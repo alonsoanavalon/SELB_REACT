@@ -1,0 +1,17 @@
+.nav-bar {
+    background-color:#ccc;
+    width:100%;
+    display:flex;
+    justify-content: space-evenly;
+
+    a {
+        text-decoration: none;
+    }
+
+
+}
+
+.active {
+    color:#389FD3;
+    font-weight: bold;
+}

@@ -1,0 +1,16 @@
+body {
+  background-color: #fff; }
+
+.nav-bar {
+  background-color: #ccc;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly; }
+  .nav-bar a {
+    text-decoration: none; }
+
+.active {
+  color: #389FD3;
+  font-weight: bold; }
+
+/*# sourceMappingURL=styles.css.map */

@@ -1,24 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
-
+import './css/styles.css'
+import {Navbar, Nav, Container} from 'react-bootstrap';
+import Test from './components/Test';
+import Home from './Home'
+import About from './About'
+import Users from './Users'
+import HomePage from './pages/HomePage'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import NotFoundPage from './pages/NotFoundPage'
+import NavBar from './components/Navbar'
+import UserPage from './pages/UserPage.js'
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+
+   
+      <BrowserRouter>
+         <NavBar/>
+        <Routes>
+          <Route path="/" element={<HomePage/>}></Route>
+          <Route path="/about" element={<About/>}></Route>
+          <Route path="/users" element={<Users/>}></Route>
+          <Route path="/users/:id" element={<UserPage/>}></Route>
+          <Route path="*" element={<NotFoundPage/>}/>
+        </Routes>
+      
+      </BrowserRouter>
+
+
+    
+
+
+
+  
+
   );
 }
 
