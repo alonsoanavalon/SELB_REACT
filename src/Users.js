@@ -6,12 +6,12 @@ export default function Users (props) {
     const [mode, setMode] = useState('online')
 
     useEffect(() => {
-        let url = "https://selb.fun/test";
+        let url = "https://jsonplaceholder.typicode.com/users";
         fetch(url)
         .then(response => response.json())
         .then(result => {
-            setUsers(result.results)
-            localStorage.setItem("users", JSON.stringify(result.results))
+            setUsers(result/* .results */)
+            localStorage.setItem("users", JSON.stringify(result/* .results */))
         }).catch(err => {
             setMode('offline')
             let collection = localStorage.getItem("users")
@@ -23,8 +23,8 @@ export default function Users (props) {
         return users.map(user => (
             <tr>
                 <td>{user.id}</td>
+                <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.clave}</td>
             </tr>
 
         ))
@@ -44,8 +44,8 @@ export default function Users (props) {
                 <thead>
                     <tr>
                     <th>#</th>
+                    <th>Name</th>
                     <th>Email</th>
-                    <th>Password</th>
                     </tr>
                 </thead>
                 <tbody>
