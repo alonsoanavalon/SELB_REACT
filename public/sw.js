@@ -7,7 +7,9 @@ this.addEventListener("install", evt => {
                 '/manifest.json',
                 '/static/js/bundle.js',
                 '/index.html',
-                '/'
+                '/',
+                '/users',
+                '/about'
 
             ])
         })
@@ -16,11 +18,17 @@ this.addEventListener("install", evt => {
 
 
 this.addEventListener("fetch", evt => {
-    evt.respondWith(
-        caches.match(evt.request).then((res => {
-            if(res) {
-                return res
-            }
-        }))
-    )
+
+    if (!navigator.onLine) {
+        evt.respondWith(
+            caches.match(evt.request).then((res => {
+                if(res) {
+                    return res
+                }
+                let requestUrl = evt.request.clone();
+                fetch(requestUrl)
+            }))
+        )
+    }
+
 })
