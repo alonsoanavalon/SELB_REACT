@@ -32,3 +32,8 @@ this.addEventListener("fetch", evt => {
     }
 
 })
+
+this.addEventListener('activate', function(event) {
+    console.log('activando')
+  })
+

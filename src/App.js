@@ -11,12 +11,14 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import NotFoundPage from './pages/NotFoundPage'
 import NavBar from './components/Navbar'
 import UserPage from './pages/UserPage.js'
+
+
 function App() {
+
+  
 
   return (
 
-
-   
       <BrowserRouter>
          <NavBar/>
         <Routes>
@@ -29,12 +31,6 @@ function App() {
       
       </BrowserRouter>
 
-
-    
-
-
-
-  
 
   );
 }
