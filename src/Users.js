@@ -7,6 +7,8 @@ export default function Users (props) {
     const [mode, setMode] = useState('online')
 
 
+
+
     useEffect(() => {
         let url = "https://selb.bond/test";
         fetch(url)
@@ -18,6 +20,7 @@ export default function Users (props) {
             setMode('offline')
             get('users').then((val) => {
                 setUsers(val)
+                
             }) 
         })
     }, [])
@@ -121,11 +124,33 @@ export default function Users (props) {
 
     function setValue(e) {
 
+        let formData = new FormData(document.getElementById("new-user"))
+        console.log(formData.entries)
+
+        let newUser = {
+            id: formData.get('id'),
+            name:formData.get('name'),
+            email:formData.get('email')
+        }
+
+        alert("on")
+
+        setUsers([...users, newUser])
+
+        fetch("https://selb.bond/test", {
+            method : 'POST',
+            headers : {'Content-Type':'application/json'},
+            body: JSON.stringify(newUser) 
+        })
+        .then(res => console.log(res))
+        .catch(err => {
+            alert(err, "estamos en offline")
+            printAndLocal()
+
+        })
 
 
-
-
-        if(!navigator.onLine) {
+/*         if(!navigator.onLine) {
             alert("printAndLocal")
             printAndLocal()
         } else {
@@ -133,7 +158,7 @@ export default function Users (props) {
             printAndSave()
         }
 
-
+ */
 
         
     }
