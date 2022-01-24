@@ -126,10 +126,10 @@ export default function Users (props) {
 
 
         if(!navigator.onLine) {
-            console.log("puto")
+            alert("printAndLocal")
             printAndLocal()
         } else {
-            console.log('estamos conectados')
+            alert("printAndSave")
             printAndSave()
         }
 
