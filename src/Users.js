@@ -189,8 +189,10 @@ export default function Users (props) {
             <p>Users Component</p>
             {
                 mode === 'offline' 
-                ? <div className="alert alert-danger" role="alert">You are in offline mode</div>
-                : <div className="alert alert-primary" role="alert">Your are in online mode</div>
+/*                 ? <div className="alert alert-danger" role="alert">You are in offline mode</div>
+                : <div className="alert alert-primary" role="alert">Your are in online mode</div> */
+                ? <button onClick={setValueOffline}>Enviar Offline</button>
+                : <button onClick={setValueOnline}>Enviar Online</button>
             }
             <Table striped bordered hover>
                 <thead>
