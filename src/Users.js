@@ -121,48 +121,6 @@ export default function Users (props) {
 
 
 
-
-    function setValue(e) {
-
-        let formData = new FormData(document.getElementById("new-user"))
-        console.log(formData.entries)
-
-        let newUser = {
-            id: formData.get('id'),
-            name:formData.get('name'),
-            email:formData.get('email')
-        }
-
-        alert("on")
-
-        setUsers([...users, newUser])
-
-        fetch("https://selb.bond/test", {
-            method : 'POST',
-            headers : {'Content-Type':'application/json'},
-            body: JSON.stringify(newUser) 
-        })
-        .then(res => console.log(res))
-        .catch(err => {
-            alert(err, "estamos en offline")
-            printAndLocal()
-
-        })
-
-
-/*         if(!navigator.onLine) {
-            alert("printAndLocal")
-            printAndLocal()
-        } else {
-            alert("printAndSave")
-            printAndSave()
-        }
-
- */
-
-        
-    }
-
     const displayUsers = () => {
         return users.map(user => (
             <tr>
@@ -177,10 +135,12 @@ export default function Users (props) {
 
     function setValueOnline () {
         alert("online")
+        printAndSave()
     }
 
     function setValueOffline () {
         alert("offline")
+        printAndLocal()
     }
 
 
