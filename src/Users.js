@@ -4,69 +4,137 @@ import {Table} from 'react-bootstrap'
 export default function Users (props) {
 
     const [users, setUsers] = useState([])
-    const [newUsers, setNewUsers] = useState([])
     const [mode, setMode] = useState('online')
-    const [data, setData] = useState("")
+
 
     useEffect(() => {
-        let url = "https://jsonplaceholder.typicode.com/users";
+        let url = "https://selb.bond/test";
         fetch(url)
         .then(response => response.json())
         .then(result => {
-            setUsers(result/* .results */)
-            set("users", (result/* .results */))
+            setUsers(result.results)
+            set("users", (result.results))
         }).catch(err => {
-            console.log("en el catch")
             setMode('offline')
             get('users').then((val) => {
                 setUsers(val)
             }) 
-    
-            
         })
     }, [])
 
-    function getData (e) {
-        e.preventDefault()
-        setData(e.target.value)
 
-        
+    function getDataAndPost (newUser) {
+
+        fetch("https://selb.bond/test", {
+            method : 'POST',
+            headers : {'Content-Type':'application/json'},
+            body: JSON.stringify(newUser) 
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+
     }
 
-    function saveAndDeleteStorage (key) {
-        get(key)
-        .then(val => {
-            console.log(val)
-        })
-        .then(() => {
-            del(key)
+    
+    function printAndSave (){
+
+        let formData = new FormData(document.getElementById("new-user"))
+        console.log(formData.entries)
+
+        let newUser = {
+            id: formData.get('id'),
+            name:formData.get('name'),
+            email:formData.get('email')
+        }
+
+        alert("on")
+
+        setUsers([...users, newUser])
+        getDataAndPost(newUser)
+
+    }
+
+    function printAndLocal () {
+
+        alert("off")
+
+        let formData = new FormData(document.getElementById("new-user"))
+
+        let newUser = {
+            id: formData.get('id'),
+            name:formData.get('name'),
+            email:formData.get('email')
+        }
+
+        //Saving in useState (Render)
+
+        setUsers([...users, newUser])
+
+        //Saving in IDB
+
+        get('newUsers')
+        .then(res => {
+            
+            let isSaved = res
+            console.log(isSaved, " IS SAVED ")
+            if (isSaved === undefined) {
+                alert("Agregando primer usuario")
+                set("newUsers", newUser)
+
+    
+            } else {
+                get("newUsers")
+                .then(savedUsers => {
+                    console.log(savedUsers, "usuarios")
+                    console.log(savedUsers.length, "LENGHT")
+                    if (savedUsers.length === undefined) {
+                        alert("Agregando nuevo usuario 1")
+                        set("newUsers", [savedUsers, newUser])
+                    } else {
+                        alert("Agregando nuevo usuario 2")
+                        set("newUsers", [...savedUsers, newUser])
+                    }
+            
+                    setUsers([...users, newUser])
+
+                })
+            }
+
+            set('users', [...users, newUser])
+    
         })
         .catch(err => console.error(err))
+        
+
+
+
+
+
+
+
+
+
     }
+
+
+
 
     function setValue(e) {
 
-        let formData = new FormData(document.getElementById("new-user"))
-        console.log(formData.get('id'))
 
-/*         if(!navigator.onLine) {
+
+
+
+        if(!navigator.onLine) {
             console.log("puto")
+            printAndLocal()
         } else {
             console.log('estamos conectados')
-            saveAndDeleteStorage('users')
+            printAndSave()
         }
 
 
-        let isSaved = get('test')
-        if (isSaved) {
-            console.log('habia algo')
-            get('test').then(val => {
-                set('test', data)
-            })
-        } else {
-            console.log('no habia nada')
-            set('test', data)
-        } */
+
         
     }
 
@@ -107,7 +175,7 @@ export default function Users (props) {
                 <form id ="new-user" name="new-user">
                     <input type="number" name="id" placeholder="Id"></input>
                     <input type="text" name="name" placeholder="Name"></input>
-                    <input type="text" name="email "placeholder="Email"></input>
+                    <input type="text" name="email"placeholder="Email"></input>
                 </form>
 
                 {<button onClick={setValue}>Enviar</button>}
