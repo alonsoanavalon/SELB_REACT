@@ -175,6 +175,14 @@ export default function Users (props) {
         
     }
 
+    function setValueOnline () {
+        alert("online")
+    }
+
+    function setValueOffline () {
+        alert("offline")
+    }
+
 
     return (
         <Fragment>
@@ -202,8 +210,12 @@ export default function Users (props) {
                     <input type="text" name="name" placeholder="Name"></input>
                     <input type="text" name="email"placeholder="Email"></input>
                 </form>
+                {
+                mode === 'offline' 
+                ? <button onClick={setValueOffline}>Enviar Offline</button>
+                : <button onClick={setValueOnline}>Enviar Online</button>
+            }
 
-                {<button onClick={setValue}>Enviar</button>}
                 
 
 
