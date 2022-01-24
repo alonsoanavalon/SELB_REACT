@@ -21,7 +21,7 @@ function App() {
   useEffect(() => { 
 
     if(navigator.onLine) {
-      alert("Ahora vamos a guardar los datos")
+      console.log("Ahora vamos a guardar los datos")
       get('newUsers')
       .then(users => {
       
@@ -33,7 +33,7 @@ function App() {
           })
           del('newUsers')
         } else {
-          alert("no hay nada q guardar")
+          console.log("no hay nada q guardar")
         }
 
 
@@ -45,7 +45,7 @@ function App() {
       .catch(err => console.log(err))
 
     } else {
-      alert("Ahora no vamos a guardar los datos, navegador offline  ")
+      console.log("Ahora no vamos a guardar los datos, navegador offline  ")
     }
 
 

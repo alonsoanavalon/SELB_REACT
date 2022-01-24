@@ -6,23 +6,28 @@ export default function Users (props) {
     const [users, setUsers] = useState([])
     const [mode, setMode] = useState('online')
 
-
-
-
     useEffect(() => {
+
         let url = "https://selb.bond/test";
-        fetch(url)
-        .then(response => response.json())
-        .then(result => {
-            setUsers(result.results)
-            set("users", (result.results))
-        }).catch(err => {
-            setMode('offline')
-            get('users').then((val) => {
-                setUsers(val)
-                
-            }) 
-        })
+
+        setTimeout(() => {
+
+            fetch(url)
+            .then(response => response.json())
+            .then(result => {
+                setUsers(result.results)
+                set("users", (result.results))
+            }).catch(err => {
+                setMode('offline')
+                get('users').then((val) => {
+                    setUsers(val)
+                    
+                }) 
+            })
+
+        }, 1000)
+
+
     }, [])
 
 
@@ -37,7 +42,6 @@ export default function Users (props) {
         .catch(err => console.log(err))
 
     }
-
     
     function printAndSave (){
 
@@ -50,16 +54,12 @@ export default function Users (props) {
             email:formData.get('email')
         }
 
-        alert("on")
-
         setUsers([...users, newUser])
         getDataAndPost(newUser)
 
     }
 
     function printAndLocal () {
-
-        alert("off")
 
         let formData = new FormData(document.getElementById("new-user"))
 
@@ -81,45 +81,27 @@ export default function Users (props) {
             let isSaved = res
             console.log(isSaved, " IS SAVED ")
             if (isSaved === undefined) {
-                alert("Agregando primer usuario")
                 set("newUsers", newUser)
-
-    
             } else {
                 get("newUsers")
                 .then(savedUsers => {
                     console.log(savedUsers, "usuarios")
                     console.log(savedUsers.length, "LENGHT")
                     if (savedUsers.length === undefined) {
-                        alert("Agregando nuevo usuario 1")
+                        //alert("Agregando nuevo usuario 1")
                         set("newUsers", [savedUsers, newUser])
                     } else {
-                        alert("Agregando nuevo usuario 2")
+                        //alert("Agregando nuevo usuario 2")
                         set("newUsers", [...savedUsers, newUser])
                     }
-            
                     setUsers([...users, newUser])
-
                 })
             }
-
             set('users', [...users, newUser])
-    
         })
         .catch(err => console.error(err))
-        
-
-
-
-
-
-
-
-
 
     }
-
-
 
     const displayUsers = () => {
         return users.map(user => (
@@ -134,12 +116,10 @@ export default function Users (props) {
     }
 
     function setValueOnline () {
-        alert("online")
         printAndSave()
     }
 
     function setValueOffline () {
-        alert("offline")
         printAndLocal()
     }
 
@@ -175,11 +155,7 @@ export default function Users (props) {
                 mode === 'offline' 
                 ? <button onClick={setValueOffline}>Enviar Offline</button>
                 : <button onClick={setValueOnline}>Enviar Online</button>
-            }
-
-                
-
-
+                }
 
         </Fragment>
     )
