@@ -6,6 +6,7 @@ this.addEventListener("install", evt => {
                 '/logo192.png',
                 '/manifest.json',
                 '/static/js/bundle.js',
+                '/login',
                 '/index.html',
                 '/',
                 '/users',

@@ -1,10 +1,6 @@
 import {useState, useEffect} from 'react'
-import logo from './logo.svg';
 import './App.css';
 import './css/styles.css'
-import {Navbar, Nav, Container} from 'react-bootstrap';
-import Test from './components/Test';
-import Home from './Home'
 import About from './About'
 import Users from './Users'
 import HomePage from './pages/HomePage'
@@ -13,9 +9,21 @@ import NotFoundPage from './pages/NotFoundPage'
 import NavBar from './components/Navbar'
 import UserPage from './pages/UserPage.js'
 import { del, get } from 'idb-keyval';
+import axios from 'axios'
+import md5 from 'md5'
+import Cookies from 'universal-cookie'
+import Login from './pages/Login';
+import { useNavigate } from 'react-router-dom';
 
+const cookies = new Cookies();
 
 function App() {
+
+  console.log(window.location.pathname == "/login", "ES ?")
+
+    if (!cookies.get('id') && (window.location.pathname !== "/login")) {
+    window.location.href='/login'
+  }
 
 
   useEffect(() => { 
@@ -61,10 +69,12 @@ function App() {
       <BrowserRouter>
          <NavBar/>
         <Routes>
+          
           <Route path="/" element={<HomePage/>}></Route>
           <Route path="/about" element={<About/>}></Route>
           <Route path="/users" element={<Users/>}></Route>
           <Route path="/users/:id" element={<UserPage/>}></Route>
+          <Route path="/login" element={<Login/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       
