@@ -29,10 +29,10 @@ function App() {
       firstTime = false;
       del('students')
       
-      let url = "http://localhost:3500/getstudents" || "https://selb.bond/getstudents"
+      let url = /* "http://localhost:3500/getstudents" || */ "https://selb.bond/getstudents"
       axios(url)
       .then(res => {
-        console.log("Esto nos llego: ")
+        alert("Esto nos llego: ")
         set('students', res.data)
       })
     }
@@ -73,10 +73,10 @@ function App() {
       firstTime = false;
       del('schools')
       
-      let url = "http://localhost:3500/getschools" || "https://selb.bond/getschools"
+      let url = /* "http://localhost:3500/getschools" || */ "https://selb.bond/getschools"
       axios(url)
       .then(res => {
-        console.log("Esto nos llego: ")
+        alert("Esto nos llego: ")
         set('schools', res.data)
       })
     }
