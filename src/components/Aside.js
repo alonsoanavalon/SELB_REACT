@@ -7,17 +7,21 @@ export default function Aside() {
         let aside = document.querySelector("#root > div.aside-bar")
         document.addEventListener("click", e => {
 
-            if (aside.classList.contains('aside-bar-active')) {
+            if (aside.classList) {
+                if (aside.classList.contains('aside-bar-active')) {
+    
+                    if (!e.target.matches('#root > div.aside-bar.aside-bar-hidden.aside-bar-active *') 
+                    && (!e.target.matches("#root > div.aside-bar.aside-bar-hidden.aside-bar-active"))
+                    && (!e.target.matches("#root > header > button"))
+                    && (!e.target.matches("#root > header > button *"))
+                    ){
+                        aside.classList.remove('aside-bar-active')
+                        aside.classList.add('aside-bar-hidden')
+                    }
+                } 
 
-                if (!e.target.matches('#root > div.aside-bar.aside-bar-hidden.aside-bar-active *') 
-                && (!e.target.matches("#root > div.aside-bar.aside-bar-hidden.aside-bar-active"))
-                && (!e.target.matches("#root > header > button"))
-                && (!e.target.matches("#root > header > button *"))
-                ){
-                    aside.classList.remove('aside-bar-active')
-                    aside.classList.add('aside-bar-hidden')
-                }
-            } 
+            }
+
 
             
         })

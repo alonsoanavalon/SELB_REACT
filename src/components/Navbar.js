@@ -7,16 +7,19 @@ export default function NavBar() {
 
     function showAside () {
         let aside = document.querySelector("#root > div.aside-bar")
-        let asideIsActive = aside.classList.contains('aside-bar-active')
-        
-        if (asideIsActive) {
 
-            aside.classList.remove('aside-bar-active')
-            aside.classList.add('aside-bar-hidden')
-        } else {
-
-            aside.classList.add('aside-bar-active')
+        if (aside.classList) {
+            let asideIsActive = aside.classList.contains('aside-bar-active')        
+            if (asideIsActive) {
+    
+                aside.classList.remove('aside-bar-active')
+                aside.classList.add('aside-bar-hidden')
+            } else {
+    
+                aside.classList.add('aside-bar-active')
+            }
         }
+
  
 
 /*         if (asideState) {
