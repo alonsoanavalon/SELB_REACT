@@ -1,18 +1,56 @@
-import React, { Fragment } from 'react'
-import {NavLink} from 'react-router-dom'
+import React, { Fragment, useState } from 'react';
 
-export default function Navbar() {
-    return (
 
-        <Fragment> 
-        {window.location.pathname !== '/login' &&
-                <div className='nav-bar'>
-                <NavLink className={({isActive}) => isActive ? 'active' : ''} to="/">Home</NavLink>
-                <NavLink className={({isActive}) => isActive ? 'active' : ''}to="/about">About</NavLink>
-                <NavLink className={({isActive}) => isActive ? 'active' : ''}to="/users">Users</NavLink>
-            </div>}
+export default function NavBar() {
 
+    const [asideState, setAsideState] = useState(false)
+
+    function showAside () {
+        let aside = document.querySelector("#root > div.aside-bar")
+        let asideIsActive = aside.classList.contains('aside-bar-active')
+        
+        if (asideIsActive) {
+
+            aside.classList.remove('aside-bar-active')
+            aside.classList.add('aside-bar-hidden')
+        } else {
+
+            aside.classList.add('aside-bar-active')
+        }
+ 
+
+/*         if (asideState) {
+            alert("vamos a cerrarla")
+            aside.classList.remove('aside-bar-active')
+            aside.classList.add('aside-bar-hidden')
+
+        } else {
+            alert("vamos a abrirla")
+            aside.classList.remove('aside-bar-hidden')
+            aside.classList.add('aside-bar-active')
+        } */
+
+    }
+
+
+    return (      
+        <Fragment>
+            {
+                            
+            window.location.pathname !== '/login' &&
+                <header className="header">
+                    <button 
+                    className="hamburger hamburger--collapse" 
+                    type="button"
+                    onClick={showAside}
+                    >
+                    <span className="hamburger-box">
+                        <span className="hamburger-inner"></span>
+                    </span>
+                    </button>
+                </header>
+            }
         </Fragment>
-
     )
 }
+

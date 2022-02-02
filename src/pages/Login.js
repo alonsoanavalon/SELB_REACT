@@ -13,10 +13,9 @@ export default function Login () {
 
     const [isLogin, setIsLogin] = useState('')
     
-      const navigate = useNavigate()
 
-      function validateLogin () {
-        
+      function validateLogin (e) {
+        e.preventDefault()
         let loginForm = document.querySelector("#loginForm")
         let loginFormData = new FormData(loginForm)
 
@@ -25,20 +24,27 @@ export default function Login () {
             password: loginFormData.get('password')
         }
 
-        let url = "https://selb.bond/login"
+        let url = "http://localhost:3500/login" || "https://selb.bond/login"
 
         axios(url, {
             params: {
                 email:user.username,
-                clave:md5(user.password)
+                password:md5(user.password)
             }
         })
-        .then(response => response.data)
+        .then(response => {
+          console.log(response, "ACA")
+          return response.data
+        })
         .then(data => {
           if (!data.status) {
             setIsLogin(false)
           } else {
-            set('user', data.id)
+            set('userData', {
+              id : data.id,
+              name: data.name,
+              surname: data.surname
+            })
             cookies.set('id', data.id, {path:"/"})
             cookies.set('email', data.email, {path:"/"})
             setIsLogin(true)
@@ -57,22 +63,32 @@ export default function Login () {
 
 
       return (
-          <Fragment>
-              <form name="loginForm" id="loginForm">
+
+            <div className="signin">
+              <form name="loginForm" id="loginForm" class="signin-form">
+                <img src="/logo.png" alt="logo"/>
+                <h2 className="signin-title">Login</h2>
                 <input type="text" name="username" placeholder='Username'/>
                 <input type="password" name="password" placeholder='Password'/>
-              </form>
+                              
 
               {
                 isLogin === false &&
                 <div className="alert alert-warning" role="alert">Datos incorrectos</div>
               }
 
-            <button
-           className='btn btn-primary'
-           onClick={validateLogin}
-           > Login </button>
-          </Fragment>
+                <button
+              id="signin-button"
+              className='btn btn-primary'
+              onClick={validateLogin}
+              > Ingresar </button>
+              
+              </form>
+
+
+            </div>
+
+
 
       )
 

@@ -10,7 +10,12 @@ this.addEventListener("install", evt => {
                 '/index.html',
                 '/',
                 '/users',
-                '/about'
+                '/about',
+                '/images/daughter.png',
+                '/images/son.png',
+                '/students',
+                '/menu.png',
+                'https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css'
 
             ])
         })

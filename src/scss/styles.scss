@@ -1,2 +1,12 @@
 @import 'index';
 @import 'navbar';
+@import 'aside';
+@import 'login';
+@import 'normalize';
+@import 'home';
+@import 'students';
+
+#root {
+    background-color: #f3f3f7;
+    height:100vh;
+}
