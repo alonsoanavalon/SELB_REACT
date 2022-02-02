@@ -24,7 +24,7 @@ export default function Login () {
             password: loginFormData.get('password')
         }
 
-        let url = "http://localhost:3500/login" || "https://selb.bond/login"
+        let url = /* "http://localhost:3500/login" ||  */"https://selb.bond/login"
 
         axios(url, {
             params: {
@@ -34,12 +34,15 @@ export default function Login () {
         })
         .then(response => {
           console.log(response, "ACA")
+          alert("enviando datos")
           return response.data
         })
         .then(data => {
           if (!data.status) {
+            alert("no hay login")
             setIsLogin(false)
           } else {
+            alert("hay login weno")
             set('userData', {
               id : data.id,
               name: data.name,
