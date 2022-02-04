@@ -647,6 +647,9 @@ template {
   align-content: center;
   text-align: center;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25); }
+  .page-item .letter-example {
+    width: 80%;
+    margin: 0 auto; }
   .page-item .main-description {
     width: 60%;
     line-height: 2rem;

@@ -113,7 +113,7 @@ export default function FirstInstrument () {
                     </SwiperSlide>
                     <SwiperSlide>
                     <div className="page-item">
-                        <img src="\instruments\tejasLee\Tejas Lee - Y.jpg"/>
+                        <img className="letter-example" src="\instruments\tejasLee\Tejas Lee - Y.jpg" alt="letter-example"/>
                     </div>
                     </SwiperSlide>
                     <SwiperSlide>
