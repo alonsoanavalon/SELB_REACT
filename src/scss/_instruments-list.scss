@@ -1,0 +1,101 @@
+#instruments-list-wrapper {
+    width:100%;
+    height:100vh;
+    background: rgba(244, 244, 244, 0.5);
+    position:fixed;
+    top:0;
+    left:0;
+    
+    #instruments-list {
+        position:fixed;
+        width:350px;
+        height:400px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+        background-color: #fff;
+        margin: auto;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        border-radius:.8rem ;
+        -webkit-border-radius:.8rem ;
+        -moz-border-radius:.8rem ;
+        -ms-border-radius:.8rem ;
+        -o-border-radius:.8rem ;
+        padding:1.2rem;
+        gap:1rem;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: flex-start;
+
+        z-index:20; 
+    
+        
+        h4{
+            width:100%;
+            text-align: center;
+            border-radius:inherit    ;
+            -webkit-border-radius:inherit    ;
+            -moz-border-radius:inherit    ;
+            -ms-border-radius:inherit    ;
+            -o-border-radius:inherit    ;
+            padding:inherit;
+            color:#3aafb9;
+            font-weight: bold;
+
+            font-family: 'Kanit', sans-serif;
+            letter-spacing: 1px;
+        }
+    
+        .listed-instrument {
+            cursor: pointer;
+            width:100%;
+            border-radius: .4rem;
+            -webkit-border-radius: .4rem;
+            -moz-border-radius: .4rem;
+            -ms-border-radius: .4rem;
+            -o-border-radius: .4rem;
+            font-weight: bold;
+            color:#555;
+            padding:.6rem;
+    }
+    
+        .listed-instrument:hover {
+            background-color:#3aafb9;
+            color:#fff;
+        }
+    }
+}
+
+
+
+
+
+.active {
+    display:block;
+    opacity:1;
+    transition: opacity 1s ease;
+    -webkit-transition: opacity 1s ease;
+    -moz-transition: opacity 1s ease;
+    -ms-transition: opacity 1s ease;
+    -o-transition: opacity 1s ease;
+}
+
+
+.hidden {
+    display: none;
+    opacity:0;
+    transition: opacity 1s ease ;
+    -webkit-transition: opacity 1s ease ;
+    -moz-transition: opacity 1s ease ;
+    -ms-transition: opacity 1s ease ;
+    -o-transition: opacity 1s ease ;
+}
+
+
+#instrument-icon {
+    width:30px;
+    margin-bottom:1px;
+    margin-right:4px;
+}

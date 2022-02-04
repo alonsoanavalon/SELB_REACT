@@ -5,15 +5,19 @@
     align-items: center;
     align-content: center;
     flex-direction: column;
-    width:200px;
-
+    width:220px;
+    margin-top:1rem;
     padding:.5rem;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
     position:fixed;
     z-index:10;
-
-
-a{
+    border-radius:1rem ;
+    -webkit-border-radius:1rem ;
+    -moz-border-radius:1rem ;
+    -ms-border-radius:1rem ;
+    -o-border-radius:1rem ;
+    
+    a{
         text-decoration: none;
         color:#333;
         padding:.5rem 1rem;
@@ -26,14 +30,14 @@ a{
 }
 
     a:hover {
-        background-color:#2797CC;
+        background-color:#7ebdc2;
         color:#fff;
     }
 
     .aside-head {
         display:block;
         width:80%;
-        border-bottom:1px solid #ccc;
+        border-bottom:1px solid #284b63;
         padding:1rem 0;
     }
 
@@ -42,6 +46,9 @@ a{
         flex-direction: column;
         padding:1rem 0;
         width:80%;
+
+
+
     }
 
 
@@ -78,4 +85,23 @@ a{
 .active {
     color:#fff;
     font-weight: bold;
+}
+
+.profile-picture-wrapper {
+    margin-bottom:1rem;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border:1px solid #ccc;
+
+    img {
+        width:60px;
+    }
+}
+
+#home-icon, #students-icon, #users-icon {
+    width:20px;
+    margin-bottom:3px;
+    margin-right:4px;
 }

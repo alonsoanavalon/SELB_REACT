@@ -51,6 +51,10 @@ export default function NavBar() {
                         <span className="hamburger-inner"></span>
                     </span>
                     </button>
+
+                    <div className='selb-icon-wrapper'>
+                        <h4>SELB</h4>
+                    </div>
                 </header>
             }
         </Fragment>

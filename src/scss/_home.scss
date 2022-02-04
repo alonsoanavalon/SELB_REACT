@@ -1,7 +1,27 @@
 .home-wrapper {
 
-    h1 {
+    text-align: center;
 
+    h1 {
+        margin:2rem 0;
+        color:#444;
         text-align: center;
+        
     }
+
+    h4 {
+        color:#444;
+    }
+
+    display:flex;
+    flex-direction: column;
+    gap:.5rem;
+}
+
+.table-home {
+    width:300px !important;
+    margin:2rem auto;
+    border:1px solid #444;
+    color:#333;
+
 }

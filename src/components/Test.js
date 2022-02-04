@@ -23,10 +23,6 @@ class Test extends Component {
     
     render () {
         const name = "pepe"
-        const firstUser = this.state.users
-        console.log(firstUser.email)
-
-
 
         return(
             <div>

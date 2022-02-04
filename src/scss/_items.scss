@@ -1,0 +1,53 @@
+.page-item {
+    background-color: #fff;
+    height:calc(100vh - 60px);
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin: auto;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    .main-description {
+        width:60%;
+        line-height:2rem;
+        min-width:300px;
+        margin:0 auto;
+        background-color: #fff;
+        padding:2rem;
+        border-radius: .5rem;
+        -webkit-border-radius: .5rem;
+        -moz-border-radius: .5rem;
+        -ms-border-radius: .5rem;
+        -o-border-radius: .5rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        padding:2rem;
+
+
+    }
+
+}
+
+/* First Instrument */
+
+
+.instrument-form{
+
+        input,label {
+            padding:.5rem;
+        }
+
+}

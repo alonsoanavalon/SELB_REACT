@@ -10,3 +10,29 @@
     background-color:#fff;
     cursor: pointer;
 }
+
+.listed-student:hover {
+    background-color: #3AAFB9;
+    color:#fff;
+
+}
+
+.student-list-wrapper {
+    min-width:300px;
+    width:95%;
+    margin:1rem auto;
+    border-radius: .4rem;
+    -webkit-border-radius: .4rem;
+    -moz-border-radius: .4rem;
+    -ms-border-radius: .4rem;
+    -o-border-radius: .4rem;
+    border:1px solid #ccc;
+    padding:1rem;
+
+
+
+    select {
+        width:300px;
+        margin:0 auto;
+    }
+}

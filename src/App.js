@@ -13,6 +13,8 @@ import Login from './pages/Login';
 import Navbar from './components/Navbar'
 import StudentList from './pages/StudentList'
 import axios from 'axios'
+import FirstInstrument from './pages/FirstInstrument';
+import SecondInstrument from './pages/SecondInstrument';
 
 const cookies = new Cookies();
 
@@ -22,18 +24,17 @@ function App() {
     window.location.href='/login'
   }
 
-  function getUsers () {
+  function getData (data) {
+    console.log("consiguiendo ", data)
     let firstTime = true;
 
     if (navigator.onLine && firstTime) {
       firstTime = false;
-      del('students')
-      
-      let url = /* "http://localhost:3500/getstudents" || */ "https://selb.bond/getstudents"
+      del(data)
+      let url = /* "http://localhost:3500/students" || */ `https://selb.bond/${data}`
       axios(url)
       .then(res => {
-        alert("Esto nos llego: ")
-        set('students', res.data)
+        set(data, res.data)
       })
     }
   }
@@ -65,37 +66,24 @@ function App() {
     }
   }
 
-  function getSchools () {
-
-    let firstTime = true;
-
-    if (navigator.onLine && firstTime) {
-      firstTime = false;
-      del('schools')
-      
-      let url = /* "http://localhost:3500/getschools" || */ "https://selb.bond/getschools"
-      axios(url)
-      .then(res => {
-        alert("Esto nos llego: ")
-        set('schools', res.data)
-      })
-    }
-  }
 
 
   useEffect(() => { 
 
-    getUsers()
     postDataInDatabase()
-    getSchools()
-  
+    getData('instruments')
+    getData('schools')
+    getData('students')
+    getData('items')
+
+
   }, [])
 
 
   return (
 
     <Fragment>
-          
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossOrigin="anonymous"></link>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css" integrity="sha512-+mlclc5Q/eHs49oIOCxnnENudJWuNqX5AogCiqRBgKnpoplPzETg2fkgBFVC6WYUVxYYljuxPNG8RE7yBy1K+g==" crossOrigin="anonymous" referrerPolicy="no-referrer"/>
           <BrowserRouter>
           <Navbar/>
@@ -106,6 +94,8 @@ function App() {
           <Route path="/users" element={<Users/>}></Route>
           <Route path="/users/:id" element={<UserPage/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
+          <Route path="/firstinstrument" element={<FirstInstrument/>}></Route>
+          <Route path="/secondinstrument" element={<SecondInstrument/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       

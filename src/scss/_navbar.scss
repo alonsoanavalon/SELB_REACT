@@ -1,3 +1,21 @@
 .header {
-    background-color:#4d90c4;
+    background-color:#1674d8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+
+    .selb-icon-wrapper{ 
+        font-family: 'Kanit', sans-serif;
+        color:#fff;
+        font-weight: 800;
+        letter-spacing: 1px;
+
+        h4 {
+            margin-right:2rem;
+        }
+        
+    }
+
+
 }

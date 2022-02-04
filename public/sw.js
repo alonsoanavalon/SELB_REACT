@@ -15,7 +15,14 @@ this.addEventListener("install", evt => {
                 '/images/son.png',
                 '/students',
                 '/menu.png',
-                'https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css'
+                '/instruments',
+                '/items',
+                'https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css',
+                'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css',
+                '/images/man.png',
+                'https://fonts.googleapis.com/css2?family=Kanit:wght@800;900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap',
+                '/instruments/tejasLee/Tejas Lee - Y.jpg',
+                '/instruments/tejasLee/Tejas Lee.wav'
 
             ])
         })

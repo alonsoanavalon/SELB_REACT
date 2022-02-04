@@ -2,28 +2,28 @@ import React, { Fragment, useState, useEffect } from 'react'
 import {get} from 'idb-keyval'
 import Student from '../components/Student'
 import Students from '../components/Students'
+import InstrumentsList from '../components/InstrumentsList';
 
 export default function StudentList () {
 
     const [students, setStudents] = useState([])
     const [schools, setSchools] = useState([])
+    const [instruments, setInstruments] = useState([])
 
+    function getData(data, setter){
+        get(data)
+        .then(res => setter(res))
+    }
 
     useEffect(() => { 
 
-        get('students')
-        .then(res => {
-            setStudents(res)
-        })
-
-        get('schools')
-        .then(res => {
-            setSchools(res)
-        })
-      
+        getData('students', setStudents)
+        getData('schools', setSchools)
+        getData('instruments', setInstruments)
+    
     }, [])
 
-
+    
 
 
     const renderSchoolOptions = ()  => {
@@ -58,9 +58,11 @@ export default function StudentList () {
 
 
 
+
     return (
         <Fragment>
-            <select onChange={getStudents} className="form-select" aria-label="Default select example" placeholder='Listado de colegios' id="schoolSelect" defaultValue="empty">
+            <div className="student-list-wrapper">
+                 <select onChange={getStudents} className="form-select" aria-label="Default select example" placeholder='Listado de colegios' id="schoolSelect" defaultValue="empty">
                 <option value="empty" disabled>Selecciona una opción</option>
                 <option key="0" value="0">Todos los alumnos</option>
                 {renderSchoolOptions()}
@@ -77,9 +79,13 @@ export default function StudentList () {
                 <tbody>
                     <Students data={students}/>
                 </tbody>
-                </table>
+            </table>
 
-                
+            <div>
+                <InstrumentsList instruments={instruments}/>
+            </div>    
+            </div>
+           
 
         </Fragment>
     )
