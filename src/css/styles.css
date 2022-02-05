@@ -673,6 +673,9 @@ template {
 .instrument-form input, .instrument-form label {
   padding: .5rem; }
 
+.book-wrapper {
+  border: 1px solid red; }
+
 html {
   background-color: #fff; }
 

@@ -10,6 +10,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
+import HTMLFlipBook from 'react-pageflip';
 export default function FirstInstrument () {
 
     const [items, setItems] = useState([]);
@@ -31,7 +32,7 @@ export default function FirstInstrument () {
                         modules={[Navigation, Pagination, Scrollbar, A11y]}
                         slidesPerView={1}
                         navigation
-                        allowTouchMove={true}
+                        allowTouchMove={false}
                         scrollbar={{ draggable: true }}
                         onSwiper={(swiper) => console.log(swiper)}
                         onSlideChange={() => console.log('slide change')}
@@ -79,14 +80,29 @@ export default function FirstInstrument () {
                     </div>
                     </SwiperSlide>
                     <SwiperSlide>
-                    <div className="page-item">
-                        Libro
-                    </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <div className="page-item">
-                        Libro
-                    </div>
+
+                        <div className='page-item'>
+                        <HTMLFlipBook width={400} height={250} mobileScrollSupport={true}>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book1.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book2.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book3.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book4.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book5.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book6.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book7.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book8.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book9.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book10.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book11.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book12.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book13.jpg"/>
+                            <img className="demoPage" alt="page-1" src="\instruments\tejasLee\book14.jpg"/>
+                            
+
+                        </HTMLFlipBook>
+                        </div>
+
+
                     </SwiperSlide>
                     <SwiperSlide>
                     <div className="page-item">
@@ -220,6 +236,8 @@ export default function FirstInstrument () {
                         </h3>
                     </div>
                     </SwiperSlide>
+
+
 
                 
                 </Swiper>
