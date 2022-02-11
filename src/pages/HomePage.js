@@ -50,7 +50,7 @@ export default function HomePage() {
             res => {
                 axios({
                     method: 'post',
-                    url: 'http://localhost:3500/newevaluation',
+                    url: 'http://selb.bond/newevaluation',
                     data: res
                 });
             }

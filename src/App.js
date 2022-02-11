@@ -33,7 +33,7 @@ function App() {
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url = `http://localhost:3500/${data}`|| `https://selb.bond/${data}`
+      let url = `https://selb.bond/${data}`
       axios(url)
       .then(res => {
         set(data, res.data)
@@ -90,7 +90,7 @@ function App() {
 
         axios({
             method: 'get',
-            url:`http://localhost:3500/instrumentlist`,
+            url:`http://selb.bond/instrumentlist`,
             params: {
                 instrument:1,
                 user: userId
