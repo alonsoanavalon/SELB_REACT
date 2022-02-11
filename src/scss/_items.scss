@@ -44,6 +44,10 @@
 
     }
 
+    img {
+        max-width:100%;
+    }
+
 }
 
 /* First Instrument */
@@ -51,14 +55,32 @@
 
 .instrument-form{
 
+        text-align: start;
         input,label {
-            padding:.5rem;
+            padding:.6rem;
         }
 
-}
 
-.book-wrapper {
-    border:1px solid red;
+        label  {
+            cursor: pointer;
+            width:100%;
+            border-radius: .5rem;
+            -webkit-border-radius: .5rem;
+            -moz-border-radius: .5rem;
+            -ms-border-radius: .5rem;
+            -o-border-radius: .5rem;
+
+        }
+
+        label:hover {
+            background-color: #3aafb9;
+            color:#fff;
+        }
+
+        label > input[type="radio"] {
+            margin-right:5px;
+        }
+
 
 
 }

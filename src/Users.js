@@ -8,7 +8,7 @@ export default function Users (props) {
 
     useEffect(() => {
 
-        let url = "https://selb.bond/test";
+        let url = "https://localhost:3500/test" ||"https://selb.bond/test";
 
         setTimeout(() => {
 

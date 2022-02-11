@@ -1,10 +1,13 @@
 import { get } from 'idb-keyval'
 import React, { Fragment, useEffect, useState } from 'react'
-import {NavLink} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
+import Cookies from 'universal-cookie'
 
 export default function Aside() {
 
     const [userData, setUserData] = useState([])
+    const cookies = new Cookies()
+    const navigate = useNavigate()
 
     useEffect(() => {
         let aside = document.querySelector("#root > div.aside-bar")
@@ -28,6 +31,13 @@ export default function Aside() {
         .then(res => setUserData(res))
         .then(console.log(userData))
     }, [])
+
+
+    function logout() {
+        cookies.remove('id',{path:'/'})
+        cookies.remove('email', {path:'/'})
+        window.location.pathname = '/login'
+    }
     
     return (
 
@@ -56,7 +66,18 @@ export default function Aside() {
                 <svg id="users-icon"xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>Usuarios</NavLink>
+
+                <a onClick={logout}>
+                    <svg id="logout-icon" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>   
+                    Salir
+                </a>
+ 
                 </div>
+
+
+ 
 
             </div>}
 

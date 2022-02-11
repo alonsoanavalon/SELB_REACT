@@ -12,7 +12,7 @@ export default function ListedInstrument (props) {
       
 
         if ($selectedInstrument == 1) {
-            navigate('/firstinstrument')
+            navigate('/tejaslee')
         } else if ($selectedInstrument == 2){
             navigate('/secondinstrument')
         }

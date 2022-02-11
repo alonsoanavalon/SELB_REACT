@@ -1,0 +1,32 @@
+.book-wrapper {
+    width:98%;
+    margin-left:1rem;
+    margin-right:1rem;
+    padding:1rem;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 1);
+    border-radius:.5rem     ;
+    -webkit-border-radius:.5rem     ;
+    -moz-border-radius:.5rem     ;
+    -ms-border-radius:.5rem     ;
+    -o-border-radius:.5rem     ;
+    background-color: #FDFAF7;
+    .demopage {
+        width:100%;
+        border-radius:inherit;
+        -webkit-border-radius:inherit;
+        -moz-border-radius:inherit;
+        -ms-border-radius:inherit;
+        -o-border-radius:inherit;
+}
+
+
+    .stf__block {
+        box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.8);
+        border-radius:.5rem    ;
+        -webkit-border-radius:.5rem    ;
+        -moz-border-radius:.5rem    ;
+        -ms-border-radius:.5rem    ;
+        -o-border-radius:.5rem    ;
+}
+
+}

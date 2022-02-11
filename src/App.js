@@ -13,12 +13,14 @@ import Login from './pages/Login';
 import Navbar from './components/Navbar'
 import StudentList from './pages/StudentList'
 import axios from 'axios'
-import FirstInstrument from './pages/FirstInstrument';
+import TejasLee from './pages/TejasLee';
 import SecondInstrument from './pages/SecondInstrument';
 
 const cookies = new Cookies();
 
 function App() {
+
+  const [userId, setUserId] = useState()
 
   if (!cookies.get('id') && (window.location.pathname !== "/login")) {
     window.location.href='/login'
@@ -31,7 +33,7 @@ function App() {
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url = /* "http://localhost:3500/students" || */ `https://selb.bond/${data}`
+      let url = `http://localhost:3500/${data}`|| `https://selb.bond/${data}`
       axios(url)
       .then(res => {
         set(data, res.data)
@@ -75,9 +77,44 @@ function App() {
     getData('schools')
     getData('students')
     getData('items')
+    getData('instrument/1')
+
+    get('userData').then(res => {
+      setUserId(res.id)
+  })
+
+  /* Arreglar esto */
+
+    if (navigator.onLine) {
+      if (userId !== undefined) {
+
+        axios({
+            method: 'get',
+            url:`http://localhost:3500/instrumentlist`,
+            params: {
+                instrument:1,
+                user: userId
+            }
+        })
+        .then(
+         
+            res => {
+                set('tejasLength', res.data[0]['COUNT(*)'])
+            }
+            )
+        }
+    }
+
+    get('completedTests')
+    .then(res => {
+      if (res === undefined) {
+        set('completedTests', [])
+      }
+    })
+    
 
 
-  }, [])
+  }, [userId])
 
 
   return (
@@ -94,7 +131,7 @@ function App() {
           <Route path="/users" element={<Users/>}></Route>
           <Route path="/users/:id" element={<UserPage/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
-          <Route path="/firstinstrument" element={<FirstInstrument/>}></Route>
+          <Route path="/tejaslee" element={<TejasLee/>}></Route>
           <Route path="/secondinstrument" element={<SecondInstrument/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>

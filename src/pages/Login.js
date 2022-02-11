@@ -24,7 +24,7 @@ export default function Login () {
             password: loginFormData.get('password')
         }
 
-        let url = /* "http://localhost:3500/login" || */ "https://selb.bond/login"
+        let url = "http://localhost:3500/login" || "https://selb.bond/login"
 
         axios(url, {
             params: {
@@ -68,7 +68,7 @@ export default function Login () {
       return (
 
             <div className="signin">
-              <form name="loginForm" id="loginForm" class="signin-form">
+              <form name="loginForm" id="loginForm" className="signin-form">
                 <img src="/logo.png" alt="logo"/>
                 <h2 className="signin-title">Ingreso</h2>
                 <input type="text" name="username" placeholder='Username'/>

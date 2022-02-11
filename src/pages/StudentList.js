@@ -67,7 +67,7 @@ export default function StudentList () {
                 <option key="0" value="0">Todos los alumnos</option>
                 {renderSchoolOptions()}
             </select>
-            <table class="table" id="students-table">
+            <table className="table" id="students-table">
                 <thead className="thead-dark">
                     <tr>    
                     <th scope="col"></th>

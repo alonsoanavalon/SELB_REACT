@@ -8,7 +8,7 @@
 @import 'students';
 @import 'instruments-list';
 @import 'items';
-
+@import 'book';
 html {
     background-color: #fff;
 }
@@ -56,4 +56,16 @@ html {
 .swiper-scrollbar-drag {
     background-color: #ff6838 !important;
 
+}
+
+/* Se supone esto ayuda para no recargar la pagina en celulares desplazando el dedo */
+
+body
+{
+  overscroll-behavior-y: contain !important ;
+}
+
+.button {
+    width:120px;
+    margin: 0 auto;
 }

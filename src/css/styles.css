@@ -43,10 +43,11 @@ body {
     -webkit-border-radius: .8rem;
     -moz-border-radius: .8rem;
     -ms-border-radius: .8rem;
-    -o-border-radius: .8rem; }
+    -o-border-radius: .8rem;
+    cursor: pointer; }
   .aside-bar a:hover {
     background-color: #7ebdc2;
-    color: #fff; }
+    color: #fff !important; }
   .aside-bar .aside-head {
     display: block;
     width: 80%;
@@ -96,7 +97,7 @@ body {
   .profile-picture-wrapper img {
     width: 60px; }
 
-#home-icon, #students-icon, #users-icon {
+#home-icon, #students-icon, #users-icon, #logout-icon {
   width: 20px;
   margin-bottom: 3px;
   margin-right: 4px; }
@@ -510,11 +511,19 @@ template {
   flex-direction: column;
   gap: .5rem; }
   .home-wrapper h1 {
-    margin: 2rem 0;
+    padding: 2rem;
     color: #444;
-    text-align: center; }
+    text-align: center;
+    height: 100%; }
   .home-wrapper h4 {
     color: #444; }
+  .home-wrapper .table-wrapper {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    align-content: center;
+    flex-wrap: wrap; }
 
 .table-home {
   width: 300px !important;
@@ -668,13 +677,54 @@ template {
     justify-content: flex-end;
     align-items: flex-start;
     padding: 2rem; }
+  .page-item img {
+    max-width: 100%; }
 
 /* First Instrument */
-.instrument-form input, .instrument-form label {
-  padding: .5rem; }
+.instrument-form {
+  text-align: start; }
+  .instrument-form input, .instrument-form label {
+    padding: .6rem; }
+  .instrument-form label {
+    cursor: pointer;
+    width: 100%;
+    border-radius: .5rem;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    -ms-border-radius: .5rem;
+    -o-border-radius: .5rem; }
+  .instrument-form label:hover {
+    background-color: #3aafb9;
+    color: #fff; }
+  .instrument-form label > input[type="radio"] {
+    margin-right: 5px; }
 
 .book-wrapper {
-  border: 1px solid red; }
+  width: 98%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 1rem;
+  box-shadow: 0px 1px 2px black;
+  border-radius: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
+  background-color: #FDFAF7; }
+  .book-wrapper .demopage {
+    width: 100%;
+    border-radius: inherit;
+    -webkit-border-radius: inherit;
+    -moz-border-radius: inherit;
+    -ms-border-radius: inherit;
+    -o-border-radius: inherit; }
+  .book-wrapper .stf__block {
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.8);
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem; }
 
 html {
   background-color: #fff; }
@@ -715,5 +765,13 @@ html {
 
 .swiper-scrollbar-drag {
   background-color: #ff6838 !important; }
+
+/* Se supone esto ayuda para no recargar la pagina en celulares desplazando el dedo */
+body {
+  overscroll-behavior-y: contain !important; }
+
+.button {
+  width: 120px;
+  margin: 0 auto; }
 
 /*# sourceMappingURL=styles.css.map */
