@@ -50,7 +50,7 @@ export default function HomePage() {
             res => {
                 axios({
                     method: 'post',
-                    url: 'http://selb.bond/newevaluation',
+                    url: 'https://selb.bond/newevaluation',
                     data: res
                 });
             }
@@ -76,7 +76,7 @@ export default function HomePage() {
         <Fragment>
 
         <div className="home-wrapper">
-           <h1>¡Hola {username}!</h1>
+           <h1>Hola {username}!</h1>
 
 
            <div className="table-wrapper">
