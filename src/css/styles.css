@@ -7,14 +7,23 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  align-content: center; }
+  align-content: baseline; }
   .header .selb-icon-wrapper {
     font-family: 'Kanit', sans-serif;
     color: #fff;
     font-weight: 800;
-    letter-spacing: 1px; }
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
+    gap: 1.5rem; }
+    .header .selb-icon-wrapper #refresh-icon {
+      width: 30px;
+      cursor: pointer; }
     .header .selb-icon-wrapper h4 {
-      margin-right: 2rem; }
+      margin-right: 2rem;
+      margin-bottom: 0; }
 
 .aside-bar {
   background-color: #fff;
@@ -767,7 +776,7 @@ html {
   background-color: #ff6838 !important; }
 
 /* Se supone esto ayuda para no recargar la pagina en celulares desplazando el dedo */
-body {
+.page-item {
   overscroll-behavior-y: contain !important; }
 
 .button {

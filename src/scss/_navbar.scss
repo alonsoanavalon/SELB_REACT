@@ -3,16 +3,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    align-content: center;
+    align-content: baseline;
 
     .selb-icon-wrapper{ 
         font-family: 'Kanit', sans-serif;
         color:#fff;
         font-weight: 800;
         letter-spacing: 1px;
+        
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: space-evenly;
+        gap:1.5rem;
+
+        #refresh-icon {
+            width:30px;
+            cursor: pointer;
+        }
 
         h4 {
             margin-right:2rem;
+            margin-bottom:0;
         }
         
     }

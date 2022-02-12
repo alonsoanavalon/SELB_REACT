@@ -29,7 +29,7 @@ export default function HomePage() {
                 setTejasLength(res)
     
             })
-        }, 500)
+        }, 1000)
         
 
   
