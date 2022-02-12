@@ -90,7 +90,7 @@ function App() {
 
         axios({
             method: 'get',
-            url:`http://selb.bond/instrumentlist`,
+            url:`https://selb.bond/instrumentlist`,
             params: {
                 instrument:1,
                 user: userId
