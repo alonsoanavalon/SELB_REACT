@@ -60,7 +60,7 @@ html {
 
 /* Se supone esto ayuda para no recargar la pagina en celulares desplazando el dedo */
 
-body
+.page-item
 {
   overscroll-behavior-y: contain !important ;
 }
