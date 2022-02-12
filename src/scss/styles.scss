@@ -60,7 +60,10 @@ html {
 
 /* Se supone esto ayuda para no recargar la pagina en celulares desplazando el dedo */
 
-
+.page-item
+{
+  overscroll-behavior-y: contain;
+}
 
 .button {
     width:120px;
