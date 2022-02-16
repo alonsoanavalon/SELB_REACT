@@ -146,6 +146,7 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             slidesPerView={1}
+            spaceBetween={50}
             navigation
             allowTouchMove={false}
             scrollbar={{ draggable: true }}
