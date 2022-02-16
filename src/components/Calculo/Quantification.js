@@ -14,7 +14,6 @@ export default function Quantification (props) {
         let $pieces = document.querySelectorAll(".pieces-container")[props.num].children
         let $piecesArray = [...$pieces]
 
-        console.log($piecesArray)
 
         if (props.repeat === true) {
             let $secondLandingArea = document.querySelectorAll(".landing-area")[props.num + 1]
@@ -123,7 +122,7 @@ export default function Quantification (props) {
 
     return (
         <Fragment>
-            <h6 class="game-title">{props.title}</h6>
+            <h5 class="game-title">{props.title}</h5>
             <div className='containerBox'>
 
 

@@ -2,6 +2,7 @@ import { get, set, update, getMany } from 'idb-keyval';
 import React, {Fragment, useEffect, useState} from 'react'
 import ReactAudioPlayer from 'react-audio-player';
 import { useAlert } from 'react-alert'
+import { useNavigate  } from 'react-router-dom'
 
 // Import Swiper React components
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -13,7 +14,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import Item from '../components/Item'
 import Book from '../components/TejasLee/Book';
-import Instruction from '../components/TejasLee/Instruction'
+import Instruction from '../components/Instruction'
 import Audio from '../components/TejasLee/Audio'
 
 /* 
@@ -23,6 +24,8 @@ import Audio from '../components/TejasLee/Audio'
 */
 
 export default function TejasLee () {
+
+    const navigate = useNavigate()
 
     const alert = useAlert()
 
@@ -82,6 +85,8 @@ export default function TejasLee () {
             choices[key] =  value
         })
 
+        
+
         instrumentInfo['instrument'] = parseInt(allInstruments[0]['instrument'].value)
 
         choicesArray.push(choices)
@@ -126,6 +131,12 @@ export default function TejasLee () {
         alert.show('Test guardado con éxito', {
             type:'success'
         })
+        setTimeout(() => {
+            navigate('/')
+
+        }, 2000)
+        
+
                 
     }   
     
@@ -160,7 +171,7 @@ export default function TejasLee () {
                     }
 
                     <SwiperSlide>
-                        <Instruction instruction="“Aquí hay un libro” (mostrar el libro de cuentos). “Vamos a hacer unas actividades divertidas usando este libro”."/>
+                        <Instruction checkpoint={true} instruction="“Aquí hay un libro” (mostrar el libro de cuentos). “Vamos a hacer unas actividades divertidas usando este libro”."/>
                     </SwiperSlide>
 
                     {
@@ -232,7 +243,7 @@ export default function TejasLee () {
                     }
 
                     <SwiperSlide>
-                        <Instruction instruction="“Te voy a decir unas palabras que quiero que dividas en sílabas. Por ejemplo, voy a dividir la palabra ‘mesa’: /me/ /sa/” (Demuestre el ejercicio con aplausos)"/>
+                        <Instruction checkpoint={true} instruction="“Te voy a decir unas palabras que quiero que dividas en sílabas. Por ejemplo, voy a dividir la palabra ‘mesa’: /me/ /sa/” (Demuestre el ejercicio con aplausos)"/>
                     </SwiperSlide>
 
                     {
@@ -256,7 +267,7 @@ export default function TejasLee () {
                     }
 
                     <SwiperSlide>
-                        <Instruction instruction="Vamos a seguir jugando con las letras. Voy a mostrarte unas letras, y quiero que me digas el nombre de cada una."/>
+                        <Instruction checkpoint={true} instruction="Vamos a seguir jugando con las letras. Voy a mostrarte unas letras, y quiero que me digas el nombre de cada una."/>
                     </SwiperSlide>
 
                     {
@@ -289,7 +300,7 @@ export default function TejasLee () {
                     }
 
                     <SwiperSlide>
-                        <Instruction instruction="“Te voy a decir una palabra. Quiero que me digas con qué sonido empieza esa palabra. Por ejemplo, la palabra “teléfono” empieza con el sonido /t/.” (Pronuncie el sonido de la letra, no diga el nombre)."/>
+                        <Instruction  checkpoint={true} instruction="“Te voy a decir una palabra. Quiero que me digas con qué sonido empieza esa palabra. Por ejemplo, la palabra “teléfono” empieza con el sonido /t/.” (Pronuncie el sonido de la letra, no diga el nombre)."/>
                     </SwiperSlide>
 
                     {
@@ -313,7 +324,7 @@ export default function TejasLee () {
                     }
 
                     <SwiperSlide>
-                        <Instruction instruction="“Vas a escuchar un cuento llamado “La sopa de letras”. Después te haré unas preguntas. Escúchalo con atención”."/>
+                        <Instruction checkpoint={true} instruction="“Vas a escuchar un cuento llamado “La sopa de letras”. Después te haré unas preguntas. Escúchalo con atención”."/>
                     </SwiperSlide>
                     
                     <SwiperSlide>
@@ -341,7 +352,7 @@ export default function TejasLee () {
                   }
 
                     <SwiperSlide>
-                        <Instruction instruction="Muchas gracias, lo hiciste muy bien"/>
+                        <Instruction checkpoint={true} instruction="Muchas gracias, lo hiciste muy bien"/>
 
                     </SwiperSlide>
 

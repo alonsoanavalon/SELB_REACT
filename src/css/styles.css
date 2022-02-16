@@ -663,8 +663,7 @@ template {
   justify-content: center;
   align-items: center;
   align-content: center;
-  text-align: center;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25); }
+  text-align: center; }
   .page-item .letter-example {
     width: 80%;
     margin: 0 auto; }
@@ -687,11 +686,12 @@ template {
     align-items: flex-start;
     padding: 2rem; }
   .page-item img {
-    max-width: 100%; }
+    max-width: 800px; }
 
 /* First Instrument */
 .instrument-form {
-  text-align: start; }
+  text-align: start;
+  padding: 1rem !important; }
   .instrument-form input, .instrument-form label {
     padding: .6rem; }
   .instrument-form label {
@@ -734,6 +734,17 @@ template {
     -moz-border-radius: 0.5rem;
     -ms-border-radius: 0.5rem;
     -o-border-radius: 0.5rem; }
+
+.instruction {
+  background-color: #3AAFB9;
+  color: #fff;
+  padding: 2rem;
+  border-radius: .5rem;
+  -webkit-border-radius: .5rem;
+  -moz-border-radius: .5rem;
+  -ms-border-radius: .5rem;
+  -o-border-radius: .5rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25); }
 
 html {
   background-color: #fff; }
@@ -785,11 +796,11 @@ body {
 
 .game-title {
   text-align: center;
-  margin-top: .5rem; }
+  margin-top: .7rem;
+  color: #444; }
 
 .containerBox {
   margin: 2rem;
-  border: 1px solid #ccc;
   width: 800px;
   height: 500px;
   margin: 2rem auto;
@@ -807,12 +818,12 @@ body {
       width: 70px;
       height: 70px;
       background-color: #FF5656;
-      border: 5px solid #FF0000;
       border-radius: 50%;
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       -ms-border-radius: 50%;
-      -o-border-radius: 50%; }
+      -o-border-radius: 50%;
+      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25); }
   .containerBox .landing-area {
     width: 50%;
     display: flex;
@@ -821,13 +832,18 @@ body {
     align-content: flex-start;
     gap: 0.5rem;
     padding: .2rem;
-    border: 1px solid #ff6838; }
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.45);
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem; }
     .containerBox .landing-area .piece-inside {
       width: 70px;
       height: 70px;
       background-color: #FF5656;
-      border: 5px solid #FF0000;
       border-radius: 50%;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       -ms-border-radius: 50%;
@@ -850,6 +866,10 @@ body {
   outline: none !important; }
 
 .quantification-value {
-  width: 70px; }
+  width: 70px;
+  padding: .5rem !important; }
+
+.swiper-scrollbar {
+  height: 1rem !important; }
 
 /*# sourceMappingURL=styles.css.map */

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import Instruction from '../components/TejasLee/Instruction'
+import Instruction from '../components/Instruction'
 import { useAlert } from 'react-alert'
 
 // Import Swiper React components
@@ -24,6 +24,7 @@ export default function Calculo () {
     const [problemsWithoutMedia, setProblemsWithoutMedia] = useState([])
     const [problems, setProblems] = useState([])
     const [isArray, setIsArray] = useState(false)
+    const [selectedPieces, setSelectedPieces] = useState([])
 
 
 /* 
@@ -53,7 +54,6 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         
     }, [])
 
-    console.log(quantification)
 
     function saveInstrumentOnline() {
         let choices = {}
@@ -139,7 +139,7 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
     }
 
     
-    function addListenersToPieces (pieces, landingArea) {
+    function addListenersToPieces (pieces) {
 
         pieces.forEach(piece => {
 
@@ -166,12 +166,13 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
                 var x = parseInt(piece.style.left);
                 var y = parseInt(piece.style.top);
 
-                let newPiece = `<div class='piece-inside'><div/>`
+                // creating the new piece
+                let newPiece = <div onTouchStart={insertNewPiece} class='piece-inside'/>
 
                 if (y > 2 && y < 500 && x > 540 && x < 940) {
+                    // hidding selected piece and creating new
                     piece.style.display = 'none'
-
-                    landingArea.insertAdjacentHTML("afterbegin", newPiece)
+                    setSelectedPieces(oldArray => [...oldArray, newPiece])
                 }
                 if (x < 140 || x > 530) {
                     piece.style.left = `${baseX}px`
@@ -185,6 +186,7 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
                 }
 
             })
+   
         })
 
 
@@ -201,6 +203,19 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         var pieces = document.querySelectorAll(".piece")
         var landingArea = document.querySelector(".landing-area")
         addListenersToPieces(pieces, landingArea)
+    }
+
+    function insertNewPiece (e) {
+
+        e.target.style.display = "none";
+        var landingArea = document.querySelector(".pieces-container")
+        landingArea.insertAdjacentHTML("beforeend", "<div class='piece'></div>")
+        let pieces = landingArea.children;
+        let piecesArray = [...pieces]
+
+        addListenersToPieces(piecesArray)
+   
+
     }
 
     return (
@@ -246,7 +261,7 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
                 )
                 }
         <SwiperSlide>
-            <Instruction instruction="Vamos a hacer un juego. En esta pantalla aparecerán un montón de fichas rojas. Vas a mover aquí (señalar la tablet), el número de fichas que yo te diga. Vamos a hacer un ejemplo"/>
+            <Instruction checkpoint={true} instruction="Vamos a hacer un juego. En esta pantalla aparecerán un montón de fichas rojas. Vas a mover aquí (señalar la tablet), el número de fichas que yo te diga. Vamos a hacer un ejemplo"/>
         </SwiperSlide>
 
         <SwiperSlide>
@@ -275,7 +290,7 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
                 <div className='piece'></div>
             </div>
             <div className="landing-area">
-                
+                {selectedPieces}
             </div>
         </div>
         <button
@@ -378,7 +393,7 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         }
 
         <SwiperSlide>
-            <Instruction instruction="A continuación te haré algunas preguntas y te mostraré algunas imágenes"/>
+            <Instruction  checkpoint={true} instruction="A continuación te haré algunas preguntas y te mostraré algunas imágenes"/>
         </SwiperSlide>
 
         {
@@ -432,16 +447,11 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
             )
         }
 
-        <SwiperSlide>
-        <div className="page-item">
-                        <button
-                        
-                            className='button btn btn-primary'
-                            onClick={saveInstrumentOnline}
-                        > Guardar test</button>
+<SwiperSlide>
+                        <Instruction checkpoint={true} instruction="Muchas gracias, lo hiciste muy bien"/>
 
-            </div>
-        </SwiperSlide>
+                    </SwiperSlide>
+
         </Swiper>
       );
 }
