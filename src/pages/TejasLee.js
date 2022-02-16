@@ -1,18 +1,19 @@
 import { get, set, update, getMany } from 'idb-keyval';
 import React, {Fragment, useEffect, useState} from 'react'
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
 import ReactAudioPlayer from 'react-audio-player';
 import { useAlert } from 'react-alert'
+
+// Import Swiper React components
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import Item from '../components/TejasLee/Item'
+import Item from '../components/Item'
 import Book from '../components/TejasLee/Book';
-import Instruction from '../components/TejasLee/Instruction';
+import Instruction from '../components/TejasLee/Instruction'
 import Audio from '../components/TejasLee/Audio'
 
 /* 
@@ -41,7 +42,8 @@ export default function TejasLee () {
     useEffect(() => {
 
         get('instrument/1')
-        .then(items => {
+        .then(
+            items => {
             setVocabulary(items.filter(item => item.itemId >= 1 && item.itemId <= 17))
             setBookPages(items.filter(item => item.itemId === 18))
             setPrint(items.filter(item => item.itemId >= 19  && item.itemId <= 27))

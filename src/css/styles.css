@@ -783,4 +783,73 @@ body {
   width: 120px;
   margin: 0 auto; }
 
+.game-title {
+  text-align: center;
+  margin-top: .5rem; }
+
+.containerBox {
+  margin: 2rem;
+  border: 1px solid #ccc;
+  width: 800px;
+  height: 500px;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: space-between; }
+  .containerBox .pieces-container {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 0.5rem;
+    padding: .2rem; }
+    .containerBox .pieces-container .piece {
+      width: 70px;
+      height: 70px;
+      background-color: #FF5656;
+      border: 5px solid #FF0000;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%; }
+  .containerBox .landing-area {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 0.5rem;
+    padding: .2rem;
+    border: 1px solid #ff6838; }
+    .containerBox .landing-area .piece-inside {
+      width: 70px;
+      height: 70px;
+      background-color: #FF5656;
+      border: 5px solid #FF0000;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%; }
+
+.restart-button {
+  display: block;
+  width: 100px;
+  height: 40px;
+  color: #fff;
+  background-color: #3aafb9;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: .5rem;
+  -webkit-border-radius: .5rem;
+  -moz-border-radius: .5rem;
+  -ms-border-radius: .5rem;
+  -o-border-radius: .5rem;
+  border: none;
+  outline: none !important; }
+
+.quantification-value {
+  width: 70px; }
+
 /*# sourceMappingURL=styles.css.map */

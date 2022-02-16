@@ -8,9 +8,13 @@ export default function HomePage() {
     const alert = useAlert()
 
     const [username, setUsername] = useState("")
-    const [savedTests, setSavedTests] = useState([])
+    const [savedTejasTests, setSavedTejasTests] = useState([])
+    const [savedCalculoTests, setSavedCalculoTests] = useState([])
     const [tejasLength, setTejasLength] = useState(undefined)
+    const [savedTests, setSavedTests] = useState(false)
+    const [calculoLength, setCalculoLength] = useState(undefined)
     const [mode, setMode] = useState('online')
+
 
     useEffect(() => {
 
@@ -20,7 +24,23 @@ export default function HomePage() {
     
         get('completedTests')
         .then(res => {
-            setSavedTests(res.length)
+            let tejas = 0;
+            let calculo = 0;
+
+            res.forEach(element => {
+                if (element[0]['instrument'] === 1) {
+                    tejas++
+                    setSavedTests(true)
+                }
+                if (element[0]['instrument'] === 2) {
+                    calculo++
+                    setSavedTests(true)
+                }
+            })
+
+            setSavedTejasTests(tejas)
+            setSavedCalculoTests(calculo)
+            
         })
 
         setTimeout(() => {
@@ -29,8 +49,16 @@ export default function HomePage() {
                 setTejasLength(res)
     
             })
+
+            get('calculoLength')
+            .then(res => {
+                setCalculoLength(res)
+            })
         }, 1000)
-        
+
+
+
+
 
   
 
@@ -41,7 +69,7 @@ export default function HomePage() {
 
 
     
-    savedTests === undefined ? console.log("Ta indefinido", savedTests) : console.log("Ta definido", savedTests, savedTests.length)
+    savedTejasTests === undefined ? console.log("Ta indefinido", savedTejasTests) : console.log("Ta definido", savedTejasTests, savedTejasTests.length)
 
     function sendNewInstrument() {
 
@@ -50,7 +78,7 @@ export default function HomePage() {
             res => {
                 axios({
                     method: 'post',
-                    url: 'https://selb.bond/newevaluation',
+                    url:  'http://localhost:3500/newevaluation'||'https://selb.bond/newevaluation',
                     data: res
                 });
             }
@@ -65,7 +93,7 @@ export default function HomePage() {
             }
         )
 
-        alert.show(`Haz enviado ${savedTests} test`);
+        alert.show(`Haz enviado ${savedTejasTests+savedCalculoTests} test`);
         
 
 
@@ -94,14 +122,18 @@ export default function HomePage() {
                     <tbody>
                         <tr>
                         <th scope="row">Tejas Lee</th>
-                        <td>{savedTests && savedTests >= 0 ? savedTests : 0}</td>
+                        <td>{savedTejasTests && savedTejasTests >= 0 ? savedTejasTests : 0}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Cálculo</th>
+                        <td>{savedCalculoTests && savedCalculoTests >= 0 ? savedCalculoTests : 0}</td>
                         </tr>
 
                     </tbody>
                     </table>
 
                     { navigator.onLine ? <Fragment>
-                            {savedTests && savedTests >= 0 ?<button onClick={sendNewInstrument} className="button btn btn-primary">Enviar</button> : <button className="button btn btn-secondary" disabled>Enviar</button>}
+                            {savedTests === true?<button onClick={sendNewInstrument} className="button btn btn-primary">Enviar</button> : <button className="button btn btn-secondary" disabled>Enviar</button>}
                         </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button> }
 
              
@@ -124,10 +156,15 @@ export default function HomePage() {
 
                         </tr>
                 
+                        <tr>
+                        <th scope="row">Cálculo</th>
+                        <td>{calculoLength && calculoLength >= 0 ? calculoLength : 0}</td>
+
+                        </tr>
 
                     </tbody>
                     </table>
-                </div>
+            </div>
            </div>
 
 
@@ -135,6 +172,7 @@ export default function HomePage() {
            </div>
           
            
+
 
 
         </Fragment>

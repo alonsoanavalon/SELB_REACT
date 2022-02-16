@@ -15,6 +15,7 @@ import StudentList from './pages/StudentList'
 import axios from 'axios'
 import TejasLee from './pages/TejasLee';
 import SecondInstrument from './pages/SecondInstrument';
+import Calculo from './pages/Calculo';
 
 const cookies = new Cookies();
 
@@ -33,7 +34,7 @@ function App() {
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url = `https://selb.bond/${data}`
+      let url = `http://localhost:3500/${data}` || `https://selb.bond/${data}`
       axios(url)
       .then(res => {
         set(data, res.data)
@@ -64,7 +65,7 @@ function App() {
       .catch(err => console.log(err))
 
     } else {
-      console.log("Ahora no vamos a guardar los datos, navegador offline  ")
+      console.log("Ahora no vamos a guardar los datos, navegador offline")
     }
   }
 
@@ -78,6 +79,7 @@ function App() {
     getData('students')
     getData('items')
     getData('instrument/1')
+    getData('instrument/2')
 
     get('userData').then(res => {
       setUserId(res.id)
@@ -90,7 +92,7 @@ function App() {
 
         axios({
             method: 'get',
-            url:`https://selb.bond/instrumentlist`,
+            url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
             params: {
                 instrument:1,
                 user: userId
@@ -102,7 +104,26 @@ function App() {
                 set('tejasLength', res.data[0]['COUNT(*)'])
             }
             )
+
+
+            axios({
+              method: 'get',
+              url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
+              params: {
+                  instrument:2,
+                  user: userId
+              }
+            })
+            .then(
+            
+                res => {
+                    set('calculoLength', res.data[0]['COUNT(*)'])
+                }
+                )
         }
+
+
+      
     }
 
     get('completedTests')
@@ -132,7 +153,7 @@ function App() {
           <Route path="/users/:id" element={<UserPage/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/tejaslee" element={<TejasLee/>}></Route>
-          <Route path="/secondinstrument" element={<SecondInstrument/>}></Route>
+          <Route path="/calculo" element={<Calculo/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       
