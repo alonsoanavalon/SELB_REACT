@@ -104,7 +104,7 @@ export default function HomePage() {
         <Fragment>
 
         <div className="home-wrapper">
-           <h1>Hola {username}!</h1>
+           <h1>¡Hola {username}!</h1>
 
 
            <div className="table-wrapper">
