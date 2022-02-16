@@ -31,8 +31,7 @@ export default function Calculo () {
 allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {console.log(instrument['key'], instrument['Cálculo'].value)} else {console.log(instrument['key'], instrument['Cálculo-selected'].value)}})
  */
 
-    let locOrientation = window.screen.lockOrientation || window.screen.mozLockOrientation || window.screen.msLockOrientation || window.screen.orientation.lock;
-    locOrientation('landscape');
+
 
 
     useEffect(() => {
