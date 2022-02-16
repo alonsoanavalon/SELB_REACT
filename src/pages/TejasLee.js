@@ -356,18 +356,6 @@ export default function TejasLee () {
 
                     </SwiperSlide>
 
-                    <SwiperSlide>
-                        <div className="page-item">
-                        <button
-                        
-                            className='button btn btn-primary'
-                            onClick={saveInstrumentOnline}
-                        > Guardar test</button>
-
-                        </div>
-               
-                    </SwiperSlide>
-
                 </Swiper>
 
             </div>
