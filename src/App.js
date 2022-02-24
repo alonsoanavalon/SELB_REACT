@@ -22,10 +22,7 @@ const cookies = new Cookies();
 function App() {
 
   const [userId, setUserId] = useState()
-
-  if (!cookies.get('id') && (window.location.pathname !== "/login")) {
-    window.location.href='/login'
-  }
+  const [isLogged, setIsLogged] = useState(false)
 
   function getData (data) {
     console.log("consiguiendo ", data)
@@ -34,7 +31,7 @@ function App() {
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url = /* `http://localhost:3500/${data}` ||  */`https://selb.bond/${data}`
+      let url = /* `http://localhost:3500/${data}` || */ `https://selb.bond/${data}`
       axios(url)
       .then(res => {
         set(data, res.data)
@@ -72,6 +69,13 @@ function App() {
 
 
   useEffect(() => { 
+
+    if (!cookies.get('id') && (window.location.pathname !== "/login")) {
+      window.location.href='/login'
+      setIsLogged(false)
+    } else if (cookies.get('id')) {
+      setIsLogged(true)
+    }
 
     postDataInDatabase()
     getData('instruments')
@@ -120,10 +124,7 @@ function App() {
                     set('calculoLength', res.data[0]['COUNT(*)'])
                 }
                 )
-        }
-
-
-      
+        }      
     }
 
     get('completedTests')
@@ -141,13 +142,22 @@ function App() {
   return (
 
     <Fragment>
+
+          { isLogged && <Fragment>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossOrigin="anonymous"></link>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css" integrity="sha512-+mlclc5Q/eHs49oIOCxnnENudJWuNqX5AogCiqRBgKnpoplPzETg2fkgBFVC6WYUVxYYljuxPNG8RE7yBy1K+g==" crossOrigin="anonymous" referrerPolicy="no-referrer"/>
+            </Fragment>}
+
           <BrowserRouter>
-          <Navbar/>
+          { isLogged && <Fragment>
+            <Navbar/>
          <Aside/>
-        <Routes>         
-          <Route path="/" element={<HomePage/>}></Route>
+         </Fragment>}
+        <Routes>       
+          { isLogged 
+          ?  <Route path="/" element={<HomePage/>}></Route>
+          : <Route path="/" element={<Login/>}></Route>}  
+          
           <Route path="/students" element={<StudentList/>}></Route>
           <Route path="/users" element={<Users/>}></Route>
           <Route path="/users/:id" element={<UserPage/>}></Route>

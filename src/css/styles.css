@@ -686,7 +686,7 @@ template {
     align-items: flex-start;
     padding: 2rem; }
   .page-item img {
-    max-width: 800px; }
+    max-width: 600px; }
 
 /* First Instrument */
 .instrument-form {
@@ -719,7 +719,7 @@ template {
   -moz-border-radius: 0.5rem;
   -ms-border-radius: 0.5rem;
   -o-border-radius: 0.5rem;
-  background-color: #FDFAF7; }
+  background-color: #CED4AC; }
   .book-wrapper .demopage {
     width: 100%;
     border-radius: inherit;
@@ -734,6 +734,8 @@ template {
     -moz-border-radius: 0.5rem;
     -ms-border-radius: 0.5rem;
     -o-border-radius: 0.5rem; }
+  .book-wrapper img {
+    max-width: 100%; }
 
 .instruction {
   background-color: #3AAFB9;
@@ -805,7 +807,7 @@ body {
   height: 500px;
   margin: 2rem auto;
   display: flex;
-  justify-content: space-between; }
+  justify-content: center; }
   .containerBox .pieces-container {
     width: 50%;
     display: flex;
@@ -838,7 +840,7 @@ body {
     -moz-border-radius: 0.5rem;
     -ms-border-radius: 0.5rem;
     -o-border-radius: 0.5rem; }
-    .containerBox .landing-area .piece-inside {
+    .containerBox .landing-area .piece-inside, .containerBox .landing-area .piece-inside-countable {
       width: 70px;
       height: 70px;
       background-color: #FF5656;
@@ -871,5 +873,42 @@ body {
 
 .swiper-scrollbar {
   height: 1rem !important; }
+
+.btn-visibility {
+  width: 40px;
+  height: 40px;
+  outline: none;
+  border: none;
+  display: inline;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  box-shadow: 0px 3px 3px rgba(2, 2, 0, 0.25);
+  background-color: inherit;
+  color: #3aafb9; }
+
+.image-instruction-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  position: relative; }
+
+@media screen and (min-width: 320px) and (max-width: 2500px) and (orientation: portrait) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0; } }
 
 /*# sourceMappingURL=styles.css.map */

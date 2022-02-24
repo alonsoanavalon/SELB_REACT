@@ -25,22 +25,14 @@ export default function Calculo () {
     const [problems, setProblems] = useState([])
     const [isArray, setIsArray] = useState(false)
     const [selectedPieces, setSelectedPieces] = useState([])
-
+    const [idWhithoutMedia, setIdWithoutMedia] = useState()
 
 /* 
 allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {console.log(instrument['key'], instrument['Cálculo'].value)} else {console.log(instrument['key'], instrument['Cálculo-selected'].value)}})
  */
 
-    
-
-
-
     useEffect(() => {
-
-    
-
  
-
         get('instrument/2')
         .then(
             items => {
@@ -49,6 +41,7 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
             setVerbalCount(items.filter(item => item.itemId === 111))
             setProblemsWithoutMedia(items.filter(item => item.itemId >= 112 && item.itemId <= 113))
             setProblems(items.filter(item => item.itemId >= 114 && item.itemId <= 145)) 
+            setIdWithoutMedia([130, 132, 135, 138, 144 ,145])
         })
 
         /* var piece = document.querySelector(".piece") */
@@ -56,12 +49,75 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         var pieces = document.querySelectorAll(".piece")
         addListenersToPieces(pieces, landingArea)
         
-        
-        
-        
+    
     }, [])
 
 
+    function addListenersToSelectedPieces (piece) {
+
+        
+        console.log(piece, "PIOECES")
+
+            let baseX = piece.offsetLeft
+            let baseY = piece.offsetTop;
+
+            piece.addEventListener("touchstart", e => {
+                var touchLocation = e.targetTouches[0];
+                piece.style.position = 'absolute';
+                piece.style.left = touchLocation.pageX + 'px';
+                piece.style.top = touchLocation.pageY + 'px';
+                
+            })
+
+            piece.addEventListener('touchmove', function(e) {
+    
+                e.preventDefault()
+                var touchLocation = e.targetTouches[0];
+                // assign box new coordinates based on the touch.
+                piece.style.left = touchLocation.pageX + 'px';
+                piece.style.top = touchLocation.pageY + 'px';
+            })          
+
+            
+            piece.addEventListener('touchend', function(e) {
+  
+                // current box position.
+                var x = parseInt(piece.style.left);
+                var y = parseInt(piece.style.top);
+
+                // creating the new piece
+                if (x > 160 && x < 560 && y > 94 && y < 590) {
+                    insertNewPiece()
+                }
+
+                if (x < 140 || x > 530) {
+              
+                    piece.style.left = `${baseX}px`
+                    piece.style.top= `${baseY}px`
+                    piece.style.position = 'static'
+                    
+
+                }
+                else if (y < 10 || y > 500){
+                    
+                    piece.style.left = `${baseX}px`
+                    piece.style.top= `${baseY}px`
+                    piece.style.position = 'static'
+                    
+
+                } else {    
+
+                    var landingArea = document.querySelector(".pieces-container")
+                    landingArea.insertAdjacentElement("beforeend", piece)
+
+                }
+  
+                
+
+            })
+   
+        
+    }
     
     function addListenersToPieces (pieces) {
 
@@ -71,16 +127,17 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
             let baseY = piece.offsetTop;
 
             piece.addEventListener("touchstart", e => {
+                var touchLocation = e.targetTouches[0];
                 piece.style.position = 'absolute';
-
+                piece.style.left = touchLocation.pageX + 'px';
+                piece.style.top = touchLocation.pageY + 'px';
+                
             })
-    
+
             piece.addEventListener('touchmove', function(e) {
     
                 e.preventDefault()
                 var touchLocation = e.targetTouches[0];
-                    
-                // assign box new coordinates based on the touch.
                 piece.style.left = touchLocation.pageX + 'px';
                 piece.style.top = touchLocation.pageY + 'px';
             })          
@@ -91,19 +148,25 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
                 var y = parseInt(piece.style.top);
 
                 // creating the new piece
-                let newPiece = <div onTouchStart={insertNewPiece} class='piece-inside'/>
+                let newPiece = <div onLoad={insertNewPiece} class='piece-inside'/>
 
                 if (y > 2 && y < 500 && x > 540 && x < 940) {
                     // hidding selected piece and creating new
+                
                     piece.style.display = 'none'
                     setSelectedPieces(oldArray => [...oldArray, newPiece])
+                    let newPieces = document.querySelectorAll(".piece-inside")
+                    newPieces = Array.from(newPieces)
+                    addListenersToSelectedPieces(newPieces.slice(-1)[0])
                 }
                 if (x < 140 || x > 530) {
+
                     piece.style.left = `${baseX}px`
                     piece.style.top= `${baseY}px`
 
                 }
                 if (y < 10 || y > 500){
+
                     piece.style.left = `${baseX}px`
                     piece.style.top= `${baseY}px`
 
@@ -115,6 +178,8 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
 
 
     }
+
+
 
     function restartGame () {
         const $piecesContainer = document.querySelector(".pieces-container")
@@ -128,16 +193,16 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         var landingArea = document.querySelector(".landing-area")
         addListenersToPieces(pieces, landingArea)
     }
+                                        
+    function insertNewPiece () {
 
-    function insertNewPiece (e) {
-
-        e.target.style.display = "none";
         var landingArea = document.querySelector(".pieces-container")
         landingArea.insertAdjacentHTML("beforeend", "<div class='piece'></div>")
         let pieces = landingArea.children;
         let piecesArray = [...pieces]
 
         addListenersToPieces(piecesArray)
+
    
 
     }
@@ -153,11 +218,9 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         >
 
         <SwiperSlide>
-            <Instruction instruction="A continuación haremos algunas actividades con números, aquí no hay respuesta buenas ni malas. Si hay algo que no sabes está bien, haz lo mejor que puedas"/>
+            <Instruction instruction="A continuación haremos algunas actividades con números, aquí no hay respuesta buenas ni malas. Si hay algo que no sabes está bien, haz lo mejor que puedas. Te voy a mostrar unos números, y te voy a pedir que me digas cómo se llaman. ¿Lo has entendido? Comencemos "/>
         </SwiperSlide>
-        <SwiperSlide>
-            <Instruction instruction="Te voy a mostrar unos números, y te voy a pedir que me digas cómo se llaman. ¿Lo has entendido? Comencemos "/>
-        </SwiperSlide>
+
         {
                 numbers.map(item => 
                     <Fragment>                           
@@ -222,6 +285,10 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
             className="button restart-button"
             onClick={restartGame}
         >Restart</button>
+        </SwiperSlide>
+
+        <SwiperSlide>
+            <Instruction instruction="Muy bien, ahora te pediré que muevas el número de fichas que te voy a decir y las cuentes"/>
         </SwiperSlide>
 
         {
@@ -341,33 +408,56 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         }
 
         {
+
+            idWhithoutMedia != undefined &&
             problems.map(
-                item => 
+                item => {
+
+                    if (idWhithoutMedia.includes(item.itemId)) {
+                        return <SwiperSlide key={item.itemId}>
+                        <Item
+                            title = {item.title}       
+                            type = "quiz"
+                            other = {false}   
+                            answer = {item.answer}
+                            instrumentId = {item.instrumentId}
+                            instrumentName = {item.instrumentName}          
+                            num = {item.num}     
+                            itemId = {item.itemId} 
+                        />
+    
+                    </SwiperSlide>
+                    } else {
+                        return  <Fragment>                           
+                        <SwiperSlide key={item.itemId+ "-media"}>
+                            <Item
+                                type={item.type}
+                                picture={item.picture}
+                                pictureName={item.pictureName}
+                                title={item.title}
+                            />
+                        </SwiperSlide>
+                        <SwiperSlide key={item.itemId}>
+                            <Item
+                                title = {item.title}       
+                                type = "quiz"
+                                other = {false}   
+                                answer = {item.answer}
+                                instrumentId = {item.instrumentId}
+                                instrumentName = {item.instrumentName}          
+                                num = {item.num}     
+                                itemId = {item.itemId} 
+                            />
+        
+                        </SwiperSlide>
+                    </Fragment>
+                    }
+
+               
+                }
 
                 
-                <Fragment>                           
-                <SwiperSlide key={item.itemId+ "-media"}>
-                    <Item
-                        type={item.type}
-                        picture={item.picture}
-                        pictureName={item.pictureName}
-                        title={item.title}
-                    />
-                </SwiperSlide>
-                <SwiperSlide key={item.itemId}>
-                    <Item
-                        title = {item.title}       
-                        type = "quiz"
-                        other = {false}   
-                        answer = {item.answer}
-                        instrumentId = {item.instrumentId}
-                        instrumentName = {item.instrumentName}          
-                        num = {item.num}     
-                        itemId = {item.itemId} 
-                    />
 
-                </SwiperSlide>
-            </Fragment>
                
             )
         }

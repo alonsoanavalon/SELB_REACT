@@ -139,6 +139,7 @@ export default function TejasLee () {
 
                 
     }   
+
     
     return (
         <Fragment>
@@ -179,6 +180,26 @@ export default function TejasLee () {
                              <Book pages={bookPages}/>
                         </SwiperSlide>
                        
+                    }
+
+                    {
+                   
+                        bookPages[0] != undefined &&
+                            <Fragment>
+
+                                <SwiperSlide key={bookPages[0].itemId}>
+                                    <Item 
+                                        title = {bookPages[0].title}       
+                                        type = "quiz"
+                                        other = {false}   
+                                        answer = {bookPages[0].answer}
+                                        instrumentId = {bookPages[0].instrumentId}
+                                        instrumentName = {bookPages[0].instrumentName}          
+                                        num = {bookPages[0].num}     
+                                        itemId = {bookPages[0].itemId}      
+                                    />
+                                </SwiperSlide>
+                            </Fragment>
                     }
 
                     {
