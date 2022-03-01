@@ -106,7 +106,7 @@ body {
   .profile-picture-wrapper img {
     width: 60px; }
 
-#home-icon, #students-icon, #users-icon, #logout-icon {
+#home-icon, #students-icon, #users-icon, #logout-icon, #excel-icon {
   width: 20px;
   margin-bottom: 3px;
   margin-right: 4px; }
@@ -747,6 +747,20 @@ template {
   -ms-border-radius: .5rem;
   -o-border-radius: .5rem;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25); }
+
+.excel-container {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  margin: 2rem auto;
+  gap: .5rem; }
+  .excel-container h2 {
+    text-align: center;
+    padding: 2rem 0; }
+  .excel-container #btn-excel {
+    width: 150px;
+    margin: 1rem auto;
+    text-align: center; }
 
 html {
   background-color: #fff; }

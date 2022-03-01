@@ -218,7 +218,8 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         >
 
         <SwiperSlide>
-            <Instruction instruction="A continuación haremos algunas actividades con números, aquí no hay respuesta buenas ni malas. Si hay algo que no sabes está bien, haz lo mejor que puedas. Te voy a mostrar unos números, y te voy a pedir que me digas cómo se llaman. ¿Lo has entendido? Comencemos "/>
+            <Instruction instruction="Te voy a mostrar unos números, y te voy a pedir que me digas cómo se llaman. ¿Lo has entendido? Comencemos.
+*A continuación aparecerán en pantalla números, la evaluadora en cada ítem deberá realizar la pregunta: ¿Qué numero es este? "/>
         </SwiperSlide>
 
         {

@@ -30,18 +30,18 @@ export default function Instruction (props) {
         allInstruments.forEach(instrument => {
             let key;
             let value;
-            if (instrument['Cálculo']) {
+            if (instrument['Precalculo']) {
                 key = instrument['key'].value
-                value= instrument['Cálculo'].value
-            } else if (instrument['Cálculo-selected']) {
+                value= instrument['Precalculo'].value
+            } else if (instrument['Precalculo-selected']) {
                 key = instrument['key'].value
-                value= instrument['Cálculo-selected'].value
-            } else if (instrument['Cálculo-counted']) {
+                value= instrument['Precalculo-selected'].value
+            } else if (instrument['Precalculo-counted']) {
                 key = instrument['key'].value
-                value= instrument['Cálculo-counted'].value
-            } else if (instrument['Cálculo-cardinal']) {
+                value= instrument['Precalculo-counted'].value
+            } else if (instrument['Precalculo-cardinal']) {
                 key = instrument['key'].value
-                value= instrument['Cálculo-cardinal'].value
+                value= instrument['Precalculo-cardinal'].value
             }
 
             if (instrument['TejasLee']) {

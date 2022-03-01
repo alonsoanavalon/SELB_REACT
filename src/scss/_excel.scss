@@ -1,0 +1,19 @@
+.excel-container {
+
+    display:flex;
+    flex-direction: column;
+    width:800px;
+    margin:2rem auto;
+    gap:.5rem;
+
+    h2 {
+        text-align: center;
+        padding:2rem 0;
+    }
+
+    #btn-excel {
+        width:150px;
+        margin:1rem auto;
+        text-align: center;
+    }
+}

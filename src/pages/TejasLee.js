@@ -62,7 +62,7 @@ export default function TejasLee () {
     }, [])
 
 
-    function saveInstrumentOnline () {
+/*     function saveInstrumentOnline () {
         let choices = {}
         let instrumentInfo = {}
         let choicesArray = []
@@ -138,7 +138,7 @@ export default function TejasLee () {
         
 
                 
-    }   
+    }    */
 
     
     return (
@@ -231,7 +231,8 @@ export default function TejasLee () {
                     }
 
                     <SwiperSlide>
-                        <Instruction instruction="“Voy a mostrarte unas letras. Quiero que me digas el nombre de cada letra. Si no conoces alguna letra, está bien, inténtalo lo mejor que puedas”."/>
+                        <Instruction instruction="“Voy a mostrarte unas letras. Quiero que me digas el nombre de cada letra. Si no conoces alguna letra, está bien, inténtalo lo mejor que puedas”.
+*A continuación aparecerán en pantalla letras, la evaluadora en cada ítem deberá realizar la pregunta: ¿Cómo se llama esta letra? ."/>
                     </SwiperSlide>
 
                     {
@@ -288,7 +289,8 @@ export default function TejasLee () {
                     }
 
                     <SwiperSlide>
-                        <Instruction checkpoint={true} instruction="Vamos a seguir jugando con las letras. Voy a mostrarte unas letras, y quiero que me digas el nombre de cada una."/>
+                        <Instruction checkpoint={true} instruction="“Voy a mostrarte unas letras. Quiero que me digas el nombre de cada letra. Si no conoces alguna letra, está bien, inténtalo lo mejor que puedas”.
+*A continuación aparecerán en pantalla letras, la evaluadora en cada ítem deberá realizar la pregunta: ¿Cómo se llama esta letra? "/>
                     </SwiperSlide>
 
                     {

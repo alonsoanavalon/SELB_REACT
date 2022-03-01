@@ -1,21 +1,23 @@
 import {useState, useEffect, Fragment} from 'react'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import axios from 'axios'
+import { del, get, set } from 'idb-keyval';
+import Cookies from 'universal-cookie'
+/* Styles */
 import './App.css';
 import './css/styles.css'
+/* Components */
 import Users from './Users'
 import HomePage from './pages/HomePage'
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import NotFoundPage from './pages/NotFoundPage'
 import Aside from './components/Aside'
 import UserPage from './pages/UserPage.js'
-import { del, get, set } from 'idb-keyval';
-import Cookies from 'universal-cookie'
 import Login from './pages/Login';
 import Navbar from './components/Navbar'
 import StudentList from './pages/StudentList'
-import axios from 'axios'
 import TejasLee from './pages/TejasLee';
-import SecondInstrument from './pages/SecondInstrument';
 import Calculo from './pages/Calculo';
+import Excel from './pages/Excel';
 
 const cookies = new Cookies();
 
@@ -25,13 +27,12 @@ function App() {
   const [isLogged, setIsLogged] = useState(false)
 
   function getData (data) {
-    console.log("consiguiendo ", data)
     let firstTime = true;
 
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url = /* `http://localhost:3500/${data}` || */ `https://selb.bond/${data}`
+      let url = `http://localhost:3500/${data}` || `https://selb.bond/${data}`
       axios(url)
       .then(res => {
         set(data, res.data)
@@ -84,6 +85,7 @@ function App() {
     getData('items')
     getData('instrument/1')
     getData('instrument/2')
+    getData('studies')
 
     get('userData').then(res => {
       setUserId(res.id)
@@ -96,7 +98,7 @@ function App() {
 
         axios({
             method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
             params: {
                 instrument:1,
                 user: userId
@@ -112,7 +114,7 @@ function App() {
 
             axios({
               method: 'get',
-              url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+              url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
               params: {
                   instrument:2,
                   user: userId
@@ -164,6 +166,7 @@ function App() {
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/tejaslee" element={<TejasLee/>}></Route>
           <Route path="/calculo" element={<Calculo/>}></Route>
+          <Route path="/excel" element={<Excel/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       
