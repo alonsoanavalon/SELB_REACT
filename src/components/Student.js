@@ -5,19 +5,12 @@ import {useNavigate} from 'react-router-dom'
 
 export default function Student (props) {
 
-/*     const navigate = useNavigate() */
     function selectStudent (evt) {
-
-
-
-           /*      navigate('/') */
 
         set('selectedStudent', evt.target.parentNode.dataset.id)
 
-
         const $instrumentsList = document.querySelector("#instruments-list-wrapper")
         $instrumentsList.setAttribute("class", 'active')
-
     
     }
 

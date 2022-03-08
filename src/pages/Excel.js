@@ -3,7 +3,7 @@ import { MultiSelect } from "react-multi-select-component";
 import {get} from 'idb-keyval'
 import { useAlert } from 'react-alert'
 import axios from 'axios';
-
+import CsvReader from '../components/CsvReader';
 
 export default function Excel () {
 
@@ -77,8 +77,7 @@ export default function Excel () {
             dataObject['schools'] = schools
             dataObject['study'] = study
             dataObject['instrument'] = instrument
-
-
+            
             axios({
                 method: 'post',
                 url:  /* 'http://localhost:3500/excel'|| */'https://selb.bond/excel',
@@ -86,13 +85,11 @@ export default function Excel () {
             });
 
         }
-
     }
     
-
-
     return (
         <Fragment>
+            {/* <CsvReader />  Este nos servirá cuando queramos meter datos, ya que lee CSV*/}
             <div className='excel-container'>
             <h2>Reportes en formato CSV</h2>
             <select  className="form-select" placeholder='Estudios' id="studySelect" defaultValue="empty">

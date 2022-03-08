@@ -19,7 +19,9 @@ export default function StudentList () {
 
         getData('students', setStudents)
         getData('schools', setSchools)
-        getData('instruments', setInstruments)
+        get('instruments')
+        .then(data => data.filter(instrument => instrument['instrument_type_id'] === 1))
+        .then(filteredInstruments => setInstruments(filteredInstruments))
     
     }, [])
 

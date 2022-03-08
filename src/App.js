@@ -1,7 +1,7 @@
 import {useState, useEffect, Fragment} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import axios from 'axios'
-import { del, get, set } from 'idb-keyval';
+import { del, get, set, update } from 'idb-keyval';
 import Cookies from 'universal-cookie'
 /* Styles */
 import './App.css';
@@ -18,6 +18,8 @@ import StudentList from './pages/StudentList'
 import TejasLee from './pages/TejasLee';
 import Calculo from './pages/Calculo';
 import Excel from './pages/Excel';
+import Parents from './pages/Parents';
+import ParentsForm from './pages/ParentsForm';
 
 const cookies = new Cookies();
 
@@ -82,13 +84,15 @@ function App() {
     getData('instruments')
     getData('schools')
     getData('students')
-    getData('items')
     getData('instrument/1')
     getData('instrument/2')
     getData('studies')
+    getData('courses')
+    getData('sdq')
 
     get('userData').then(res => {
       setUserId(res.id)
+
   })
 
   /* Arreglar esto */
@@ -107,6 +111,7 @@ function App() {
         .then(
          
             res => {
+                
                 set('tejasLength', res.data[0]['COUNT(*)'])
             }
             )
@@ -126,8 +131,26 @@ function App() {
                     set('calculoLength', res.data[0]['COUNT(*)'])
                 }
                 )
+
+              
+          axios({
+            method: 'get',
+            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            params: {
+                instrument:3,
+                user: userId
+            }
+          })
+          .then(
+                
+               res => {
+                  set('sdqLength', res.data[0]['COUNT(*)'])
+              }
+              )
+      }
         }      
-    }
+
+
 
     get('completedTests')
     .then(res => {
@@ -167,6 +190,8 @@ function App() {
           <Route path="/tejaslee" element={<TejasLee/>}></Route>
           <Route path="/calculo" element={<Calculo/>}></Route>
           <Route path="/excel" element={<Excel/>}></Route>
+          <Route path="/parents" element={<Parents/>}></Route>
+          <Route path="/sdq" element={<ParentsForm/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       

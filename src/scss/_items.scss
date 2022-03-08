@@ -14,7 +14,6 @@
     align-content: center;
     text-align: center;
 
-
     .letter-example {
         width:80%;
         margin:0 auto;
@@ -41,7 +40,6 @@
         align-items: flex-start;
         padding:2rem;
 
-
     }
 
     img {
@@ -49,9 +47,7 @@
     }
 
 }
-
 /* First Instrument */
-
 
 .instrument-form{
         
@@ -81,6 +77,137 @@
             margin-right:5px;
         }
 
-
         padding:1rem !important;
 }
+
+.sdq-wrapper {
+    max-width: 1100px;
+    margin:1rem auto;
+    padding:2rem 0;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+
+    .sdq-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width:inherit;
+        padding:2rem 0;
+
+        img {
+            width:40%;
+        }
+
+        
+    }
+
+
+
+    .sdq-instructions {
+
+        border:1px solid #ccc;
+
+        h6 {
+            width:100%;
+            background-color: #ccc;
+            padding:.5rem;
+        }
+        width:90%;
+        margin:0 auto;
+
+        p {
+            padding:1rem;
+        }
+
+    
+
+    }
+
+    #sdq-btn {
+        width:150px;
+
+    }
+}
+.instrument-sdq {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border:1px solid #ddd;
+    width:90%;
+    margin: 1rem auto;
+    
+
+    .sdq-title {
+        width:40%;
+        text-align: start;
+    }
+
+    .sdq-option {
+        width:60%;
+
+        label {
+            margin-left:20px;
+            padding:0rem;
+        }
+
+    }
+
+}
+
+
+.instrument-sdq__open {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto;
+    width: 90%;
+    
+    h6 {
+        align-self: flex-start;
+    }
+
+    textarea {
+        align-self: flex-start;
+        width:1000px;
+        text-align: start;
+        padding:1rem;
+        max-height:200px;
+    }
+}
+
+
+.instrument-multiple {
+
+    max-width:900px;
+    margin-bottom:1rem;
+}
+
+.multipleChoicesWrapper {
+    border:1px solid #ddd;
+    width:90%;
+    margin: 1rem auto;
+
+}
+
+.instrument-sdq__extended {
+    display: flex;
+
+    border:1px solid #ddd;
+    margin: 1rem auto;
+    width: 90%;
+    flex-direction: column;
+
+    .sdq-option {
+        text-align: center;
+    }
+}
+

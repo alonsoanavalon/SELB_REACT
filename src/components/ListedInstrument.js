@@ -4,10 +4,13 @@ import { useNavigate  } from 'react-router-dom'
 
 export default function ListedInstrument (props) {
 
+    console.log(props, "aca")
+
 
     const navigate = useNavigate()
         
     function renderInstrument(evt) {    
+        
         const $selectedInstrument = evt.target.dataset.instrument
       
 

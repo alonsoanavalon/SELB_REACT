@@ -33,15 +33,19 @@ export default function Instruction (props) {
             if (instrument['Precalculo']) {
                 key = instrument['key'].value
                 value= instrument['Precalculo'].value
+                choices[key] =  value
             } else if (instrument['Precalculo-selected']) {
                 key = instrument['key'].value
                 value= instrument['Precalculo-selected'].value
+                choices[key] =  value
             } else if (instrument['Precalculo-counted']) {
                 key = instrument['key'].value
                 value= instrument['Precalculo-counted'].value
+                choices[key] =  value
             } else if (instrument['Precalculo-cardinal']) {
                 key = instrument['key'].value
                 value= instrument['Precalculo-cardinal'].value
+                choices[key] =  value
             }
 
             if (instrument['TejasLee']) {
@@ -50,7 +54,13 @@ export default function Instruction (props) {
                 choices[key] =  value
             }
 
-            choices[key] =  value
+            if (instrument['SDQ']) {
+                let key = instrument['key'].value
+                let value = instrument['SDQ'].value
+                choices[key] = value
+            }
+
+            
         })
 
         instrumentInfo['instrument'] = parseInt(allInstruments[0]['instrument'].value)

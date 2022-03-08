@@ -10,9 +10,11 @@ export default function HomePage() {
     const [username, setUsername] = useState("")
     const [savedTejasTests, setSavedTejasTests] = useState([])
     const [savedCalculoTests, setSavedCalculoTests] = useState([])
+    const [savedSdqTests, setSavedSdqTests] = useState([])
     const [tejasLength, setTejasLength] = useState(undefined)
     const [savedTests, setSavedTests] = useState(false)
     const [calculoLength, setCalculoLength] = useState(undefined)
+    const [sdqLength, setSdqLength] = useState(undefined)
     const [mode, setMode] = useState('online')
 
 
@@ -26,6 +28,7 @@ export default function HomePage() {
         .then(res => {
             let tejas = 0;
             let calculo = 0;
+            let sdq = 0;
 
             res.forEach(element => {
                 if (element[0]['instrument'] === 1) {
@@ -36,10 +39,15 @@ export default function HomePage() {
                     calculo++
                     setSavedTests(true)
                 }
+                if (element[0]['instrument'] === 3) {
+                    sdq++
+                    setSavedTests(true)
+                }
             })
 
             setSavedTejasTests(tejas)
             setSavedCalculoTests(calculo)
+            setSavedSdqTests(sdq)
             
         })
 
@@ -54,6 +62,13 @@ export default function HomePage() {
             .then(res => {
                 setCalculoLength(res)
             })
+            
+            
+            get('sdqLength')
+            .then(res => {
+                setSdqLength(res)
+            })
+            
         }, 1000)
 
 
@@ -93,7 +108,7 @@ export default function HomePage() {
             }
         )
 
-        alert.show(`Haz enviado ${savedTejasTests+savedCalculoTests} test`);
+        alert.show(`Haz enviado ${savedTejasTests+savedCalculoTests+savedSdqTests} test`);
         
 
 
@@ -128,6 +143,10 @@ export default function HomePage() {
                         <th scope="row">Cálculo</th>
                         <td>{savedCalculoTests && savedCalculoTests >= 0 ? savedCalculoTests : 0}</td>
                         </tr>
+                        <tr>
+                        <th scope="row">SDQ</th>
+                        <td>{savedSdqTests && savedSdqTests >= 0 ? savedSdqTests : 0}</td>
+                        </tr>
 
                     </tbody>
                     </table>
@@ -159,6 +178,11 @@ export default function HomePage() {
                         <tr>
                         <th scope="row">Cálculo</th>
                         <td>{calculoLength && calculoLength >= 0 ? calculoLength : 0}</td>
+
+                        </tr>
+                        <tr>
+                        <th scope="row">SDQ</th>
+                        <td>{sdqLength && sdqLength >= 0 ? sdqLength : 0}</td>
 
                         </tr>
 
