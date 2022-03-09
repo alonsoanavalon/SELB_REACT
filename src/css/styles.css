@@ -9,6 +9,13 @@ body {
   }
 }
 
+.btn-parent {
+
+width:130px;
+margin:0 auto;
+
+}
+
 .header {
   background-color: #1674d8;
   display: flex;
