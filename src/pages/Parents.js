@@ -87,7 +87,7 @@ export default function Parents() {
             <option value="empty" disabled>Estudiantes</option>
             {filteredStudents}
             </select>
-            <button onClick={renderTest} className='btn btn-primary'>
+            <button onClick={renderTest} className='btn btn-primary btn-parent'>
                 Comenzar
             </button>
         </Fragment>
