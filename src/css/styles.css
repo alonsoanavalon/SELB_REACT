@@ -2,6 +2,13 @@
 body {
   background-color: #fff; }
 
+@media only screen and (orientation:portrait) {
+  body {
+    height: 100vw;
+    transform: rotate(90deg);
+  }
+}
+
 .header {
   background-color: #1674d8;
   display: flex;
