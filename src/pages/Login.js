@@ -14,19 +14,8 @@ export default function Login () {
   
 
     const [isLogin, setIsLogin] = useState('')
-    const [isCookie, setIsCookie] = useState(false)
 
-      useEffect(() => {
 
-        console.log(cookies.get("id"))
-
-        if (cookies.get("id") == undefined) {
-          setIsCookie(false)
-        } else {
-          setIsCookie(true)
-        }
-
-      }, [])
     
 
       function validateLogin (e) {
@@ -102,11 +91,7 @@ export default function Login () {
               className='btn btn-primary'
               onClick={validateLogin}
               > Ingresar </button>
-              {
-                isCookie
-                ? <h1>ON</h1>
-                : <h1>OFF</h1>
-              }
+
               </form>
 
 
