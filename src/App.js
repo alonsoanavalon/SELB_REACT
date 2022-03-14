@@ -25,6 +25,10 @@ const cookies = new Cookies();
 
 function App() {
 
+  if (!cookies.get('id') && (window.location.pathname !== "/login")) {
+    window.location.href='/login'
+  }
+
   const [userId, setUserId] = useState()
   const [isLogged, setIsLogged] = useState(false)
 
@@ -34,7 +38,7 @@ function App() {
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url = /* `http://localhost:3500/${data}` || */ `https://selb.bond/${data}`
+      let url = `http://localhost:3500/${data}` || `https://selb.bond/${data}`
       axios(url)
       .then(res => {
         set(data, res.data)
@@ -73,12 +77,12 @@ function App() {
 
   useEffect(() => { 
 
-    if (!cookies.get('id') && (window.location.pathname !== "/login")) {
+/*     if (!cookies.get('id') && (window.location.pathname !== "/login")) {
       window.location.href='/login'
       setIsLogged(false)
     } else if (cookies.get('id')) {
       setIsLogged(true)
-    }
+    } */
 
     postDataInDatabase()
     getData('instruments')
@@ -102,7 +106,7 @@ function App() {
 
         axios({
             method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
             params: {
                 instrument:1,
                 user: userId
@@ -119,7 +123,7 @@ function App() {
 
             axios({
               method: 'get',
-              url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+              url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
               params: {
                   instrument:2,
                   user: userId
@@ -135,7 +139,7 @@ function App() {
               
           axios({
             method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
             params: {
                 instrument:3,
                 user: userId
@@ -168,20 +172,20 @@ function App() {
 
     <Fragment>
 
-          { isLogged && <Fragment>
+          {/* { isLogged && */} <Fragment>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossOrigin="anonymous"></link>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css" integrity="sha512-+mlclc5Q/eHs49oIOCxnnENudJWuNqX5AogCiqRBgKnpoplPzETg2fkgBFVC6WYUVxYYljuxPNG8RE7yBy1K+g==" crossOrigin="anonymous" referrerPolicy="no-referrer"/>
-            </Fragment>}
+            </Fragment>{/* } */}
 
           <BrowserRouter>
-          { isLogged && <Fragment>
+          {/* { isLogged &&  */}<Fragment>
             <Navbar/>
          <Aside/>
-         </Fragment>}
+         </Fragment>{/* } */}
         <Routes>       
-          { isLogged 
+{/*           { isLogged 
           ?  <Route path="/" element={<HomePage/>}></Route>
-          : <Route path="/" element={<Login/>}></Route>}  
+          : <Route path="/" element={<Login/>}></Route>}   */}
           
           <Route path="/students" element={<StudentList/>}></Route>
           <Route path="/users" element={<Users/>}></Route>

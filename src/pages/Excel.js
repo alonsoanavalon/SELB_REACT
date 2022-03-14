@@ -80,7 +80,7 @@ export default function Excel () {
             
             axios({
                 method: 'post',
-                url:  /* 'http://localhost:3500/excel'|| */'https://selb.bond/excel',
+                url:  'http://localhost:3500/excel'||'https://selb.bond/excel',
                 data: dataObject
             });
 
