@@ -14,6 +14,19 @@ export default function Login () {
   
 
     const [isLogin, setIsLogin] = useState('')
+    const [isCookie, setIsCookie] = useState(false)
+
+      useEffect(() => {
+
+        console.log(cookies.get("id"))
+
+        if (cookies.get("id") == undefined) {
+          setIsCookie(false)
+        } else {
+          setIsCookie(true)
+        }
+
+      }, [])
     
 
       function validateLogin (e) {
@@ -50,8 +63,8 @@ export default function Login () {
               name: data.name,
               surname: data.surname
             })
-            cookies.set('id', data.id, {path:"/"})
-            cookies.set('email', data.email, {path:"/"})
+            cookies.set('id', data.id, {path:"/", sameSite: 'lax', maxAge: 31536000 })
+            cookies.set('email', data.email, {path:"/" ,sameSite: 'lax', maxAge: 31536000 })
             setIsLogin(true)
             window.location.href = "/"
           }
@@ -68,6 +81,8 @@ export default function Login () {
 
 
       return (
+
+   
 
             <div className="signin">
               <form name="loginForm" id="loginForm" className="signin-form">
@@ -87,7 +102,11 @@ export default function Login () {
               className='btn btn-primary'
               onClick={validateLogin}
               > Ingresar </button>
-              
+              {
+                isCookie
+                ? <h1>ON</h1>
+                : <h1>OFF</h1>
+              }
               </form>
 
 
