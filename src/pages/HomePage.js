@@ -93,7 +93,7 @@ export default function HomePage() {
             res => {
                 axios({
                     method: 'post',
-                    url:  'http://localhost:3500/newevaluation'||'https://selb.bond/newevaluation',
+                    url:  /* 'http://localhost:3500/newevaluation'|| */'https://selb.bond/newevaluation',
                     data: res
                 });
             }
