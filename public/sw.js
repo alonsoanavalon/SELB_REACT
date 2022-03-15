@@ -20,6 +20,7 @@ this.addEventListener("install", evt => {
                 '/tejaslee',
                 '/calculo',
                 '/excel',
+                '/sdq',
                 'https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css',
                 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css',
                 '/images/man.png',
