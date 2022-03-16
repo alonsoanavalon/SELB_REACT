@@ -387,8 +387,6 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
                     <div className="page-item">
                         <h3 className='main-description'>
                             {item.title} 
-                            TEST
-
                         </h3>
                         <form key={item.itemId} id={item.instrumentName +"-"+item.num} className="instrument-form">
                             <input type="hidden" value={item.instrumentId} name="instrument"/>
