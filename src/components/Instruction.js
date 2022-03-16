@@ -120,6 +120,14 @@ export default function Instruction (props) {
         <h3 className='main-description'>
             <div className='instruction'>
                 <p>{props.instruction}</p>
+                
+                {props.secondInstruction && 
+                <Fragment>
+                <br></br>
+                 <p>{props.secondInstruction}</p>
+                </Fragment>
+
+                 }
                 {
                     props.checkpoint === true &&
 
@@ -130,6 +138,7 @@ export default function Instruction (props) {
                     > Guardar test</button>
 
                 }
+
             </div>
             
         </h3>

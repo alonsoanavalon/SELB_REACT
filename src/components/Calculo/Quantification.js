@@ -42,8 +42,6 @@ export default function Quantification (props) {
         selectedPieceArray.splice(-1, 1)
         addListenersToPiecesTest(piecesArray)
 
-   
-
     }
 
     function addListenersToSelectedPiecesTest (piece) {
@@ -86,7 +84,6 @@ export default function Quantification (props) {
                     piece.style.top= `${baseY}px`
                     piece.style.position = 'static'
                     
-
                 }
                 else if (y < 10 || y > 500){
                     
@@ -100,13 +97,9 @@ export default function Quantification (props) {
                     const landingArea = document.querySelectorAll(".pieces-container")[props.num]
                     console.log(landingArea)
                     landingArea.insertAdjacentElement("beforeend", piece)
-
                 }
-  
-                
 
             })
-   
         
     }
 
