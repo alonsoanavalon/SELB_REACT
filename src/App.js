@@ -176,6 +176,7 @@ function App() {
           <BrowserRouter>
           { isLogged && <Fragment>
             <Navbar/>
+
          <Aside/>
          </Fragment>}
         <Routes>       
