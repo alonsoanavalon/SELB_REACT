@@ -40,8 +40,6 @@ export default function TejasLee () {
     const [auditiveComprehension, setAuditiveComprehension] = useState([])
     const [isArray, setIsArray] = useState(false)
 
-
-
     useEffect(() => {
 
         get('instrument/1')
@@ -59,11 +57,28 @@ export default function TejasLee () {
             }    
         )      
 
-    }, [])
 
+        window.addEventListener("beforeunload", handleBeforeUnload);
+
+
+        
+        
+
+    }, [])
+    
+    
+            const handleBeforeUnload = (e) => {
+                e.preventDefault();
+                const message =
+                  "Are you sure you want to leave? All provided data will be lost.";
+                e.returnValue = message;
+                alert("hi")
+                return message;
+              };
     
     return (
         <Fragment>
+            
 
             <div className="first-instrument">
                     <Swiper

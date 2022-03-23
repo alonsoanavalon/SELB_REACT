@@ -1037,7 +1037,7 @@ body, html {
 
 /* Se supone esto ayuda para no recargar la pagina en celulares desplazando el dedo */
 body {
-  overscroll-behavior-y: contain;
+  overscroll-behavior-y: contain !important;
 }
 
 .button {

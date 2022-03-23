@@ -50,8 +50,18 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
         addListenersToPieces(pieces, landingArea)
         
     
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        
     }, [])
 
+        const handleBeforeUnload = (e) => {
+            e.preventDefault();
+            const message =
+              "Are you sure you want to leave? All provided data will be lost.";
+            e.returnValue = message;
+            alert("hi")
+            return message;
+          };
 
     function addListenersToSelectedPieces (piece) {
 
