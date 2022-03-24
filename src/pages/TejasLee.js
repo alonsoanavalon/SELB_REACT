@@ -86,7 +86,7 @@ export default function TejasLee () {
                         slidesPerView={1}
                         navigation
                         allowTouchMove={false}
-                        scrollbar={{ draggable: true }}
+                        
                         >
                     <SwiperSlide>
                         <Instruction instruction="A continuación haremos algunas actividades usando letras y palabras, aquí no hay respuestas buenas ni malas, si hay algo que no sabes está bien, haz lo mejor que puedas."/>

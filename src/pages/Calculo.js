@@ -229,7 +229,6 @@ document.onmousemove = function (e) {
             spaceBetween={50}
             navigation
             allowTouchMove={false}
-            scrollbar={{ draggable: true }}
         >
 
             <SwiperSlide>
