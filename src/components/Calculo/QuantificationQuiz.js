@@ -2,9 +2,9 @@ import React, {Fragment, useState, useEffect} from 'react';
 
 export default function QuantificationQuiz (props) {
 
-    const [selectedValue, setSelectedValue] = useState(0)
-    const [countedValue, setCountedValue] = useState(0)
-    const [cardinalValue, setCardinalValue] = useState(0)
+    const [selectedValue, setSelectedValue] = useState()
+    const [countedValue, setCountedValue] = useState()
+    const [cardinalValue, setCardinalValue] = useState()
     const [keys, setKeys] = useState([])
 
     useEffect(() => {
