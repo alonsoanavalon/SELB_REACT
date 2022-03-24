@@ -73,6 +73,12 @@ function App() {
 
   useEffect(() => { 
 
+
+
+    
+    
+
+
     if (!cookies.get('id') && (window.location.pathname !== "/login")) {
       window.location.href='/login'
       setIsLogged(false)
@@ -110,11 +116,11 @@ function App() {
         })
         .then(
          
-            res => {
-                
-                set('tejasLength', res.data[0]['COUNT(*)'])
-            }
-            )
+          res => {
+            
+            set('tejasLength', res.data[0]['COUNT(*)'])
+          }
+          )
 
 
             axios({
@@ -159,10 +165,22 @@ function App() {
       }
     })
     
-
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+    
 
   }, [userId])
 
+
+  const handleBeforeUnload = (e) => {
+    e.preventDefault();
+    const message =
+      "Are you sure you want to leave? All provided data will be lost.";
+    e.returnValue = message;
+    return message;
+  };
 
   return (
 
@@ -176,6 +194,7 @@ function App() {
           <BrowserRouter>
           { isLogged && <Fragment>
             <Navbar/>
+
          <Aside/>
          </Fragment>}
         <Routes>       

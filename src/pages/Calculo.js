@@ -55,8 +55,18 @@ document.onmousemove = function (e) {
         addListenersToPieces(pieces, landingArea)
         
     
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        
     }, [])
 
+        const handleBeforeUnload = (e) => {
+            e.preventDefault();
+            const message =
+              "Are you sure you want to leave? All provided data will be lost.";
+            e.returnValue = message;
+            alert("hi")
+            return message;
+          };
 
     function addListenersToSelectedPieces (piece) {
 
@@ -222,6 +232,10 @@ document.onmousemove = function (e) {
             scrollbar={{ draggable: true }}
         >
 
+            <SwiperSlide>
+                <Instruction instruction="“A continuación haremos algunas actividades con números, aquí no hay respuestas buenas ni malas. Si hay algo que no sabes está bien, haz lo mejor que puedas.” "/>
+            </SwiperSlide>
+
         <SwiperSlide>
             <Instruction instruction="Te voy a mostrar unos números, y te voy a pedir que me digas cómo se llaman. ¿Lo has entendido? Comencemos.
 *A continuación aparecerán en pantalla números, la evaluadora en cada ítem deberá realizar la pregunta: ¿Qué numero es este? "/>
@@ -259,6 +273,7 @@ document.onmousemove = function (e) {
         </SwiperSlide>
 
         <SwiperSlide>
+        <h5 class="game-title">Coloca UNA ficha aquí</h5>
         <div className='containerBox'>
 
             <div className='pieces-container'>
@@ -294,7 +309,9 @@ document.onmousemove = function (e) {
         </SwiperSlide>
 
         <SwiperSlide>
-            <Instruction instruction="Muy bien, ahora te pediré que muevas el número de fichas que te voy a decir y las cuentes"/>
+            <Instruction instruction="R: Si el/la niño/a coloca UNA ficha decir: 'Muy bien, ahora vamos a seguir jugando con otros números'. Pasar a los ítems reales." secondInstruction="R: Si el/la niño/a no responde, o lo hace mal volver al ítem de ejemplo y demostrar cómo se hace,
+            diciendo: 'Mira, esta es UNA ficha, la vamos a poner aquí porque yo te pedí UNA sola ficha' '¿Ves?
+            Ahora vamos a intentarlo nuevamente'. Repetir el ejemplo hasta máximo 3 veces."/>
         </SwiperSlide>
 
         {
@@ -370,29 +387,35 @@ document.onmousemove = function (e) {
             </Fragment>
         }
 
+
+
+        <SwiperSlide>
+            <Instruction  checkpoint={true} instruction="A continuación te haré algunas preguntas y te mostraré algunas imágenes"/>
+        </SwiperSlide>
+
         {
             verbalCount.map(
                 item => 
 
                     <SwiperSlide>
-                        <Item
-                            title = {item.title}       
-                            type = "quiz"
-                            other = {false}   
-                            answer = {item.answer}
-                            instrumentId = {item.instrumentId}
-                            instrumentName = {item.instrumentName}          
-                            num = {item.num}     
-                            itemId = {item.itemId} 
-                        />
+
+                    <div className="page-item">
+                        <h3 className='main-description'>
+                            {item.title} 
+                        </h3>
+                        <form key={item.itemId} id={item.instrumentName +"-"+item.num} className="instrument-form">
+                            <input type="hidden" value={item.instrumentId} name="instrument"/>
+                            <input type="hidden" value={item.itemId} name="key"/>
+                            <label className="form-check-label"><input className="quantification-value" type="number" name={item.instrumentName}/></label>
+
+                     
+                        </form>
+                    </div>
+
                     </SwiperSlide>
                
             )
         }
-
-        <SwiperSlide>
-            <Instruction  checkpoint={true} instruction="A continuación te haré algunas preguntas y te mostraré algunas imágenes"/>
-        </SwiperSlide>
 
         {
             problemsWithoutMedia.map(
