@@ -59,12 +59,11 @@ document.onmousemove = function (e) {
         
     }, [])
 
-        const handleBeforeUnload = (e) => {
+        const handleBeforeUnload = (e) => { 
             e.preventDefault();
             const message =
               "Are you sure you want to leave? All provided data will be lost.";
             e.returnValue = message;
-            alert("hi")
             return message;
           };
 
@@ -221,8 +220,22 @@ document.onmousemove = function (e) {
    
 
     }
+    function onBackKeyDown() {
+        // Do stuff here
+        alert("oki")
+        console.log("oki")
+    }
 
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+
+    function onLoadFunction() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
     return (
+        <div onLoad={onLoadFunction()}>
         <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             slidesPerView={1}
@@ -496,5 +509,7 @@ document.onmousemove = function (e) {
                     </SwiperSlide>
 
         </Swiper>
+        </div>
       );
+
 }

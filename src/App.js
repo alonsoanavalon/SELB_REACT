@@ -164,11 +164,30 @@ function App() {
         set('completedTests', [])
       }
     })
-    
 
-    
+
+/*     window.onpopstate = e => {
+      
+      const message =
+        "Are you sure you want to leave? All provided data will be lost.";
+      e.returnValue = message;
+      let exitConfirm = window.confirm("Desea salir?")
+      exitConfirm && e.preventDefault();
+      return message;
+    } */
+    var confirmationMessage = "You have unsaved changes. Are you sure you want to leave?";
+
+    window.onpopstate = function(event) {
+      if(!window.confirm(confirmationMessage)) {
+        window.history.pushState(null, document.title, window.location.href);
+      }
+    }
+
 
   }, [userId])
+
+
+
 
   return (
 
