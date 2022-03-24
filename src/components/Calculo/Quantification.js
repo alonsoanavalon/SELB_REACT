@@ -145,7 +145,7 @@ export default function Quantification (props) {
 
                 let newPiece = <div class='piece-inside'/>
 
-                if (y > 2 && y < 500 && x > 540 && x < 940) {    
+                if (y > 2 && y < 500 && x > 461 && x < 940) {    
            
                         piece.style.display = 'none'    
                         setSelectedPieces(oldArray => [...oldArray, newPiece])
@@ -157,7 +157,7 @@ export default function Quantification (props) {
             
                 }
 
-                if (x < 140 || x > 530) {
+                if (x < 140 || x > 460) {
                     piece.style.left = `${baseX}px`
                     piece.style.top= `${baseY}px`
 

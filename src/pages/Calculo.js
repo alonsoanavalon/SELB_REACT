@@ -29,7 +29,12 @@ export default function Calculo () {
 
 /* 
 allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {console.log(instrument['key'], instrument['Cálculo'].value)} else {console.log(instrument['key'], instrument['Cálculo-selected'].value)}})
- */
+document.onmousemove = function (e) {
+    var x = e.pageX;
+    var y = e.pageY;
+    console.log(`X is ${x} and Y is ${y}`)
+}
+*/
 
     useEffect(() => {
  
@@ -150,16 +155,16 @@ allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {c
                 // creating the new piece
                 let newPiece = <div onLoad={insertNewPiece} class='piece-inside'/>
 
-                if (y > 2 && y < 500 && x > 540 && x < 940) {
+                if (y > 2 && y < 500 && x > 461 && x < 940) {
                     // hidding selected piece and creating new
-                
+                    
                     piece.style.display = 'none'
                     setSelectedPieces(oldArray => [...oldArray, newPiece])
                     let newPieces = document.querySelectorAll(".piece-inside")
                     newPieces = Array.from(newPieces)
                     addListenersToSelectedPieces(newPieces.slice(-1)[0])
                 }
-                if (x < 140 || x > 530) {
+                if (x < 140 || x > 460) {
 
                     piece.style.left = `${baseX}px`
                     piece.style.top= `${baseY}px`

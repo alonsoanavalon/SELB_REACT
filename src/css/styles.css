@@ -2,20 +2,6 @@
 body {
   background-color: #fff; }
 
-@media only screen and (orientation:portrait) {
-  body {
-    height: 100vh;
-    transform: rotate(90deg);
-  }
-}
-
-.btn-parent {
-
-width:130px;
-margin:0 auto;
-
-}
-
 .header {
   background-color: #1674d8;
   display: flex;
@@ -944,7 +930,7 @@ body {
     align-content: flex-start;
     gap: 0.5rem;
     padding: .2rem;
-    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.45);
+    box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.6);
     border-radius: 0.5rem;
     -webkit-border-radius: 0.5rem;
     -moz-border-radius: 0.5rem;
