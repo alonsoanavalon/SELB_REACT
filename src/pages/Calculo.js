@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import Instruction from '../components/Instruction'
 import { useAlert } from 'react-alert'
-
+import { useHistory } from "react-router-dom";
 // Import Swiper React components
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -17,6 +17,7 @@ import QuantificationQuiz from '../components/Calculo/QuantificationQuiz';
 
 export default function Calculo () {
 
+
     const alert = useAlert()
     const [numbers, setNumbers] = useState([])
     const [quantification, setQuantification] = useState([])
@@ -26,6 +27,7 @@ export default function Calculo () {
     const [isArray, setIsArray] = useState(false)
     const [selectedPieces, setSelectedPieces] = useState([])
     const [idWhithoutMedia, setIdWithoutMedia] = useState()
+    
 
 /* 
 allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {console.log(instrument['key'], instrument['Cálculo'].value)} else {console.log(instrument['key'], instrument['Cálculo-selected'].value)}})
@@ -55,17 +57,15 @@ document.onmousemove = function (e) {
         addListenersToPieces(pieces, landingArea)
         
     
-        window.addEventListener("beforeunload", handleBeforeUnload);
+    
+        // Esto sirve para que el navegador no vaya hacia atras.
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+        window.history.go(1);
+     };
         
     }, [])
 
-        const handleBeforeUnload = (e) => { 
-            e.preventDefault();
-            const message =
-              "Are you sure you want to leave? All provided data will be lost.";
-            e.returnValue = message;
-            return message;
-          };
 
     function addListenersToSelectedPieces (piece) {
 
@@ -190,6 +190,9 @@ document.onmousemove = function (e) {
    
         })
 
+        
+      
+
 
     }
 
@@ -220,22 +223,117 @@ document.onmousemove = function (e) {
    
 
     }
-    function onBackKeyDown() {
-        // Do stuff here
-        alert("oki")
-        console.log("oki")
-    }
 
-    function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener("backbutton", onBackKeyDown, false);
-    }
+    function saveInstrumentOnline() {
+        let choices = {}
+        let instrumentInfo = {}
+        let choicesArray = []
+  
+        let testDataArray = ['selectedStudent', 'userData']
+  
+        getMany(testDataArray).then(([firstVal, secondVal]) =>  {
+            instrumentInfo['user_id'] = parseInt(secondVal['id'])
+            instrumentInfo['student_id'] = parseInt(firstVal)
+            instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
+        }
+        );
+  
+        choicesArray.push(instrumentInfo)
+        
+        let allInstruments = document.querySelectorAll('.instrument-form')
 
-    function onLoadFunction() {
-        document.addEventListener("deviceready", onDeviceReady, false);
+        console.log("ACA SI")
+        console.log(allInstruments)
+
+        allInstruments.forEach(instrument => {
+            let key;
+            let value;
+            if (instrument['Precalculo']) {
+                key = instrument['key'].value
+                value= instrument['Precalculo'].value
+                choices[key] =  value
+            } else if (instrument['Precalculo-selected']) {
+                key = instrument['key'].value
+                value= instrument['Precalculo-selected'].value
+                choices[key] =  value
+            } else if (instrument['Precalculo-counted']) {
+                key = instrument['key'].value
+                value= instrument['Precalculo-counted'].value
+                choices[key] =  value
+            } else if (instrument['Precalculo-cardinal']) {
+                key = instrument['key'].value
+                value= instrument['Precalculo-cardinal'].value
+                choices[key] =  value
+            }
+  
+            if (instrument['TejasLee']) {
+                let key = instrument['key'].value
+                let value = instrument['TejasLee'].value
+                choices[key] =  value
+            }
+  
+            if (instrument['SDQ']) {
+                let key = instrument['key'].value
+                let value = instrument['SDQ'].value
+                choices[key] = value
+            }
+  
+            
+        })
+
+
+        
+            instrumentInfo['instrument'] = 0;
+
+  
+        choicesArray.push(choices)
+  
+        console.log(choicesArray)
+  
+        get('completedTests')
+        .then(response => {
+  
+            if (!isArray) {
+                if (response.length === undefined) {
+                    update('completedTests', (val) => 
+                    [response , choicesArray])         
+                    setIsArray(true)
+                } else if (response.length === 0) {
+                    set('completedTests', [choicesArray])
+                } else {
+                    console.log(response, "Actualizando1")
+                    let arrayCounter = 0;
+                    response.forEach(array => {
+                        
+                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument']) {
+                            console.log(response, arrayCounter)
+                            response.splice(arrayCounter, 1)
+                            
+                
+                        }
+                        arrayCounter+= 1
+  
+                    })
+  
+                    update('completedTests', val => [...response, choicesArray])
+  
+                    
+                }
+            } else {
+                console.log(response, "Actualizando2")
+                update('completedTests', val => [...response, choicesArray])
+  
+            }
+  
+  
+        })
+            
+         
+  
+           
     }
     return (
-        <div onLoad={onLoadFunction()}>
+        <div>
         <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             slidesPerView={1}
