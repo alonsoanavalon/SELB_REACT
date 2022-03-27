@@ -69,6 +69,8 @@ export default function Excel () {
         let instrument = getInstrument()
         let dataObject = {}
 
+        setCsvData(undefined)
+
         if (study === 'empty' || instrument === 'empty' || schools.length < 1) {
            
             alert.show('Debe elegir cada una de las opciones', {
