@@ -56,7 +56,7 @@ document.onmousemove = function (e) {
         var pieces = document.querySelectorAll(".piece")
         addListenersToPieces(pieces, landingArea)
         
-    
+        window.addEventListener("beforeunload", handleBeforeUnload);
     
         // Esto sirve para que el navegador no vaya hacia atras.
         window.history.pushState(null, null, window.location.href);
@@ -65,6 +65,15 @@ document.onmousemove = function (e) {
      };
         
     }, [])
+
+    const handleBeforeUnload = (e) => {
+        e.preventDefault();
+        const message =
+          "Are you sure you want to leave? All provided data will be lost.";
+        e.returnValue = message;
+        alert("hi")
+        return message;
+      };
 
 
     function addListenersToSelectedPieces (piece) {
@@ -328,7 +337,7 @@ document.onmousemove = function (e) {
   
         })
             
-         
+
   
            
     }
