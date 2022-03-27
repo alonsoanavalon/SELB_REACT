@@ -35,7 +35,7 @@ function App() {
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url = /* `http://localhost:3500/${data}` || */ `https://selb.bond/${data}`
+      let url = `http://localhost:3500/${data}` || `https://selb.bond/${data}`
       axios(url)
       .then(res => {
         set(data, res.data)
@@ -109,7 +109,7 @@ function App() {
 
         axios({
             method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
             params: {
                 instrument:1,
                 user: userId
@@ -126,7 +126,7 @@ function App() {
 
             axios({
               method: 'get',
-              url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+              url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
               params: {
                   instrument:2,
                   user: userId
@@ -142,7 +142,7 @@ function App() {
               
           axios({
             method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
             params: {
                 instrument:3,
                 user: userId

@@ -4,6 +4,7 @@ import {get} from 'idb-keyval'
 import { useAlert } from 'react-alert'
 import axios from 'axios';
 import CsvReader from '../components/CsvReader';
+import { CSVLink, CSVDownload } from "react-csv";
 
 export default function Excel () {
 
@@ -13,6 +14,7 @@ export default function Excel () {
     const [studies, setStudies] = useState([])
     const [instruments, setInstruments] = useState([])
     const [schoolOptions, setSchoolOptions] = useState([])
+    const [csvData, setCsvData] = useState()
 
     useEffect(() => {
 
@@ -80,12 +82,19 @@ export default function Excel () {
             
             axios({
                 method: 'post',
-                url:  /* 'http://localhost:3500/excel'|| */'https://selb.bond/excel',
+                url:  'http://localhost:3500/excel'||'https://selb.bond/excel',
                 data: dataObject
-            });
+            })
+            .then(
+                res => {
+                    setCsvData(res.data)
+                }
+            )
 
         }
     }
+
+   
     
     return (
         <Fragment>
@@ -120,6 +129,15 @@ export default function Excel () {
             </select>   
             
             <button id="btn-excel"className='btn btn-primary' onClick={getCsv}>Obtener datos</button>
+
+            {
+                 csvData !== undefined && 
+                 <Fragment>
+                     <CSVLink className="btn btn-success "filename='selb-data.csv'data={csvData}>Descargar</CSVLink>
+                 </Fragment>
+            }
+
+
 
   </div>
   </Fragment>
