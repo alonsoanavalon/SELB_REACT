@@ -28,7 +28,7 @@ export default function Login () {
             password: loginFormData.get('password')
         }
 
-        let url = "http://localhost:3500/login" || "https://selb.bond/login"
+        let url = /* "http://localhost:3500/login" || */ "https://selb.bond/login"
 
         axios(url, {
             params: {
