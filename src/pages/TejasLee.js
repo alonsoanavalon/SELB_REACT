@@ -53,7 +53,7 @@ export default function TejasLee () {
             setSecondLetter(items.filter(item => item.itemId >= 49 && item.itemId <= 60))
             setInitialSound(items.filter(item => item.itemId >=61 && item.itemId <= 66))
             setStorySound(items.filter(item => item.itemId === 67 ))
-            setAuditiveComprehension(items.filter(item => item.itemId >= 68 && item.itemId <= 72))
+            setAuditiveComprehension(items.filter(item => item.itemId >= 67 && item.itemId <= 72))
             }    
         )      
 
@@ -94,6 +94,9 @@ export default function TejasLee () {
                     <SwiperSlide>
                         <Instruction instruction="A continuación haremos algunas actividades usando letras y palabras, aquí no hay respuestas buenas ni malas, si hay algo que no sabes está bien, haz lo mejor que puedas."/>
                     </SwiperSlide>
+                    <SwiperSlide>
+                        <Instruction instruction="Ahora haremos un juego de adivinanza. Yo te voy a decir una adivinanza y tú me dices lo que es."></Instruction>
+                    </SwiperSlide>
                     {
                     vocabulary.map(item => 
                         <SwiperSlide key={item.itemId}>
@@ -112,6 +115,10 @@ export default function TejasLee () {
 
                     <SwiperSlide>
                         <Instruction checkpoint={true} instruction="“Aquí hay un libro” (mostrar el libro de cuentos). “Vamos a hacer unas actividades divertidas usando este libro”."/>
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                        <Instruction instruction="Muéstrame la portada (carátula/cubierta) del libro" statement={true}/>
                     </SwiperSlide>
 
                     {
@@ -174,6 +181,14 @@ export default function TejasLee () {
 *A continuación aparecerán en pantalla letras, la evaluadora en cada ítem deberá realizar la pregunta: ¿Cómo se llama esta letra? ."/>
                     </SwiperSlide>
 
+                    <SwiperSlide>
+                        <Instruction title="Item de ensayo" instruction="Mostrar la primera letra (R) y decir: '¿Cómo se llama esta letra?' a) Si la respuesta es incorrecta, decir: El nombre de esta letra es 'erre'" secondInstruction="b) Si el/la niño/a dice el sonido de una letra en vez de su nombre, decir: “Ese es el sonido de la letra, ¿cuál es su nombre?”"/>
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                        <Instruction statementInstruction={true} instruction = "¿Como se llama esta letra?" secondInstruction="R"/>
+                    </SwiperSlide>
+
                     {
                         firstLetter.map(
                             item => 
@@ -207,6 +222,14 @@ export default function TejasLee () {
                         <Instruction checkpoint={true} instruction="“Te voy a decir unas palabras que quiero que dividas en sílabas. Por ejemplo, voy a dividir la palabra ‘mesa’: /me/ /sa/” (Demuestre el ejercicio con aplausos)"/>
                     </SwiperSlide>
 
+                    <SwiperSlide>
+                        <Instruction title="Item de ensayo" instruction="Decir: “Ahora vamos a practicar, Si digo ‘toro’, dime ¿cómo se divide en sílabas la palabra ‘toro’?” Si la respuesta es incorrecta, decir: “La palabra ‘toro’ se divide en sílabas /to/ /ro/”. 
+" secondInstruction="Luego proseguir con un segundo ejemplo, para este usted deberá decir: “Vamos a hacer
+otro ejemplo. Si digo ‘cocina’, dime ¿cómo se divide en sílabas la palabra ‘cocina’? Si la respuesta es incorrecta, decir: “La palabra ‘cocina’ se divide en sílabas /co/ /ci/
+/na/. Ahora sigamos con otras palabras.
+"/>
+                    </SwiperSlide>
+
                     {
                         syllable.map(
                             item => 
@@ -228,8 +251,8 @@ export default function TejasLee () {
                     }
 
                     <SwiperSlide>
-                        <Instruction checkpoint={true} instruction="“Voy a mostrarte unas letras. Quiero que me digas el nombre de cada letra. Si no conoces alguna letra, está bien, inténtalo lo mejor que puedas”.
-*A continuación aparecerán en pantalla letras, la evaluadora en cada ítem deberá realizar la pregunta: ¿Cómo se llama esta letra? "/>
+                        <Instruction checkpoint={true} instruction="Vamos a seguir jugando con las letras. Voy a mostrarte unas letras, y quiero
+que me digas el nombre de cada una. Si no conoces alguna letra está bien, inténtalo lo mejor que puedas”" secondInstruction="*A continuación aparecerán en pantalla letras, la evaluadora en cada ítem deberá realizar la pregunta: ¿Cómo se llama esta letra? "/>
                     </SwiperSlide>
 
                     {
@@ -262,7 +285,8 @@ export default function TejasLee () {
                     }
 
                     <SwiperSlide>
-                        <Instruction  checkpoint={true} instruction="“Te voy a decir una palabra. Quiero que me digas con qué sonido empieza esa palabra. Por ejemplo, la palabra “teléfono” empieza con el sonido /t/.” (Pronuncie el sonido de la letra, no diga el nombre)."/>
+                        <Instruction  checkpoint={true} instruction="Te voy a decir una palabra. Quiero que me digas con qué sonido empieza esa palabra. Por ejemplo, la palabra “sombrero” empieza con el sonido /s/. (Pronuncie el sonido de la letra, no diga el nombre). 
+."/>
                     </SwiperSlide>
 
                     {
@@ -301,7 +325,7 @@ export default function TejasLee () {
                                     <Item
                                         other = {true}
                                         title = {item.title}       
-                                        type = {item.type}   
+                                        type = "quiz"
                                         answer= {item.answer}
                                         instrumentId = {item.instrumentId}
                                         instrumentName = {item.instrumentName}          

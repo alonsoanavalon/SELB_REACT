@@ -64,7 +64,7 @@ export default function Excel () {
     }
 
     const getCsv = () => {
-        let schools = getSelectedSchool()
+  /*       let schools = getSelectedSchool()
         let study = getStudy()
         let instrument = getInstrument()
         let dataObject = {}
@@ -84,7 +84,7 @@ export default function Excel () {
             
             axios({
                 method: 'post',
-                url:  /* 'http://localhost:3500/excel'|| */'https://selb.bond/excel',
+                url:  'https://selb.bond/excel',
                 data: dataObject
             })
             .then(
@@ -93,7 +93,7 @@ export default function Excel () {
                 }
             )
 
-        }
+        } */
     }
 
    

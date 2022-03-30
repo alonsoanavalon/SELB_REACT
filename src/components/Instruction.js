@@ -118,13 +118,18 @@ export default function Instruction (props) {
     return (
         <div className="page-item">
         <h3 className='main-description'>
-            <div className='instruction'>
+
+            {
+                props.title && <h3 className="p-4">{props.title}</h3>
+            }
+
+            <div className={props.statement ? 'statement' : 'instruction' }>
                 <p>{props.instruction}</p>
                 
                 {props.secondInstruction && 
                 <Fragment>
                 <br></br>
-                 <p>{props.secondInstruction}</p>
+                 <p className={props.statementInstruction && 'statement-instruction'}>{props.secondInstruction}</p>
                 </Fragment>
 
                  }
@@ -138,6 +143,7 @@ export default function Instruction (props) {
                     > Guardar test</button>
 
                 }
+
 
             </div>
             
