@@ -338,7 +338,7 @@ que me digas el nombre de cada una. Si no conoces alguna letra está bien, inté
                   }
 
                     <SwiperSlide>
-                        <Instruction checkpoint={true} instruction="Al final de la subprueba modificar la frase de cierre por esta: “Lo hiciste muy bien, ahora seguiremos con otra actividad”."/>
+                        <Instruction checkpoint={true} instruction="Lo hiciste muy bien, ahora seguiremos con otra actividad."/>
 
                     </SwiperSlide>
 

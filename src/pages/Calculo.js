@@ -611,8 +611,7 @@ document.onmousemove = function (e) {
         }
 
 <SwiperSlide>
-                        <Instruction checkpoint={true} instruction="Al final de la subprueba modificar la frase de cierre por esta: “Lo hiciste muy bien, ahora seguiremos con otra actividad”."/>
-
+        <Instruction checkpoint={true} instruction="Lo hiciste muy bien, ahora seguiremos con otra actividad."/>
                     </SwiperSlide>
 
         </Swiper>
