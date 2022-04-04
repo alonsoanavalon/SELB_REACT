@@ -1,6 +1,5 @@
 let cacheData = "app-v2";
 this.addEventListener("install", evt => {
-
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
@@ -141,7 +140,6 @@ this.addEventListener("fetch", evt => {
 })
 
 this.addEventListener('activate', function(event) {
-    
     console.log('activando')
   })
 
