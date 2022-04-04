@@ -1,8 +1,5 @@
-let cacheData = "app-v3";
-
+let cacheData = "app-v2";
 this.addEventListener("install", evt => {
-
-    
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
@@ -20,10 +17,10 @@ this.addEventListener("install", evt => {
                 '/menu.png',
                 '/instruments',
                 '/items',
-                '/tejaslee_v1',
-                '/calculo_v1',
+                '/tejaslee',
+                '/calculo',
                 '/excel',
-                '/sdq_v1',
+                '/sdq',
                 'https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css',
                 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css',
                 '/images/man.png',
@@ -143,7 +140,6 @@ this.addEventListener("fetch", evt => {
 })
 
 this.addEventListener('activate', function(event) {
-    console.log('activating')
-    caches.delete("app-v1");
-    caches.delete("app-v2");
-  });
+    console.log('activando')
+  })
+
