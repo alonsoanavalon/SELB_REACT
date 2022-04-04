@@ -1,4 +1,4 @@
-let cacheData = "app-v1";
+let cacheData = "app-v2";
 this.addEventListener("install", evt => {
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
