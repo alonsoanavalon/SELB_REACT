@@ -140,6 +140,7 @@ this.addEventListener("fetch", evt => {
 })
 
 this.addEventListener('activate', function(event) {
+    caches.remove("app-v1")
     console.log('activando')
   })
 
