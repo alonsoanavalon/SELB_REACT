@@ -311,11 +311,11 @@ function App() {
           <Route path="/users" element={<Users/>}></Route>
           <Route path="/users/:id" element={<UserPage/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
-          <Route path="/tejaslee" element={<TejasLee/>}></Route>
-          <Route path="/calculo" element={<Calculo/>}></Route>
+          <Route path="/tejaslee_v1" element={<TejasLee/>}></Route>
+          <Route path="/calculo_v1" element={<Calculo/>}></Route>
           <Route path="/excel" element={<Excel/>}></Route>
           <Route path="/parents" element={<Parents/>}></Route>
-          <Route path="/sdq" element={<ParentsForm/>}></Route>
+          <Route path="/sdq_v1" element={<ParentsForm/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       

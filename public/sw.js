@@ -1,5 +1,7 @@
-let cacheData = "app-v2";
+let cacheData = "app-v3";
+
 this.addEventListener("install", evt => {
+    console.log("installing")
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
@@ -17,10 +19,10 @@ this.addEventListener("install", evt => {
                 '/menu.png',
                 '/instruments',
                 '/items',
-                '/tejaslee',
-                '/calculo',
+                '/tejaslee_v1',
+                '/calculo_v1',
                 '/excel',
-                '/sdq',
+                '/sdq_v1',
                 'https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css',
                 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css',
                 '/images/man.png',
@@ -140,6 +142,18 @@ this.addEventListener("fetch", evt => {
 })
 
 this.addEventListener('activate', function(event) {
-    console.log('activando')
-  })
-
+    console.log('activating')
+    event.waitUntil(
+      caches.keys().then(function(cacheNames) {
+        return Promise.all(
+          cacheNames.filter(function(cacheName) {
+            // Return true if you want to remove this cache,
+            // but remember that caches are shared across
+            // the whole origin
+          }).map(function(cacheName) {
+            return caches.delete(cacheName);
+          })
+        );
+      })
+    );
+  });

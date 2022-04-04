@@ -15,9 +15,9 @@ export default function ListedInstrument (props) {
       
 
         if ($selectedInstrument == 1) {
-            navigate('/tejaslee')
+            navigate('/tejaslee_v1')
         } else if ($selectedInstrument == 2){
-            navigate('/calculo')
+            navigate('/calculo_v1')
         }
 
     }
