@@ -3,7 +3,7 @@ this.addEventListener("install", evt => {
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
-/*                 '/logo192.png',
+                '/logo192.png',
                 '/manifest.json',
                 '/static/js/bundle.js',
                 '/login',
@@ -113,7 +113,7 @@ this.addEventListener("install", evt => {
                 "https://res.cloudinary.com/keyzen/image/upload/v1644842357/selb/C%C3%A1lculo/Identificaci%C3%B3n%20de%20N%C3%BAmeros%20-%20JPG%20Est%C3%ADmulos-20220212T203015Z-001/Identificaci%C3%B3n_de_N%C3%BAmeros_-_PPT_Est%C3%ADmulos.pptx_page-0017_cd8be2.jpg",
                 "https://res.cloudinary.com/keyzen/image/upload/v1644842357/selb/C%C3%A1lculo/Identificaci%C3%B3n%20de%20N%C3%BAmeros%20-%20JPG%20Est%C3%ADmulos-20220212T203015Z-001/Identificaci%C3%B3n_de_N%C3%BAmeros_-_PPT_Est%C3%ADmulos.pptx_page-0018_yh61ii.jpg"
 
- */
+
 
 
 
