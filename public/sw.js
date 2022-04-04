@@ -1,8 +1,7 @@
 let cacheData = "app-v3";
 
 this.addEventListener("install", evt => {
-    caches.delete("app-v1");
-    caches.delete("app-v2");
+
     
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
@@ -145,15 +144,6 @@ this.addEventListener("fetch", evt => {
 
 this.addEventListener('activate', function(event) {
     console.log('activating')
-    event.waitUntil(
-      caches.keys().then(function(cacheNames) {
-        return Promise.all(
-          cacheNames.filter(function(cacheName) {
-            return true
-          }).map(function(cacheName) {
-            return caches.delete(cacheName);
-          })
-        );
-      })
-    );
+    caches.delete("app-v1");
+    caches.delete("app-v2");
   });
