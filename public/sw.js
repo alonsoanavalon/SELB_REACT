@@ -1,7 +1,9 @@
 let cacheData = "app-v3";
 
 this.addEventListener("install", evt => {
-    console.log("installing")
+    caches.delete("app-v1");
+    caches.delete("app-v2");
+    
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
@@ -147,9 +149,7 @@ this.addEventListener('activate', function(event) {
       caches.keys().then(function(cacheNames) {
         return Promise.all(
           cacheNames.filter(function(cacheName) {
-            // Return true if you want to remove this cache,
-            // but remember that caches are shared across
-            // the whole origin
+            return true
           }).map(function(cacheName) {
             return caches.delete(cacheName);
           })
