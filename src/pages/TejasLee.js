@@ -178,7 +178,7 @@ export default function TejasLee () {
 
                     <SwiperSlide>
                         <Instruction instruction="“Voy a mostrarte unas letras. Quiero que me digas el nombre de cada letra. Si no conoces alguna letra, está bien, inténtalo lo mejor que puedas”.
-*A continuación aparecerán en pantalla letras, la evaluadora en cada ítem deberá realizar la pregunta: ¿Cómo se llama esta letra? ."/>
+*A continuación aparecerán en pantalla letras, la evaluadora en cada ítem deberá realizar la pregunta: ¿Cómo se llama esta letra?."/>
                     </SwiperSlide>
 
                     <SwiperSlide>
@@ -251,7 +251,7 @@ otro ejemplo. Si digo ‘cocina’, dime ¿cómo se divide en sílabas la palabr
                     }
 
                     <SwiperSlide>
-                        <Instruction checkpoint={true} instruction="Vamos a seguir jugando con las letras. Voy a mostrarte unas letras, y quiero
+                        <Instruction checkpoint={true} instruction="“Vamos a seguir jugando con las letras. Voy a mostrarte unas letras, y quiero
 que me digas el nombre de cada una. Si no conoces alguna letra está bien, inténtalo lo mejor que puedas”" secondInstruction="*A continuación aparecerán en pantalla letras, la evaluadora en cada ítem deberá realizar la pregunta: ¿Cómo se llama esta letra? "/>
                     </SwiperSlide>
 
@@ -285,8 +285,7 @@ que me digas el nombre de cada una. Si no conoces alguna letra está bien, inté
                     }
 
                     <SwiperSlide>
-                        <Instruction  checkpoint={true} instruction="Te voy a decir una palabra. Quiero que me digas con qué sonido empieza esa palabra. Por ejemplo, la palabra “sombrero” empieza con el sonido /s/. (Pronuncie el sonido de la letra, no diga el nombre). 
-."/>
+                        <Instruction  checkpoint={true} instruction="Te voy a decir una palabra. Quiero que me digas con qué sonido empieza esa palabra. Por ejemplo, la palabra “sombrero” empieza con el sonido /s/. (Pronuncie el sonido de la letra, no diga el nombre)."/>
                     </SwiperSlide>
 
                     {

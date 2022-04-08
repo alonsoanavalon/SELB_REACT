@@ -443,7 +443,7 @@ document.onmousemove = function (e) {
                 <Quantification key={quantification[0].itemId} quantity={20} num={1} repeat={true} title={"Coloca tres fichas aquí"}/>
         </SwiperSlide>
         <SwiperSlide key="2">
-                <Quantification key={quantification[0].itemId} quantity={20} num={2} title={"Ahora las vas a contar y me vas a decir cuantas tocaste"}/>
+                <Quantification key={quantification[0].itemId} quantity={20} num={2} title={"Ahora las vas a contar y me vas a decir cuantas hay"}/>
         </SwiperSlide>
         <SwiperSlide key="3">
                 <QuantificationQuiz title={quantification[0].title} itemId={[quantification[0].itemId, quantification[1].itemId, quantification[2].itemId]} instrumentName={quantification[0].instrumentName} num={quantification[0].num}/>
@@ -452,7 +452,7 @@ document.onmousemove = function (e) {
                 <Quantification key={quantification[3].itemId} quantity={20} num={3} repeat={true} title={"Coloca cuatro fichas aquí"}/>
         </SwiperSlide>
         <SwiperSlide key="5">
-                <Quantification key={quantification[3].itemId} quantity={20} num={4} title={"Ahora las vas a contar y me vas a decir cuantas tocaste"}/>
+                <Quantification key={quantification[3].itemId} quantity={20} num={4} title={"Ahora las vas a contar y me vas a decir cuantas hay"}/>
         </SwiperSlide>
         <SwiperSlide key="6">
                 <QuantificationQuiz title={quantification[3].title} itemId={[quantification[3].itemId, quantification[4].itemId, quantification[5].itemId]} instrumentName={quantification[3].instrumentName} num={quantification[3].num}/>
@@ -461,7 +461,7 @@ document.onmousemove = function (e) {
                 <Quantification key={quantification[6].itemId} quantity={20} num={5} repeat={true} title={"Coloca seis fichas aquí"}/>
         </SwiperSlide>
         <SwiperSlide key="8">
-                <Quantification key={quantification[6].itemId} quantity={20} num={6} title={"Ahora las vas a contar y me vas a decir cuantas tocaste"}/>
+                <Quantification key={quantification[6].itemId} quantity={20} num={6} title={"Ahora las vas a contar y me vas a decir cuantas hay"}/>
         </SwiperSlide>
         <SwiperSlide key="9">
                 <QuantificationQuiz title={quantification[6].title} itemId={[quantification[6].itemId, quantification[7].itemId, quantification[8].itemId]} instrumentName={quantification[6].instrumentName} num={quantification[6].num}/>
@@ -470,7 +470,7 @@ document.onmousemove = function (e) {
                 <Quantification key={quantification[9].itemId} quantity={20} num={7} repeat={true} title={"Coloca ocho fichas aquí"}/>
         </SwiperSlide>
         <SwiperSlide key="11">
-                <Quantification key={quantification[9].itemId} quantity={20} num={8} title={"Ahora las vas a contar y me vas a decir cuantas tocaste"}/>
+                <Quantification key={quantification[9].itemId} quantity={20} num={8} title={"Ahora las vas a contar y me vas a decir cuantas hay"}/>
         </SwiperSlide>
         <SwiperSlide key="12">
                 <QuantificationQuiz title={quantification[9].title} itemId={[quantification[9].itemId, quantification[10].itemId, quantification[11].itemId]} instrumentName={quantification[9].instrumentName} num={quantification[9].num}/>
@@ -479,7 +479,7 @@ document.onmousemove = function (e) {
                 <Quantification key={quantification[12].itemId} quantity={20} num={9} repeat={true} title={"Coloca diez fichas aquí"}/>
         </SwiperSlide>
         <SwiperSlide key="14">
-                <Quantification key={quantification[12].itemId} quantity={20} num={10} title={"Ahora las vas a contar y me vas a decir cuantas tocaste"}/>
+                <Quantification key={quantification[12].itemId} quantity={20} num={10} title={"Ahora las vas a contar y me vas a decir cuantas hay"}/>
         </SwiperSlide>
         <SwiperSlide key="15">
                 <QuantificationQuiz title={quantification[12].title} itemId={[quantification[12].itemId, quantification[13].itemId, quantification[14].itemId]} instrumentName={quantification[12].instrumentName} num={quantification[12].num}/>
@@ -488,7 +488,7 @@ document.onmousemove = function (e) {
                 <Quantification key={quantification[15].itemId} quantity={20} num={11} repeat={true} title={"Coloca once fichas aquí"}/>
         </SwiperSlide> 
         <SwiperSlide key="17">
-                <Quantification key={quantification[15].itemId} quantity={20} num={12} title={"Ahora las vas a contar y me vas a decir cuantas tocaste"}/>
+                <Quantification key={quantification[15].itemId} quantity={20} num={12} title={"Ahora las vas a contar y me vas a decir cuantas hay"}/>
         </SwiperSlide>
         <SwiperSlide key="18">
                 <QuantificationQuiz title={quantification[15].title} itemId={[quantification[15].itemId, quantification[16].itemId, quantification[17].itemId]} instrumentName={quantification[15].instrumentName} num={quantification[15].num}/>
@@ -497,7 +497,7 @@ document.onmousemove = function (e) {
                 <Quantification key={quantification[18].itemId} quantity={20} num={13} repeat={true} title={"Coloca dieciseis fichas aquí"}/>
         </SwiperSlide>
         <SwiperSlide key="20">
-                <Quantification key={quantification[18].itemId} quantity={20} num={14} title={"Ahora las vas a contar y me vas a decir cuantas tocaste"}/>
+                <Quantification key={quantification[18].itemId} quantity={20} num={14} title={"Ahora las vas a contar y me vas a decir cuantas hay"}/>
         </SwiperSlide>
         <SwiperSlide key="21">
                 <QuantificationQuiz title={quantification[18].title} itemId={[quantification[18].itemId, quantification[19].itemId, quantification[20].itemId]} instrumentName={quantification[18].instrumentName} num={quantification[18].num}/>
