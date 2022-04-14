@@ -79,7 +79,6 @@ document.onmousemove = function (e) {
     function addListenersToSelectedPieces (piece) {
 
         
-        console.log(piece, "PIOECES")
 
             let baseX = piece.offsetLeft
             let baseY = piece.offsetTop;
@@ -188,7 +187,7 @@ document.onmousemove = function (e) {
                     piece.style.top= `${baseY}px`
 
                 }
-                if (y < 10 || y > 500){
+                if (y < 10 || y > 0){
 
                     piece.style.left = `${baseX}px`
                     piece.style.top= `${baseY}px`

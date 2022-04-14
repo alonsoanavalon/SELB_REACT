@@ -156,7 +156,7 @@ export default function Quantification (props) {
 
                 }
 
-                if (y < 10 || y > 500){
+                if (y < 10 || y > 0){
                     piece.style.left = `${baseX}px`
                     piece.style.top= `${baseY}px`
 
