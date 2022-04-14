@@ -108,7 +108,7 @@ document.onmousemove = function (e) {
                 var y = parseInt(piece.style.top);
 
                 // creating the new piece
-                if (x > 160 && x < 560 && y > 94 && y < 590) {
+                if (x > 160 && x < 530 && y > 94 && y < 590) {
                     insertNewPiece()
                 }
 
