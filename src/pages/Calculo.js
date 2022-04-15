@@ -110,6 +110,7 @@ document.onmousemove = function (e) {
                 // creating the new piece
                 if (x > 160 && x < 530 && y > 94 && y < 590) {
                     insertNewPiece()
+                    console.log("Insertando")
                 }
 
                 if (x < 140 || x > 530) {
@@ -117,17 +118,20 @@ document.onmousemove = function (e) {
                     piece.style.left = `${baseX}px`
                     piece.style.top= `${baseY}px`
                     piece.style.position = 'static'
+                    console.log("Devolviendo1")
                     
 
                 }
-                else if (y < 10 || y > 500){
+                else if (y < 10 || y > 590){
                     
                     piece.style.left = `${baseX}px`
                     piece.style.top= `${baseY}px`
                     piece.style.position = 'static'
+                    console.log("devolviendo2")
                     
 
                 } else {    
+                    console.log("devolviendooo")
 
                     var landingArea = document.querySelector(".pieces-container")
                     landingArea.insertAdjacentElement("beforeend", piece)

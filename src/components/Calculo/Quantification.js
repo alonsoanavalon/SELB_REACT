@@ -85,7 +85,7 @@ export default function Quantification (props) {
                     piece.style.position = 'static'
                     
                 }
-                else if (y < 10 || y > 500){
+                else if (y < 10 || y > 590){
                     
                     piece.style.left = `${baseX}px`
                     piece.style.top= `${baseY}px`
