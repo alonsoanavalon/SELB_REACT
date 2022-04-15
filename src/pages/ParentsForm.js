@@ -82,13 +82,6 @@ export default function ParentsForm() {
               /> )
             }
 
-<div className='sdq-instructions'>
-
-
-
-<p><b>Si ha contestado que "Si", porfavor responda las siguientes preguntas sobre estas dificultades</b>
-</p>
-</div>
 
 
 
@@ -104,6 +97,13 @@ export default function ParentsForm() {
                   choices = {4}
                 />
             }
+
+<div className='sdq-instructions'>
+    <p>
+        <b>Si ha contestado que "Si", porfavor responda las siguientes preguntas sobre estas dificultades</b>
+    </p>
+</div>
+
 
 {
             secondItemQuestions[1] &&
