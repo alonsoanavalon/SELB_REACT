@@ -82,6 +82,16 @@ export default function ParentsForm() {
               /> )
             }
 
+<div className='sdq-instructions'>
+
+
+
+<p><b>Si ha contestado que "Si", porfavor responda las siguientes preguntas sobre estas dificultades</b>
+</p>
+</div>
+
+
+
             {
             secondItemQuestions[0] &&
                 <QuizRadio
