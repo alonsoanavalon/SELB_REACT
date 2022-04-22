@@ -9,6 +9,9 @@ export default function StudentList () {
     const [students, setStudents] = useState([])
     const [schools, setSchools] = useState([])
     const [instruments, setInstruments] = useState([])
+    const [courses, setCourses] = useState([])
+    const [filteredCourses, setFilteredCourses] = useState([])
+    const [filteredStudents, setFilteredStudents] = useState([])
 
     function getData(data, setter){
         get(data)
@@ -17,7 +20,8 @@ export default function StudentList () {
 
     useEffect(() => { 
 
-        getData('students', setStudents)
+        get('students').then(students => setStudents(students))
+        getData('courses', setCourses)
         getData('schools', setSchools)
         get('instruments')
         .then(data => data.filter(instrument => instrument['instrument_type_id'] === 1))
@@ -32,7 +36,7 @@ export default function StudentList () {
         return schools.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
     }
 
-    function getStudents (evt) {
+/*     function getStudents (evt) {
         let schoolId = evt.target.value
         let filteredStudents;
      
@@ -57,6 +61,53 @@ export default function StudentList () {
         }
 
     }
+ */
+
+    const renderSchools = () => {
+        return schools.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
+    }
+
+    const getCourses = (evt) => {
+        let $schoolId = evt.target.value
+        let $courseSelect = document.getElementById("courseSelect")
+        let $filteredCourses = courses.filter(course => parseInt(course.school) === parseInt($schoolId))
+        let $filteredCoursesToRender = $filteredCourses.map(course => <option key={course.course}value={course.course}> {course.courseName}</option>)
+
+        console.log($schoolId)
+        console.log($filteredCourses)
+
+        setFilteredCourses($filteredCoursesToRender)
+        $courseSelect.value = "empty"
+        $courseSelect.disabled = false;
+    }
+
+
+    const getStudents = (evt) => {
+  
+
+        let $courseSelect = document.getElementById("courseSelect")
+        console.log(evt.target, "aca")
+        let $courseId = evt.target.value
+        let $filteredStudents = students.filter(student => parseInt(student.courseId) === parseInt($courseId))
+        let $filteredStudentsToRender = $filteredStudents.map(student => <option key={student.studentId} value={student.studentId}> {student.name + " " + student.surname}</option>)
+
+        setFilteredStudents($filteredStudents)
+        $courseSelect.value = $courseId
+
+        console.log("ACa esta la wea")
+        console.log($filteredStudents)
+
+        
+   
+    
+
+
+    }   
+
+    console.log(filteredStudents)
+    console.log("******************")
+    console.log(students)
+
 
 
 
@@ -64,11 +115,15 @@ export default function StudentList () {
     return (
         <Fragment>
             <div className="student-list-wrapper">
-                 <select onChange={getStudents} className="form-select" aria-label="Default select example" placeholder='Listado de colegios' id="schoolSelect" defaultValue="empty">
-                <option value="empty" disabled>Selecciona una opción</option>
-                <option key="0" value="0">Todos los alumnos</option>
-                {renderSchoolOptions()}
+            <select onChange={getCourses}className="form-select" placeholder='Colegios' id="schoolSelect" defaultValue="empty">
+                <option value="empty" disabled>Colegios</option>
+                {renderSchools()}
+            </select>   
+            <select onChange={getStudents} className="form-select" placeholder='Cursos' id="courseSelect" defaultValue="empty" disabled>
+            <option value="empty" disabled>Cursos</option>
+            {filteredCourses}
             </select>
+
             <table className="table" id="students-table">
                 <thead className="thead-dark">
                     <tr>    
@@ -79,7 +134,7 @@ export default function StudentList () {
                     </tr>
                 </thead>
                 <tbody>
-                    <Students data={students}/>
+                    <Students data={filteredStudents}/>
                 </tbody>
             </table>
 
