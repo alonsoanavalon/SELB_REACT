@@ -138,7 +138,7 @@ export default function Instruction (props) {
 
                     <button
                     
-                        className='button btn btn-primary'
+                        className='button btn text-success'
                         onClick={saveInstrumentOnline}
                     > Guardar test</button>
 
