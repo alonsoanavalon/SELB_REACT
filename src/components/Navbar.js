@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react';
-
+import { useAlert } from 'react-alert'
 
 export default function NavBar() {
 
+    const alert = useAlert()
     const [asideState, setAsideState] = useState(false)
 
     function showAside () {
@@ -41,6 +42,18 @@ export default function NavBar() {
         window.location.reload()
     }
 
+    function showVersionInfo () {
+        
+        const textInfo = `
+        Version: 1.0.0 ||
+        Ultima Actualizacion: 07/05/2022 ||
+        Cache: v5
+        `
+        alert.show(textInfo, {
+            type:'success'
+        })
+    }
+
 
     return (      
         <Fragment>
@@ -62,7 +75,12 @@ export default function NavBar() {
                         <svg onClick={reloadPage} id="refresh-icon" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
-                        <h4>SELB</h4>
+                        <h4
+                            onClick={showVersionInfo}
+                            className='selb-info'
+                        >
+                        SELB
+                        </h4>
                     </div>
                 </header>
             }

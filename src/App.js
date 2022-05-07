@@ -21,6 +21,7 @@ import Excel from './pages/Excel';
 import Parents from './pages/Parents';
 import ParentsForm from './pages/ParentsForm';
 
+
 const cookies = new Cookies();
 
 function App() {
@@ -70,15 +71,7 @@ function App() {
     }
   }
 
-
-
   useEffect(() => { 
-
-
-
-    
-    
-
 
     if (!cookies.get('id') && (window.location.pathname !== "/login")) {
       window.location.href='/login'
@@ -122,8 +115,6 @@ function App() {
             set('tejasLength', res.data[0]['COUNT(*)'])
           }
           )
-
-
             axios({
               method: 'get',
               url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
@@ -156,8 +147,6 @@ function App() {
               )
       }
         }      
-
-
 
     get('completedTests')
     .then(res => {
@@ -227,7 +216,6 @@ function App() {
               choices[key] = value
           }
 
-          
       })
 
       instrumentInfo['instrument'] = parseInt(allInstruments[0]['instrument'].value)
@@ -262,8 +250,7 @@ function App() {
                   })
 
                   update('completedTests', val => [...response, choicesArray])
-
-                  
+         
               }
           } else {
               console.log(response, "Actualizando2")
@@ -271,18 +258,11 @@ function App() {
 
           }
 
-
       })   
   }
 
-
-
-
-
-
-
-
   }, [userId])
+
 
 
 

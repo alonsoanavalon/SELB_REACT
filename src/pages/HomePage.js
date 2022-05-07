@@ -115,6 +115,8 @@ export default function HomePage() {
         
     }
 
+    console.log(process.env.PORT, ' desde home')
+
     return (
         <Fragment>
 

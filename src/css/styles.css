@@ -603,6 +603,10 @@ template {
   color: #333;
 }
 
+.selb-info {
+  cursor: pointer;
+}
+
 .kid-icon {
   width: 30px;
 }
