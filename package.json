@@ -23,6 +23,8 @@
     "react-pageflip": "^2.0.3",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.1",
+    "styled-components": "^5.3.5",
+    "sweetalert2": "^11.4.14",
     "swiper": "^8.0.3",
     "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.3"

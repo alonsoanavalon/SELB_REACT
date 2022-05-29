@@ -15,6 +15,7 @@ export default function Excel () {
     const [instruments, setInstruments] = useState([])
     const [schoolOptions, setSchoolOptions] = useState([])
     const [csvData, setCsvData] = useState()
+    const [fileName, setFileName] = useState()
 
     useEffect(() => {
 
@@ -63,8 +64,26 @@ export default function Excel () {
         return selectedInstrument
     }
 
+    const getFileName = (instrumentId) => {
+
+        switch(instrumentId) {
+            case "1": 
+                setFileName("TejasLee");
+                break;
+            case "2": 
+                setFileName("Precálculo");
+                break;
+            case "3": 
+                setFileName("SDQ");
+                break;
+            default:
+                setFileName("instrument");
+                break;
+        }
+    }
+
     const getCsv = () => {
-  /*       let schools = getSelectedSchool()
+        let schools = getSelectedSchool()
         let study = getStudy()
         let instrument = getInstrument()
         let dataObject = {}
@@ -81,6 +100,9 @@ export default function Excel () {
             dataObject['schools'] = schools
             dataObject['study'] = study
             dataObject['instrument'] = instrument
+
+            getFileName(instrument)
+
             
             axios({
                 method: 'post',
@@ -93,7 +115,7 @@ export default function Excel () {
                 }
             )
 
-        } */
+        }
     }
 
    
@@ -135,7 +157,7 @@ export default function Excel () {
             {
                  csvData !== undefined && 
                  <Fragment>
-                     <CSVLink className="btn btn-success "filename='selb-data.csv'data={csvData}>Descargar</CSVLink>
+                     <CSVLink className="btn btn-success "filename={fileName}data={csvData}>Descargar</CSVLink>
                  </Fragment>
             }
 

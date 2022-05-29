@@ -14,6 +14,7 @@ import { get, set, getMany, update } from 'idb-keyval';
 import Item from '../components/Item';
 import Quantification from '../components/Calculo/Quantification';
 import QuantificationQuiz from '../components/Calculo/QuantificationQuiz';
+import AppleCounter from '../components/ui/AppleCounter/AppleCounter'
 
 export default function Calculo () {
 
@@ -27,6 +28,7 @@ export default function Calculo () {
     const [isArray, setIsArray] = useState(false)
     const [selectedPieces, setSelectedPieces] = useState([])
     const [idWhithoutMedia, setIdWithoutMedia] = useState()
+    const [wrongCounter, setWrongCounter] = useState(0)
     
 
 /* 
@@ -339,13 +341,28 @@ document.onmousemove = function (e) {
   
   
         })
-            
 
-  
-           
+
+        
+        
+        
+        
+    }
+    const getWrongAnswer = () => {
+
+        let internalCounter = 0;
+        let allAnswers = document.querySelectorAll(".wrong-answer");
+        if (allAnswers) {
+            Array.from(allAnswers).map((answer) => {
+                if (answer.checked) internalCounter++;
+            })
+        }
+        console.log(internalCounter, " Estas estan malas")
+        setWrongCounter(internalCounter)
     }
     return (
         <div>
+           <AppleCounter counter={wrongCounter}/>
         <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             slidesPerView={1}
@@ -552,6 +569,8 @@ document.onmousemove = function (e) {
                         instrumentName = {item.instrumentName}          
                         num = {item.num}     
                         itemId = {item.itemId} 
+                        identifier="wrong-answer"
+                        onclick={getWrongAnswer}
                     />
 
                 </SwiperSlide>
@@ -575,6 +594,8 @@ document.onmousemove = function (e) {
                             instrumentName = {item.instrumentName}          
                             num = {item.num}     
                             itemId = {item.itemId} 
+                            identifier="wrong-answer"
+                            onclick={getWrongAnswer}
                         />
     
                     </SwiperSlide>
@@ -586,6 +607,9 @@ document.onmousemove = function (e) {
                                 picture={item.picture}
                                 pictureName={item.pictureName}
                                 title={item.title}
+                                identifier="wrong-answer"
+                                onclick={getWrongAnswer}
+
                             />
                         </SwiperSlide>
                         <SwiperSlide key={item.itemId}>
@@ -598,6 +622,8 @@ document.onmousemove = function (e) {
                                 instrumentName = {item.instrumentName}          
                                 num = {item.num}     
                                 itemId = {item.itemId} 
+                                identifier="wrong-answer"
+                                onclick={getWrongAnswer}
                             />
         
                         </SwiperSlide>

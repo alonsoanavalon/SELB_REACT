@@ -1,4 +1,4 @@
-let cacheData = "app-v6";
+let cacheData = "app-v7";
 this.addEventListener("install", evt => {
     console.log("installing")
     caches.delete('app-v1')
@@ -6,6 +6,7 @@ this.addEventListener("install", evt => {
     caches.delete("app-v3")
     caches.delete("app-v4")
     caches.delete("app-v5")
+    caches.delete("app-v6")
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([

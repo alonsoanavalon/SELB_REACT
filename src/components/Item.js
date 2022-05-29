@@ -25,11 +25,13 @@ export default function Item (props) {
                             {props.title} 
 
                         </h3>
-                        <form key={props.itemId} id={props.instrumentName +"-"+props.num} className="instrument-form">
+                        <form onClick={props.onclick} key={props.itemId} id={props.instrumentName +"-"+props.num} className="instrument-form">
                             <input type="hidden" value={props.instrumentId} name="instrument"/>
                             <input type="hidden" value={props.itemId} name="key"/>
-                            <label className="form-check-label"><input className="form-check-input"  type="radio" name={props.instrumentName} value="1"/> {props.answer ? `Correcto (${props.answer})` : 'Correcto'}</label>
-                            <label className="form-check-label"><input className="form-check-input" type="radio" name={props.instrumentName} value="2"/> Incorrecto</label>
+                            <label className="form-check-label">
+                                <input className="form-check-input" type="radio" name={props.instrumentName} value="1"/> {props.answer ? `Correcto (${props.answer})` : 'Correcto'}
+                            </label>
+                            <label className="form-check-label"><input  className={`${props.identifier} form-check-input`} type="radio" name={props.instrumentName} value="2"/> Incorrecto</label>
                             <label className="form-check-label"><input className="form-check-input" type="radio" name={props.instrumentName} value="3"/> No sabe / No lo conoce</label>
                             <label className="form-check-label"><input className="form-check-input" type="radio" name={props.instrumentName} value="4"/> Omite o no responde</label>
                             {props.other && 
