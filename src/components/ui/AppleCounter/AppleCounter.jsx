@@ -123,9 +123,9 @@ export default function AppleCounter (props) {
 
     useEffect(() => {
 
-        if (props.counter > 4) {
+        if (props.counter >= 6) {
             Swal.fire({
-                title: 'Haz cometido 5 errores',
+                title: 'Haz cometido 6 errores',
                 text: "¿Deseas salir?",
                 icon: 'warning',
                 showCancelButton: true,
@@ -146,8 +146,8 @@ export default function AppleCounter (props) {
        <Fragment>
             <AppleWrapper className="apple-wrapper">
                 {
-                    props.counter < 5
-                    && [...Array(5 - props.counter)].map((e, i) => <Apple key= {i}/>)
+                    props.counter < 6
+                    && [...Array(6 - props.counter)].map((e, i) => <Apple key= {i}/>)
                 }
                 </AppleWrapper>    
        </Fragment> 
