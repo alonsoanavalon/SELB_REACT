@@ -194,6 +194,10 @@ body
     height:1rem !important;
 }
 
+.swiper-wrapper {
+    height:calc(100vh - 120px) !important;
+}
+
 .btn-visibility {
     width:40px;
     height:40px;

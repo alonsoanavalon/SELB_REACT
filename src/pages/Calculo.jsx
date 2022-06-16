@@ -15,6 +15,7 @@ import Item from '../components/Item';
 import Quantification from '../components/Calculo/Quantification';
 import QuantificationQuiz from '../components/Calculo/QuantificationQuiz';
 import AppleCounter from '../components/ui/AppleCounter/AppleCounter'
+import Piece from '../components/ui/Piece/Piece';
 
 export default function Calculo () {
 
@@ -30,7 +31,19 @@ export default function Calculo () {
     const [idWhithoutMedia, setIdWithoutMedia] = useState()
     const [wrongCounter, setWrongCounter] = useState(0)
     const [lastWrongCounter, setLastWrongCounter] = useState(0) 
-    
+    const [unselectedPieces, setUnselectedPieces] = useState([<Piece></Piece>])
+
+    useEffect(() => {
+        let selectedPiecesLocal = 2; //TEST esto debo recibirlo del estado
+        let unselectedPiecesLocal = []; //Array con jsx
+
+        [...Array(20 - selectedPiecesLocal)].forEach((_, i) => {
+            console.log(i, "Array")
+            unselectedPiecesLocal.push(<Piece></Piece>)
+        });
+        console.log(unselectedPiecesLocal)
+        setUnselectedPieces(unselectedPiecesLocal)
+    }, [])
 
 /* 
 allInstruments.forEach(instrument => {if(instrument['Cálculo'] != undefined) {console.log(instrument['key'], instrument['Cálculo'].value)} else {console.log(instrument['key'], instrument['Cálculo-selected'].value)}})
@@ -181,8 +194,7 @@ document.onmousemove = function (e) {
 
                 if (y > 2 && y < 500 && x > 461 && x < 940) {
                     // hidding selected piece and creating new
-                    
-                    piece.style.display = 'none'
+                    piece.style.display = 'none';
                     setSelectedPieces(oldArray => [...oldArray, newPiece])
                     let newPieces = document.querySelectorAll(".piece-inside")
                     newPieces = Array.from(newPieces)
@@ -417,26 +429,7 @@ document.onmousemove = function (e) {
         <div className='containerBox'>
 
             <div className='pieces-container'>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
-                <div className='piece'></div>
+                {unselectedPieces}
             </div>
             <div className="landing-area">
                 {selectedPieces}
