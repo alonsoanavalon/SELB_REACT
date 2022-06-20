@@ -50,7 +50,8 @@ export default function Login () {
             set('userData', {
               id : data.id,
               name: data.name,
-              surname: data.surname
+              surname: data.surname,
+              role: data.role
             })
             cookies.set('id', data.id, {path:"/", sameSite: 'lax', maxAge: 31536000 })
             cookies.set('email', data.email, {path:"/" ,sameSite: 'lax', maxAge: 31536000 })
