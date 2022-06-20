@@ -29,6 +29,7 @@ export default function Calculo () {
     const [selectedPieces, setSelectedPieces] = useState([])
     const [idWhithoutMedia, setIdWithoutMedia] = useState()
     const [wrongCounter, setWrongCounter] = useState(0)
+    const [lastWrongCounter, setLastWrongCounter] = useState(0) 
     
 
 /* 
@@ -180,7 +181,7 @@ document.onmousemove = function (e) {
 
                 if (y > 2 && y < 500 && x > 461 && x < 940) {
                     // hidding selected piece and creating new
-                    
+
                     piece.style.display = 'none'
                     setSelectedPieces(oldArray => [...oldArray, newPiece])
                     let newPieces = document.querySelectorAll(".piece-inside")
@@ -348,17 +349,17 @@ document.onmousemove = function (e) {
         
         
     }
-    const getWrongAnswer = () => {
 
-        let internalCounter = 0;
-        let allAnswers = document.querySelectorAll(".wrong-answer");
-        if (allAnswers) {
-            Array.from(allAnswers).map((answer) => {
-                if (answer.checked) internalCounter++;
-            })
+    
+    const getWrongAnswer = (e) => {
+
+        if (e.target.value == 1) {
+            setWrongCounter(0)
+        } else if (e.target.value == 2) {
+            setWrongCounter(wrongCounter + 1)
+
         }
-        console.log(internalCounter, " Estas estan malas")
-        setWrongCounter(internalCounter)
+
     }
     return (
         <div>
@@ -569,7 +570,6 @@ document.onmousemove = function (e) {
                         instrumentName = {item.instrumentName}          
                         num = {item.num}     
                         itemId = {item.itemId} 
-                        identifier="wrong-answer"
                         onclick={getWrongAnswer}
                     />
 
@@ -594,7 +594,6 @@ document.onmousemove = function (e) {
                             instrumentName = {item.instrumentName}          
                             num = {item.num}     
                             itemId = {item.itemId} 
-                            identifier="wrong-answer"
                             onclick={getWrongAnswer}
                         />
     
@@ -607,7 +606,6 @@ document.onmousemove = function (e) {
                                 picture={item.picture}
                                 pictureName={item.pictureName}
                                 title={item.title}
-                                identifier="wrong-answer"
                                 onclick={getWrongAnswer}
 
                             />
@@ -622,7 +620,6 @@ document.onmousemove = function (e) {
                                 instrumentName = {item.instrumentName}          
                                 num = {item.num}     
                                 itemId = {item.itemId} 
-                                identifier="wrong-answer"
                                 onclick={getWrongAnswer}
                             />
         
