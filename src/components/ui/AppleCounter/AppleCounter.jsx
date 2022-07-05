@@ -86,12 +86,10 @@ export default function AppleCounter (props) {
                 } else if (response.length === 0) {
                     set('completedTests', [choicesArray])
                 } else {
-                    console.log(response, "Actualizando1")
                     let arrayCounter = 0;
                     response.forEach(array => {
                         
                         if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument']) {
-                            console.log(response, arrayCounter)
                             response.splice(arrayCounter, 1)
                             
                 

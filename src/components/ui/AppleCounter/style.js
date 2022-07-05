@@ -8,7 +8,6 @@ export const Apple = styled.div`
     width:30px;
     height:30px;
     padding:2px;
-
     display:inline-block;
     border-radius:100%;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);

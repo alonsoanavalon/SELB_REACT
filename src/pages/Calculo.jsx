@@ -29,7 +29,8 @@ export default function Calculo () {
     const [selectedPieces, setSelectedPieces] = useState([])
     const [idWhithoutMedia, setIdWithoutMedia] = useState()
     const [wrongCounter, setWrongCounter] = useState(0)
-    const [lastWrongCounter, setLastWrongCounter] = useState(0) 
+    const [lastWrongAnswer, setLastWrongAnswer] = useState() 
+    const [thisAnswer, setThisAnswer] = useState()
     
 
 /* 
@@ -353,9 +354,14 @@ document.onmousemove = function (e) {
     
     const getWrongAnswer = (e) => {
 
+        if (e.target.parentNode.id) {
+            setThisAnswer(e.target.parentNode.id);
+        }
         if (e.target.value == 1) {
             setWrongCounter(0)
-        } else if (e.target.value == 2) {
+            setLastWrongAnswer(undefined)
+        } else if (e.target.value != 1 && thisAnswer !== lastWrongAnswer && e.target.value !== undefined) {
+            setLastWrongAnswer(thisAnswer)
             setWrongCounter(wrongCounter + 1)
 
         }
