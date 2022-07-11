@@ -1,7 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import Instruction from '../components/Instruction'
 import { useAlert } from 'react-alert'
-import { useHistory } from "react-router-dom";
 // Import Swiper React components
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';

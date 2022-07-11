@@ -1,7 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
-import manzana from './images/manzana.png';
 import manzana_mordida from './images/manzana_mordida.png';
 
 export const Apple = styled.div`  

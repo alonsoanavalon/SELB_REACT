@@ -7,14 +7,9 @@ import { getMany, get, set, update } from 'idb-keyval';
 
 export default function AppleCounter (props) {
 
-    const [appleCounter, setAppleCounter] = useState([]);
     const [isArray, setIsArray] = useState(false)
     const navigate = useNavigate();
     const alert = useAlert();
-
-    useEffect(() => {
-        setAppleCounter()
-    }, [])
 
     function saveInstrumentOnline() {
         let choices = {}
