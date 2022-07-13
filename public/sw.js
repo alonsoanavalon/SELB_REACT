@@ -9,7 +9,7 @@ this.addEventListener("install", evt => {
                 '/logo192.png',
                 '/manifest.json',
                 '/static/js/bundle.js',
-                '/login',
+                /* '/login',
                 '/index.html',
                 '/',
                 '/users',
@@ -118,7 +118,7 @@ this.addEventListener("install", evt => {
 
 
 
-
+ */
 
             ])
         })
