@@ -1,9 +1,7 @@
-import React, {useState, useEffect, Fragment} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 import md5 from 'md5'
-import { Link, Navigate, Redirect, useNavigate } from 'react-router-dom'
-import { render } from 'react-dom'
 import { set } from 'idb-keyval'
 
 const cookies = new Cookies();
@@ -28,7 +26,7 @@ export default function Login () {
             password: loginFormData.get('password')
         }
 
-        let url = /* "http://localhost:3500/login" || */ "https://selb.bond/login"
+        let url = "http://localhost:3500/login" || "https://selb.bond/login"
 
         axios(url, {
             params: {

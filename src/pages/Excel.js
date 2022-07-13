@@ -12,9 +12,11 @@ export default function Excel () {
     const [selectedSchool, setSelectedSchool] = useState([])
     const [studies, setStudies] = useState([])
     const [instruments, setInstruments] = useState([])
+    const [moments, setMoments] = useState([])
     const [schoolOptions, setSchoolOptions] = useState([])
     const [csvData, setCsvData] = useState()
     const [fileName, setFileName] = useState()
+    const [filteredMoments, setFilteredMoments] = useState([])
 
     useEffect(() => {
 
@@ -31,8 +33,19 @@ export default function Excel () {
             obj['value'] = school.id
             setSchoolOptions(prevVal => [...prevVal, obj])
         }))
+        
+        get('moments')
+        .then(res => setMoments(res));
 
     }, [])
+
+    const renderMoments = () => {
+        return filteredMoments.map(moment => <option key={moment.id}value={moment.id}> {moment.begin.slice(0, 10)} - {moment.until.slice(0,10)}</option>)
+    }
+
+    const setMomentsFiltered = (e) => {
+        setFilteredMoments(moments.filter(moment => moment.study_id === e.target.value))
+    }
 
     const renderStudies = ()  => {
         return studies.map(study => <option key={study.id}value={study.id}> {study.name}</option>)
@@ -124,9 +137,16 @@ export default function Excel () {
             {/* <CsvReader />  Este nos servirá cuando queramos meter datos, ya que lee CSV*/}
             <div className='excel-container'>
             <h2>Reportes en formato CSV</h2>
-            <select  className="form-select" placeholder='Estudios' id="studySelect" defaultValue="empty">
+            <select  className="form-select" onChange={setMomentsFiltered}placeholder='Estudios' id="studySelect" defaultValue="empty">
                 <option value="empty" disabled>Estudios</option>
                 {renderStudies()}
+            </select>   
+
+            <select  className="form-select" placeholder='Momentos' id="momentSelect" defaultValue="empty">
+                <option value="empty" disabled>Momentos</option>
+                {
+                    filteredMoments.length > 0 && renderMoments()
+                }
             </select>   
 
             <div>

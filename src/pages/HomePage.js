@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
-import { del, get, set, update } from 'idb-keyval'
+import { get, update } from 'idb-keyval'
 import { useAlert } from 'react-alert'
 import axios from 'axios'
 export default function HomePage() {
@@ -15,7 +14,6 @@ export default function HomePage() {
     const [savedTests, setSavedTests] = useState(false)
     const [calculoLength, setCalculoLength] = useState(undefined)
     const [sdqLength, setSdqLength] = useState(undefined)
-    const [mode, setMode] = useState('online')
 
 
     useEffect(() => {
@@ -93,7 +91,7 @@ export default function HomePage() {
             res => {
                 axios({
                     method: 'post',
-                    url:  /* 'http://localhost:3500/newevaluation'|| */'https://selb.bond/newevaluation',
+                    url:  'http://localhost:3500/newevaluation'||'https://selb.bond/newevaluation',
                     data: res
                 });
             }

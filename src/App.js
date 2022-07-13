@@ -7,11 +7,9 @@ import Cookies from 'universal-cookie'
 import './App.css';
 import './css/styles.css'
 /* Components */
-import Users from './Users'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
 import Aside from './components/Aside'
-import UserPage from './pages/UserPage.js'
 import Login from './pages/Login';
 import Navbar from './components/Navbar'
 import StudentList from './pages/StudentList'
@@ -20,6 +18,7 @@ import Calculo from './pages/Calculo';
 import Excel from './pages/Excel';
 import Parents from './pages/Parents';
 import ParentsForm from './pages/ParentsForm';
+
 
 
 const cookies = new Cookies();
@@ -36,7 +35,7 @@ function App() {
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url = /* `http://localhost:3500/${data}` || */ `https://selb.bond/${data}`
+      let url = `http://localhost:3500/${data}` || `https://selb.bond/${data}`
       axios(url)
       .then(res => {
         set(data, res.data)
@@ -82,6 +81,7 @@ function App() {
 
     postDataInDatabase()
     getData('instruments')
+    getData('moments')
     getData('schools')
     getData('students')
     getData('instrument/1')
@@ -102,7 +102,7 @@ function App() {
 
         axios({
             method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
             params: {
                 instrument:1,
                 user: userId
@@ -117,7 +117,7 @@ function App() {
           )
             axios({
               method: 'get',
-              url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+              url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
               params: {
                   instrument:2,
                   user: userId
@@ -133,7 +133,7 @@ function App() {
               
           axios({
             method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            url:`http://localhost:3500/instrumentlist` || `https://selb.bond/instrumentlist`,
             params: {
                 instrument:3,
                 user: userId
@@ -288,8 +288,6 @@ function App() {
           : <Route path="/" element={<Login/>}></Route>}  
           
           <Route path="/students" element={<StudentList/>}></Route>
-          <Route path="/users" element={<Users/>}></Route>
-          <Route path="/users/:id" element={<UserPage/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/tejaslee" element={<TejasLee/>}></Route>
           <Route path="/calculo" element={<Calculo/>}></Route>
