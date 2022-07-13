@@ -1,15 +1,15 @@
-let cacheData = "app-v11";
+let cacheData = "app-v2";
 this.addEventListener("install", evt => {
     console.log("installing")
     caches.delete("app-v9")
-    caches.delete("app-v2")
+    caches.delete("app-v11")
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
                 '/logo192.png',
                 '/manifest.json',
                 '/static/js/bundle.js',
-                /* '/login',
+                '/login',
                 '/index.html',
                 '/',
                 '/users',
@@ -118,7 +118,7 @@ this.addEventListener("install", evt => {
 
 
 
- */
+
 
             ])
         })
