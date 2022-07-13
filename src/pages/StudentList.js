@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import {get} from 'idb-keyval'
-import Student from '../components/Student'
 import Students from '../components/Students'
 import InstrumentsList from '../components/InstrumentsList';
 
@@ -29,39 +28,7 @@ export default function StudentList () {
     
     }, [])
 
-    
 
-
-    const renderSchoolOptions = ()  => {
-        return schools.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
-    }
-
-/*     function getStudents (evt) {
-        let schoolId = evt.target.value
-        let filteredStudents;
-     
-        if (schoolId == 0) {
-            get('students')
-            .then(res => {
-                setStudents(res)
-            })
-                      
-        } else {
-            get('students')
-            .then(res => {
-                setStudents(res)
-                return res
-            })
-            .then(allStudents => {
-                filteredStudents = allStudents.filter(student => student.schoolId == schoolId)
-                setStudents(filteredStudents)
-
-            })
-          
-        }
-
-    }
- */
 
     const renderSchools = () => {
         return schools.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
@@ -89,28 +56,10 @@ export default function StudentList () {
         console.log(evt.target, "aca")
         let $courseId = evt.target.value
         let $filteredStudents = students.filter(student => parseInt(student.courseId) === parseInt($courseId))
-        let $filteredStudentsToRender = $filteredStudents.map(student => <option key={student.studentId} value={student.studentId}> {student.name + " " + student.surname}</option>)
-
+        
         setFilteredStudents($filteredStudents)
         $courseSelect.value = $courseId
-
-        console.log("ACa esta la wea")
-        console.log($filteredStudents)
-
-        
-   
-    
-
-
     }   
-
-    console.log(filteredStudents)
-    console.log("******************")
-    console.log(students)
-
-
-
-
 
     return (
         <Fragment>
