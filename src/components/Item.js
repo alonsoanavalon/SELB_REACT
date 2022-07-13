@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from "react";
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { SwiperSlide } from 'swiper/react';
 
 export default function Item (props) {
 

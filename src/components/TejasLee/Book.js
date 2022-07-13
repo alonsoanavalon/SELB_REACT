@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React from 'react';
 import HTMLFlipBook from 'react-pageflip';
 
 export default function Book (props) {

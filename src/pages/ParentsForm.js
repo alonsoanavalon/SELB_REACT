@@ -32,10 +32,6 @@ export default function ParentsForm() {
         
         
     }, [])
-
-    const sendDataToServer = (evt) => {
-
-    }
     
     
     return (

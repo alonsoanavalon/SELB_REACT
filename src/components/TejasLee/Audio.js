@@ -1,6 +1,5 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
-import { render } from 'react-dom';
 
 export default function Audio (props) {
 

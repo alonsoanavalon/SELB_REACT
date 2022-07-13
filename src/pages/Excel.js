@@ -3,8 +3,7 @@ import { MultiSelect } from "react-multi-select-component";
 import {get} from 'idb-keyval'
 import { useAlert } from 'react-alert'
 import axios from 'axios';
-import CsvReader from '../components/CsvReader';
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 
 export default function Excel () {
 

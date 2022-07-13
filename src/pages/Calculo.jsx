@@ -9,7 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { get, set, getMany, update } from 'idb-keyval';
+import { get } from 'idb-keyval';
 import Item from '../components/Item';
 import Quantification from '../components/Calculo/Quantification';
 import QuantificationQuiz from '../components/Calculo/QuantificationQuiz';
@@ -237,117 +237,6 @@ document.onmousemove = function (e) {
 
    
 
-    }
-
-    function saveInstrumentOnline() {
-        let choices = {}
-        let instrumentInfo = {}
-        let choicesArray = []
-  
-        let testDataArray = ['selectedStudent', 'userData']
-  
-        getMany(testDataArray).then(([firstVal, secondVal]) =>  {
-            instrumentInfo['user_id'] = parseInt(secondVal['id'])
-            instrumentInfo['student_id'] = parseInt(firstVal)
-            instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
-        }
-        );
-  
-        choicesArray.push(instrumentInfo)
-        
-        let allInstruments = document.querySelectorAll('.instrument-form')
-
-        console.log("ACA SI")
-        console.log(allInstruments)
-
-        allInstruments.forEach(instrument => {
-            let key;
-            let value;
-            if (instrument['Precalculo']) {
-                key = instrument['key'].value
-                value= instrument['Precalculo'].value
-                choices[key] =  value
-            } else if (instrument['Precalculo-selected']) {
-                key = instrument['key'].value
-                value= instrument['Precalculo-selected'].value
-                choices[key] =  value
-            } else if (instrument['Precalculo-counted']) {
-                key = instrument['key'].value
-                value= instrument['Precalculo-counted'].value
-                choices[key] =  value
-            } else if (instrument['Precalculo-cardinal']) {
-                key = instrument['key'].value
-                value= instrument['Precalculo-cardinal'].value
-                choices[key] =  value
-            }
-  
-            if (instrument['TejasLee']) {
-                let key = instrument['key'].value
-                let value = instrument['TejasLee'].value
-                choices[key] =  value
-            }
-  
-            if (instrument['SDQ']) {
-                let key = instrument['key'].value
-                let value = instrument['SDQ'].value
-                choices[key] = value
-            }
-  
-            
-        })
-
-
-        
-            instrumentInfo['instrument'] = 0;
-
-  
-        choicesArray.push(choices)
-  
-        console.log(choicesArray)
-  
-        get('completedTests')
-        .then(response => {
-  
-            if (!isArray) {
-                if (response.length === undefined) {
-                    update('completedTests', (val) => 
-                    [response , choicesArray])         
-                    setIsArray(true)
-                } else if (response.length === 0) {
-                    set('completedTests', [choicesArray])
-                } else {
-                    console.log(response, "Actualizando1")
-                    let arrayCounter = 0;
-                    response.forEach(array => {
-                        
-                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument']) {
-                            console.log(response, arrayCounter)
-                            response.splice(arrayCounter, 1)
-                            
-                
-                        }
-                        arrayCounter+= 1
-  
-                    })
-  
-                    update('completedTests', val => [...response, choicesArray])
-  
-                    
-                }
-            } else {
-                console.log(response, "Actualizando2")
-                update('completedTests', val => [...response, choicesArray])
-  
-            }
-  
-  
-        })
-
-
-        
-        
-        
-        
     }
 
     

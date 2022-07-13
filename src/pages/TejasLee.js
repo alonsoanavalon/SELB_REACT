@@ -1,6 +1,5 @@
-import { get, set, update, getMany } from 'idb-keyval';
+import { get } from 'idb-keyval';
 import React, {Fragment, useEffect, useState} from 'react'
-import ReactAudioPlayer from 'react-audio-player';
 import { useAlert } from 'react-alert'
 import { useNavigate  } from 'react-router-dom'
 
@@ -38,7 +37,6 @@ export default function TejasLee () {
     const [initialSound, setInitialSound] = useState([])
     const [storySound, setStorySound] = useState([])
     const [auditiveComprehension, setAuditiveComprehension] = useState([])
-    const [isArray, setIsArray] = useState(false)
 
     useEffect(() => {
 

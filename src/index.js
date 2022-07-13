@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM, {render} from 'react-dom';
+import {render} from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AlertTemplate from 'react-alert-template-mui'
 import { transitions, positions, Provider as AlertProvider, types } from 'react-alert'
