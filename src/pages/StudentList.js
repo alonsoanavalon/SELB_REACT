@@ -53,7 +53,6 @@ export default function StudentList () {
   
 
         let $courseSelect = document.getElementById("courseSelect")
-        console.log(evt.target, "aca")
         let $courseId = evt.target.value
         let $filteredStudents = students.filter(student => parseInt(student.courseId) === parseInt($courseId))
         

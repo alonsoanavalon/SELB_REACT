@@ -17,6 +17,7 @@ export default function Excel () {
     const [csvData, setCsvData] = useState()
     const [fileName, setFileName] = useState()
     const [filteredMoments, setFilteredMoments] = useState([])
+    const [studyId, setStudyId] = useState()
 
     useEffect(() => {
 
@@ -39,12 +40,8 @@ export default function Excel () {
 
     }, [])
 
-    const renderMoments = () => {
-        return filteredMoments.map(moment => <option key={moment.id}value={moment.id}> {moment.begin.slice(0, 10)} - {moment.until.slice(0,10)}</option>)
-    }
-
     const setMomentsFiltered = (e) => {
-        setFilteredMoments(moments.filter(moment => moment.study_id === e.target.value))
+        setFilteredMoments(moments.filter(moment => moment.study_id == e.target.value))
     }
 
     const renderStudies = ()  => {
@@ -70,6 +67,13 @@ export default function Excel () {
         return selectedStudy
     }
 
+    const getMoment = () => {
+        let studies = document.getElementById("momentSelect")
+        let selectedMoment = studies.value
+        return selectedMoment
+    }
+
+
     const getInstrument = () => {
         let studies = document.getElementById("instrumentSelect")
         let selectedInstrument = studies.value
@@ -93,16 +97,18 @@ export default function Excel () {
                 break;
         }
     }
+    console.log(filteredMoments, "FILTERED")
 
     const getCsv = () => {
-        let schools = getSelectedSchool()
-        let study = getStudy()
-        let instrument = getInstrument()
-        let dataObject = {}
+        const schools = getSelectedSchool()
+        const moment = getMoment()
+        const instrument = getInstrument()
+        const dataObject = {}
+
 
         setCsvData(undefined)
 
-        if (study === 'empty' || instrument === 'empty' || schools.length < 1) {
+        if (moment === 'empty' || instrument === 'empty' || schools.length < 1) {
            
             alert.show('Debe elegir cada una de las opciones', {
                 type:'error'
@@ -110,7 +116,7 @@ export default function Excel () {
         } else {
             
             dataObject['schools'] = schools
-            dataObject['study'] = study
+            dataObject['moment'] = moment
             dataObject['instrument'] = instrument
 
             getFileName(instrument)
@@ -143,9 +149,10 @@ export default function Excel () {
             </select>   
 
             <select  className="form-select" placeholder='Momentos' id="momentSelect" defaultValue="empty">
-                <option value="empty" disabled>Momentos</option>
+                <option value="empty">Momentos</option>
                 {
-                    filteredMoments.length > 0 && renderMoments()
+                    filteredMoments.length > 0 && 
+                        filteredMoments.map(moment => <option key={moment.id}value={moment.id}> {moment.begin.slice(0, 10)} - {moment.until.slice(0,10)}</option>)
                 }
             </select>   
 
