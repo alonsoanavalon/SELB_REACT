@@ -157,7 +157,7 @@ export default function ParentsForm() {
                     instrumentName = {lastQuestion[0]['instrumentName']}          
                     num = {lastQuestion[0]['num']}     
                     itemId = {lastQuestion[0]['itemId']} 
-                    choices = {3}
+                    choices = {4.2}
                     />
             }
 
