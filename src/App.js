@@ -18,6 +18,7 @@ import Calculo from './pages/Calculo';
 import Excel from './pages/Excel';
 import Parents from './pages/Parents';
 import ParentsForm from './pages/ParentsForm';
+import Aces from './pages/Aces'
 
 
 
@@ -86,6 +87,7 @@ function App() {
     getData('students')
     getData('instrument/1')
     getData('instrument/2')
+    getData('instrument/4')
     getData('studies')
     getData('courses')
     getData('sdq')
@@ -294,6 +296,7 @@ function App() {
           <Route path="/excel" element={<Excel/>}></Route>
           <Route path="/parents" element={<Parents/>}></Route>
           <Route path="/sdq" element={<ParentsForm/>}></Route>
+          <Route path="/aces" element={<Aces/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       

@@ -69,6 +69,25 @@ export default function Item (props) {
                 </div>
             </Fragment>
         )
+    } else if (props.type == 'aces') {
+        return (
+            <Fragment>
+                <div className="page-item"> 
+                    {props.title && 
+                    <Fragment> 
+                        <div class="image-instruction-container">
+                        <h3 className='main-description image-instruction'>{props.title}</h3>
+                            <button class="btn-visibility"
+                                onClick={toggleTitles}
+                            >
+                            </button>
+                            </div>
+                            </Fragment>} 
+          
+                    <img src={props.picture} alt={props.pictureName}/>
+                </div>
+            </Fragment>
+        )
     }
 
 
