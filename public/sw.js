@@ -1,11 +1,11 @@
-let cacheData = "app-v8";
+let cacheData = "app-v9";
 this.addEventListener("install", evt => {
     console.log("installing")
     caches.delete("app-v3")
     caches.delete("app-v7")
     caches.delete("app-v6")
     caches.delete("app-v5")
-    caches.delete("app-v4")
+    caches.delete("app-v8")
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
@@ -26,7 +26,6 @@ this.addEventListener("install", evt => {
                 '/tejaslee',
                 '/calculo',
                 '/excel',
-                '/respaldo',
                 '/sdq',
                 'https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css',
                 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css',

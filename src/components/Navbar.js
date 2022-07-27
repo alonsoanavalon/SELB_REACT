@@ -47,7 +47,7 @@ export default function NavBar() {
         const textInfo = `
         Version: 1.1 ||
         Ultima Actualizacion: 27/07/2022 ||
-        Cache: v8
+        Cache: v9
         `
         alert.show(textInfo, {
             type:'success'
