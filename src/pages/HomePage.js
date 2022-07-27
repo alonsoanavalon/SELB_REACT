@@ -33,8 +33,8 @@ export default function HomePage() {
                 set('backupTest', res)
               }
             })
-          } else {
-            if (res.length === 0) {
+          } else if (res.length === 0) {
+             {
               get('completedTests')
               .then(res => {
                 if (res !== undefined) {
@@ -42,6 +42,14 @@ export default function HomePage() {
                 }
               })
             }
+          } else {
+            get('completedTests')
+            .then(completed => {
+                if (completed.length > res.length) {
+                    window.alert(completed.length, res.length)
+                    set('backupTest', completed)
+                }
+            })
           }
         })
       }, [])
