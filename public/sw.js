@@ -5,6 +5,7 @@ this.addEventListener("install", evt => {
     caches.delete("app-v11")
     caches.delete("app-v5")
     caches.delete("app-v100")
+    caches.delete("app-v3")
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
