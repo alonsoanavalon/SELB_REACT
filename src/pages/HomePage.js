@@ -46,7 +46,7 @@ export default function HomePage() {
             get('completedTests')
             .then(completed => {
                 if (completed.length > res.length) {
-                    window.alert(completed.length, res.length)
+                    window.alert("Se han actualizado los test respaldados a: ", completed.length)
                     set('backupTest', completed)
                 }
             })

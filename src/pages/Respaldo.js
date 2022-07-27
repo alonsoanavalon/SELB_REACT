@@ -108,7 +108,6 @@ export default function Respaldo () {
                             csvDataRespaldo !== undefined && 
                             <Fragment>
                                 <CSVLink className="btn btn-success "filename="respaldo-test" data={csvDataRespaldo}>Descargar</CSVLink>
-                                <button style= {{marginTop:"1rem"}} className="btn btn-warning"></button>
                             </Fragment>
 
 
