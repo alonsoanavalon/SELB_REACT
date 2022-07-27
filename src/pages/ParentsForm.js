@@ -38,8 +38,6 @@ export default function ParentsForm() {
         <Fragment>
         <div className='sdq-wrapper'>
             <div className='sdq-header'>
-                <img alt="facultad-logo" src='/images/uandes.png'/>
-                <img alt="facultad-logo" src='/images/facultad.png'/>
             </div>
 
             <h2 className='h2 text-center'>“Cuestionario de capacidad y dificultades (SDQ-Cas)”</h2>   

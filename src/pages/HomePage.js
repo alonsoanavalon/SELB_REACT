@@ -1,7 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { get, update } from 'idb-keyval'
+import { get, set, update } from 'idb-keyval'
 import { useAlert } from 'react-alert'
 import axios from 'axios'
+import { CSVLink } from "react-csv";
+
 export default function HomePage() {
 
     const alert = useAlert()
@@ -11,15 +13,44 @@ export default function HomePage() {
     const [savedCalculoTests, setSavedCalculoTests] = useState([])
     const [savedSdqTests, setSavedSdqTests] = useState([])
     const [tejasLength, setTejasLength] = useState(undefined)
+
     const [savedTests, setSavedTests] = useState(false)
     const [calculoLength, setCalculoLength] = useState(undefined)
     const [sdqLength, setSdqLength] = useState(undefined)
+    const [csvData, setCsvData] = useState(undefined)
+    const [students, setStudents] = useState([])
+    const [completeName, setCompleteName] = useState("")
+    const [instruments, setInstruments] = useState([])
 
+    useEffect(() => {
+        get('backupTest')
+        .then(res => {
+          console.log(res)
+          if (res === undefined) {
+            get('completedTests')
+            .then(res => {
+              if (res !== undefined) {
+                set('backupTest', res)
+              }
+            })
+          } else {
+            if (res.length === 0) {
+              get('completedTests')
+              .then(res => {
+                if (res !== undefined) {
+                  set('backupTest', res)
+                }
+              })
+            }
+          }
+        })
+      }, [])
 
     useEffect(() => {
 
         get('userData').then(res => {
             setUsername(res.name)
+            setCompleteName(`${res.name} ${res.surname}`)
         })
     
         get('completedTests')
@@ -66,8 +97,19 @@ export default function HomePage() {
             .then(res => {
                 setSdqLength(res)
             })
+
+      
+
             
         }, 1000)
+
+        setTimeout(() => {
+            get('students')
+            .then(res => setStudents(res))
+
+            get('instruments').then(res => setInstruments(res))
+
+        }, 5000) 
 
 
 
@@ -81,6 +123,8 @@ export default function HomePage() {
     }, [])
 
 
+
+
     
     savedTejasTests === undefined ? console.log("Ta indefinido", savedTejasTests) : console.log("Ta definido", savedTejasTests, savedTejasTests.length)
 
@@ -89,6 +133,7 @@ export default function HomePage() {
         get('completedTests')
         .then(
             res => {
+
                 axios({
                     method: 'post',
                     url:  /* 'http://localhost:3500/newevaluation'|| */ 'https://selb.bond/newevaluation',
@@ -112,6 +157,7 @@ export default function HomePage() {
 
         
     }
+
 
     console.log(process.env.PORT, ' desde home')
 
@@ -154,6 +200,7 @@ export default function HomePage() {
 {/*                     { navigator.onLine ? <Fragment>
                             {savedTests === true?<button onClick={sendNewInstrument} className="button btn btn-primary">Enviar</button> : <button className="button btn btn-secondary" disabled>Enviar</button>}
                         </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button> } */}
+
 
              
            </div>

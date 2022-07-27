@@ -74,11 +74,16 @@ export default function Instruction (props) {
 
             if (!isArray) {
                 if (response.length === undefined) {
+                    update('backupTest', (val) => 
+                    [response , choicesArray])     
+
                     update('completedTests', (val) => 
                     [response , choicesArray])         
                     setIsArray(true)
                 } else if (response.length === 0) {
+
                     set('completedTests', [choicesArray])
+                    set('backupTest', [choicesArray])
                 } else {
                     console.log(response, "Actualizando1")
                     let arrayCounter = 0;
@@ -95,12 +100,14 @@ export default function Instruction (props) {
                     })
 
                     update('completedTests', val => [...response, choicesArray])
+                    update('backupTest', val => [...response, choicesArray])
 
                     
                 }
             } else {
                 console.log(response, "Actualizando2")
                 update('completedTests', val => [...response, choicesArray])
+                update('backupTest', val => [...response, choicesArray])
 
             }
 

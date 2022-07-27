@@ -1,7 +1,7 @@
 import {useState, useEffect, Fragment} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import axios from 'axios'
-import { del, get, set, update, getMany} from 'idb-keyval';
+import { del, get, set } from 'idb-keyval';
 import Cookies from 'universal-cookie'
 /* Styles */
 import './App.css';
@@ -16,6 +16,7 @@ import StudentList from './pages/StudentList'
 import TejasLee from './pages/TejasLee';
 import Calculo from './pages/Calculo';
 import Excel from './pages/Excel';
+import Respaldo from './pages/Respaldo'
 import Parents from './pages/Parents';
 import ParentsForm from './pages/ParentsForm';
 
@@ -27,7 +28,6 @@ function App() {
 
   const [userId, setUserId] = useState()
   const [isLogged, setIsLogged] = useState(false)
-  const [isArray, setIsArray] = useState()
 
   function getData (data) {
     let firstTime = true;
@@ -70,6 +70,8 @@ function App() {
     }
   }
 
+
+
   useEffect(() => { 
 
     if (!cookies.get('id') && (window.location.pathname !== "/login")) {
@@ -92,6 +94,8 @@ function App() {
 
     get('userData').then(res => {
       setUserId(res.id)
+
+      
 
   })
 
@@ -146,7 +150,7 @@ function App() {
               }
               )
       }
-        }      
+    }      
 
     get('completedTests')
     .then(res => {
@@ -156,110 +160,7 @@ function App() {
     })
 
 
-/*     window.onpopstate = e => {
-      
-      const message =
-        "Are you sure you want to leave? All provided data will be lost.";
-      e.returnValue = message;
-      let exitConfirm = window.confirm("Desea salir?")
-      exitConfirm && e.preventDefault();
-      return message;
-    } */
 
-    function saveInstrumentOnline() {
-      let choices = {}
-      let instrumentInfo = {}
-      let choicesArray = []
-
-      let testDataArray = ['selectedStudent', 'userData']
-
-      getMany(testDataArray).then(([firstVal, secondVal]) =>  {
-          instrumentInfo['user_id'] = parseInt(secondVal['id'])
-          instrumentInfo['student_id'] = parseInt(firstVal)
-          instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
-      }
-      );
-
-      choicesArray.push(instrumentInfo)
-
-      let allInstruments = document.querySelectorAll('.instrument-form')
-      allInstruments.forEach(instrument => {
-          let key;
-          let value;
-          if (instrument['Precalculo']) {
-              key = instrument['key'].value
-              value= instrument['Precalculo'].value
-              choices[key] =  value
-          } else if (instrument['Precalculo-selected']) {
-              key = instrument['key'].value
-              value= instrument['Precalculo-selected'].value
-              choices[key] =  value
-          } else if (instrument['Precalculo-counted']) {
-              key = instrument['key'].value
-              value= instrument['Precalculo-counted'].value
-              choices[key] =  value
-          } else if (instrument['Precalculo-cardinal']) {
-              key = instrument['key'].value
-              value= instrument['Precalculo-cardinal'].value
-              choices[key] =  value
-          }
-
-          if (instrument['TejasLee']) {
-              let key = instrument['key'].value
-              let value = instrument['TejasLee'].value
-              choices[key] =  value
-          }
-
-          if (instrument['SDQ']) {
-              let key = instrument['key'].value
-              let value = instrument['SDQ'].value
-              choices[key] = value
-          }
-
-      })
-
-      instrumentInfo['instrument'] = parseInt(allInstruments[0]['instrument'].value)
-
-      choicesArray.push(choices)
-
-      console.log(choicesArray)
-
-      get('completedTests')
-      .then(response => {
-
-          if (!isArray) {
-              if (response.length === undefined) {
-                  update('completedTests', (val) => 
-                  [response , choicesArray])         
-                  setIsArray(true)
-              } else if (response.length === 0) {
-                  set('completedTests', [choicesArray])
-              } else {
-                  console.log(response, "Actualizando1")
-                  let arrayCounter = 0;
-                  response.forEach(array => {
-                      
-                      if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument']) {
-                          console.log(response, arrayCounter)
-                          response.splice(arrayCounter, 1)
-                          
-              
-                      }
-                      arrayCounter+= 1
-
-                  })
-
-                  update('completedTests', val => [...response, choicesArray])
-         
-              }
-          } else {
-              console.log(response, "Actualizando2")
-              update('completedTests', val => [...response, choicesArray])
-
-          }
-
-      })   
-  }
 
   }, [userId])
 
@@ -292,6 +193,7 @@ function App() {
           <Route path="/tejaslee" element={<TejasLee/>}></Route>
           <Route path="/calculo" element={<Calculo/>}></Route>
           <Route path="/excel" element={<Excel/>}></Route>
+          <Route path="/respaldo" element={<Respaldo/>}></Route>
           <Route path="/parents" element={<Parents/>}></Route>
           <Route path="/sdq" element={<ParentsForm/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
