@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { get, set, update } from 'idb-keyval'
 import { useAlert } from 'react-alert'
 import axios from 'axios'
-import { CSVLink } from "react-csv";
 
 export default function HomePage() {
 
@@ -17,10 +16,7 @@ export default function HomePage() {
     const [savedTests, setSavedTests] = useState(false)
     const [calculoLength, setCalculoLength] = useState(undefined)
     const [sdqLength, setSdqLength] = useState(undefined)
-    const [csvData, setCsvData] = useState(undefined)
-    const [students, setStudents] = useState([])
     const [completeName, setCompleteName] = useState("")
-    const [instruments, setInstruments] = useState([])
 
     useEffect(() => {
         get('backupTest')
@@ -111,13 +107,6 @@ export default function HomePage() {
             
         }, 1000)
 
-        setTimeout(() => {
-            get('students')
-            .then(res => setStudents(res))
-
-            get('instruments').then(res => setInstruments(res))
-
-        }, 5000) 
 
 
 

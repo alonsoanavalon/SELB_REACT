@@ -1,14 +1,11 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {get, set} from 'idb-keyval'
+import React, {Fragment, useEffect, useState, useCallback} from 'react';
+import {get, getMany, set} from 'idb-keyval'
 import { CSVLink } from "react-csv";
 import { useAlert } from 'react-alert'
 export default function Respaldo () {
 
 
-    const [instrumentsRespaldo, setInstrumentsRespaldo] = useState([])
     const [csvDataRespaldo, setCsvDataRespaldo] = useState()
-    const [backupTest, setBackupTest] = useState([])
-    const [studentsRespaldo, setStudentsRespaldo] = useState([])
     const [userData, setUserData] = useState("")
     const alert = useAlert()
 
@@ -18,51 +15,69 @@ export default function Respaldo () {
             setUserData(res)
         })
 
-        get('backupTest')
-        .then(res => setBackupTest(res))
-
-
-
     }, [])
 
-    setTimeout(() => {
-        get('students')
-        .then(res => setStudentsRespaldo(res))
 
-        get('instruments').then(res => setInstrumentsRespaldo(res))
+    const getCsvRespaldo2 = () => {
+        let instrumentId;
+        let studentId;
+        let testArray = []
 
-    }, 5000) 
+        getMany(['backupTest', 'instruments', 'students'])
+        .then(([backupTest, instrumentsRespaldo, studentsRespaldo]) => {
+            
+            backupTest.map((test) => {
+                instrumentId = test[0]['instrument']
+                /* let userId = test[0]['user_id'] */
+                studentId = test[0]['student_id'];
+    
+                let localArray = []
+                let studentName;
+                let instrumentName;
+                let answers = []
+
+
+                studentsRespaldo.forEach((student) => {
+                    if (student['studentId'] == studentId) {
+                        studentName = student['name']
+                    }
+                })
+                instrumentsRespaldo.forEach((instrument) => {
+                    if (instrument['id'] == instrumentId) {
+                        instrumentName = instrument['name']
+                    }
+                })
+                Object.entries(test[1]).map((element) => element[1] === "" ? answers.push(0) : answers.push(element[1]))
+                localArray.push(instrumentName, test[0]['date'], studentName, ...answers, "FIN", JSON.stringify(test))
+                testArray.push(localArray)
+    
+            })
+            setCsvDataRespaldo(testArray)
+        })
+
+    }
 
 
 
-    const getCsvRespaldo = () => {
-
-
-
+/*     const getCsvRespaldo = () => {
 
         let instrumentId;
         let studentId;
         let testArray = []
-       
-
-
-
         backupTest.map((test) => {
             instrumentId = test[0]['instrument']
-            /* let userId = test[0]['user_id'] */
+            
             studentId = test[0]['student_id'];
 
             let localArray = []
             let studentName;
             let instrumentName;
             let answers = []
-
             studentsRespaldo.forEach((student) => {
                 if (student['studentId'] == studentId) {
                     studentName = student['name']
                 }
             })
-
             instrumentsRespaldo.forEach((instrument) => {
                 if (instrument['id'] == instrumentId) {
                     instrumentName = instrument['name']
@@ -71,27 +86,16 @@ export default function Respaldo () {
             Object.entries(test[1]).map((element) => element[1] === "" ? answers.push(0) : answers.push(element[1]))
             localArray.push(instrumentName, test[0]['date'], studentName, ...answers, "FIN", JSON.stringify(test))
             testArray.push(localArray)
-            
-
-
-            
-            
-
 
         })
 
-        console.log(testArray)
-
         setCsvDataRespaldo(testArray)
-        
-
-
-    }
+    } */
 
     const igualarRespaldoALocal = () => {
         get('completedTests')
         .then(completed => {
-            alert.show('El respaldo se ha reinicializado. RECUERDA: Actualiza esta pantalla para descargar el respaldo con los NUEVOS datos', {
+            alert.show('El respaldo se ha reinicializado. RECUERDA: Sale y vuelve de esta pantalla para descargar el respaldo con los NUEVOS datos', {
                 type:'success'
             })
                 set('backupTest', completed)
@@ -100,7 +104,7 @@ export default function Respaldo () {
 
     
 
-   
+    csvDataRespaldo && console.log(csvDataRespaldo)
     
     return (
         <Fragment>
@@ -113,11 +117,11 @@ export default function Respaldo () {
 
             <div style={{border:"1px solid #ccc", display: "flex", flexDirection:"column", gap: ".6rem", minHeight:"100px"}}>
             {
-                            studentsRespaldo.length > 0 && <button id="btn-excel"className='btn btn-primary' onClick={getCsvRespaldo}>Obtener respaldo</button>
+                            <button id="btn-excel"className='btn btn-primary' onClick={getCsvRespaldo2}>Obtener respaldo</button>
                         }
 
                         {
-                            csvDataRespaldo !== undefined && 
+                            (csvDataRespaldo !== undefined) && 
                             <Fragment>
                                 <CSVLink className="btn btn-success "filename="respaldo-test" data={csvDataRespaldo}>Descargar</CSVLink>
                                
