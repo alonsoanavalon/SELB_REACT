@@ -69,6 +69,8 @@ export default function Instruction (props) {
 
         console.log(choicesArray)
 
+
+
         get('completedTests')
         .then(response => {
 
