@@ -69,6 +69,30 @@ export default function Instruction (props) {
 
         console.log(choicesArray)
 
+        get('backupTest')
+        .then(response => {
+            let backupLength = response.length
+            if (Array.isArray(response) && response.length > 0) {
+                get('completedTests')
+                .then(res => {
+                    if (backupLength > res.length) { // Aca ya sabemos que es mas el backup
+                        console.log(response, "Actualizando Backup")
+                        let arrayCounter = 0;
+                        response.forEach(array => {
+                            
+                            if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id'] && array[0]['date'] == instrumentInfo['date']) {
+                                response.splice(arrayCounter, 1)
+                                //ACA ESTA
+                            }
+                            arrayCounter+= 1
+    
+                        })
+    
+                        update('backupTest', val => [...response, choicesArray])
+                    }
+                })
+            }
+        })
 
 
         get('completedTests')
@@ -76,25 +100,19 @@ export default function Instruction (props) {
 
             if (!isArray) {
                 if (response.length === undefined) {
-                    update('backupTest', (val) => 
-                    [response , choicesArray])     
-
                     update('completedTests', (val) => 
                     [response , choicesArray])         
                     setIsArray(true)
                 } else if (response.length === 0) {
 
                     set('completedTests', [choicesArray])
-                    set('backupTest', [choicesArray])
                 } else {
                     console.log(response, "Actualizando1")
                     let arrayCounter = 0;
                     response.forEach(array => {
                         
-                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument']) {
-                            console.log(response, arrayCounter)
+                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id'] && array[0]['date'] == instrumentInfo['date']) {
                             response.splice(arrayCounter, 1)
-                            
                 
                         }
                         arrayCounter+= 1
@@ -102,14 +120,12 @@ export default function Instruction (props) {
                     })
 
                     update('completedTests', val => [...response, choicesArray])
-                    update('backupTest', val => [...response, choicesArray])
 
                     
                 }
             } else {
                 console.log(response, "Actualizando2")
                 update('completedTests', val => [...response, choicesArray])
-                update('backupTest', val => [...response, choicesArray])
 
             }
 

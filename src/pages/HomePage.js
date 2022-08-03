@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { get, set, update } from 'idb-keyval'
 import { useAlert } from 'react-alert'
 import axios from 'axios'
+import Swal from 'sweetalert2';
 
 export default function HomePage() {
 
@@ -21,7 +22,6 @@ export default function HomePage() {
     useEffect(() => {
         get('backupTest')
         .then(res => {
-          console.log(res)
           if (res === undefined) {
             get('completedTests')
             .then(res => {
@@ -42,7 +42,6 @@ export default function HomePage() {
             get('completedTests')
             .then(completed => {
                 if (completed.length > res.length) {
-                    window.alert("Se han actualizado los test respaldados a: ", completed.length)
                     set('backupTest', completed)
                 }
             })
@@ -130,15 +129,73 @@ export default function HomePage() {
         get('completedTests')
         .then(
             res => {
+                if (res !== undefined) {
+                    Swal.fire({
+                        inputAttributes: {
+                          autocapitalize: 'off'
+                        },
+                        showCancelButton: true,
+                        cancelButtonText: 'Cancelar',
+                        cancelButtonColor:'#cc4846',
+                        confirmButtonColor:"#1674d8",
+                        confirmButtonText: '¿Deseas enviar los test?',
+                        showLoaderOnConfirm: true,
+                        preConfirm: async () => {
+                          return fetch(/* 'http://localhost:3500/newevaluation'|| */ 'https://selb.bond/newevaluation', { 
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(res)
+                            })
+                            .then(response => {
+                              if (!response.ok) {
+                                throw new Error(response.statusText)
+                              }
+                              return response.json()
+                            })
+                            .catch(error => {
+                              Swal.showValidationMessage(
+                                `Ha ocurrido un error en el envío de datos desde el dispositivo`
+                              )
+                            })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          Swal.fire({
+                            showCancelButton: true,
+                            cancelButtonText: 'Finalizar',
+                            cancelButtonColor:'#cc4846',
+                            confirmButtonColor:"#1674d8",
+                            confirmButtonText: 'Finalizar y limpiar test por enviar',
+                            title: `${result.value.statusText}`,
+                            html: `<b>Total enviados</b>: ${result.value.instrumentsLength}
+                                   <br>
+                                   <b>Ingresados</b>: ${result.value.createdCounter}
+                                   <br>
+                                   <b>Actualizados</b>: ${result.value.updatedCounter}
+                                   <br></br>
+                                   ${result.value.htmlText}`
+                          }).then(result => {
+                            if (result.isConfirmed) {
+                                update('completedTests', val => [])
+                                setTimeout(() => {
+                                    window.location.pathname = '/'
+                                }, 1500)
+                            }
+                        })
 
-                axios({
-                    method: 'post',
-                    url:  /* 'http://localhost:3500/newevaluation'|| */ 'https://selb.bond/newevaluation',
-                    data: res
-                });
+                        }
+                    })
+                      
+                      
+                }
             }
+
+
         )
-        .then(
+/*         .then(
             _ => {
                 update('completedTests', val => [])
                 setTimeout(() => {
@@ -146,17 +203,12 @@ export default function HomePage() {
                     window.location.pathname = '/'
                 }, 1000)
             }
-        )
-
-        alert.show(`Haz enviado ${savedTejasTests+savedCalculoTests+savedSdqTests} test`);
-        
+        ) */
 
 
         
     }
 
-
-    console.log(process.env.PORT, ' desde home')
 
     return (
         <Fragment>
@@ -193,8 +245,8 @@ export default function HomePage() {
 
                     </tbody>
                     </table>
-{/* 
-                    { navigator.onLine ? <Fragment>
+
+{/*                     { navigator.onLine ? <Fragment>
                             {savedTests === true?<button onClick={sendNewInstrument} className="button btn btn-primary">Enviar</button> : <button className="button btn btn-secondary" disabled>Enviar</button>}
                         </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button> }
  */}
