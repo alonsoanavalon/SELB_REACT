@@ -1,7 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { get, update } from 'idb-keyval'
+import { get, set, update } from 'idb-keyval'
 import { useAlert } from 'react-alert'
 import axios from 'axios'
+import Swal from 'sweetalert2';
+
 export default function HomePage() {
 
     const alert = useAlert()
@@ -11,15 +13,47 @@ export default function HomePage() {
     const [savedCalculoTests, setSavedCalculoTests] = useState([])
     const [savedSdqTests, setSavedSdqTests] = useState([])
     const [tejasLength, setTejasLength] = useState(undefined)
+
     const [savedTests, setSavedTests] = useState(false)
     const [calculoLength, setCalculoLength] = useState(undefined)
     const [sdqLength, setSdqLength] = useState(undefined)
+    const [completeName, setCompleteName] = useState("")
 
+    useEffect(() => {
+        get('backupTest')
+        .then(res => {
+          if (res === undefined) {
+            get('completedTests')
+            .then(res => {
+              if (res !== undefined) {
+                set('backupTest', res)
+              }
+            })
+          } else if (res.length === 0) {
+             {
+              get('completedTests')
+              .then(res => {
+                if (res !== undefined) {
+                  set('backupTest', res)
+                }
+              })
+            }
+          } else {
+            get('completedTests')
+            .then(completed => {
+                if (completed.length > res.length) {
+                    set('backupTest', completed)
+                }
+            })
+          }
+        })
+      }, [])
 
     useEffect(() => {
 
         get('userData').then(res => {
             setUsername(res.name)
+            setCompleteName(`${res.name} ${res.surname}`)
         })
     
         get('completedTests')
@@ -66,8 +100,12 @@ export default function HomePage() {
             .then(res => {
                 setSdqLength(res)
             })
+
+      
+
             
         }, 1000)
+
 
 
 
@@ -81,6 +119,8 @@ export default function HomePage() {
     }, [])
 
 
+
+
     
     savedTejasTests === undefined ? console.log("Ta indefinido", savedTejasTests) : console.log("Ta definido", savedTejasTests, savedTejasTests.length)
 
@@ -89,14 +129,73 @@ export default function HomePage() {
         get('completedTests')
         .then(
             res => {
-                axios({
-                    method: 'post',
-                    url:  /* 'http://localhost:3500/newevaluation'|| */ 'https://selb.bond/newevaluation',
-                    data: res
-                });
+                if (res !== undefined) {
+                    Swal.fire({
+                        inputAttributes: {
+                          autocapitalize: 'off'
+                        },
+                        showCancelButton: true,
+                        cancelButtonText: 'Cancelar',
+                        cancelButtonColor:'#cc4846',
+                        confirmButtonColor:"#1674d8",
+                        confirmButtonText: '¿Deseas enviar los test?',
+                        showLoaderOnConfirm: true,
+                        preConfirm: async () => {
+                          return fetch(/* 'http://localhost:3500/newevaluation'|| */ 'https://selb.bond/newevaluation', { 
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(res)
+                            })
+                            .then(response => {
+                              if (!response.ok) {
+                                throw new Error(response.statusText)
+                              }
+                              return response.json()
+                            })
+                            .catch(error => {
+                              Swal.showValidationMessage(
+                                `Ha ocurrido un error en el envío de datos desde el dispositivo`
+                              )
+                            })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          Swal.fire({
+                            showCancelButton: true,
+                            cancelButtonText: 'Finalizar',
+                            cancelButtonColor:'#cc4846',
+                            confirmButtonColor:"#1674d8",
+                            confirmButtonText: 'Finalizar y limpiar test por enviar',
+                            title: `${result.value.statusText}`,
+                            html: `<b>Total enviados</b>: ${result.value.instrumentsLength}
+                                   <br>
+                                   <b>Ingresados</b>: ${result.value.createdCounter}
+                                   <br>
+                                   <b>Actualizados</b>: ${result.value.updatedCounter}
+                                   <br></br>
+                                   ${result.value.htmlText}`
+                          }).then(result => {
+                            if (result.isConfirmed) {
+                                update('completedTests', val => [])
+                                setTimeout(() => {
+                                    window.location.pathname = '/'
+                                }, 1500)
+                            }
+                        })
+
+                        }
+                    })
+                      
+                      
+                }
             }
+
+
         )
-        .then(
+/*         .then(
             _ => {
                 update('completedTests', val => [])
                 setTimeout(() => {
@@ -104,16 +203,12 @@ export default function HomePage() {
                     window.location.pathname = '/'
                 }, 1000)
             }
-        )
-
-        alert.show(`Haz enviado ${savedTejasTests+savedCalculoTests+savedSdqTests} test`);
-        
+        ) */
 
 
         
     }
 
-    console.log(process.env.PORT, ' desde home')
 
     return (
         <Fragment>
@@ -154,6 +249,7 @@ export default function HomePage() {
                     { navigator.onLine ? <Fragment>
                             {savedTests === true?<button onClick={sendNewInstrument} className="button btn btn-primary">Enviar</button> : <button className="button btn btn-secondary" disabled>Enviar</button>}
                         </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button> }
+
 
              
            </div>

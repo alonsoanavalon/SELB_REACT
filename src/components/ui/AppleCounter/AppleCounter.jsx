@@ -11,6 +11,24 @@ export default function AppleCounter (props) {
     const navigate = useNavigate();
     const alert = useAlert();
 
+    function getMomentByDate(date) {
+        let dateBegin;
+        let dateUntil;
+        get('moments')
+        .then(res => {
+            res.map(element => {
+                dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW")
+                dateUntil = new Date(element['until']).toLocaleDateString("zh-TW")
+                if (date >= dateBegin && date <= dateUntil ) {
+                    console.log(element['id'], " ID")
+                    return element['id']
+                } 
+                
+                
+            })
+        })
+    }
+
     function saveInstrumentOnline() {
         let choices = {}
         let instrumentInfo = {}
@@ -70,6 +88,39 @@ export default function AppleCounter (props) {
 
         console.log(choicesArray)
 
+        get('backupTest')
+        .then(response => {
+            let backupLength = response.length
+            if (Array.isArray(response) && response.length > 0) {
+                get('completedTests')
+                .then(res => {
+                    if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
+                        console.log(response, "Actualizando Backup from apple")
+                        let arrayCounter = 0;
+                        response.forEach(array => {
+                            
+                            let responseMoment;
+                            let instrumentMoment;
+                            if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                                responseMoment = getMomentByDate(array[0]['date'])
+                                instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                                if (responseMoment === instrumentMoment) {
+                                    response.splice(arrayCounter, 1)
+                                }
+                            }
+                            arrayCounter+= 1
+    
+                        })
+    
+                        update('backupTest', val => [...response, choicesArray])
+                    }
+                })
+            }
+        })
+
+
         get('completedTests')
         .then(response => {
 
@@ -84,10 +135,16 @@ export default function AppleCounter (props) {
                     let arrayCounter = 0;
                     response.forEach(array => {
                         
-                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument']) {
-                            response.splice(arrayCounter, 1)
-                            
-                
+                        let responseMoment;
+                        let instrumentMoment;
+                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                            responseMoment = getMomentByDate(array[0]['date'])
+                            instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                            if (responseMoment === instrumentMoment) {
+                                response.splice(arrayCounter, 1)
+                            } 
                         }
                         arrayCounter+= 1
 

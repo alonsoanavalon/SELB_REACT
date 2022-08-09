@@ -17,7 +17,7 @@ export default function Excel () {
     const [csvData, setCsvData] = useState()
     const [fileName, setFileName] = useState()
     const [filteredMoments, setFilteredMoments] = useState([])
-    const [studyId, setStudyId] = useState()
+
 
     useEffect(() => {
 
@@ -61,11 +61,6 @@ export default function Excel () {
         return schoolArray
     }
 
-    const getStudy = () => {
-        let studies = document.getElementById("studySelect")
-        let selectedStudy = studies.value
-        return selectedStudy
-    }
 
     const getMoment = () => {
         let studies = document.getElementById("momentSelect")
@@ -124,7 +119,7 @@ export default function Excel () {
             
             axios({
                 method: 'post',
-                url:  'https://selb.bond/excel',
+                url:  /* 'http://localhost:3500/excel' || */ 'https://selb.bond/excel',
                 data: dataObject
             })
             .then(
