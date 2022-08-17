@@ -14,7 +14,6 @@ import Item from '../components/Item'
 export default function Aces () {
 
     const [items, setItems] = useState([])
-    const swiper = useSwiper();
 
     useEffect(() => {
 
@@ -26,6 +25,9 @@ export default function Aces () {
         )
 
     }, [])
+
+
+    items && console.log(items)
 
 
     return (
@@ -52,16 +54,23 @@ export default function Aces () {
                 items && items.map((item) => 
                     <SwiperSlide className="next" key={item.itemId+"-media"}>
                     <Item
+                        title={item.title}
                         type={item.type}
                         picture={item.picture}
                         pictureName={item.pictureName}
                         key={item.itemId + "-media"}
-                        title={item.title}
+                        num={item.num}
+                        instrumentName={item.instrumentName}
+                        instrumentId={item.instrumentId}
+                        itemId={item.itemId}
                     />
                     </SwiperSlide >
                 )
             }
 
+            <SwiperSlide>
+                <Instruction checkpoint={true} instruction="Lo hiciste muy bien"/>
+            </SwiperSlide>
 
             </Swiper>
 

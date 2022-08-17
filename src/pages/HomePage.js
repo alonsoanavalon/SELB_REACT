@@ -55,6 +55,12 @@ export default function HomePage() {
             setUsername(res.name)
             setCompleteName(`${res.name} ${res.surname}`)
         })
+/* 
+        set('completedTests', [
+
+          [{instrument:3,user_id:4,student_id:596,date:'2022/8/14'},{146:3,147:2,148:1,149:2,150:3,151:2,152:2,153:1,154:3,155:3,156:2,157:2,158:1,159:3,160:3,161:1,162:2,163:2,164:3,165:1,166:2,167:1,168:2,169:1,170:2,171:'Si,lo not con dificultad a la hora de la separacion conmigo que soy la mama y tambien le ocurre con su abuela y apesar que me han dicho que esto no representa nada de malo,igual siento que a influido en gran parte en su vida diaria.',172:2,173:1,174:2,175:1,176:1,177:1,178:1,179:1}]
+
+        ]) */
     
         get('completedTests')
         .then(res => {

@@ -18,6 +18,8 @@ export default function ListedInstrument (props) {
             navigate('/tejaslee')
         } else if ($selectedInstrument == 2){
             navigate('/calculo')
+        } else if ($selectedInstrument == 4){
+            navigate('/aces')
         }
 
     }

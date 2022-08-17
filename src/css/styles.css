@@ -1186,4 +1186,19 @@ body {
   position: relative;
 }
 
+.main-content-wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  align-content: center;
+  gap: 2rem;
+}
+.main-content-wrapper img {
+  max-width: 100%;
+  max-height: 500px;
+}
+.main-content-wrapper form {
+  width: 50%;
+}
+
 /*# sourceMappingURL=styles.css.map */
