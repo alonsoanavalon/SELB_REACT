@@ -170,11 +170,11 @@ export default function HomePage() {
                       }).then((result) => {
                         if (result.isConfirmed) {
                           Swal.fire({
-                            showCancelButton: true,
+                            showCancelButton: false,
                             cancelButtonText: 'Finalizar',
                             cancelButtonColor:'#cc4846',
                             confirmButtonColor:"#1674d8",
-                            confirmButtonText: 'Finalizar y limpiar test por enviar',
+                            confirmButtonText: 'Finalizar',
                             title: `${result.value.statusText}`,
                             html: `<b>Total enviados</b>: ${result.value.instrumentsLength}
                                    <br>
@@ -185,10 +185,10 @@ export default function HomePage() {
                                    ${result.value.htmlText}`
                           }).then(result => {
                             if (result.isConfirmed) {
-                                update('completedTests', val => [])
+                                /* update('completedTests', val => []) */
                                 setTimeout(() => {
                                     window.location.pathname = '/'
-                                }, 1500)
+                                }, 3000)
                             }
                         })
 
