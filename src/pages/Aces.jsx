@@ -33,17 +33,18 @@ export default function Aces () {
     return (
         
         <Fragment>
+            <div className="aces-test">
               <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             slidesPerView={1}
             navigation/* ={{
                 nextEl: '.next',
             }} */
-            spaceBetween={50}
+            spaceBetween={0}
             allowTouchMove={false}
             >
 
-            <SwiperSlide className="next">
+            <SwiperSlide className="next aces-direction aces-next">
                 <Instruction instruction="“Ahora voy a mostrarte algunas imágenes de niños y niñas y quiero que tú me digas cómo se siente cada uno. Ella/Él se siente ¿feliz, triste, enojada/o, o asustada/o?. ¿Lo has entendido?… (espere respuesta del niño) Comencemos...”"/>
 
 
@@ -68,12 +69,12 @@ export default function Aces () {
                 )
             }
 
-            <SwiperSlide>
+            <SwiperSlide className="aces-direction">
                 <Instruction checkpoint={true} instruction="Lo hiciste muy bien"/>
             </SwiperSlide>
 
             </Swiper>
-
+            </div>
         </Fragment>
     )
 }
