@@ -12,11 +12,15 @@ export default function HomePage() {
     const [savedTejasTests, setSavedTejasTests] = useState([])
     const [savedCalculoTests, setSavedCalculoTests] = useState([])
     const [savedSdqTests, setSavedSdqTests] = useState([])
+    const [savedWallyTests, setSavedWallyTests] = useState([])
+    const [savedAcesTests, setSavedAcesTests] = useState([])
     const [tejasLength, setTejasLength] = useState(undefined)
 
     const [savedTests, setSavedTests] = useState(false)
     const [calculoLength, setCalculoLength] = useState(undefined)
     const [sdqLength, setSdqLength] = useState(undefined)
+    const [wallyLength, setWallyLength] = useState(undefined)
+    const [acesLength, setAcesLength] = useState(undefined)
     const [completeName, setCompleteName] = useState("")
 
     useEffect(() => {
@@ -67,6 +71,8 @@ export default function HomePage() {
             let tejas = 0;
             let calculo = 0;
             let sdq = 0;
+            let wally = 0;
+            let aces = 0;
 
             res.forEach(element => {
                 if (element[0]['instrument'] === 1) {
@@ -81,10 +87,20 @@ export default function HomePage() {
                     sdq++
                     setSavedTests(true)
                 }
+                if (element[0]['instrument'] === 4) {
+                  aces++
+                  setSavedTests(true)
+              }
+              if (element[0]['instrument'] === 5) {
+                wally++
+                setSavedTests(true)
+            }
             })
 
             setSavedTejasTests(tejas)
             setSavedCalculoTests(calculo)
+            setSavedWallyTests(wally)
+            setSavedAcesTests(aces)
             setSavedSdqTests(sdq)
             
         })
@@ -105,6 +121,16 @@ export default function HomePage() {
             get('sdqLength')
             .then(res => {
                 setSdqLength(res)
+            })
+
+            get('acesLength')
+            .then(res => {
+                setAcesLength(res)
+            })
+
+            get('wallyLength')
+            .then(res => {
+                setWallyLength(res)
             })
 
       
@@ -249,6 +275,16 @@ export default function HomePage() {
                         <td>{savedSdqTests && savedSdqTests >= 0 ? savedSdqTests : 0}</td>
                         </tr>
 
+                        <tr>
+                        <th scope="row">Aces</th>
+                        <td>{savedAcesTests && savedAcesTests >= 0 ? savedAcesTests : 0}</td>
+                        </tr>
+
+                        <tr>
+                        <th scope="row">Wally</th>
+                        <td>{savedWallyTests && savedWallyTests >= 0 ? savedWallyTests : 0}</td>
+                        </tr>
+
                     </tbody>
                     </table>
 
@@ -285,6 +321,18 @@ export default function HomePage() {
                         <tr>
                         <th scope="row">SDQ</th>
                         <td>{sdqLength && sdqLength >= 0 ? sdqLength : 0}</td>
+
+                        </tr>
+
+                        <tr>
+                        <th scope="row">Aces</th>
+                        <td>{acesLength && acesLength >= 0 ? acesLength : 0}</td>
+
+                        </tr>
+
+                        <tr>
+                        <th scope="row">Wally</th>
+                        <td>{wallyLength && wallyLength >= 0 ? wallyLength : 0}</td>
 
                         </tr>
 

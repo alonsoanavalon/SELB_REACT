@@ -1,11 +1,11 @@
 .aces-direction {
     display:flex;
     flex-direction: column !important;
-    transform: rotate(270deg);
+    transform: rotate(270deg) !important;
     flex-wrap: nowrap;
     width:100%;
     img {
-        width:500px;
+        width:450px;
     }
 }
 

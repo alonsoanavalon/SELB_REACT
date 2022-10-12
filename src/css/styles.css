@@ -995,12 +995,12 @@ template {
 .aces-direction {
   display: flex;
   flex-direction: column !important;
-  transform: rotate(270deg);
+  transform: rotate(270deg) !important;
   flex-wrap: nowrap;
   width: 100%;
 }
 .aces-direction img {
-  width: 500px;
+  width: 450px;
 }
 
 * {
@@ -1031,6 +1031,29 @@ template {
 .aces-content-wrapper {
   width: 600px;
   flex-direction: column !important;
+}
+
+.wally-emotion {
+  max-width: 100px !important;
+}
+
+.item-image-wally {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.wally-action {
+  max-width: 250px !important;
+}
+
+.wally-label {
+  text-align: center;
+}
+
+.wally-form {
+  display: flex;
+  flex-direction: row !important;
+  gap: 2rem;
 }
 
 html {

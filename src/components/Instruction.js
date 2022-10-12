@@ -84,6 +84,12 @@ export default function Instruction (props) {
                 choices[key] = value
             }
 
+            if (instrument['Wally']) {
+                let key = instrument['key'].value
+                let value = instrument['Wally'].value
+                choices[key] = value
+            }
+
             
         })
 

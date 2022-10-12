@@ -2,13 +2,13 @@ import {useState, useEffect, Fragment} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import axios from 'axios'
 import { del, get, set } from 'idb-keyval';
-import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie';
 /* Styles */
 import './App.css';
-import './css/styles.css'
+import './css/styles.css';
 /* Components */
-import HomePage from './pages/HomePage'
-import NotFoundPage from './pages/NotFoundPage'
+import HomePage from './pages/HomePage';
+import NotFoundPage from './pages/NotFoundPage';
 import Aside from './components/Aside'
 import Login from './pages/Login';
 import Navbar from './components/Navbar'
@@ -19,7 +19,8 @@ import Excel from './pages/Excel';
 import Respaldo from './pages/Respaldo'
 import Parents from './pages/Parents';
 import ParentsForm from './pages/ParentsForm';
-import Aces from './pages/Aces'
+import Aces from './pages/Aces';
+import Wally from './pages/Wally';
 
 
 
@@ -90,6 +91,7 @@ function App() {
     getData('instrument/1')
     getData('instrument/2')
     getData('instrument/4')
+    getData('instrument/5')
     getData('studies')
     getData('courses')
     getData('sdq')
@@ -151,6 +153,38 @@ function App() {
                   set('sdqLength', res.data[0]['COUNT(*)'])
               }
               )
+              
+
+              axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument:4,
+                    user: userId
+                }
+              })
+              .then(
+                    
+                   res => {
+                      set('acesLength', res.data[0]['COUNT(*)'])
+                  }
+                  )
+
+                
+          axios({
+            method: 'get',
+            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            params: {
+                instrument:5,
+                user: userId
+            }
+          })
+          .then(
+                
+               res => {
+                  set('wallyLength', res.data[0]['COUNT(*)'])
+              }
+              )
       }
     }      
 
@@ -199,6 +233,7 @@ function App() {
           <Route path="/parents" element={<Parents/>}></Route>
           <Route path="/sdq" element={<ParentsForm/>}></Route>
           <Route path="/aces" element={<Aces/>}></Route>
+          <Route path="/wally" element={<Wally/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       
