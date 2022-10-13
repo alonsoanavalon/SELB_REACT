@@ -1034,26 +1034,38 @@ template {
 }
 
 .wally-emotion {
-  max-width: 100px !important;
+  max-width: 170px !important;
 }
 
 .item-image-wally {
   text-align: center;
-  margin-top: 4rem;
+  margin: 4rem auto 0 auto;
+  width: 900px;
+}
+.item-image-wally img {
+  margin: 1rem;
 }
 
 .wally-action {
-  max-width: 250px !important;
+  max-width: 230px !important;
 }
 
 .wally-label {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.wally-label p {
+  text-align: center;
+  font-weight: 700;
 }
 
 .wally-form {
   display: flex;
   flex-direction: row !important;
-  gap: 2rem;
+  /*     gap:2rem; */
 }
 
 html {

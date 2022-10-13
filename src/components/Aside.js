@@ -2,7 +2,7 @@ import { get } from 'idb-keyval'
 import React, { Fragment, useEffect, useState } from 'react'
 import {NavLink, useNavigate} from 'react-router-dom'
 import Cookies from 'universal-cookie'
-
+import Swal from 'sweetalert2'
 export default function Aside() {
 
     const [userData, setUserData] = useState([])
@@ -10,15 +10,17 @@ export default function Aside() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        let aside = document.querySelector("#root > div.aside-bar")
-        document.addEventListener("click", e => {
 
+    
+        document.addEventListener("click", e => {
+            let aside = document.querySelector("#root > div.aside-bar")
             if (aside.classList) {
                 if (aside.classList.contains('aside-bar-active')) {
                     if (!e.target.matches('#root > div.aside-bar.aside-bar-hidden.aside-bar-active *') 
                     && (!e.target.matches("#root > div.aside-bar.aside-bar-hidden.aside-bar-active"))
                     && (!e.target.matches("#root > header > button"))
                     && (!e.target.matches("#root > header > button *"))
+                    && (!e.target.getAttribute("type") === "button")
                     ){
                         aside.classList.remove('aside-bar-active')
                         aside.classList.add('aside-bar-hidden')

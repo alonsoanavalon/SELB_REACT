@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useAlert } from 'react-alert'
+import Swal from 'sweetalert2'
 
 export default function NavBar() {
 
@@ -12,12 +13,23 @@ export default function NavBar() {
         if (aside.classList) {
             let asideIsActive = aside.classList.contains('aside-bar-active')        
             if (asideIsActive) {
-    
                 aside.classList.remove('aside-bar-active')
                 aside.classList.add('aside-bar-hidden')
             } else {
-    
-                aside.classList.add('aside-bar-active')
+            Swal.fire({
+            title: '¿Deseas ingresar al menú?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Si, ingresar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                 aside.classList.add('aside-bar-active')
+            }
+          })
+
             }
         }
 
@@ -39,7 +51,21 @@ export default function NavBar() {
     }
 
     function reloadPage() {
-        window.location.reload()
+
+        Swal.fire({
+            title: '¿Deseas recargar la página?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Si, salir y guardar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.reload()
+            }
+          })
+     
     }
 
     function showVersionInfo () {

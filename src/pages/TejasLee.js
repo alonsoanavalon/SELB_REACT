@@ -56,7 +56,6 @@ export default function TejasLee () {
         )      
 
 
-        window.addEventListener("beforeunload", handleBeforeUnload);
 
         window.history.pushState(null, null, window.location.href);
         window.onpopstate = function () {
@@ -67,15 +66,6 @@ export default function TejasLee () {
 
     }, [])
     
-    
-            const handleBeforeUnload = (e) => {
-                e.preventDefault();
-                const message =
-                  "Are you sure you want to leave? All provided data will be lost.";
-                e.returnValue = message;
-                alert("hi")
-                return message;
-              };
     
     return (
         <Fragment>

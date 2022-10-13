@@ -85,10 +85,14 @@ export default function Wally () {
                                         instrumentName = {wallyItems[1].instrumentName}          
                                         num = {wallyItems[1].num}     
                                         itemId = {wallyItems[1].itemId} 
-                                        firstAction = "https://placeimg.com/200/200/animals" 
-                                        secondAction = "https://placeimg.com/200/200/tech" 
-                                        thirdAction = "https://placeimg.com/200/200/animals" 
-                                        fourthAction = "https://placeimg.com/200/200/tech" 
+                                        firstAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_1_2_n4kx4u.png" 
+                                        secondAction =  "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_1_3_molmqr.png" 
+                                        thirdAction ="https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_1_4_snhvbq.png"
+                                        fourthAction =  "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_1_1_gzmoys.png" 
+                                        firstDescription = "¿Pedirle a Bruno que construya otra torre contigo?"
+                                        secondDescription = "¿Pegarle a Bruno o gritarle?"
+                                        thirdDescription = "¿Llorar?"
+                                        fourthDescription = "¿Ir a buscar otra cosa para jugar?"
                                     />
 
                                 </SwiperSlide>
@@ -99,7 +103,7 @@ export default function Wally () {
                                         <ItemImage
                                             picture={wallyItems[2].picture}
                                             pictureName={wallyItems[2].pictureName}
-                                            title="María/Juan estaba construyendo una torre muy alta con bloques. Bruno lo derribó"
+                                            title="María/Juan se está divirtiendo jugando en el patio cuando Bruno le pega."
                                         />
                 </SwiperSlide>
                 <SwiperSlide key={wallyItems[2].itemId}>
@@ -125,10 +129,14 @@ export default function Wally () {
                                         instrumentName = {wallyItems[3].instrumentName}          
                                         num = {wallyItems[3].num}     
                                         itemId = {wallyItems[3].itemId} 
-                                        firstAction = "https://placeimg.com/200/200/animals" 
-                                        secondAction = "https://placeimg.com/200/200/tech" 
-                                        thirdAction = "https://placeimg.com/200/200/animals" 
-                                        fourthAction = "https://placeimg.com/200/200/tech" 
+                                        firstAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_2_4_mv65zb.png"
+                                        secondAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_2_2_pi9xap.png" 
+                                        thirdAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_2_3_xq86c4.png" 
+                                        fourthAction =  "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_2_1_wnxxkq.png" 
+                                        firstDescription = "¿Decirle que hacer eso no es algo bueno?"
+                                        secondDescription = "¿Pegarle a Bruno o gritarle?"
+                                        thirdDescription = "¿Llorar?"
+                                        fourthDescription = "¿Ir a buscar otra cosa para jugar?"
                                     />
 
                                 </SwiperSlide>
@@ -139,7 +147,7 @@ export default function Wally () {
                                         <ItemImage
                                             picture={wallyItems[4].picture}
                                             pictureName={wallyItems[4].pictureName}
-                                            title="María/Juan estaba construyendo una torre muy alta con bloques. Bruno lo derribó"
+                                            title="María/Juan estaba pegándole a una pelota de fútbol. Llegó Bruno y le quitó la pelota."
                                         />
                 </SwiperSlide>
                 <SwiperSlide key={wallyItems[4].itemId}>
@@ -165,10 +173,14 @@ export default function Wally () {
                                         instrumentName = {wallyItems[5].instrumentName}          
                                         num = {wallyItems[5].num}     
                                         itemId = {wallyItems[5].itemId} 
-                                        firstAction = "https://placeimg.com/200/200/animals" 
-                                        secondAction = "https://placeimg.com/200/200/tech" 
-                                        thirdAction = "https://placeimg.com/200/200/animals" 
-                                        fourthAction = "https://placeimg.com/200/200/tech" 
+                                        firstAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_3_2_cexdtp.png" 
+                                        secondAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_3_4_skmbb3.png" 
+                                        thirdAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_3_1_sgxf4j.png" 
+                                        fourthAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_3_3_ipn623.png" 
+                                        firstDescription = "¿Pedirle a Bruno que juegue contigo?"
+                                        secondDescription = "¿Quitarle la pelota devuelta o gritarle?"
+                                        thirdDescription = "¿Llorar?"
+                                        fourthDescription = "¿Ir a buscar otra cosa para jugar?"
                                     />
 
                                 </SwiperSlide>
@@ -181,7 +193,7 @@ export default function Wally () {
                                         <ItemImage
                                             picture={wallyItems[6].picture}
                                             pictureName={wallyItems[6].pictureName}
-                                            title="María/Juan estaba construyendo una torre muy alta con bloques. Bruno lo derribó"
+                                            title=" María/Juan le pidió a Bruno que jugara con él/ella. Pero Bruno dijo que no quería jugar con María/Juan. Él/Ella va a jugar con Tomás."
                                         />
                 </SwiperSlide>
                 <SwiperSlide key={wallyItems[6].itemId}>
@@ -207,10 +219,14 @@ export default function Wally () {
                                         instrumentName = {wallyItems[7].instrumentName}          
                                         num = {wallyItems[7].num}     
                                         itemId = {wallyItems[7].itemId} 
-                                        firstAction = "https://placeimg.com/200/200/animals" 
-                                        secondAction = "https://placeimg.com/200/200/tech" 
-                                        thirdAction = "https://placeimg.com/200/200/animals" 
-                                        fourthAction = "https://placeimg.com/200/200/tech" 
+                                        firstAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_4_4_tknz9j.png" 
+                                        secondAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_4_3_cnnpvq.png" 
+                                        thirdAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_4_2_obu8qu.png" 
+                                        fourthAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_4_1_fyndfn.png" 
+                                        firstDescription = "¿Preguntar si también puedes jugar con Tomás?"
+                                        secondDescription = '¿Empujar a Bruno y decirle: "Tú no eres mi amigo?'
+                                        thirdDescription = "¿Llorar?"
+                                        fourthDescription = "¿Ir a jugar con otra persona?"
                                     />
 
                                 </SwiperSlide>
@@ -224,7 +240,7 @@ export default function Wally () {
                                         <ItemImage
                                             picture={wallyItems[8].picture}
                                             pictureName={wallyItems[8].pictureName}
-                                            title="María/Juan estaba construyendo una torre muy alta con bloques. Bruno lo derribó"
+                                            title="María/Juan hizo un dibujo de un perro. Bruno lo miró y le dijo: “No parece un perro. ¡Parece un mounstro feo!”, y comenzó a reirse."
                                         />
                 </SwiperSlide>
                 <SwiperSlide key={wallyItems[8].itemId}>
@@ -250,10 +266,14 @@ export default function Wally () {
                                         instrumentName = {wallyItems[9].instrumentName}          
                                         num = {wallyItems[9].num}     
                                         itemId = {wallyItems[9].itemId} 
-                                        firstAction = "https://placeimg.com/200/200/animals" 
-                                        secondAction = "https://placeimg.com/200/200/tech" 
-                                        thirdAction = "https://placeimg.com/200/200/animals" 
-                                        fourthAction = "https://placeimg.com/200/200/tech" 
+                                        firstAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_5_2_xzjkvx.png" 
+                                        secondAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_5_4_hk4a2v.png" 
+                                        thirdAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_5_3_zp5ymd.png" 
+                                        fourthAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_5_1_d0veor.png" 
+                                        firstDescription = '¿Decirle a Bruno: "No importa, a mí me gusta mí dibujo"?'
+                                        secondDescription = "¿Pegarle a Bruno o gritarle?" 
+                                        thirdDescription = "¿Llorar?"
+                                        fourthDescription = "¿Dejar de dibujar y buscar otra cosa para hacer?"
                                     />
 
                                 </SwiperSlide>
@@ -264,7 +284,7 @@ export default function Wally () {
                                         <ItemImage
                                             picture={wallyItems[10].picture}
                                             pictureName={wallyItems[10].pictureName}
-                                            title="María/Juan estaba construyendo una torre muy alta con bloques. Bruno lo derribó"
+                                            title=" María/Juan trajo un/a muñeco/a a la escuela para la hora de la siesta. Bruno le dijo: “¡Eres una guagua!”"
                                         />
                 </SwiperSlide>
                 <SwiperSlide key={wallyItems[10].itemId}>
@@ -290,10 +310,14 @@ export default function Wally () {
                                         instrumentName = {wallyItems[11].instrumentName}          
                                         num = {wallyItems[11].num}     
                                         itemId = {wallyItems[11].itemId} 
-                                        firstAction = "https://placeimg.com/200/200/animals" 
-                                        secondAction = "https://placeimg.com/200/200/tech" 
-                                        thirdAction = "https://placeimg.com/200/200/animals" 
-                                        fourthAction = "https://placeimg.com/200/200/tech" 
+                                        firstAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_3_jybvz7.png" 
+                                        secondAction ="https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_4_tnvsr6.png"  
+                                        thirdAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_1_mvziqj.png" 
+                                        fourthAction = "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_2_zhtx0k.png" 
+                                        firstDescription = "¿Traer un juguete para que Bruno duerma con él?"
+                                        secondDescription = '¿Decirle a Bruno :"¡No, tú eres una guagua!" o pegarle?'
+                                        thirdDescription = "¿Llorar?"
+                                        fourthDescription = "¿Ignorar a Bruno?"
                                     />
 
                                 </SwiperSlide>

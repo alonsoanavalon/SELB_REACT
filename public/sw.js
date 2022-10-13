@@ -34,7 +34,10 @@ this.addEventListener("install", evt => {
                 '/aces',
                 'https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css',
                 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css',
-                '/images/man.png',
+                '/images/angry.png',
+                '/images/sad.png',
+                '/images/smiling-face.png',
+                '/images/poker-face.png',
                 'https://fonts.googleapis.com/css2?family=Kanit:wght@800;900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap',
                 "https://res.cloudinary.com/keyzen/image/upload/v1645727162/selb/tejaslee/book/01_pzeieo.jpg",
                 "https://res.cloudinary.com/keyzen/image/upload/v1645727162/selb/tejaslee/book/02_kphnm6.jpg",
@@ -122,9 +125,31 @@ this.addEventListener("install", evt => {
                 "https://res.cloudinary.com/keyzen/image/upload/v1644842357/selb/C%C3%A1lculo/Identificaci%C3%B3n%20de%20N%C3%BAmeros%20-%20JPG%20Est%C3%ADmulos-20220212T203015Z-001/Identificaci%C3%B3n_de_N%C3%BAmeros_-_PPT_Est%C3%ADmulos.pptx_page-0015_ogp2bm.jpg",
                 "https://res.cloudinary.com/keyzen/image/upload/v1644842357/selb/C%C3%A1lculo/Identificaci%C3%B3n%20de%20N%C3%BAmeros%20-%20JPG%20Est%C3%ADmulos-20220212T203015Z-001/Identificaci%C3%B3n_de_N%C3%BAmeros_-_PPT_Est%C3%ADmulos.pptx_page-0016_m7blqa.jpg",
                 "https://res.cloudinary.com/keyzen/image/upload/v1644842357/selb/C%C3%A1lculo/Identificaci%C3%B3n%20de%20N%C3%BAmeros%20-%20JPG%20Est%C3%ADmulos-20220212T203015Z-001/Identificaci%C3%B3n_de_N%C3%BAmeros_-_PPT_Est%C3%ADmulos.pptx_page-0017_cd8be2.jpg",
-                "https://res.cloudinary.com/keyzen/image/upload/v1644842357/selb/C%C3%A1lculo/Identificaci%C3%B3n%20de%20N%C3%BAmeros%20-%20JPG%20Est%C3%ADmulos-20220212T203015Z-001/Identificaci%C3%B3n_de_N%C3%BAmeros_-_PPT_Est%C3%ADmulos.pptx_page-0018_yh61ii.jpg"
-
-
+                "https://res.cloudinary.com/keyzen/image/upload/v1644842357/selb/C%C3%A1lculo/Identificaci%C3%B3n%20de%20N%C3%BAmeros%20-%20JPG%20Est%C3%ADmulos-20220212T203015Z-001/Identificaci%C3%B3n_de_N%C3%BAmeros_-_PPT_Est%C3%ADmulos.pptx_page-0018_yh61ii.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_1_1_gzmoys.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_1_2_n4kx4u.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_1_3_molmqr.png" ,
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_1_4_snhvbq.png", 
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_2_1_wnxxkq.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_2_2_pi9xap.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_2_3_xq86c4.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_2_4_mv65zb.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_3_1_sgxf4j.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_3_2_cexdtp.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_3_3_ipn623.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666821/selb/wally/behavior/behavior_3_4_skmbb3.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_4_1_fyndfn.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_4_2_obu8qu.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_4_3_cnnpvq.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_4_4_tknz9j.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_5_1_d0veor.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666822/selb/wally/behavior/behavior_5_2_xzjkvx.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_5_3_zp5ymd.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_5_4_hk4a2v.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_1_mvziqj.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_2_zhtx0k.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_3_jybvz7.png",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_4_tnvsr6.png" 
 
 
 
