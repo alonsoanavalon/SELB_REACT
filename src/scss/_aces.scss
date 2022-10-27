@@ -44,3 +44,26 @@
     flex-direction: column !important;
   
 }
+
+#root > div.aces-test > div > div.swiper-button-prev
+
+ {
+    padding:0px;
+    width:40px !important;
+    height:40px !important;
+}
+
+#root > div.aces-test > div > div.swiper-button-next{ 
+    padding:0 !important;
+    width:40px !important;
+    height:40px !important;
+    
+}
+
+
+.swiper-button-next:after, .swiper-button-prev:after {
+    font-size:1rem !important;
+    padding:0;
+    margin:0;
+
+}

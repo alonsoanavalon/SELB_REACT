@@ -26,6 +26,7 @@
     "styled-components": "^5.3.5",
     "sweetalert2": "^11.4.14",
     "swiper": "^8.0.3",
+    "underscore": "^1.13.6",
     "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.3"
   },

@@ -21,6 +21,8 @@ import Parents from './pages/Parents';
 import ParentsForm from './pages/ParentsForm';
 import Aces from './pages/Aces';
 import Wally from './pages/Wally';
+import Corsi from './pages/Corsi'
+import Moments from './pages/Moments'
 
 
 
@@ -229,10 +231,12 @@ function App() {
           <Route path="/tejaslee" element={<TejasLee/>}></Route>
           <Route path="/calculo" element={<Calculo/>}></Route>
           <Route path="/excel" element={<Excel/>}></Route>
+          <Route path="/moments" element={<Moments/>}></Route>
           <Route path="/respaldo" element={<Respaldo/>}></Route>
           <Route path="/parents" element={<Parents/>}></Route>
           <Route path="/sdq" element={<ParentsForm/>}></Route>
           <Route path="/aces" element={<Aces/>}></Route>
+          <Route path="/corsi" element={<Corsi/>}></Route>
           <Route path="/wally" element={<Wally/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>

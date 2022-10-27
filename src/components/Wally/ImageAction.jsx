@@ -9,7 +9,6 @@ export default function ImageAction (props) {
 
         const randomNumber = parseInt(Math.random() * 100)
 
-        console.log(randomNumber)
 
         if (randomNumber >= 0 && randomNumber <= 30) {
             setOptions([

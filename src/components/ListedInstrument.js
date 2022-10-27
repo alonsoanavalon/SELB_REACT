@@ -4,8 +4,6 @@ import { useNavigate  } from 'react-router-dom'
 
 export default function ListedInstrument (props) {
 
-    console.log(props, "aca")
-
 
     const navigate = useNavigate()
         
@@ -20,7 +18,10 @@ export default function ListedInstrument (props) {
             navigate('/calculo')
         } else if ($selectedInstrument == 4){
             navigate('/aces')
+        } else if ($selectedInstrument == 5){
+            navigate('/wally')
         }
+        
 
     }
 

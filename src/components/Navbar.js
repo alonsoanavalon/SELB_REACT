@@ -59,7 +59,7 @@ export default function NavBar() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             cancelButtonText: 'Cancelar',
-            confirmButtonText: 'Si, salir y guardar'
+            confirmButtonText: 'Confirmar'
           }).then((result) => {
             if (result.isConfirmed) {
                 window.location.reload()
@@ -71,9 +71,9 @@ export default function NavBar() {
     function showVersionInfo () {
         
         const textInfo = `
-        Version: 1.1.2 ||
-        Ultima Actualización: 12/10/2022 ||
-        Cache: v2
+        Version: 1.1.3 ||
+        Ultima Actualización: 27/10/2022 ||
+        Cache: v4
         `
         alert.show(textInfo, {
             type:'success'

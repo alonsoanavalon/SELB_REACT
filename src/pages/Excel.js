@@ -92,7 +92,6 @@ export default function Excel () {
                 break;
         }
     }
-    console.log(filteredMoments, "FILTERED")
 
     const getCsv = () => {
         const schools = getSelectedSchool()

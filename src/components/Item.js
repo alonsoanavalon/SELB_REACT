@@ -10,8 +10,6 @@ export default function Item (props) {
 
         const randomNumber = parseInt(Math.random() * 100)
 
-        console.log(randomNumber)
-
         if (randomNumber >= 0 && randomNumber <= 30) {
             setOptions([<label className="form-check-label"><input className="form-check-input" type="radio" name={props.instrumentName} value="1"/>Enojado </label>,
             <label className="form-check-label"><input className={`${props.identifier} form-check-input`} type="radio" name={props.instrumentName} value="2"/>Feliz</label>,

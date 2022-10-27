@@ -46,7 +46,6 @@ export default function Users (props) {
     function printAndSave (){
 
         let formData = new FormData(document.getElementById("new-user"))
-        console.log(formData.entries)
 
         let newUser = {
             id: formData.get('id'),
@@ -79,14 +78,11 @@ export default function Users (props) {
         .then(res => {
             
             let isSaved = res
-            console.log(isSaved, " IS SAVED ")
             if (isSaved === undefined) {
                 set("newUsers", newUser)
             } else {
                 get("newUsers")
                 .then(savedUsers => {
-                    console.log(savedUsers, "usuarios")
-                    console.log(savedUsers.length, "LENGHT")
                     if (savedUsers.length === undefined) {
                         //alert("Agregando nuevo usuario 1")
                         set("newUsers", [savedUsers, newUser])

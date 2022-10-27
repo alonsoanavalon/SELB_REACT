@@ -121,7 +121,7 @@ body {
   width: 60px;
 }
 
-#home-icon, #students-icon, #users-icon, #logout-icon, #excel-icon, #parents-icon {
+#home-icon, #students-icon, #users-icon, #logout-icon, #excel-icon, #parents-icon, #moment-icon {
   width: 20px;
   margin-bottom: 3px;
   margin-right: 4px;
@@ -1033,6 +1033,24 @@ template {
   flex-direction: column !important;
 }
 
+#root > div.aces-test > div > div.swiper-button-prev {
+  padding: 0px;
+  width: 40px !important;
+  height: 40px !important;
+}
+
+#root > div.aces-test > div > div.swiper-button-next {
+  padding: 0 !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.swiper-button-next:after, .swiper-button-prev:after {
+  font-size: 1rem !important;
+  padding: 0;
+  margin: 0;
+}
+
 .wally-emotion {
   max-width: 170px !important;
 }
@@ -1043,6 +1061,8 @@ template {
   width: 900px;
 }
 .item-image-wally img {
+  width: 80%;
+  max-width: 600px;
   margin: 1rem;
 }
 
@@ -1066,6 +1086,91 @@ template {
   display: flex;
   flex-direction: row !important;
   /*     gap:2rem; */
+}
+
+.corsi-container {
+  background-color: #333;
+  height: calc(100% - 60px);
+  width: 100%;
+}
+.corsi-container .game-box {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 2rem;
+  padding-top: 4rem;
+}
+.corsi-container .game-box .corsi-box {
+  border: 1px solid #fff;
+  width: 90px;
+  height: 90px;
+}
+.corsi-container .game-box .box-1 {
+  margin-left: 2rem;
+  margin-top: 8rem;
+}
+.corsi-container .game-box .box-2 {
+  margin-left: 2rem;
+}
+.corsi-container .game-box .box-3 {
+  margin-left: 4rem;
+  margin-top: 5rem;
+}
+.corsi-container .game-box .box-4 {
+  margin-left: 5rem;
+  margin-top: 7rem;
+}
+.corsi-container .game-box .box-5 {
+  margin-left: 5rem;
+  margin-top: 2rem;
+}
+.corsi-container .game-box .box-6 {
+  margin-left: 4rem;
+}
+.corsi-container .game-box .box-7 {
+  margin-left: 4rem;
+  margin-top: -4rem;
+}
+.corsi-container .game-box .box-8 {
+  margin-left: 4rem;
+  margin-top: -2rem;
+}
+.corsi-container .game-box .box-9 {
+  margin-left: 4rem;
+  margin-top: 3rem;
+}
+.corsi-container .game-box .box-10 {
+  margin-left: 4rem;
+  margin-top: -6rem;
+}
+
+.switch-on {
+  background-color: #fff;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.corsi-options {
+  border: 1px solid #ccc;
+  align-self: center;
+}
+
+.corsi-start,
+.rotate-container {
+  transform: rotate(270deg);
+}
+
+.table-moments {
+  width: 60% !important;
+  margin: 0 auto;
+}
+.table-moments h2 {
+  padding: 2rem 0;
 }
 
 html {

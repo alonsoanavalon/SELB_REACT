@@ -8,9 +8,6 @@ export default function ImageResponse (props) {
     useEffect(() => {
 
         const randomNumber = parseInt(Math.random() * 100)
-
-        console.log(randomNumber)
-
         if (randomNumber >= 0 && randomNumber <= 30) {
             setOptions([
             <label className="form-check-label wally-label"><input className="form-check-input" type="radio" name={props.instrumentName} value="1"/> 

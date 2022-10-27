@@ -19,7 +19,6 @@ export default function Instruction (props) {
                 dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW")
                 dateUntil = new Date(element['until']).toLocaleDateString("zh-TW")
                 if (date >= dateBegin && date <= dateUntil ) {
-                    console.log(element['id'], " ID")
                     return element['id']
                 } 
                 

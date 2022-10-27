@@ -40,9 +40,6 @@ export default function StudentList () {
         let $filteredCourses = courses.filter(course => parseInt(course.school) === parseInt($schoolId))
         let $filteredCoursesToRender = $filteredCourses.map(course => <option key={course.course}value={course.course}> {course.courseName}</option>)
 
-        console.log($schoolId)
-        console.log($filteredCourses)
-
         setFilteredCourses($filteredCoursesToRender)
         $courseSelect.value = "empty"
         $courseSelect.disabled = false;

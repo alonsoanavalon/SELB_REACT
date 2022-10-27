@@ -1,4 +1,4 @@
-let cacheData = "app-v2";
+let cacheData = "app-v4";
 this.addEventListener("install", evt => {
     console.log("installing")
     caches.delete("app-v3")
@@ -9,6 +9,7 @@ this.addEventListener("install", evt => {
     caches.delete("app-v10")
     caches.delete("app-v11")
     caches.delete("app-v1")
+    caches.delete("app-v2")
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
@@ -149,7 +150,49 @@ this.addEventListener("install", evt => {
                 "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_1_mvziqj.png",
                 "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_2_zhtx0k.png",
                 "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_3_jybvz7.png",
-                "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_4_tnvsr6.png" 
+                "https://res.cloudinary.com/keyzen/image/upload/v1665666823/selb/wally/behavior/behavior_6_4_tnvsr6.png" ,
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872135/selb/aces/1_wgsqrr.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872135/selb/aces/2_oc8z4j.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872135/selb/aces/3_wxddcu.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872135/selb/aces/4_zzkk3e.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872135/selb/aces/5_eal2hm.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872135/selb/aces/6_azfvbh.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872133/selb/aces/7_gjvjff.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872133/selb/aces/8_u20ot4.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872133/selb/aces/9_hy2ml9.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872133/selb/aces/10_y0roqm.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872133/selb/aces/11_lxvs93.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872133/selb/aces/12_irtjjg.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/13_wzbgte.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/14_lksrzi.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/15_hb6tl7.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/16_en9hrb.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/17_o34puq.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/18_rmqm05.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/19_xzbdcf.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/20_pudbob.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/21_na0hdv.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/22_sa4umg.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872134/selb/aces/23_xx588t.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872135/selb/aces/24_qpk0ty.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872135/selb/aces/25_quexdk.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1658872135/selb/aces/26_se3n31.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665180605/selb/wally/situation_ijkiyw.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665180605/selb/wally/situation_1_bjgcu5.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665180605/selb/wally/situation_2_pih4ju.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665180605/selb/wally/situation_3_oombkl.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665180605/selb/wally/situation_4_zj29op.jpg",
+                "https://res.cloudinary.com/keyzen/image/upload/v1665180605/selb/wally/situation_5_jlesas.jpg"
+
+
+
+
+
+
+
+          
+
+
 
 
 

@@ -1,0 +1,83 @@
+.corsi-container {
+    background-color:#333;
+    height:calc(100% - 60px);
+    width:100%;
+
+    .game-box {
+
+        width:90%;
+        height:100%;
+        display:flex;
+        flex-wrap:wrap;
+        gap:1rem;
+        padding:2rem;
+        padding-top:4rem;
+        .corsi-box {
+            border:1px solid #fff;
+            width:90px;
+            height:90px;
+        }
+
+        .box-1 {
+            margin-left:2rem;
+            margin-top:8rem;
+        }
+
+        .box-2 {
+            margin-left:2rem;
+        }
+
+        .box-3 {
+            margin-left:4rem;
+            margin-top:5rem;
+        }
+        .box-4 {
+            margin-left:5rem;
+            margin-top:7rem;
+        }
+        .box-5 {
+            margin-left:5rem;
+            margin-top:2rem;
+        }
+        .box-6 {
+            margin-left:4rem;
+        }
+        .box-7 {
+            margin-left:4rem;
+            margin-top:-4rem;
+        }
+        
+        .box-8 {
+            margin-left:4rem;
+            margin-top:-2rem;
+        }
+        .box-9 {
+            margin-left:4rem;
+            margin-top:3rem;
+        }
+        .box-10 {
+            margin-left:4rem;
+            margin-top:-6rem;
+        }
+    }
+
+}
+
+.switch-on {
+    background-color:#fff;
+}
+
+.hidden {
+    display:none;
+    visibility:hidden;
+}
+
+.corsi-options {
+    border:1px solid #ccc;
+    align-self:center;
+}
+
+.corsi-start,
+.rotate-container {
+    transform:rotate(270deg);
+}

@@ -36,7 +36,6 @@ export default function Quantification (props) {
         let piecesArray = [...pieces]
         
         let selectedPieceArray = Array.from(document.querySelectorAll(".landing-area")[props.num+1].children)
-        console.log(selectedPieceArray)
         selectedPieceArray.slice(selectedPieceArray.length -1)[0].remove()
         
         selectedPieceArray.splice(-1, 1)
@@ -95,7 +94,6 @@ export default function Quantification (props) {
                 } else {    
                     
                     const landingArea = document.querySelectorAll(".pieces-container")[props.num]
-                    console.log(landingArea)
                     landingArea.insertAdjacentElement("beforeend", piece)
                 }
 
