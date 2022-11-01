@@ -288,9 +288,9 @@ export default function HomePage() {
                     </tbody>
                     </table>
 
-                    { navigator.onLine ? <Fragment>
+{/*                     { navigator.onLine ? <Fragment>
                             {savedTests === true?<button onClick={sendNewInstrument} className="button btn btn-primary">Enviar</button> : <button className="button btn btn-secondary" disabled>Enviar</button>}
-                        </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button> }
+                        </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button> } */}
 
 
              

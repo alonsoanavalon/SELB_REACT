@@ -23,6 +23,7 @@ this.addEventListener("install", evt => {
                 '/about',
                 '/images/daughter.png',
                 '/images/son.png',
+                '/images/man.png',
                 '/students',
                 '/menu.png',
                 '/instruments',
