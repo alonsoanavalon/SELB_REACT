@@ -2,9 +2,9 @@ import React, {Fragment, useState, useEffect} from 'react';
 
 export default function QuantificationQuiz (props) {
 
-    const [selectedValue, setSelectedValue] = useState()
-    const [countedValue, setCountedValue] = useState()
-    const [cardinalValue, setCardinalValue] = useState()
+    const [selectedValue, setSelectedValue] = useState(0)
+    const [countedValue, setCountedValue] = useState(0)
+    const [cardinalValue, setCardinalValue] = useState(0)
     const [keys, setKeys] = useState([])
 
     useEffect(() => {
@@ -21,7 +21,62 @@ export default function QuantificationQuiz (props) {
         keys && console.log(keys)
 
     }, [])
-    
+
+    useEffect(() => {
+
+        const counters = document.querySelectorAll(".quantification-value");
+        counters.forEach((counter) => {
+            counter.addEventListener("click", e => {
+                e.preventDefault();
+            })
+        })
+
+    }, [])
+
+    const substractSelectedValue = (e) => {
+        e.preventDefault();
+        if (selectedValue > 0) {
+            setSelectedValue(prevValue => prevValue -1)
+        }
+    }
+
+    const sumSelectedValue = (e) => {
+        e.preventDefault();
+
+            setSelectedValue(prevValue => prevValue +1)
+
+    }
+     
+
+    const substractCountedValue = (e) => {
+        e.preventDefault();
+        if (countedValue > 0) {
+            setCountedValue(prevValue => prevValue -1)
+        }
+    }
+
+    const sumCountedValue = (e) => {
+        e.preventDefault();
+            setCountedValue(prevValue => prevValue +1)
+
+    }
+
+
+    const substractCardinalValue = (e) => {
+        e.preventDefault();
+        if (cardinalValue > 0) {
+            setCardinalValue(prevValue => prevValue -1)
+        }
+    }
+
+    const sumCardinalValue = (e) => {
+        e.preventDefault();
+            setCardinalValue(prevValue => prevValue +1)
+
+    }
+     
+
+
     
 
     return (
@@ -37,17 +92,41 @@ export default function QuantificationQuiz (props) {
            <form key={props.itemId+"-selected"} id={props.instrumentName +"-"+props.num} className="instrument-form">
                <input type="hidden" value={props.instrumentId} name="instrument"/>
                <input type="hidden" value={keys[0]} name="key"/>
-               <label className="form-check-label"><input  className="quantification-value" type="number" name={props.instrumentName+"-selected"} value={selectedValue} onChange={(e) => setSelectedValue(e.target.value)}/> Número de fichas entregadas</label>
+               <div className="quantification-counter">
+               <p>Número de fichas entregadas</p>
+               <div>
+                <button className="btn btn-dark" onClick={substractSelectedValue}>-</button>
+
+                <label className="form-check-label"><input  className="quantification-value" type="number" name={props.instrumentName+"-selected"} value={selectedValue} disabled min="0" onChange={(e) => setSelectedValue(e.target.value)}/></label>
+                <button className="btn btn-dark" onClick={sumSelectedValue}>+</button>
+                </div>  
+               </div>
+
            </form>
            <form key={props.itemId+"-counted"} id={props.instrumentName +"-"+props.num} className="instrument-form">
                <input type="hidden" value={props.instrumentId} name="instrument"/>
                <input type="hidden" value={keys[1]} name="key"/>
-               <label className="form-check-label"><input  className="quantification-value" type="number" name={props.instrumentName+"-counted"}  value={countedValue} onChange={(e) => setCountedValue(e.target.value)}/> Número de fichas conteo</label>
+               <div className="quantification-counter">
+                <p>Número de fichas conteo</p>
+                <div>
+                    <button className="btn btn-dark" onClick={substractCountedValue}>-</button>
+                    <label className="form-check-label"><input  className="quantification-value" type="number" name={props.instrumentName+"-counted"}  value={countedValue} disabled min="0" onChange={(e) => setCountedValue(e.target.value)}/></label>
+                    <button className="btn btn-dark" onClick={sumCountedValue}>+</button>
+               </div>
+               </div>
            </form>
            <form key={props.itemId+"-cardinal"} id={props.instrumentName +"-"+props.num} className="instrument-form">
                <input type="hidden" value={props.instrumentId} name="instrument"/>
                <input type="hidden" value={keys[2]} name="key"/>
-               <label className="form-check-label"><input  className="quantification-value" type="number" name={props.instrumentName+"-cardinal"} value={cardinalValue} onChange={(e) => setCardinalValue(e.target.value)}/> Número de fichas cardinalidad</label>   
+               <div className="quantification-counter">
+                <p>Número de fichas cardinalidad</p>
+                <div>
+                <button className="btn btn-dark" onClick={substractCardinalValue}>-</button>
+                <label className="form-check-label"><input  className="quantification-value" type="number" name={props.instrumentName+"-cardinal"} value={cardinalValue} disabled min="0"  onChange={(e) => setCardinalValue(e.target.value)}/></label>  
+                <button className="btn btn-dark" onClick={sumCardinalValue}>+</button>
+                </div>
+
+               </div> 
            </form>
            </div>
 
