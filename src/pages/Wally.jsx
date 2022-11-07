@@ -7,7 +7,6 @@ import 'swiper/css/scrollbar';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Instruction from '../components/Instruction'
-import Item from '../components/Item'
 import ItemImage from '../components/Wally/ItemImage';
 import ImageResponse from '../components/Wally/ImageResponse'; 
 import ImageAction from '../components/Wally/ImageAction';

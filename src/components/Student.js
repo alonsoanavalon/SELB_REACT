@@ -1,7 +1,5 @@
-import { get, set } from 'idb-keyval';
-import React, { Fragment, useState } from 'react';
-
-import {useNavigate} from 'react-router-dom'
+import { set } from 'idb-keyval';
+import React, { Fragment } from 'react';
 
 export default function Student (props) {
 

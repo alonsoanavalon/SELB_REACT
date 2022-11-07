@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState, useCallback} from 'react';
+import React, {Fragment, useEffect, useState } from 'react';
 import {get, getMany, set} from 'idb-keyval'
 import { CSVLink } from "react-csv";
 import { useAlert } from 'react-alert'

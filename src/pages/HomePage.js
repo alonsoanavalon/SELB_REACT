@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { get, set, update } from 'idb-keyval'
+import { get, set } from 'idb-keyval'
 import { useAlert } from 'react-alert'
-import axios from 'axios'
 import Swal from 'sweetalert2';
 
 export default function HomePage() {
@@ -341,7 +340,7 @@ export default function HomePage() {
             </div>
            </div>
 
-
+            <a href="/corsi">Test Corsi</a>
 
            </div>
           

@@ -1,5 +1,5 @@
-import React, {Component, Fragment, useState, useEffect} from 'react';
-import {get, set, update, del} from 'idb-keyval'
+import React, { Fragment, useState, useEffect} from 'react';
+import {get, set} from 'idb-keyval'
 import {Table} from 'react-bootstrap'
 export default function Users (props) {
 

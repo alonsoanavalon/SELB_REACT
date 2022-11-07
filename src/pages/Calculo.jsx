@@ -291,7 +291,7 @@ document.onmousemove = function (e) {
                 )
                 }
         <SwiperSlide>
-            <Instruction checkpoint={true} instruction="Vamos a hacer un juego. En esta pantalla aparecerán un montón de fichas rojas. Vas a mover aquí (señalar la tablet), el número de fichas que yo te diga. Vamos a hacer un ejemplo"/>
+            <Instruction checkPrecalculo={true} instruction="Vamos a hacer un juego. En esta pantalla aparecerán un montón de fichas rojas. Vas a mover aquí (señalar la tablet), el número de fichas que yo te diga. Vamos a hacer un ejemplo"/>
         </SwiperSlide>
 
         <SwiperSlide>
@@ -412,7 +412,7 @@ document.onmousemove = function (e) {
 
 
         <SwiperSlide>
-            <Instruction  checkpoint={true} instruction="A continuación te haré algunas preguntas y te mostraré algunas imágenes"/>
+            <Instruction  checkPrecalculo={true} instruction="A continuación te haré algunas preguntas y te mostraré algunas imágenes"/>
         </SwiperSlide>
 
         {

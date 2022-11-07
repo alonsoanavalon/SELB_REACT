@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import {get,set,update} from 'idb-keyval'
 
 export default function Quantification (props) {
 

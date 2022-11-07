@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {get, del, set} from 'idb-keyval'
-import { useAlert } from 'react-alert'
 import axios from 'axios';
 import Swal from 'sweetalert2'
 export default function Excel () {
