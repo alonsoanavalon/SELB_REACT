@@ -30,6 +30,7 @@ export default function Corsi () {
     const [reverseFifthTestFirstAnswer, setReverseFifthTestFirstAnswer] = useState([])
     const [reverseFifthTestSecondAnswer, setReverseFifthTestSecondAnswer] = useState([])
 
+
     const blink = (num) => {
         const boxes = document.querySelectorAll(".corsi-box");
         setTimeout(() => {
@@ -524,6 +525,12 @@ export default function Corsi () {
         }
     }, [errorCounter])
     
+    useEffect(() => {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            window.history.go(1);
+        };
+    }, [])
     return (
         <Fragment>
                 
