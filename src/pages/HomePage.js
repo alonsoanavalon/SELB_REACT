@@ -340,7 +340,7 @@ export default function HomePage() {
             </div>
            </div>
 
-            <a href="/corsi">Test Corsi</a>
+            {/* <a href="/corsi">Test Corsi</a> */}
 
            </div>
           
