@@ -19,6 +19,8 @@ export default function Corsi () {
     const [fifthTestFirstAnswer, setFifthTestFirstAnswer] = useState([])
     const [fifthTestSecondAnswer, setFifthTestSecondAnswer] = useState([])
 
+    const [reverseFirstExampleAnswer, setReverseFirstExampleAnswer] = useState([])
+    const [reverseSecondExampleAnswer, setReverseSecondExampleAnswer] = useState([])
     const [reverseFirstTestFirstAnswer, setReverseFirstTestFirstAnswer] = useState([])
     const [reverseFirstTestSecondAnswer, setReverseFirstTestSecondAnswer] = useState([])
     const [reverseSecondTestFirstAnswer, setReverseSecondTestFirstAnswer] = useState([])
@@ -225,8 +227,6 @@ export default function Corsi () {
     }
 
     const corsiExample = () => {
-        
-        let expectedResults = []
 
 /*         do { */
             primeraSecuencia(7,4, setFirstExampleAnswer);
@@ -257,6 +257,13 @@ export default function Corsi () {
         // 2 DE 6
     }
 
+    const corsiExampleReverse = () => {
+        setTimeout(() => {
+            resetBoxes();
+            primeraSecuencia(1,8, setReverseFirstExampleAnswer)
+        }, 1000)
+    }
+
 
                                     // Primer test
 
@@ -270,6 +277,7 @@ export default function Corsi () {
         }
 
     }, [firstTestFirstAnswer])
+    
 
 
     //verificacion de secuencias y paso a siguiente o salida
@@ -339,7 +347,7 @@ export default function Corsi () {
         if (thirdTestSecondAnswer.length === 5) {
 
             if (!isEqual(secondCorrectAnswers, thirdTestSecondAnswer) && !isEqual(firstCorrectAnswers, thirdTestFirstAnswer)) {
-                debugger;
+
                 window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
@@ -387,13 +395,132 @@ export default function Corsi () {
 
     useEffect(() => {
         if (fifthTestFirstAnswer.length === 7) {
-            debugger;
                     setTimeout(() => {
                         resetBoxes();
-                        window.alert("ahora los test al reves")
+                        corsiExampleReverse()
                     }, 1000)
         } 
     }, [fifthTestFirstAnswer])
+
+                                // example
+
+    useEffect(() => {
+
+        if (reverseFirstExampleAnswer.length === 2) {
+            setTimeout(() => {
+                resetBoxes();
+                primeraSecuencia(7,4, setReverseSecondExampleAnswer)
+            }, 1000)
+        }
+
+    }, [reverseFirstExampleAnswer])
+
+                                // 2ndo de ejemplo
+    useEffect(() => {
+        const firstCorrectAnswer = ['9', '2'];
+        const secondCorrectAnswer = ['5', '8']
+
+        if (reverseSecondExampleAnswer.length === 2 && errorCounter < 2) {
+            if (isEqual(reverseSecondExampleAnswer, secondCorrectAnswer) && isEqual(reverseFirstExampleAnswer, firstCorrectAnswer)) {
+                setTimeout(() => {
+                    resetBoxes();
+                    Swal.fire({
+                        title: 'Recuerda, ese fue el ensayo, ¿Lo has entendido?... (espere la respuesta del niño) ... Comencemos.',
+                        icon: 'warning',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Confirmar',
+                        customClass: {
+                            container: 'rotate-container'
+                        }
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                            setErrorCounter(0)
+                            setGlobalError(0)
+                            /* Esto fue lo ultimo que hicimos, para poder ir contando los errores en los otros test */
+                            secuenciaDeTres(2,6,1, setReverseFirstTestFirstAnswer)
+                        }
+                      })
+                }, 1000)
+            } else {
+                window.alert("se suma uno al contador de amalas")
+                resetBoxes();
+                setReverseFirstExampleAnswer([])
+                setReverseSecondExampleAnswer([])
+                setErrorCounter(prevValue => prevValue + 1)
+                //hizo 2 pero estan malas, sumar a contador de malas en caso de que esto no sea infinito
+            }
+        } else if (reverseSecondExampleAnswer.length === 2 && errorCounter === 2) {
+            resetBoxes();
+            setErrorCounter(prevValue => prevValue + 1)
+        }
+        
+
+    }, [reverseSecondExampleAnswer])
+
+    //Secuencia de 3 reverse
+
+    useEffect(() => {
+        if (reverseFirstTestFirstAnswer.length === 2) {
+            setTimeout(() => {
+                resetBoxes();
+                secuenciaDeTres(5,3,7, setReverseFirstTestSecondAnswer)
+            }, 1000)
+        }
+    }, [reverseFirstTestFirstAnswer])
+
+    useEffect(() => {
+        const firstCorrectAnswers = ['3','7','2'];
+        const secondCorrectAnswers = ['6','4','8'];
+
+        if (reverseFirstTestSecondAnswer.length === 3) {
+            if (!isEqual(secondCorrectAnswers, reverseFirstTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseFirstTestFirstAnswer)) {
+                window.alert("te pateamos a la vrg")
+            } else {
+                //aca va el siguiente test
+                setTimeout(() => {
+                    resetBoxes();
+                    secuenciaDeCuatro(4,0,6,1, setReverseSecondTestFirstAnswer);
+                }, 1000)
+            }
+        }
+
+
+    }, [reverseFirstTestSecondAnswer])
+
+    //secuencia de 4 reverse
+
+
+    useEffect(() => {
+        if (reverseSecondTestFirstAnswer.length === 4) {
+            setTimeout(() => {
+                resetBoxes();
+                secuenciaDeCuatro(8,3,5,0, setReverseSecondTestSecondAnswer);
+            }, 1000)
+        }
+    }, [reverseSecondTestFirstAnswer])
+
+    useEffect(() => {
+
+        const firstCorrectAnswers = ['5','1','7','2'];
+        const secondCorrectAnswers = ['9','4','6','1'];
+
+        if (reverseSecondTestSecondAnswer.length === 5) {
+            if (!isEqual(secondCorrectAnswers, reverseSecondTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseSecondTestFirstAnswer)) {
+                window.alert("te pateamos a la vrg")
+            } else {
+                //aca va el siguiente test
+                setTimeout(() => {
+                    resetBoxes();
+                    secuenciaDeCuatro(4,0,6,1, setReverseSecondTestFirstAnswer);
+                }, 1000)
+            }
+        }
+
+
+    }, [reverseSecondTestSecondAnswer])
+
+
 
     
 
@@ -414,7 +541,9 @@ export default function Corsi () {
             if (result.isConfirmed) {
                 e.target.innerHTML = "Avanzar"
                 e.target.disabled = true;
-                corsiExample();
+                /* corsiExample(); */
+
+                corsiExampleReverse();
             }
           })
 
@@ -500,7 +629,9 @@ export default function Corsi () {
                     }
                   }).then((result) => {
                     if (result.isConfirmed) {
+          
                         corsiExample();
+ 
                     }
                   })
 
