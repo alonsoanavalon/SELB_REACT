@@ -3,7 +3,7 @@ this.addEventListener("install", evt => {
     console.log("installing")
     caches.delete("app-v1")
     caches.delete("app-v2")
-    caches.delete("app-v3")ß
+    caches.delete("app-v3")
     caches.delete("app-v4")
     caches.delete("app-v6")
     caches.delete("app-v7")
