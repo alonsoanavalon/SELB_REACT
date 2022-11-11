@@ -17,7 +17,7 @@ export default function Corsi () {
     const [fourthTestFirstAnswer, setFourthTestFirstAnswer] = useState([])
     const [fourthTestSecondAnswer, setFourthTestSecondAnswer] = useState([])
     const [fifthTestFirstAnswer, setFifthTestFirstAnswer] = useState([])
-    const [fifthTestSecondAnswer, setFifthTestSecondAnswer] = useState([])
+
 
     const [reverseFirstExampleAnswer, setReverseFirstExampleAnswer] = useState([])
     const [reverseSecondExampleAnswer, setReverseSecondExampleAnswer] = useState([])
@@ -30,7 +30,6 @@ export default function Corsi () {
     const [reverseFourthTestFirstAnswer, setReverseFourthTestFirstAnswer] = useState([])
     const [reverseFourthTestSecondAnswer, setReverseFourthTestSecondAnswer] = useState([])
     const [reverseFifthTestFirstAnswer, setReverseFifthTestFirstAnswer] = useState([])
-    const [reverseFifthTestSecondAnswer, setReverseFifthTestSecondAnswer] = useState([])
 
 
     const blink = (num) => {
@@ -269,6 +268,7 @@ export default function Corsi () {
 
     //segunda secuencia cuando primera secuencia termina
     useEffect(() => {
+        console.log(firstTestFirstAnswer)
         if (firstTestFirstAnswer.length === 3) {
                 setTimeout(() => {
                     resetBoxes();
@@ -282,10 +282,12 @@ export default function Corsi () {
 
     //verificacion de secuencias y paso a siguiente o salida
     useEffect(() => {
+        console.log(firstTestSecondAnswer)
         const firstCorrectAnswers = ['6','4','8'];
         const secondCorrectAnswers = ['3','7','2'];
         if (firstTestSecondAnswer.length === 3) {
             if (!isEqual(secondCorrectAnswers, firstTestSecondAnswer) && !isEqual(firstCorrectAnswers, firstTestFirstAnswer)) {
+                debugger;
                 window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
@@ -300,6 +302,7 @@ export default function Corsi () {
                                     // segundo test
     //segunda secuencia cuando primera secuencia termina
     useEffect(() => {
+        console.log(secondTestFirstAnswer)
         if (secondTestFirstAnswer.length === 4) {
                 setTimeout(() => {
                     resetBoxes();
@@ -311,10 +314,12 @@ export default function Corsi () {
 
     //verificacion de secuencias y paso a siguiente o salida
     useEffect(() => {
+        console.log(secondTestSecondAnswer)
         const secondCorrectAnswers = ['5','1','7','2'];
         const firstCorrectAnswers = ['9','4','6','1'];
         if (secondTestSecondAnswer.length === 4) {
             if (!isEqual(secondCorrectAnswers, secondTestSecondAnswer) && !isEqual(firstCorrectAnswers, secondTestFirstAnswer)) {
+                debugger;
                 window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
@@ -331,6 +336,7 @@ export default function Corsi () {
 
                                     //segunda secuencia cuando primera secuencia termina
     useEffect(() => {
+        console.log(thirdTestFirstAnswer)
         if (thirdTestFirstAnswer.length === 5) {
                 setTimeout(() => {
                     resetBoxes();
@@ -342,12 +348,13 @@ export default function Corsi () {
 
     //verificacion de secuencias y paso a siguiente o salida
     useEffect(() => {
+        console.log(thirdTestSecondAnswer);
         const firstCorrectAnswers = ['1','10','6','9','3'];
         const secondCorrectAnswers = ['10','2','4','3','7'];
         if (thirdTestSecondAnswer.length === 5) {
 
             if (!isEqual(secondCorrectAnswers, thirdTestSecondAnswer) && !isEqual(firstCorrectAnswers, thirdTestFirstAnswer)) {
-
+                debugger;
                 window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
@@ -363,6 +370,7 @@ export default function Corsi () {
                                 // quinto test
 
     useEffect(() => {
+        console.log(fourthTestFirstAnswer)
         if (fourthTestFirstAnswer.length === 6) {
                     setTimeout(() => {
                         resetBoxes();
@@ -374,11 +382,13 @@ export default function Corsi () {
 
     //verificacion de secuencias y paso a siguiente o salida
     useEffect(() => {
+        console.log(fourthTestSecondAnswer)
         const firstCorrectAnswers = ['9','6','4','8','3', '5'];
         const secondCorrectAnswers = ['4','7','1','2','8','10'];
         if (fourthTestSecondAnswer.length === 6) {
 
             if (!isEqual(secondCorrectAnswers, fourthTestSecondAnswer) && !isEqual(firstCorrectAnswers, fourthTestFirstAnswer)) {
+                debugger;
                 window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
@@ -394,9 +404,11 @@ export default function Corsi () {
                                 //sexto test comprobacion
 
     useEffect(() => {
+        console.log(fifthTestFirstAnswer)
         if (fifthTestFirstAnswer.length === 7) {
                     setTimeout(() => {
                         resetBoxes();
+                        //Aca tengo que tirar un swal con alguna instruccion y luego tirar el ejemplo me imagino
                         corsiExampleReverse()
                     }, 1000)
         } 
@@ -405,7 +417,7 @@ export default function Corsi () {
                                 // example
 
     useEffect(() => {
-
+        console.log(reverseFirstExampleAnswer)
         if (reverseFirstExampleAnswer.length === 2) {
             setTimeout(() => {
                 resetBoxes();
@@ -464,6 +476,7 @@ export default function Corsi () {
     //Secuencia de 3 reverse
 
     useEffect(() => {
+        console.log(reverseFirstTestFirstAnswer)
         if (reverseFirstTestFirstAnswer.length === 3) {
             setTimeout(() => {
                 resetBoxes();
@@ -473,12 +486,14 @@ export default function Corsi () {
     }, [reverseFirstTestFirstAnswer])
 
     useEffect(() => {
+        console.log(reverseFirstTestSecondAnswer)
         const firstCorrectAnswers = ['2','7','3'];
         const secondCorrectAnswers = ['8','4','6'];
 
         if (reverseFirstTestSecondAnswer.length === 3) {
             window.alert(reverseFirstTestSecondAnswer, reverseFirstTestFirstAnswer)
             if (!isEqual(secondCorrectAnswers, reverseFirstTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseFirstTestFirstAnswer)) {
+                debugger;
                 window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
@@ -496,6 +511,7 @@ export default function Corsi () {
 
 
     useEffect(() => {
+        console.log(reverseSecondTestFirstAnswer)
         if (reverseSecondTestFirstAnswer.length === 4) {
             setTimeout(() => {
                 resetBoxes();
@@ -506,11 +522,13 @@ export default function Corsi () {
 
     useEffect(() => {
 
+        console.log(reverseSecondTestSecondAnswer)
         const firstCorrectAnswers = ['2','7','1','5'];
         const secondCorrectAnswers = ['1','6','4','9'];
 
         if (reverseSecondTestSecondAnswer.length === 4) {
             if (!isEqual(secondCorrectAnswers, reverseSecondTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseSecondTestFirstAnswer)) {
+                debugger;
                 window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
@@ -523,6 +541,7 @@ export default function Corsi () {
     }, [reverseSecondTestSecondAnswer])
 
     useEffect(() => {
+        console.log(reverseThirdTestFirstAnswer)
         if (reverseThirdTestFirstAnswer.length === 5) {
             setTimeout(() => {
                 resetBoxes();
@@ -533,12 +552,13 @@ export default function Corsi () {
 
 
     useEffect(() => {
+        console.log(reverseThirdTestSecondAnswer)
         const firstCorrectAnswers = ['7','3','4','2','10'];
         const secondCorrectAnswers = ['3','9','6','10','1'];
         
         if (reverseThirdTestSecondAnswer.length === 5) {
-            debugger;
             if (!isEqual(secondCorrectAnswers, reverseThirdTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseThirdTestFirstAnswer)) {
+                debugger;
                 window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
@@ -553,6 +573,7 @@ export default function Corsi () {
 
 
     useEffect(() => {
+        console.log(reverseFourthTestFirstAnswer)
         if (reverseFourthTestFirstAnswer.length === 6) {
             setTimeout(() => {
                 resetBoxes();
@@ -562,11 +583,13 @@ export default function Corsi () {
     }, [reverseFourthTestFirstAnswer])
 
     useEffect(() => {
+        console.log(reverseFourthTestSecondAnswer)
         const firstCorrectAnswers = ['10','8','2','1','7','4'];
         const secondCorrectAnswers = ['5','3','8','4','6','9'];
         
         if (reverseFourthTestSecondAnswer.length === 6) {
             if (!isEqual(secondCorrectAnswers, reverseFourthTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseFourthTestFirstAnswer)) {
+                debugger;
                 window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
@@ -579,6 +602,8 @@ export default function Corsi () {
     }, [reverseFourthTestSecondAnswer])
 
     useEffect(() => {
+
+        console.log(reverseFifthTestFirstAnswer)
         if (reverseFifthTestFirstAnswer.length === 7) {
             window.alert("guardamos y salimos")
         }
