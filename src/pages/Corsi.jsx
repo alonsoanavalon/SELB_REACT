@@ -4,32 +4,35 @@ import {isEqual} from 'underscore';
 
 export default function Corsi () {
 
-    const [firstExampleAnswer, setFirstExampleAnswer] = useState([])
-    const [secondExampleAnswer, setSecondExampleAnswer] = useState([])
-    const [errorCounter, setErrorCounter] = useState(0)
-    const [globalError, setGlobalError] = useState(0)
-    const [firstTestFirstAnswer, setFirstTestFirstAnswer] = useState([])
-    const [firstTestSecondAnswer, setFirstTestSecondAnswer] = useState([])
-    const [secondTestFirstAnswer, setSecondTestFirstAnswer] = useState([])
-    const [secondTestSecondAnswer, setSecondTestSecondAnswer] = useState([])
-    const [thirdTestFirstAnswer, setThirdTestFirstAnswer] = useState([])
-    const [thirdTestSecondAnswer, setThirdTestSecondAnswer] = useState([])
-    const [fourthTestFirstAnswer, setFourthTestFirstAnswer] = useState([])
-    const [fourthTestSecondAnswer, setFourthTestSecondAnswer] = useState([])
-    const [fifthTestFirstAnswer, setFifthTestFirstAnswer] = useState([])
+    const [firstExampleAnswer, setFirstExampleAnswer] = useState([]);
+    const [secondExampleAnswer, setSecondExampleAnswer] = useState([]);
+    const [errorCounter, setErrorCounter] = useState(0);
+    const [globalError, setGlobalError] = useState(0);
+    const [firstTestFirstAnswer, setFirstTestFirstAnswer] = useState([]);
+    const [firstTestSecondAnswer, setFirstTestSecondAnswer] = useState([]);
+    const [secondTestFirstAnswer, setSecondTestFirstAnswer] = useState([]);
+    const [secondTestSecondAnswer, setSecondTestSecondAnswer] = useState([]);
+    const [thirdTestFirstAnswer, setThirdTestFirstAnswer] = useState([]);
+    const [thirdTestSecondAnswer, setThirdTestSecondAnswer] = useState([]);
+    const [fourthTestFirstAnswer, setFourthTestFirstAnswer] = useState([]);
+    const [fourthTestSecondAnswer, setFourthTestSecondAnswer] = useState([]);
+    const [fifthTestFirstAnswer, setFifthTestFirstAnswer] = useState([]);
 
 
-    const [reverseFirstExampleAnswer, setReverseFirstExampleAnswer] = useState([])
-    const [reverseSecondExampleAnswer, setReverseSecondExampleAnswer] = useState([])
-    const [reverseFirstTestFirstAnswer, setReverseFirstTestFirstAnswer] = useState([])
-    const [reverseFirstTestSecondAnswer, setReverseFirstTestSecondAnswer] = useState([])
-    const [reverseSecondTestFirstAnswer, setReverseSecondTestFirstAnswer] = useState([])
-    const [reverseSecondTestSecondAnswer, setReverseSecondTestSecondAnswer] = useState([])
-    const [reverseThirdTestFirstAnswer, setReverseThirdTestFirstAnswer] = useState([])
-    const [reverseThirdTestSecondAnswer, setReverseThirdTestSecondAnswer] = useState([])
-    const [reverseFourthTestFirstAnswer, setReverseFourthTestFirstAnswer] = useState([])
-    const [reverseFourthTestSecondAnswer, setReverseFourthTestSecondAnswer] = useState([])
-    const [reverseFifthTestFirstAnswer, setReverseFifthTestFirstAnswer] = useState([])
+    const [reverseFirstExampleAnswer, setReverseFirstExampleAnswer] = useState([]);
+    const [reverseSecondExampleAnswer, setReverseSecondExampleAnswer] = useState([]);
+    const [reverseFirstTestFirstAnswer, setReverseFirstTestFirstAnswer] = useState([]);
+    const [reverseFirstTestSecondAnswer, setReverseFirstTestSecondAnswer] = useState([]);
+    const [reverseSecondTestFirstAnswer, setReverseSecondTestFirstAnswer] = useState([]);
+    const [reverseSecondTestSecondAnswer, setReverseSecondTestSecondAnswer] = useState([]);
+    const [reverseThirdTestFirstAnswer, setReverseThirdTestFirstAnswer] = useState([]);
+    const [reverseThirdTestSecondAnswer, setReverseThirdTestSecondAnswer] = useState([]);
+    const [reverseFourthTestFirstAnswer, setReverseFourthTestFirstAnswer] = useState([]);
+    const [reverseFourthTestSecondAnswer, setReverseFourthTestSecondAnswer] = useState([]);
+    const [reverseFifthTestFirstAnswer, setReverseFifthTestFirstAnswer] = useState([]);
+
+    const [allAnswers, setAllAnswers] = useState([]);
+    const [allReverseAnswers, setAllReverseAnswers] = useState([]);
 
 
     const blink = (num) => {
@@ -41,6 +44,20 @@ export default function Corsi () {
             boxes[num].classList.remove("switch-on")
         }, 2000)
     }
+
+    const saveTest = () => {
+        //guardartest
+        setAllAnswers([firstTestFirstAnswer, firstTestSecondAnswer, secondTestFirstAnswer, secondTestSecondAnswer, thirdTestFirstAnswer, thirdTestSecondAnswer, fourthTestFirstAnswer, fourthTestSecondAnswer, fifthTestFirstAnswer])
+        setAllReverseAnswers([reverseFirstTestFirstAnswer, reverseFirstTestSecondAnswer, reverseSecondTestFirstAnswer, reverseSecondTestSecondAnswer, reverseThirdTestFirstAnswer, reverseThirdTestSecondAnswer, reverseFourthTestFirstAnswer, reverseFourthTestSecondAnswer, reverseFifthTestFirstAnswer])
+
+    }
+
+    useEffect(() => {
+        if (allAnswers.length > 0) {
+            console.log(allAnswers)
+            console.log(allReverseAnswers)
+        }
+    }, [allAnswers, allReverseAnswers])
 
     function touchableBoxes (e, callback) {
         let selectedBox = e.target.classList[1].slice(-1);
@@ -287,8 +304,8 @@ export default function Corsi () {
         const secondCorrectAnswers = ['3','7','2'];
         if (firstTestSecondAnswer.length === 3) {
             if (!isEqual(secondCorrectAnswers, firstTestSecondAnswer) && !isEqual(firstCorrectAnswers, firstTestFirstAnswer)) {
+                saveTest()
                 debugger;
-                window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
                 setTimeout(() => {
@@ -319,8 +336,8 @@ export default function Corsi () {
         const firstCorrectAnswers = ['9','4','6','1'];
         if (secondTestSecondAnswer.length === 4) {
             if (!isEqual(secondCorrectAnswers, secondTestSecondAnswer) && !isEqual(firstCorrectAnswers, secondTestFirstAnswer)) {
+                saveTest()
                 debugger;
-                window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
                 setTimeout(() => {
@@ -354,8 +371,8 @@ export default function Corsi () {
         if (thirdTestSecondAnswer.length === 5) {
 
             if (!isEqual(secondCorrectAnswers, thirdTestSecondAnswer) && !isEqual(firstCorrectAnswers, thirdTestFirstAnswer)) {
+                saveTest()
                 debugger;
-                window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
                 setTimeout(() => {
@@ -388,8 +405,8 @@ export default function Corsi () {
         if (fourthTestSecondAnswer.length === 6) {
 
             if (!isEqual(secondCorrectAnswers, fourthTestSecondAnswer) && !isEqual(firstCorrectAnswers, fourthTestFirstAnswer)) {
+                saveTest()
                 debugger;
-                window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
                 setTimeout(() => {
@@ -406,11 +423,29 @@ export default function Corsi () {
     useEffect(() => {
         console.log(fifthTestFirstAnswer)
         if (fifthTestFirstAnswer.length === 7) {
+            debugger;
+            resetBoxes();
+            //Aca tengo que tirar un swal con alguna instruccion y luego tirar el ejemplo me imagino
+            Swal.fire({
+                html:'A continuación van a aparecer 10 cuadrados en la pantalla. De todos ellos, algunos se van a encender en un determinado orden. Una vez que escuches la palabra "ahora", tú tendras que tocar los cuadrados en el orden contrario en el que se encendieron ¿Lo has entendido? (espere la respuesta del niño). Comencemos',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Confirmar',
+                customClass: {
+                    container: 'rotate-container'
+                }
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    setErrorCounter(0)
+                    /* Esto fue lo ultimo que hicimos, para poder ir contando los errores en los otros test */
                     setTimeout(() => {
                         resetBoxes();
-                        //Aca tengo que tirar un swal con alguna instruccion y luego tirar el ejemplo me imagino
                         corsiExampleReverse()
                     }, 1000)
+                }
+              })
+
         } 
     }, [fifthTestFirstAnswer])
 
@@ -493,8 +528,8 @@ export default function Corsi () {
         if (reverseFirstTestSecondAnswer.length === 3) {
             window.alert(reverseFirstTestSecondAnswer, reverseFirstTestFirstAnswer)
             if (!isEqual(secondCorrectAnswers, reverseFirstTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseFirstTestFirstAnswer)) {
+                saveTest()
                 debugger;
-                window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
                 setTimeout(() => {
@@ -528,8 +563,8 @@ export default function Corsi () {
 
         if (reverseSecondTestSecondAnswer.length === 4) {
             if (!isEqual(secondCorrectAnswers, reverseSecondTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseSecondTestFirstAnswer)) {
+                saveTest()
                 debugger;
-                window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
                 setTimeout(() => {
@@ -558,8 +593,8 @@ export default function Corsi () {
         
         if (reverseThirdTestSecondAnswer.length === 5) {
             if (!isEqual(secondCorrectAnswers, reverseThirdTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseThirdTestFirstAnswer)) {
+                saveTest()
                 debugger;
-                window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
                 setTimeout(() => {
@@ -589,8 +624,8 @@ export default function Corsi () {
         
         if (reverseFourthTestSecondAnswer.length === 6) {
             if (!isEqual(secondCorrectAnswers, reverseFourthTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseFourthTestFirstAnswer)) {
+                saveTest()
                 debugger;
-                window.alert("te pateamos a la vrg")
             } else {
                 //aca va el siguiente test
                 setTimeout(() => {
@@ -605,7 +640,7 @@ export default function Corsi () {
 
         console.log(reverseFifthTestFirstAnswer)
         if (reverseFifthTestFirstAnswer.length === 7) {
-            window.alert("guardamos y salimos")
+            saveTest();
         }
     }, [reverseFifthTestFirstAnswer])
 
