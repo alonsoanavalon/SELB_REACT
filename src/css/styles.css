@@ -959,6 +959,11 @@ template {
   display: flex;
   justify-content: center;
   align-items: center; }
+  .corsi-container .separator {
+    position: absolute;
+    border: 1px solid red;
+    width: 100%;
+    height: calc(100% - 60px); }
   .corsi-container .game-box {
     width: 90%;
     height: 100%;

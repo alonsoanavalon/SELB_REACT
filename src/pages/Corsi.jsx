@@ -109,11 +109,11 @@ export default function Corsi () {
         setTimeout(() => {
             //Ahora va el sonido "Ahora"
             boxes.forEach((box) => {
-                
+                box.addEventListener('dblclick', (event) => {window.alert("doble")});
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
-        }, 5000)
+        }, 7000)
     }
 
 
@@ -140,7 +140,7 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
-        }, 5000)
+        }, 9000)
     }
 
     
@@ -170,7 +170,7 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
-        }, 5000)
+        }, 11000)
     }
 
 
@@ -204,7 +204,7 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
-        }, 5000)
+        }, 13000)
     }
 
     const secuenciaDeSiete = async (box1, box2, box3, box4, box5, box6, box7, callback) => {
@@ -245,7 +245,11 @@ export default function Corsi () {
     const corsiExample = () => {
 
 /*         do { */
-            primeraSecuencia(7,4, setFirstExampleAnswer);
+            setTimeout(() => {
+
+                resetBoxes();
+                primeraSecuencia(7,4, setFirstExampleAnswer);
+            }, 1000)
 /*         } while(results !== ) */
  
 
@@ -287,6 +291,7 @@ export default function Corsi () {
     useEffect(() => {
         console.log(firstTestFirstAnswer)
         if (firstTestFirstAnswer.length === 3) {
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeTres(2,6,1, setFirstTestSecondAnswer)
@@ -305,9 +310,9 @@ export default function Corsi () {
         if (firstTestSecondAnswer.length === 3) {
             if (!isEqual(secondCorrectAnswers, firstTestSecondAnswer) && !isEqual(firstCorrectAnswers, firstTestFirstAnswer)) {
                 saveTest()
-                debugger;
             } else {
                 //aca va el siguiente test
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeCuatro(8,3,5,0, setSecondTestFirstAnswer)
@@ -321,6 +326,7 @@ export default function Corsi () {
     useEffect(() => {
         console.log(secondTestFirstAnswer)
         if (secondTestFirstAnswer.length === 4) {
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeCuatro(4,0,6,1, setSecondTestSecondAnswer)
@@ -340,6 +346,7 @@ export default function Corsi () {
                 debugger;
             } else {
                 //aca va el siguiente test
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeCinco(0,9,5,8,2, setThirdTestFirstAnswer)
@@ -355,6 +362,7 @@ export default function Corsi () {
     useEffect(() => {
         console.log(thirdTestFirstAnswer)
         if (thirdTestFirstAnswer.length === 5) {
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeCinco(9,1,3,2,6, setThirdTestSecondAnswer)
@@ -375,6 +383,7 @@ export default function Corsi () {
                 debugger;
             } else {
                 //aca va el siguiente test
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeSeis(8,5,3,7,2,4, setFourthTestFirstAnswer)
@@ -409,6 +418,7 @@ export default function Corsi () {
                 debugger;
             } else {
                 //aca va el siguiente test
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeSiete(4,5,0,8,2,9,1, setFifthTestFirstAnswer)
@@ -431,6 +441,7 @@ export default function Corsi () {
                 icon: 'warning',
                 showCancelButton: false,
                 confirmButtonColor: '#3085d6',
+                allowOutsideClick: false,
                 confirmButtonText: 'Confirmar',
                 customClass: {
                     container: 'rotate-container'
@@ -469,14 +480,14 @@ export default function Corsi () {
 
         if (reverseSecondExampleAnswer.length === 2 && errorCounter < 2) {
             if (isEqual(reverseSecondExampleAnswer, secondCorrectAnswer) && isEqual(reverseFirstExampleAnswer, firstCorrectAnswer)) {
-                setTimeout(() => {
-                    resetBoxes();
+                
                     Swal.fire({
                         title: 'Recuerda, ese fue el ensayo, ¿Lo has entendido?... (espere la respuesta del niño) ... Comencemos.',
                         icon: 'warning',
                         showCancelButton: false,
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
+                        allowOutsideClick: false,
                         customClass: {
                             container: 'rotate-container'
                         }
@@ -491,7 +502,7 @@ export default function Corsi () {
                             }, 1000)
                         }
                       })
-                }, 1000)
+           
             } else {
                 window.alert("se suma uno al contador de amalas")
                 resetBoxes();
@@ -532,6 +543,7 @@ export default function Corsi () {
                 debugger;
             } else {
                 //aca va el siguiente test
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeCuatro(4,0,6,1, setReverseSecondTestFirstAnswer);
@@ -567,6 +579,7 @@ export default function Corsi () {
                 debugger;
             } else {
                 //aca va el siguiente test
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeCinco(9,1,3,2,6, setReverseThirdTestFirstAnswer);
@@ -597,6 +610,7 @@ export default function Corsi () {
                 debugger;
             } else {
                 //aca va el siguiente test
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeSeis(3,6,0,1,7,9, setReverseFourthTestFirstAnswer);
@@ -628,6 +642,7 @@ export default function Corsi () {
                 debugger;
             } else {
                 //aca va el siguiente test
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     secuenciaDeSiete(6,0,7,2,6,4,5, setReverseFifthTestFirstAnswer);
@@ -657,6 +672,7 @@ export default function Corsi () {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             cancelButtonText: 'Cancelar',
+            allowOutsideClick: false,
             confirmButtonText: 'Confirmar',
             customClass: {
                 container: 'rotate-container'
@@ -680,6 +696,13 @@ export default function Corsi () {
         const old_element = document.querySelector(".game-box");
         const new_element = old_element.cloneNode(true);
         old_element.parentNode.replaceChild(new_element, old_element);
+
+        // si hay separador lo removemos.
+        if (document.querySelector("#root > div.corsi-container").firstChild.classList.contains("separator")) {
+            document.querySelector("#root > div.corsi-container").removeChild(document.querySelector("#root > div.corsi-container").firstChild)
+        }
+
+
     }
 
                     //TEST
@@ -687,6 +710,8 @@ export default function Corsi () {
     useEffect(() => {
         console.log(firstExampleAnswer)
         if (firstExampleAnswer.length === 2) {
+
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     primeraSecuencia(1, 8, setSecondExampleAnswer)
@@ -702,6 +727,7 @@ export default function Corsi () {
         if (secondExampleAnswer.length === 2 && errorCounter < 2) {
 
             if (isEqual(secondExampleAnswer, secondCorrectAnswer) && isEqual(firstExampleAnswer, firstCorrectAnswer)) {
+            document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
                     Swal.fire({
@@ -710,6 +736,7 @@ export default function Corsi () {
                         showCancelButton: false,
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Confirmar',
+                        allowOutsideClick: false,
                         customClass: {
                             container: 'rotate-container'
                         }
@@ -742,22 +769,27 @@ export default function Corsi () {
             setGlobalError(prevValue => prevValue + 1)
             console.log("global", globalError )
             if (globalError < 2) {
-                Swal.fire({
-                    title: 'Vamos a intentarlo una vez más... Comencemos',
-                    icon: 'warning',
-                    showCancelButton: false,
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'Confirmar',
-                    customClass: {
-                        container: 'rotate-container'
-                    }
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-          
-                        corsiExample();
- 
-                    }
-                  })
+                setTimeout(() => {
+                    resetBoxes();
+                    Swal.fire({
+                        title: 'Vamos a intentarlo una vez más... Comencemos',
+                        icon: 'warning',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick: false,
+                        confirmButtonText: 'Confirmar',
+                        customClass: {
+                            container: 'rotate-container'
+                        }
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                     
+                            corsiExample();
+     
+                        }
+                      })
+                }, 2000)
+
 
             } else {
                 Swal.fire({
@@ -765,6 +797,7 @@ export default function Corsi () {
                     icon: 'warning',
                     showCancelButton: false,
                     confirmButtonColor: '#3085d6',
+                    allowOutsideClick: false,
                     confirmButtonText: 'Confirmar',
                     customClass: {
                         container: 'rotate-container'
@@ -790,6 +823,7 @@ export default function Corsi () {
         <Fragment>
                 
                 <div className="corsi-container">
+
                     <div className="game-box">
                         
                         <div className="corsi-box box-1"></div>
@@ -803,6 +837,7 @@ export default function Corsi () {
                         <div className="corsi-box box-9"></div>
                         <div className="corsi-box box-10"></div>
                     </div>
+               
                         <button className="btn btn-primary corsi-start" onClick={startGame}>Comenzar</button>
                 </div>
             
