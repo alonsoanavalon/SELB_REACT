@@ -36,7 +36,6 @@ export default function Corsi () {
     const [allAnswers, setAllAnswers] = useState([]);
     const [allReverseAnswers, setAllReverseAnswers] = useState([]);
 
-
     const blink = (num) => {
         const boxes = document.querySelectorAll(".corsi-box");
         setTimeout(() => {
@@ -68,6 +67,43 @@ export default function Corsi () {
         if (selectedBox === '0') {
             selectedBox = '10';
         }
+
+        switch (selectedBox) {
+            case '1':
+            selectedBox = '1';
+            break;
+            case '6': 
+            selectedBox = '2';
+            break;
+            case '2': 
+            selectedBox = '3';
+            break;
+            case '7': 
+            selectedBox = '4';
+            break;
+            case '3': 
+            selectedBox = '5';
+            break;
+            case '8': 
+            selectedBox = '6';
+            break;
+            case '4': 
+            selectedBox = '7';
+            break;
+            case '9': 
+            selectedBox = '8';
+            break;
+            case '5': 
+            selectedBox = '9';
+            break;
+            case '10': 
+            selectedBox = '10';
+            break;
+
+            default:
+            selectedBox = '';
+        }
+
         callback(prevValue => [...prevValue, selectedBox]) //tengo ue cambiar esto no me sirve para la segunda vuelta
         setTimeout(() => {
             e.target.classList.add("switch-on")
@@ -95,7 +131,14 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
+
+            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            audio.play();
+
+
+
         }, 5000)
+        
     }
 
     const secuenciaDeTres = async (box1, box2, box3, callback) => {
@@ -117,6 +160,9 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
+
+            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            audio.play();
         }, 7000)
     }
 
@@ -144,6 +190,8 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
+            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            audio.play();
         }, 9000)
     }
 
@@ -174,6 +222,8 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
+            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            audio.play();
         }, 11000)
     }
 
@@ -208,6 +258,8 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
+            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            audio.play();
         }, 13000)
     }
 
@@ -243,6 +295,8 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
+            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            audio.play();
         }, 15000)
     }
 
@@ -316,8 +370,8 @@ export default function Corsi () {
     //verificacion de secuencias y paso a siguiente o salida
     useEffect(() => {
         console.log(firstTestSecondAnswer)
-        const firstCorrectAnswers = ['6','4','8'];
-        const secondCorrectAnswers = ['3','7','2'];
+        const firstCorrectAnswers = ['2','7','6'];
+        const secondCorrectAnswers = ['5','4','3'];
         if (firstTestSecondAnswer.length === 3) {
             if (!isEqual(secondCorrectAnswers, firstTestSecondAnswer) && !isEqual(firstCorrectAnswers, firstTestFirstAnswer)) {
                 document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
@@ -354,8 +408,8 @@ export default function Corsi () {
     //verificacion de secuencias y paso a siguiente o salida
     useEffect(() => {
         console.log(secondTestSecondAnswer)
-        const secondCorrectAnswers = ['5','1','7','2'];
-        const firstCorrectAnswers = ['9','4','6','1'];
+        const secondCorrectAnswers = ['9','1','4','3'];
+        const firstCorrectAnswers = ['8','7','2','1'];
         if (secondTestSecondAnswer.length === 4) {
             if (!isEqual(secondCorrectAnswers, secondTestSecondAnswer) && !isEqual(firstCorrectAnswers, secondTestFirstAnswer)) {
                 document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
@@ -393,8 +447,8 @@ export default function Corsi () {
     //verificacion de secuencias y paso a siguiente o salida
     useEffect(() => {
         console.log(thirdTestSecondAnswer);
-        const firstCorrectAnswers = ['1','10','6','9','3'];
-        const secondCorrectAnswers = ['10','2','4','3','7'];
+        const firstCorrectAnswers = ['1','10','2','8','5'];
+        const secondCorrectAnswers = ['10','3','7','5','4'];
         if (thirdTestSecondAnswer.length === 5) {
 
             if (!isEqual(secondCorrectAnswers, thirdTestSecondAnswer) && !isEqual(firstCorrectAnswers, thirdTestFirstAnswer)) {
@@ -433,8 +487,8 @@ export default function Corsi () {
     //verificacion de secuencias y paso a siguiente o salida
     useEffect(() => {
         console.log(fourthTestSecondAnswer)
-        const firstCorrectAnswers = ['9','6','4','8','3', '5'];
-        const secondCorrectAnswers = ['4','7','1','2','8','10'];
+        const firstCorrectAnswers = ['8','2','7','6','5','9'];
+        const secondCorrectAnswers = ['7','4','1','3','6','10'];
         if (fourthTestSecondAnswer.length === 6) {
 
             if (!isEqual(secondCorrectAnswers, fourthTestSecondAnswer) && !isEqual(firstCorrectAnswers, fourthTestFirstAnswer)) {
@@ -508,8 +562,8 @@ export default function Corsi () {
 
                                 // 2ndo de ejemplo
     useEffect(() => {
-        const firstCorrectAnswer = ['9', '2'];
-        const secondCorrectAnswer = ['5', '8']
+        const firstCorrectAnswer = ['8', '3'];
+        const secondCorrectAnswer = ['9', '6']
 
         if (reverseSecondExampleAnswer.length === 2 && errorCounterReverse < 2) {
             if (isEqual(reverseSecondExampleAnswer, secondCorrectAnswer) && isEqual(reverseFirstExampleAnswer, firstCorrectAnswer)) {
@@ -575,8 +629,8 @@ export default function Corsi () {
 
     useEffect(() => {
         console.log(reverseFirstTestSecondAnswer)
-        const firstCorrectAnswers = ['2','7','3'];
-        const secondCorrectAnswers = ['8','4','6'];
+        const firstCorrectAnswers = ['3','4','5'];
+        const secondCorrectAnswers = ['6','7','2'];
 
         if (reverseFirstTestSecondAnswer.length === 3) {
             if (!isEqual(secondCorrectAnswers, reverseFirstTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseFirstTestFirstAnswer)) {
@@ -616,8 +670,8 @@ export default function Corsi () {
     useEffect(() => {
 
         console.log(reverseSecondTestSecondAnswer)
-        const firstCorrectAnswers = ['2','7','1','5'];
-        const secondCorrectAnswers = ['1','6','4','9'];
+        const firstCorrectAnswers = ['3','4','1','9'];
+        const secondCorrectAnswers = ['1','2','7','8'];
 
         if (reverseSecondTestSecondAnswer.length === 4) {
             if (!isEqual(secondCorrectAnswers, reverseSecondTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseSecondTestFirstAnswer)) {
@@ -651,8 +705,8 @@ export default function Corsi () {
 
     useEffect(() => {
         console.log(reverseThirdTestSecondAnswer)
-        const firstCorrectAnswers = ['7','3','4','2','10'];
-        const secondCorrectAnswers = ['3','9','6','10','1'];
+        const firstCorrectAnswers = ['4','5','7','3','10'];
+        const secondCorrectAnswers = ['5','8','2','10','1'];
         
         if (reverseThirdTestSecondAnswer.length === 5) {
             if (!isEqual(secondCorrectAnswers, reverseThirdTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseThirdTestFirstAnswer)) {
@@ -688,8 +742,8 @@ export default function Corsi () {
 
     useEffect(() => {
         console.log(reverseFourthTestSecondAnswer)
-        const firstCorrectAnswers = ['10','8','2','1','7','4'];
-        const secondCorrectAnswers = ['5','3','8','4','6','9'];
+        const firstCorrectAnswers = ['10','6','3','1','4','7'];
+        const secondCorrectAnswers = ['9','5','6','7','2','8'];
         
         if (reverseFourthTestSecondAnswer.length === 6) {
             if (!isEqual(secondCorrectAnswers, reverseFourthTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseFourthTestFirstAnswer)) {
@@ -739,8 +793,8 @@ export default function Corsi () {
             if (result.isConfirmed) {
                 e.target.innerHTML = "Avanzar"
                 e.target.disabled = true;
-                corsiExampleReverse()
-                //corsiExample();
+                //corsiExampleReverse()
+                corsiExample();
 
                 
             }
@@ -781,8 +835,8 @@ export default function Corsi () {
 
     useEffect(() => {
         console.log(secondExampleAnswer)
-        const firstCorrectAnswer = ['8','5'];
-        const secondCorrectAnswer = ['2','9'];
+        const firstCorrectAnswer = ['6','9'];
+        const secondCorrectAnswer = ['3','8'];
         if (secondExampleAnswer.length === 2 && errorCounter < 2) {
 
             if (isEqual(secondExampleAnswer, secondCorrectAnswer) && isEqual(firstExampleAnswer, firstCorrectAnswer)) {
