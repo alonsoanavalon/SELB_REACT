@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { get, set } from 'idb-keyval'
+import { get, set, update } from 'idb-keyval'
 import { useAlert } from 'react-alert'
 import Swal from 'sweetalert2';
 
@@ -195,11 +195,11 @@ export default function HomePage() {
                       }).then((result) => {
                         if (result.isConfirmed) {
                           Swal.fire({
-                            showCancelButton: false,
+                            showCancelButton: true,
                             cancelButtonText: 'Finalizar',
-                            cancelButtonColor:'#cc4846',
-                            confirmButtonColor:"#1674d8",
-                            confirmButtonText: 'Finalizar',
+                            cancelButtonColor:'#E6BB34',
+                            confirmButtonColor:"#70C851",
+                            confirmButtonText: 'Finalizar y eliminar test por enviar',
                             title: `${result.value.statusText}`,
                             html: `<b>Total enviados</b>: ${result.value.instrumentsLength}
                                    <br>
@@ -210,10 +210,14 @@ export default function HomePage() {
                                    ${result.value.htmlText}`
                           }).then(result => {
                             if (result.isConfirmed) {
-                                /* update('completedTests', val => []) */
+                                update('completedTests', val => [])
                                 setTimeout(() => {
                                     window.location.pathname = '/'
                                 }, 3000)
+                            } else {
+                              setTimeout(() => {
+                                window.location.pathname = '/'
+                            }, 3000)
                             }
                         })
 

@@ -48,10 +48,17 @@ export default function Corsi () {
 
     const saveTest = () => {
         //guardartest
-        setAllAnswers([firstTestFirstAnswer, firstTestSecondAnswer, secondTestFirstAnswer, secondTestSecondAnswer, thirdTestFirstAnswer, thirdTestSecondAnswer, fourthTestFirstAnswer, fourthTestSecondAnswer, fifthTestFirstAnswer])
-        setAllReverseAnswers([reverseFirstTestFirstAnswer, reverseFirstTestSecondAnswer, reverseSecondTestFirstAnswer, reverseSecondTestSecondAnswer, reverseThirdTestFirstAnswer, reverseThirdTestSecondAnswer, reverseFourthTestFirstAnswer, reverseFourthTestSecondAnswer, reverseFifthTestFirstAnswer])
 
-        window.alert("nos juimos")
+        const respuestas = [firstTestFirstAnswer, firstTestSecondAnswer, secondTestFirstAnswer, secondTestSecondAnswer, thirdTestFirstAnswer, thirdTestSecondAnswer, fourthTestFirstAnswer, fourthTestSecondAnswer, fifthTestFirstAnswer]
+        const respuestasReversas = [reverseFirstTestFirstAnswer, reverseFirstTestSecondAnswer, reverseSecondTestFirstAnswer, reverseSecondTestSecondAnswer, reverseThirdTestFirstAnswer, reverseThirdTestSecondAnswer, reverseFourthTestFirstAnswer, reverseFourthTestSecondAnswer, reverseFifthTestFirstAnswer]
+        setAllAnswers(respuestas)
+        setAllReverseAnswers(respuestasReversas)
+        Swal.fire({
+            title: "Test finalizado por errores",
+        })
+        setTimeout(() => {
+            window.location.href = '/desarrollo'
+        }, [2000])
 
     }
 
@@ -137,7 +144,7 @@ export default function Corsi () {
 
 
 
-        }, 5000)
+        }, 4000)
         
     }
 
@@ -163,7 +170,7 @@ export default function Corsi () {
 
             var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
             audio.play();
-        }, 7000)
+        }, 6000)
     }
 
 
@@ -192,7 +199,7 @@ export default function Corsi () {
             })
             var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
             audio.play();
-        }, 9000)
+        }, 8000)
     }
 
     
@@ -224,7 +231,7 @@ export default function Corsi () {
             })
             var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
             audio.play();
-        }, 11000)
+        }, 10000)
     }
 
 
@@ -260,7 +267,7 @@ export default function Corsi () {
             })
             var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
             audio.play();
-        }, 13000)
+        }, 12000)
     }
 
     const secuenciaDeSiete = async (box1, box2, box3, box4, box5, box6, box7, callback) => {
@@ -297,7 +304,7 @@ export default function Corsi () {
             })
             var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
             audio.play();
-        }, 15000)
+        }, 14000)
     }
 
     const corsiExample = () => {

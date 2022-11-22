@@ -23,6 +23,7 @@ import Aces from './pages/Aces';
 import Wally from './pages/Wally';
 import Corsi from './pages/Corsi'
 import Moments from './pages/Moments'
+import Desarrollo from './components/Desarrollo';
 
 
 
@@ -234,6 +235,7 @@ function App() {
           <Route path="/moments" element={<Moments/>}></Route>
           <Route path="/respaldo" element={<Respaldo/>}></Route>
           <Route path="/parents" element={<Parents/>}></Route>
+          <Route path="/desarrollo" element={<Desarrollo/>}></Route>
           <Route path="/sdq" element={<ParentsForm/>}></Route>
           <Route path="/aces" element={<Aces/>}></Route>
           <Route path="/corsi" element={<Corsi/>}></Route>
