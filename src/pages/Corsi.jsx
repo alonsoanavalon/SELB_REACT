@@ -739,8 +739,8 @@ export default function Corsi () {
             if (result.isConfirmed) {
                 e.target.innerHTML = "Avanzar"
                 e.target.disabled = true;
-                corsiExampleReverse()
-                //corsiExample();
+                //corsiExampleReverse()
+                corsiExample();
 
                 
             }
