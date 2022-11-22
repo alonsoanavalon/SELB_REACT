@@ -21,6 +21,31 @@ export default function HomePage() {
     const [wallyLength, setWallyLength] = useState(undefined)
     const [acesLength, setAcesLength] = useState(undefined)
     const [completeName, setCompleteName] = useState("")
+    function eliminarTestAntiguos () {
+      get('completedTests')
+      .then(res => {
+        let counterEliminados = 0;
+        const testNuevos = res.filter((test) => {
+          const fechaTest = new Date(test[0].date)
+          const fechaLimite = new Date('2022/10/31')
+
+          if (fechaTest > fechaLimite) {
+            return test;
+          } else {
+            counterEliminados++
+          }
+        })
+        return [testNuevos, counterEliminados];
+      })
+      .then((data) => {
+        window.alert('Se eliminaron: '+ data[1] +' test antiguos')
+        update('completedTests', val => data[0])
+
+        setTimeout(() => {
+          window.location.pathname = '/'
+      }, 2000)
+      })
+    }
 
     useEffect(() => {
         get('backupTest')
@@ -294,6 +319,9 @@ export default function HomePage() {
                     { navigator.onLine ? <Fragment>
                             {savedTests === true?<button onClick={sendNewInstrument} className="button btn btn-primary">Enviar</button> : <button className="button btn btn-secondary" disabled>Enviar</button>}
                         </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button> }
+
+
+                    <button className="btn btn-info" onClick={eliminarTestAntiguos}>Eliminar test antiguos</button>
 
 
              
