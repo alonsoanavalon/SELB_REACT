@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
 import {isEqual} from 'underscore';
+import {get, update, getMany, set} from 'idb-keyval'
 
 export default function Corsi () {
 
@@ -33,8 +34,8 @@ export default function Corsi () {
     const [reverseFourthTestSecondAnswer, setReverseFourthTestSecondAnswer] = useState([]);
     const [reverseFifthTestFirstAnswer, setReverseFifthTestFirstAnswer] = useState([]);
 
-    const [allAnswers, setAllAnswers] = useState([]);
-    const [allReverseAnswers, setAllReverseAnswers] = useState([]);
+    const [allAnswers, setAllAnswers] = useState({});
+    const [isArray, setIsArray] = useState(false)
 
     const blink = (num) => {
         const boxes = document.querySelectorAll(".corsi-box");
@@ -46,18 +47,159 @@ export default function Corsi () {
         }, 2000)
     }
 
+
+    function getMomentByDate(date) {
+        let dateBegin;
+        let dateUntil;
+        get('moments')
+        .then(res => {
+            res.map(element => {
+                dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW")
+                dateUntil = new Date(element['until']).toLocaleDateString("zh-TW")
+                if (date >= dateBegin && date <= dateUntil ) {
+                    return element['id']
+                } 
+                
+                
+            })
+        })
+    }
+
+    function saveCorsi(answers) {
+
+        let instrumentInfo = {}
+        let choicesArray = []
+
+        let testDataArray = ['selectedStudent', 'userData']
+
+        //Me queda arreglar esto, pq ahora al elegir el test no tenemos niño, ni fecha ni evaluador, entonces hay que ver eso dps
+        getMany(testDataArray).then(([firstVal, secondVal]) =>  { 
+            instrumentInfo['user_id'] = parseInt(secondVal['id'])
+            instrumentInfo['student_id'] = parseInt(firstVal)
+            instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
+        }
+        );
+
+        choicesArray.push(instrumentInfo)
+
+        instrumentInfo['instrument'] = 6
+
+        choicesArray.push(answers) // estas deben ser las respuestas
+
+        //Luego viene toda la logica de si se repite o si se guarda en el backup etc.
+
+        get('backupTest')
+        .then(response => {
+            let backupLength = response.length
+            debugger;
+            if (Array.isArray(response) && response.length > 0) {
+                get('completedTests')
+                .then(res => {
+                    if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
+                        console.log(response, "Actualizando Backup")
+                        let arrayCounter = 0;
+                        response.forEach(array => {
+                            let responseMoment;
+                            let instrumentMoment;
+                            if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                                responseMoment = getMomentByDate(array[0]['date'])
+                                instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                                if (responseMoment === instrumentMoment) {
+                                    response.splice(arrayCounter, 1)
+                                } 
+                            }
+                            arrayCounter+= 1
+    
+                        })
+    
+                        update('backupTest', val => [...response, choicesArray])
+                    }
+                })
+            }
+        })
+
+
+        get('completedTests')
+        .then(response => {
+
+            if (!isArray) {
+                if (response.length === undefined) {
+                    update('completedTests', (val) => 
+                    [response , choicesArray])         
+                    setIsArray(true)
+                } else if (response.length === 0) {
+
+                    set('completedTests', [choicesArray])
+                } else {
+                    console.log(response, "Actualizando1")
+                    let arrayCounter = 0;
+                    response.forEach(array => {
+                        
+                        let responseMoment;
+                        let instrumentMoment;
+                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                            responseMoment = getMomentByDate(array[0]['date'])
+                            instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                            if (responseMoment === instrumentMoment) {
+                                response.splice(arrayCounter, 1)
+                            } 
+                        }
+                        arrayCounter+= 1
+
+                    })
+
+                    update('completedTests', val => [...response, choicesArray])
+
+                    
+                }
+            } else {
+                console.log(response, "Actualizando2")
+                update('completedTests', val => [...response, choicesArray])
+
+            }
+
+        })
+
+    }
+
+
     const saveTest = () => {
         //guardartest
 
-        const respuestas = [firstTestFirstAnswer, firstTestSecondAnswer, secondTestFirstAnswer, secondTestSecondAnswer, thirdTestFirstAnswer, thirdTestSecondAnswer, fourthTestFirstAnswer, fourthTestSecondAnswer, fifthTestFirstAnswer]
-        const respuestasReversas = [reverseFirstTestFirstAnswer, reverseFirstTestSecondAnswer, reverseSecondTestFirstAnswer, reverseSecondTestSecondAnswer, reverseThirdTestFirstAnswer, reverseThirdTestSecondAnswer, reverseFourthTestFirstAnswer, reverseFourthTestSecondAnswer, reverseFifthTestFirstAnswer]
-        setAllAnswers(respuestas)
-        setAllReverseAnswers(respuestasReversas)
+        const respuestas = [firstExampleAnswer, secondExampleAnswer, firstTestFirstAnswer, firstTestSecondAnswer, secondTestFirstAnswer, secondTestSecondAnswer, thirdTestFirstAnswer, thirdTestSecondAnswer, fourthTestFirstAnswer, fourthTestSecondAnswer, fifthTestFirstAnswer];
+        const respuestasReversas = [reverseFirstExampleAnswer, reverseSecondExampleAnswer, reverseFirstTestFirstAnswer, reverseFirstTestSecondAnswer, reverseSecondTestFirstAnswer, reverseSecondTestSecondAnswer, reverseThirdTestFirstAnswer, reverseThirdTestSecondAnswer, reverseFourthTestFirstAnswer, reverseFourthTestSecondAnswer, reverseFifthTestFirstAnswer];
+        const everyAnswer = [...respuestas, ...respuestasReversas];
+        let firstItemId = 230;
+        const answersObject = {};
+        
+        everyAnswer.forEach((respuesta) => {
+            if (respuesta.length > 0) {
+                answersObject[firstItemId] = respuesta.join('-');
+            } else {
+                answersObject[firstItemId] = '';
+            }
+            firstItemId++
+            //aca tengo que iterar las respuestas e ir asignandoles llave valor y metiendolo en los objetos
+            //una vez dentro tendré que mixear ambos en todas las answers, y eso meterlo luego en la funcion de guardarCorsi()
+            //donde primero ira la metadata y luego los datos de los test.
+        })
+
+        saveCorsi(answersObject)
+
+        
+
+
+
+
         Swal.fire({
             title: "Test finalizado por errores",
         })
         setTimeout(() => {
-            window.location.href = '/desarrollo'
+            window.location.href = '/'
         }, [2000])
 
     }
@@ -65,9 +207,8 @@ export default function Corsi () {
     useEffect(() => {
         if (allAnswers.length > 0) {
             console.log(allAnswers)
-            console.log(allReverseAnswers)
         }
-    }, [allAnswers, allReverseAnswers])
+    }, [allAnswers, ])
 
     function touchableBoxes (e, callback) {
         let selectedBox = e.target.classList[1].slice(-1);
@@ -309,19 +450,12 @@ export default function Corsi () {
 
     const corsiExample = () => {
 
-/*         do { */
             setTimeout(() => {
 
                 resetBoxes();
                 primeraSecuencia(7,4, setFirstExampleAnswer);
             }, 1000)
-/*         } while(results !== ) */
- 
 
-        //Este lo ejecuto cuando me den OK a la primera instruccion
-        //Logica primer test de prueba
-        //Son 2 secuencias de 2
-        //Si ambas estan bien pasamos a la otra, sino repetimos creo que 3 veces y si no pa la casa.
     }
     
     //Luego una pantalla
@@ -334,19 +468,10 @@ export default function Corsi () {
     }
 
     const corsiTest = () => {
-        //Logica primer de juego
-            //Secuencias
-        // 2 de 3 
         setTimeout(() => {
             resetBoxes();
             secuenciaDeTres(5,3,7, setFirstTestFirstAnswer)
         }, 1000)
-
-        
-
-        // 2 de 4
-        // 2 DE 5
-        // 2 DE 6
     }
 
     const corsiExampleReverse = () => {
@@ -392,7 +517,7 @@ export default function Corsi () {
             document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
-                    secuenciaDeCuatro(8,3,5,0, setSecondTestFirstAnswer)
+                    secuenciaDeCuatro(8,5,3,0, setSecondTestFirstAnswer)
                 }, 1000)
             }
         }
@@ -416,7 +541,7 @@ export default function Corsi () {
     useEffect(() => {
         console.log(secondTestSecondAnswer)
         const secondCorrectAnswers = ['9','1','4','3'];
-        const firstCorrectAnswers = ['8','7','2','1'];
+        const firstCorrectAnswers = ['8','2','7','1'];
         if (secondTestSecondAnswer.length === 4) {
             if (!isEqual(secondCorrectAnswers, secondTestSecondAnswer) && !isEqual(firstCorrectAnswers, secondTestFirstAnswer)) {
                 document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
@@ -668,7 +793,7 @@ export default function Corsi () {
                 document.querySelector("#root > div.corsi-container").insertAdjacentHTML("afterBegin", "<div class='separator'></div>")            
                 setTimeout(() => {
                     resetBoxes();
-                    secuenciaDeCuatro(8,3,5,0, setReverseSecondTestSecondAnswer);
+                    secuenciaDeCuatro(8,5,3,0, setReverseSecondTestSecondAnswer);
                 }, 1000)
 
             }
@@ -678,7 +803,7 @@ export default function Corsi () {
 
         console.log(reverseSecondTestSecondAnswer)
         const firstCorrectAnswers = ['3','4','1','9'];
-        const secondCorrectAnswers = ['1','2','7','8'];
+        const secondCorrectAnswers = ['1','7','2','8'];
 
         if (reverseSecondTestSecondAnswer.length === 4) {
             if (!isEqual(secondCorrectAnswers, reverseSecondTestSecondAnswer) && !isEqual(firstCorrectAnswers, reverseSecondTestFirstAnswer)) {

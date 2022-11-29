@@ -12,6 +12,7 @@ export default function HomePage() {
     const [savedCalculoTests, setSavedCalculoTests] = useState([])
     const [savedSdqTests, setSavedSdqTests] = useState([])
     const [savedWallyTests, setSavedWallyTests] = useState([])
+    const [savedCorsiTests, setSavedCorsiTests] = useState([])
     const [savedAcesTests, setSavedAcesTests] = useState([])
     const [tejasLength, setTejasLength] = useState(undefined)
 
@@ -20,7 +21,9 @@ export default function HomePage() {
     const [sdqLength, setSdqLength] = useState(undefined)
     const [wallyLength, setWallyLength] = useState(undefined)
     const [acesLength, setAcesLength] = useState(undefined)
+    const [corsiLength, setCorsiLength] = useState(undefined)
     const [completeName, setCompleteName] = useState("")
+
     function eliminarTestAntiguos () {
       get('completedTests')
       .then(res => {
@@ -97,6 +100,7 @@ export default function HomePage() {
             let sdq = 0;
             let wally = 0;
             let aces = 0;
+            let corsi = 0;
 
             res.forEach(element => {
                 if (element[0]['instrument'] === 1) {
@@ -118,6 +122,9 @@ export default function HomePage() {
               if (element[0]['instrument'] === 5) {
                 wally++
                 setSavedTests(true)
+            }  if (element[0]['instrument'] === 6) {
+                corsi++
+                setSavedTests(true)
             }
             })
 
@@ -126,6 +133,7 @@ export default function HomePage() {
             setSavedWallyTests(wally)
             setSavedAcesTests(aces)
             setSavedSdqTests(sdq)
+            setSavedCorsiTests(corsi)
             
         })
 
@@ -155,6 +163,12 @@ export default function HomePage() {
             get('wallyLength')
             .then(res => {
                 setWallyLength(res)
+            })
+
+
+            get('corsiLength')
+            .then(res => {
+                setCorsiLength(res)
             })
 
       
@@ -280,6 +294,7 @@ export default function HomePage() {
            <div className="table-wrapper">
            <div className="sendEvaluationTable">
            <h4>Evaluaciones por enviar</h4>
+           <p>(Evaluaciones guardadas en la tablet)</p>
 
                 <table className="table table-home">
 
@@ -313,6 +328,11 @@ export default function HomePage() {
                         <td>{savedWallyTests && savedWallyTests >= 0 ? savedWallyTests : 0}</td>
                         </tr>
 
+                        <tr>
+                        <th scope="row">Corsi</th>
+                        <td>{savedCorsiTests && savedCorsiTests >= 0 ? savedCorsiTests : 0}</td>
+                        </tr>
+
                     </tbody>
                     </table>
 
@@ -329,6 +349,7 @@ export default function HomePage() {
 
            <div className="instrumentInfoTable">
                 <h4>Evaluaciones por Instrumento</h4>
+                <p>(Evaluaciones ingresadas en la base de datos a tu nombre)</p>
                 <table className="table table-home">
         
                     <thead className="thead-dark">

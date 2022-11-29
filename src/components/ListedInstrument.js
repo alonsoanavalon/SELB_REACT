@@ -20,6 +20,8 @@ export default function ListedInstrument (props) {
             navigate('/aces')
         } else if ($selectedInstrument == 5){
             navigate('/wally')
+        }else if ($selectedInstrument == 6){
+            navigate('/corsi')
         }
         
 

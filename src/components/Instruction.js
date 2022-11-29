@@ -286,7 +286,7 @@ export default function Instruction (props) {
                             if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
                                 console.log(response, "Actualizando Backup")
                                 let arrayCounter = 0;
-                                response.forEach(array => {
+                                response.forEach(array => { //buscamos si hay uno igual a este
                                     let responseMoment;
                                     let instrumentMoment;
                                     if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
