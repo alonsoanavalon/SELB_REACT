@@ -33,6 +33,8 @@ export default function Corsi () {
     const [reverseFourthTestFirstAnswer, setReverseFourthTestFirstAnswer] = useState([]);
     const [reverseFourthTestSecondAnswer, setReverseFourthTestSecondAnswer] = useState([]);
     const [reverseFifthTestFirstAnswer, setReverseFifthTestFirstAnswer] = useState([]);
+    const [orderedTries, setOrderedTries] = useState(1);
+    const [reversedTries, setReversedTries] = useState(0);
 
     const [allAnswers, setAllAnswers] = useState({});
     const [isArray, setIsArray] = useState(false)
@@ -170,17 +172,23 @@ export default function Corsi () {
     const saveTest = () => {
         //guardartest
 
-        const respuestas = [firstExampleAnswer, secondExampleAnswer, firstTestFirstAnswer, firstTestSecondAnswer, secondTestFirstAnswer, secondTestSecondAnswer, thirdTestFirstAnswer, thirdTestSecondAnswer, fourthTestFirstAnswer, fourthTestSecondAnswer, fifthTestFirstAnswer];
-        const respuestasReversas = [reverseFirstExampleAnswer, reverseSecondExampleAnswer, reverseFirstTestFirstAnswer, reverseFirstTestSecondAnswer, reverseSecondTestFirstAnswer, reverseSecondTestSecondAnswer, reverseThirdTestFirstAnswer, reverseThirdTestSecondAnswer, reverseFourthTestFirstAnswer, reverseFourthTestSecondAnswer, reverseFifthTestFirstAnswer];
+        const respuestas = [orderedTries, firstExampleAnswer, secondExampleAnswer, firstTestFirstAnswer, firstTestSecondAnswer, secondTestFirstAnswer, secondTestSecondAnswer, thirdTestFirstAnswer, thirdTestSecondAnswer, fourthTestFirstAnswer, fourthTestSecondAnswer, fifthTestFirstAnswer];
+        const respuestasReversas = [reversedTries, reverseFirstExampleAnswer, reverseSecondExampleAnswer, reverseFirstTestFirstAnswer, reverseFirstTestSecondAnswer, reverseSecondTestFirstAnswer, reverseSecondTestSecondAnswer, reverseThirdTestFirstAnswer, reverseThirdTestSecondAnswer, reverseFourthTestFirstAnswer, reverseFourthTestSecondAnswer, reverseFifthTestFirstAnswer];
         const everyAnswer = [...respuestas, ...respuestasReversas];
         let firstItemId = 230;
         const answersObject = {};
         
         everyAnswer.forEach((respuesta) => {
-            if (respuesta.length > 0) {
+            if (typeof(respuesta) === 'number') {
+                if (respuesta.toString().length === 1){
+                    answersObject[firstItemId] = respuesta.toString();
+                }
+            }
+            else if (respuesta.length > 1) {
                 answersObject[firstItemId] = respuesta.join('-');
-            } else {
-                answersObject[firstItemId] = '';
+            } 
+            else {
+                answersObject[firstItemId] = "";
             }
             firstItemId++
             //aca tengo que iterar las respuestas e ir asignandoles llave valor y metiendolo en los objetos
@@ -667,6 +675,7 @@ export default function Corsi () {
                         /* Esto fue lo ultimo que hicimos, para poder ir contando los errores en los otros test */
                         setTimeout(() => {
                             resetBoxes();
+                            setReversedTries(prevValue => prevValue+1)
                             corsiExampleReverse()
                         }, 1000)
                     }
@@ -1025,6 +1034,7 @@ export default function Corsi () {
             setGlobalError(prevValue => prevValue + 1)
             console.log("global", globalError )
             if (globalError < 2) {
+                setOrderedTries(prevValue => prevValue+1)
                 setTimeout(() => {
                     resetBoxes();
                     Swal.fire({
@@ -1074,6 +1084,7 @@ export default function Corsi () {
         if (errorCounterReverse > 0) {
             setGlobalErrorReverse(prevValue => prevValue + 1)
             if (globalErrorReverse < 2) {
+                setReversedTries(prevValue => prevValue+1)
                 setTimeout(() => {
                     resetBoxes();
                     Swal.fire({
