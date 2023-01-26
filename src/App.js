@@ -24,6 +24,7 @@ import Wally from './pages/Wally';
 import Corsi from './pages/Corsi'
 import Moments from './pages/Moments'
 import Desarrollo from './components/Desarrollo';
+import HNF from './pages/Hnf';
 
 
 
@@ -239,6 +240,7 @@ function App() {
           <Route path="/sdq" element={<ParentsForm/>}></Route>
           <Route path="/aces" element={<Aces/>}></Route>
           <Route path="/corsi" element={<Corsi/>}></Route>
+          <Route path="/hnf" element={<HNF/>}></Route>
           <Route path="/wally" element={<Wally/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
