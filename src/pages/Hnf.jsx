@@ -154,19 +154,6 @@ export default function HNF() {
 
     const flowerTest = () => {
 
-        // 24: 0,
-        // 25: 1,
-        // 26: 1,
-        // 27: 0,
-        // 28: 0, // OK
-        // 29: 1,
-        // 30: 0,
-        // 31: 0, // OK 2
-        // 32: 1,
-        // 33: 1,
-        // 34: 0,
-        // 35: 1
-
         setOption(0, 'flower');
         setCycle(24);
 
@@ -183,7 +170,7 @@ export default function HNF() {
             setCycle(27);
         }, 6000)
         setTimeout(() => {
-            setOption(0, 'flower');  //OK
+            setOption(0, 'flower'); 
             setCycle(28);
         }, 8000)
         setTimeout(() => {
@@ -195,7 +182,7 @@ export default function HNF() {
             setCycle(30);
         }, 12000)
         setTimeout(() => {
-            setOption(0, 'flower'); // OK 2
+            setOption(0, 'flower'); 
             setCycle(31);
         }, 14000)
         setTimeout(() => {
@@ -220,19 +207,6 @@ export default function HNF() {
 
     const heartTest = () => {
 
-        // 6: 1,
-        // 7: 0,
-        // 8: 0,
-        // 9: 1,
-        // 10: 1,
-        // 11: 0,
-        // 12: 1,
-        // 13: 1,
-        // 14: 0,
-        // 15: 0,
-        // 16: 0,
-        // 17: 1,
-
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(6);
@@ -246,7 +220,7 @@ export default function HNF() {
             setCycle(8);
         }, 6000)
         setTimeout(() => {
-            setOption(1, 'heart'); // OK
+            setOption(1, 'heart'); 
             setCycle(9);
         }, 8000)
         setTimeout(() => {
@@ -258,7 +232,7 @@ export default function HNF() {
             setCycle(11);
         }, 12000)
         setTimeout(() => {
-            setOption(1, 'heart'); // OK 2
+            setOption(1, 'heart'); 
             setCycle(12);
         }, 14000)
         setTimeout(() => {
@@ -286,41 +260,6 @@ export default function HNF() {
 
     const heartAndFlowerTest = () => {
 
-        
-
-        // 36: 0,
-        // 37: 1,
-        // 38: 1,
-        // 39: 0,
-        // 40: 0,
-        // 41: 1,
-        // 42: 1,
-        // 43: 0,
-        // 44: 0,
-        // 45: 0,
-        // 46: 1,
-        // 47: 0,
-        // 48: 0,
-        // 49: 0,
-        // 50: 1,
-        // 51: 0,
-        // 52: 1,
-        // 53: 1,
-        // 54: 0,
-        // 55: 1,
-        // 56: 1,
-        // 57: 1,
-        // 58: 0,
-        // 59: 0,
-        // 60: 0,
-        // 61: 1,
-        // 62: 0,
-        // 63: 0,
-        // 64: 1,
-        // 65: 1,
-        // 66: 1,
-        // 67: 0,
-        // 68: 0
 
         setTimeout(() => {
             setOption(0, 'flower');
@@ -335,7 +274,7 @@ export default function HNF() {
             setCycle(38);
         }, 6000)
         setTimeout(() => {
-            setOption(0, 'heart'); // OK
+            setOption(0, 'heart'); 
             setCycle(39);
         }, 8000)
         setTimeout(() => {
@@ -347,7 +286,7 @@ export default function HNF() {
             setCycle(41);
         }, 12000)
         setTimeout(() => {
-            setOption(1, 'flower'); // OK 2      
+            setOption(1, 'flower');  
             setCycle(42);
         }, 14000)
         setTimeout(() => {
@@ -458,11 +397,7 @@ export default function HNF() {
     }
 
     const setChoice = (evt) => {
-
-        // al hacer click 2 veces en el mismo boton se bugea todo xd
         const choice = JSON.parse(evt.target.dataset.id);
-
-        //Como ya se hizo click, quitaremos los eventos, los debemos devolver cuando seteamos otro ciclo
 
         if (cycle <= 5) {
             //test de ejemplo corazones
@@ -511,9 +446,6 @@ export default function HNF() {
                 newValue[cycle] = choice;
                 setFirstBoxClass("hnf-box");
                 setSecondBoxClass("hnf-box");
-                if (cycle === 35) {
-                    debugger;
-                }     
                 return newValue;
             })
             //test flores
@@ -523,23 +455,11 @@ export default function HNF() {
                 newValue[cycle] = choice;
                 setFirstBoxClass("hnf-box");
                 setSecondBoxClass("hnf-box");
-                if (cycle === 68) {
-                    debugger;
-                }     
                 return newValue;
             })
         }
 
     }
-
-    useEffect(() => {
-        if (cycle === 68) {
-            setTimeout(() => {
-                debugger;
-            }, 2000)
-        }
-    }, [cycle])
-
 
     useEffect(() => {
 
