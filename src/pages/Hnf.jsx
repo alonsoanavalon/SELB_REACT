@@ -98,7 +98,7 @@ export default function HNF() {
     }
 
     const setOption = (position, option) => {
-      
+
             if (option === 'heart') {
                 if (position === 0) {
                     setFirstBoxClass("hnf-box")
@@ -141,7 +141,7 @@ export default function HNF() {
     }
 
     const exampleTest = (choice, option) => {
-        debugger;
+
         if (option === 'flower') {
             if (answers[cycle] !== choice) {
                 const newPosition = answers[cycle + 1];
@@ -489,6 +489,13 @@ export default function HNF() {
 
             
         } else if (cycle <= 17) {
+
+            const button0 = document.querySelector("#hnf-button-0");
+            const button1 = document.querySelector("#hnf-button-1");
+
+            button0.disabled = true;
+            button1.disabled = true;
+
             //test corazones
             setChoices(prevValue => {
                 let newValue = prevValue;
@@ -619,6 +626,7 @@ export default function HNF() {
 
         setTimeout(() => {
             setChoices(prevValue => {
+                debugger;
                 return prevValue;
             })
         setFirstBoxClass("hnf-box");
