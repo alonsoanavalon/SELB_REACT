@@ -98,21 +98,21 @@ export default function HNF() {
     }
 
     const setOption = (position, option) => {
-        setTimeout(() => {
+      
             if (option === 'heart') {
                 if (position === 0) {
                     setFirstBoxClass("hnf-box")
                     setSecondBoxClass("hnf-box")
                     setTimeout(() => {
                         setFirstBoxClass("hnf-box hnf-heart")
-                    }, 500)
+                    }, 200)
 
                 } else {
                     setFirstBoxClass("hnf-box")
                     setSecondBoxClass("hnf-box")
                     setTimeout(() => {
                         setSecondBoxClass("hnf-box hnf-heart")
-                    }, 500)
+                    }, 200)
                 }
             } else {
                 if (position === 0) {
@@ -120,17 +120,17 @@ export default function HNF() {
                     setFirstBoxClass("hnf-box")
                     setTimeout(() => {
                         setFirstBoxClass("hnf-box hnf-flower")
-                    }, 500)
+                    }, 200)
 
                 } else {
                     setFirstBoxClass("hnf-box")
                     setSecondBoxClass("hnf-box")
                     setTimeout(() => {
                         setSecondBoxClass("hnf-box hnf-flower")
-                    }, 500)
+                    }, 200)
                 }
             }
-        }, 1000)
+
     }
 
     const exampleTest = (choice, option) => {
@@ -233,51 +233,51 @@ export default function HNF() {
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(6);
-        }, 1000)
-        setTimeout(() => {
-            setOption(0, 'heart');
-            setCycle(7);
         }, 2000)
         setTimeout(() => {
             setOption(0, 'heart');
-            setCycle(8);
+            setCycle(7);
         }, 4000)
+        setTimeout(() => {
+            setOption(0, 'heart');
+            setCycle(8);
+        }, 6000)
         setTimeout(() => {
             setOption(1, 'heart'); // OK
             setCycle(9);
-        }, 6000)
+        }, 8000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(10);
-        }, 8000)
+        }, 10000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(11);
-        }, 10000)
+        }, 12000)
         setTimeout(() => {
             setOption(1, 'heart'); // OK 2
             setCycle(12);
-        }, 12000)
+        }, 14000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(13);
-        }, 14000)
-        setTimeout(() => {
-            setOption(0, 'heart');
-            setCycle(14);
         }, 16000)
         setTimeout(() => {
             setOption(0, 'heart');
-            setCycle(15);
+            setCycle(14);
         }, 18000)
         setTimeout(() => {
             setOption(0, 'heart');
-            setCycle(16);
+            setCycle(15);
         }, 20000)
+        setTimeout(() => {
+            setOption(0, 'heart');
+            setCycle(16);
+        }, 22000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(17);
-        }, 22000)
+        }, 24000)
     }
 
     const setChoice = (evt) => {
@@ -304,6 +304,7 @@ export default function HNF() {
                 newValue[cycle] = choice;
                 setFirstBoxClass("hnf-box");
                 setSecondBoxClass("hnf-box");
+     
                 return newValue;
             })
 
@@ -406,7 +407,10 @@ export default function HNF() {
         
 
         if (cycle === 17) {
+
+        setTimeout(() => {
             setChoices(prevValue => {
+                debugger;
                 return prevValue;
             })
         setFirstBoxClass("hnf-box");
@@ -431,10 +435,11 @@ export default function HNF() {
                 if (result.isConfirmed) {
                     setFirstBoxClass("hnf-box");
                     setSecondBoxClass("hnf-box");
-                    debugger;
                     setOption(1, 'flower');
                 }
             })
+        }, 3000)
+            
         }
     
 
