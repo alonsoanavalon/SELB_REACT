@@ -77,11 +77,11 @@ export default function HNF() {
         61: 1,
         62: 0,
         63: 0,
-        63: 1,
         64: 1,
         65: 1,
-        66: 0,
-        67: 0
+        66: 1,
+        67: 0,
+        68: 0
 
     })
     const [choices, setChoices] = useState({})
@@ -115,7 +115,7 @@ export default function HNF() {
                     }, 200)
                 }
             } else {
-                if (position === 0) {
+                if (position === 1) {
                     setSecondBoxClass("hnf-box")
                     setFirstBoxClass("hnf-box")
                     setTimeout(() => {
@@ -131,21 +131,33 @@ export default function HNF() {
                 }
             }
 
+
+            const button0 = document.querySelector("#hnf-button-0");
+            const button1 = document.querySelector("#hnf-button-1");
+    
+            button0.disabled = false;
+            button1.disabled = false;
+
     }
 
     const exampleTest = (choice, option) => {
-
+        debugger;
         if (option === 'flower') {
             if (answers[cycle] !== choice) {
                 const newPosition = answers[cycle + 1];
                 setOption(newPosition, option);
+                return true;
+            } else {
+                return false;
             }
-        }
+        } 
  
         if (answers[cycle] === choice) {
             const newPosition = answers[cycle + 1];
-
             setOption(newPosition, option);
+            return true;
+        } else { 
+            return false;
         }
     }
 
@@ -280,22 +292,201 @@ export default function HNF() {
         }, 24000)
     }
 
+
+    const heartAndFlowerTest = () => {
+
+        
+
+        // 36: 0,
+        // 37: 1,
+        // 38: 1,
+        // 39: 0,
+        // 40: 0,
+        // 41: 1,
+        // 42: 1,
+        // 43: 0,
+        // 44: 0,
+        // 45: 0,
+        // 46: 1,
+        // 47: 0,
+        // 48: 0,
+        // 49: 0,
+        // 50: 1,
+        // 51: 0,
+        // 52: 1,
+        // 53: 1,
+        // 54: 0,
+        // 55: 1,
+        // 56: 1,
+        // 57: 1,
+        // 58: 0,
+        // 59: 0,
+        // 60: 0,
+        // 61: 1,
+        // 62: 0,
+        // 63: 0,
+        // 64: 1,
+        // 65: 1,
+        // 66: 1,
+        // 67: 0,
+        // 68: 0
+
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(36);
+        }, 2000)
+        setTimeout(() => {
+            setOption(1, 'heart');
+            setCycle(37);
+        }, 4000)
+        setTimeout(() => {
+            setOption(1, 'heart');
+            setCycle(38);
+        }, 6000)
+        setTimeout(() => {
+            setOption(0, 'heart'); // OK
+            setCycle(39);
+        }, 8000)
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(40);
+        }, 10000)
+        setTimeout(() => {
+            setOption(1, 'flower');
+            setCycle(41);
+        }, 12000)
+        setTimeout(() => {
+            setOption(1, 'flower'); // OK 2      
+            setCycle(42);
+        }, 14000)
+        setTimeout(() => {
+            setOption(0, 'heart');
+            setCycle(43);
+        }, 16000)
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(44);
+        }, 18000)
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(45);
+        }, 20000)
+        setTimeout(() => {
+            setOption(1, 'heart');
+            setCycle(46);
+        }, 22000)
+        setTimeout(() => {
+            setOption(0, 'heart');
+            setCycle(47);
+        }, 24000)
+        setTimeout(() => {
+            setOption(0, 'heart');
+            setCycle(48);
+        }, 26000)
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(49);
+        }, 28000)
+        setTimeout(() => {
+            setOption(1, 'heart');
+            setCycle(50);
+        }, 30000)
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(51);
+        }, 32000)
+        setTimeout(() => {
+            setOption(1, 'flower');
+            setCycle(52);
+        }, 34000)
+        setTimeout(() => {
+            setOption(1, 'flower');
+            setCycle(53);
+        }, 36000)
+        setTimeout(() => {
+            setOption(0, 'heart');
+            setCycle(54);
+        }, 38000)
+        setTimeout(() => {
+            setOption(1, 'heart');
+            setCycle(55);
+        }, 40000)
+        setTimeout(() => {
+            setOption(1, 'flower');
+            setCycle(56);
+        }, 42000)
+        setTimeout(() => {
+            setOption(1, 'heart');
+            setCycle(57);
+        }, 44000)
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(58);
+        }, 46000)
+        setTimeout(() => {
+            setOption(0, 'heart');
+            setCycle(59);
+        }, 48000)
+        setTimeout(() => {
+            setOption(0, 'heart');
+            setCycle(60);
+        }, 50000)
+        setTimeout(() => {
+            setOption(1, 'flower');
+            setCycle(61);
+        }, 52000)
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(62);
+        }, 54000)
+        setTimeout(() => {
+            setOption(0, 'heart');
+            setCycle(63);
+        }, 56000)
+        setTimeout(() => {
+            setOption(1, 'heart');
+            setCycle(64);
+        }, 58000)
+        setTimeout(() => {
+            setOption(1, 'heart');
+            setCycle(65);
+        }, 60000)
+        setTimeout(() => {
+            setOption(1, 'flower');
+            setCycle(66);
+        }, 62000)
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(67);
+        }, 64000)
+        setTimeout(() => {
+            setOption(0, 'flower');
+            setCycle(68);
+        }, 66000)
+
+    }
+
     const setChoice = (evt) => {
 
         // al hacer click 2 veces en el mismo boton se bugea todo xd
         const choice = JSON.parse(evt.target.dataset.id);
 
+        //Como ya se hizo click, quitaremos los eventos, los debemos devolver cuando seteamos otro ciclo
+
         if (cycle <= 5) {
             //test de ejemplo corazones
-            exampleTest(choice, 'heart');
-            setChoices(prevValue => {
-                let newValue = prevValue;
-                newValue[cycle] = choice;
-                setFirstBoxClass("hnf-box");
-                setSecondBoxClass("hnf-box");
-                return newValue;
-            })
-            setCycle(prevValue => prevValue + 1);
+            const isCorrect = exampleTest(choice, 'heart');
+            if (isCorrect) {
+                setChoices(prevValue => {
+                    let newValue = prevValue;
+                    newValue[cycle] = choice;
+                    setFirstBoxClass("hnf-box");
+                    setSecondBoxClass("hnf-box");
+                    return newValue;
+                })
+                setCycle(prevValue => prevValue + 1);
+            }
+
             
         } else if (cycle <= 17) {
             //test corazones
@@ -320,13 +511,40 @@ export default function HNF() {
             })
             setCycle(prevValue => prevValue + 1);
         } else if (cycle <= 35) {
-            debugger;
+
+            setChoices(prevValue => {
+                let newValue = prevValue;
+                newValue[cycle] = choice;
+                setFirstBoxClass("hnf-box");
+                setSecondBoxClass("hnf-box");
+                if (cycle === 35) {
+                    debugger;
+                }     
+                return newValue;
+            })
             //test flores
         } else {
-            //maximo
+            setChoices(prevValue => {
+                let newValue = prevValue;
+                newValue[cycle] = choice;
+                setFirstBoxClass("hnf-box");
+                setSecondBoxClass("hnf-box");
+                if (cycle === 68) {
+                    debugger;
+                }     
+                return newValue;
+            })
         }
 
     }
+
+    useEffect(() => {
+        if (cycle === 68) {
+            setTimeout(() => {
+                debugger;
+            }, 2000)
+        }
+    }, [cycle])
 
 
     useEffect(() => {
@@ -392,15 +610,6 @@ export default function HNF() {
 
     }, [cycle])
 
-    useEffect(() => {
-        if (cycle === 18) {
-            setChoices(prevValue => {
-                debugger;
-                return prevValue;
-            })
-        }
-    }, [cycle, choices])
-
 
     useEffect(() => {
 
@@ -410,7 +619,49 @@ export default function HNF() {
 
         setTimeout(() => {
             setChoices(prevValue => {
-                debugger;
+                return prevValue;
+            })
+        setFirstBoxClass("hnf-box");
+        setSecondBoxClass("hnf-box");
+            Swal.fire({
+                icon: 'warning',
+                html: `<p>Bienvenido a la prueba de FLORES, es bastante simple. Cada vez que aparece un corazón, debes presionar el botón que está al lado contrario de la FLOR (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
+                <div style="display: flex;">
+                <img style="width:48%"src="/images/corazon-1.png">
+                <img style="width:48%"src="/images/corazon-2.png">
+                </div>
+     `,
+                showCancelButton: true,
+                allowOutsideClick: false,
+                width:"50em",
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar',
+                showCancelButton: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setFirstBoxClass("hnf-box");
+                    setSecondBoxClass("hnf-box");
+                    setCycle(18)
+                    setOption(0, 'flower')
+                }
+            })
+        }, 3000)
+            
+        }
+    
+
+}, [cycle, choices])
+
+
+useEffect(() => {
+
+        
+
+    if (cycle === 23) {
+        setTimeout(() => {
+            setChoices(prevValue => {
                 return prevValue;
             })
         setFirstBoxClass("hnf-box");
@@ -433,15 +684,13 @@ export default function HNF() {
                 showCancelButton: false,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    setFirstBoxClass("hnf-box");
-                    setSecondBoxClass("hnf-box");
-                    setOption(1, 'flower');
+                    flowerTest();
                 }
             })
-        }, 3000)
-            
-        }
-    
+        }, 2000)
+        
+    }
+
 
 }, [cycle, choices])
 
@@ -450,35 +699,36 @@ useEffect(() => {
 
         
 
-    if (cycle === 23) {
-        setChoices(prevValue => {
-            debugger;
-            return prevValue;
-        })
-    setFirstBoxClass("hnf-box");
-    setSecondBoxClass("hnf-box");
-        Swal.fire({
-            icon: 'warning',
-            html: `<p>Bienvenido a la prueba de CORAZONES, es bastante simple. Cada vez que aparece un corazón, debes presionar el botón que está en el mismo lado que el corazón. (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
-            <div style="display: flex;">
-            <img style="width:48%"src="/images/corazon-1.png">
-            <img style="width:48%"src="/images/corazon-2.png">
-            </div>
- `,
-            showCancelButton: true,
-            allowOutsideClick: false,
-            width:"50em",
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: 'Confirmar',
-            showCancelButton: false,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                debugger;
-                flowerTest();
-            }
-        })
+    if (cycle === 35) {
+        setTimeout(() => {
+            setChoices(prevValue => {
+                return prevValue;
+            })
+        setFirstBoxClass("hnf-box");
+        setSecondBoxClass("hnf-box");
+            Swal.fire({
+                icon: 'warning',
+                html: `<p>Bienvenido a la prueba de CORAZONES, es bastante simple. Cada vez que aparece un corazón, debes presionar el botón que está en el mismo lado que el corazón. (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
+                <div style="display: flex;">
+                <img style="width:48%"src="/images/corazon-1.png">
+                <img style="width:48%"src="/images/corazon-2.png">
+                </div>
+     `,
+                showCancelButton: true,
+                allowOutsideClick: false,
+                width:"50em",
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar',
+                showCancelButton: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    heartAndFlowerTest();
+                }
+            })
+        }, 2000)
+        
     }
 
 
@@ -493,32 +743,29 @@ useEffect(() => {
 
     return (
         <Fragment>
-
-            {/* <div className="hnf-instructions-1">
-                <div>
-                    <h4>
-
-                    </h4>
-                </div>
-                <div className="hnf-example-container">
-                    <div className="first-example"></div>
-                    <div className="second-example"></div>
-                </div>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                    <button onClick={startFirstTest} className="btn btn-success">Continuar</button>
-                </div>
-            </div> */}
             <div className="hnf-container">
+            
                 <div className="hnf-option-container">
                     <div className={firstBoxClass} data-id="0"></div>
                     <div className="hnf-box hidden-container"></div>
                     <div className={secondBoxClass} data-id="1"></div>
-                </div>
-                <div className="hnf-button-container">
-                    <button onClick={(e) => setChoice(e)} data-id="0" className="hnf-button"></button>
-                    <button onClick={(e) => setChoice(e)} data-id="1" className="hnf-button"></button>
+      
                 </div>
 
+
+      
+                <div className="hnf-button-container">
+                    <button id="hnf-button-0" style={{zIndex: 3}}onClick={(e) => setChoice(e)} data-id="0" className="hnf-button"></button>
+                    <button id="hnf-button-1" style={{zIndex: 4}}onClick={(e) => setChoice(e)} data-id="1" className="hnf-button"></button>
+
+                </div>
+                <div className='overlay'>
+              </div>
+  
+
+                
+
+ 
             </div>
         </Fragment>
     )

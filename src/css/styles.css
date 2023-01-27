@@ -1248,6 +1248,17 @@ template {
   visibility: hidden;
 }
 
+#hnf-wall {
+  border: 2px solid red;
+  z-index: -1;
+  background-color: #ddd;
+}
+
+.overlay {
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 html {
   background-color: #fff;
 }
