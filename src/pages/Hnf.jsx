@@ -98,7 +98,7 @@ export default function HNF() {
     }
 
     const setOption = (position, option) => {
-
+      
             if (option === 'heart') {
                 if (position === 0) {
                     setFirstBoxClass("hnf-box")
@@ -142,16 +142,6 @@ export default function HNF() {
 
     const exampleTest = (choice, option) => {
 
-        if (option === 'flower') {
-            if (answers[cycle] !== choice) {
-                const newPosition = answers[cycle + 1];
-                setOption(newPosition, option);
-                return true;
-            } else {
-                return false;
-            }
-        } 
- 
         if (answers[cycle] === choice) {
             const newPosition = answers[cycle + 1];
             setOption(newPosition, option);
@@ -159,6 +149,7 @@ export default function HNF() {
         } else { 
             return false;
         }
+        
     }
 
     const flowerTest = () => {
@@ -489,13 +480,6 @@ export default function HNF() {
 
             
         } else if (cycle <= 17) {
-
-            const button0 = document.querySelector("#hnf-button-0");
-            const button1 = document.querySelector("#hnf-button-1");
-
-            button0.disabled = true;
-            button1.disabled = true;
-
             //test corazones
             setChoices(prevValue => {
                 let newValue = prevValue;
@@ -508,15 +492,18 @@ export default function HNF() {
 
         } else if (cycle >= 18 && cycle <= 23) {
             //test de ejemplo flores
-            exampleTest(choice, 'flower');
-            setChoices(prevValue => {
-                let newValue = prevValue;
-                newValue[cycle] = choice;
-                setFirstBoxClass("hnf-box");
-                setSecondBoxClass("hnf-box");
-                return newValue;
-            })
-            setCycle(prevValue => prevValue + 1);
+            const isCorrect = exampleTest(choice, 'flower');
+            if (isCorrect) {
+                setChoices(prevValue => {
+                    let newValue = prevValue;
+                    newValue[cycle] = choice;
+                    setFirstBoxClass("hnf-box");
+                    setSecondBoxClass("hnf-box");
+                    return newValue;
+                })
+                setCycle(prevValue => prevValue + 1);
+            }
+
         } else if (cycle <= 35) {
 
             setChoices(prevValue => {
@@ -626,7 +613,6 @@ export default function HNF() {
 
         setTimeout(() => {
             setChoices(prevValue => {
-                debugger;
                 return prevValue;
             })
         setFirstBoxClass("hnf-box");
