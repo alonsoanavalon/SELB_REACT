@@ -2,7 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
 
 export default function HNF() {
-
+    const [startTimeHearts, setStartTimeHearts] = useState();
+    const [startTimeFlowers, setStartTimeFlowers] = useState();
+    const [startTimeHeartAndFlowers, setStartTimeHeartAndFlowers] = useState();
     const [firstBoxClass, setFirstBoxClass] = useState("hnf-box");
     const [secondBoxClass, setSecondBoxClass] = useState("hnf-box");
     const [cycle, setCycle] = useState(0);
@@ -154,52 +156,66 @@ export default function HNF() {
 
     const flowerTest = () => {
 
+
+
         setOption(0, 'flower');
         setCycle(24);
+        setStartTimeFlowers(new Date().getTime());
 
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(25);
+            setStartTimeFlowers(new Date().getTime());
         }, 2000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(26);
+            setStartTimeFlowers(new Date().getTime());
         }, 4000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(27);
+            setStartTimeFlowers(new Date().getTime());
         }, 6000)
         setTimeout(() => {
             setOption(0, 'flower'); 
             setCycle(28);
+            setStartTimeFlowers(new Date().getTime());
         }, 8000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(29);
+            setStartTimeFlowers(new Date().getTime());
         }, 10000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(30);
+            setStartTimeFlowers(new Date().getTime());
         }, 12000)
         setTimeout(() => {
             setOption(0, 'flower'); 
             setCycle(31);
+            setStartTimeFlowers(new Date().getTime());
         }, 14000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(32);
+            setStartTimeFlowers(new Date().getTime());
         }, 16000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(33);
+            setStartTimeFlowers(new Date().getTime());
         }, 18000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(34);
+            setStartTimeFlowers(new Date().getTime());
         }, 20000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(35);
+            setStartTimeFlowers(new Date().getTime());
         }, 22000)
 
     }
@@ -210,50 +226,62 @@ export default function HNF() {
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(6);
+            setStartTimeHearts(new Date().getTime());
         }, 2000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(7);
+            setStartTimeHearts(new Date().getTime());
         }, 4000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(8);
+            setStartTimeHearts(new Date().getTime());
         }, 6000)
         setTimeout(() => {
             setOption(1, 'heart'); 
             setCycle(9);
+            setStartTimeHearts(new Date().getTime());
         }, 8000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(10);
+            setStartTimeHearts(new Date().getTime());
         }, 10000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(11);
+            setStartTimeHearts(new Date().getTime());
         }, 12000)
         setTimeout(() => {
             setOption(1, 'heart'); 
             setCycle(12);
+            setStartTimeHearts(new Date().getTime());
         }, 14000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(13);
+            setStartTimeHearts(new Date().getTime());
         }, 16000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(14);
+            setStartTimeHearts(new Date().getTime());
         }, 18000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(15);
+            setStartTimeHearts(new Date().getTime());
         }, 20000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(16);
+            setStartTimeHearts(new Date().getTime());
         }, 22000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(17);
+            setStartTimeHearts(new Date().getTime());
         }, 24000)
     }
 
@@ -264,134 +292,167 @@ export default function HNF() {
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(36);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 2000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(37);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 4000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(38);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 6000)
         setTimeout(() => {
             setOption(0, 'heart'); 
             setCycle(39);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 8000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(40);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 10000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(41);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 12000)
         setTimeout(() => {
             setOption(1, 'flower');  
             setCycle(42);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 14000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(43);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 16000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(44);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 18000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(45);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 20000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(46);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 22000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(47);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 24000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(48);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 26000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(49);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 28000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(50);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 30000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(51);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 32000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(52);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 34000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(53);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 36000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(54);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 38000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(55);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 40000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(56);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 42000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(57);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 44000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(58);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 46000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(59);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 48000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(60);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 50000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(61);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 52000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(62);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 54000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(63);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 56000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(64);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 58000)
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(65);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 60000)
         setTimeout(() => {
             setOption(1, 'flower');
             setCycle(66);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 62000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(67);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 64000)
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(68);
+            setStartTimeHeartAndFlowers(new Date().getTime())
         }, 66000)
 
     }
@@ -405,7 +466,10 @@ export default function HNF() {
             if (isCorrect) {
                 setChoices(prevValue => {
                     let newValue = prevValue;
-                    newValue[cycle] = choice;
+                    newValue[cycle] = {
+                        choice,
+                        time: null
+                    };
                     setFirstBoxClass("hnf-box");
                     setSecondBoxClass("hnf-box");
                     return newValue;
@@ -417,8 +481,13 @@ export default function HNF() {
         } else if (cycle <= 17) {
             //test corazones
             setChoices(prevValue => {
+                const itemTime = (new Date().getTime() - startTimeHearts)/1000;
                 let newValue = prevValue;
-                newValue[cycle] = choice;
+                newValue[cycle] = {
+                    choice,
+                    time: itemTime
+                };
+
                 setFirstBoxClass("hnf-box");
                 setSecondBoxClass("hnf-box");
      
@@ -427,11 +496,15 @@ export default function HNF() {
 
         } else if (cycle >= 18 && cycle <= 23) {
             //test de ejemplo flores
+
             const isCorrect = exampleTest(choice, 'flower');
             if (isCorrect) {
                 setChoices(prevValue => {
                     let newValue = prevValue;
-                    newValue[cycle] = choice;
+                    newValue[cycle] = {
+                        choice,
+                        time: null
+                    };
                     setFirstBoxClass("hnf-box");
                     setSecondBoxClass("hnf-box");
                     return newValue;
@@ -442,8 +515,14 @@ export default function HNF() {
         } else if (cycle <= 35) {
 
             setChoices(prevValue => {
+                const itemTime = (new Date().getTime() - startTimeFlowers)/1000;
                 let newValue = prevValue;
-                newValue[cycle] = choice;
+                newValue[cycle] = {
+                    choice,
+                    time: itemTime
+                };
+
+
                 setFirstBoxClass("hnf-box");
                 setSecondBoxClass("hnf-box");
                 return newValue;
@@ -451,8 +530,14 @@ export default function HNF() {
             //test flores
         } else {
             setChoices(prevValue => {
+                const itemTime = (new Date().getTime() - startTimeHeartAndFlowers)/1000;
                 let newValue = prevValue;
-                newValue[cycle] = choice;
+                newValue[cycle] = {
+                    choice,
+                    time: itemTime
+                };
+
+
                 setFirstBoxClass("hnf-box");
                 setSecondBoxClass("hnf-box");
                 return newValue;
@@ -582,7 +667,7 @@ useEffect(() => {
         setSecondBoxClass("hnf-box");
             Swal.fire({
                 icon: 'warning',
-                html: `<p>Bienvenido a la prueba de CORAZONES, es bastante simple. Cada vez que aparece un corazón, debes presionar el botón que está en el mismo lado que el corazón. (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
+                html: `<p>Bienvenido a la prueba de FLORES, es bastante simple. Cada vez que aparece una FLOR, debes presionar el botón que está al lado contrario de la FLOR. (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
                 <div style="display: flex;">
                 <img style="width:48%"src="/images/corazon-1.png">
                 <img style="width:48%"src="/images/corazon-2.png">
@@ -652,6 +737,41 @@ useEffect(() => {
 
 
     
+useEffect(() => {
+
+        
+
+    if (cycle === 68) {
+
+    setTimeout(() => {
+        setChoices(prevValue => {
+            debugger;
+            return prevValue;
+        })
+    setFirstBoxClass("hnf-box");
+    setSecondBoxClass("hnf-box");
+        Swal.fire({
+            icon: 'warning',
+            html: `El test ha finalizado`,
+            showCancelButton: true,
+            allowOutsideClick: false,
+            width:"50em",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Confirmar',
+            showCancelButton: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+        })
+    }, 3000)
+        
+    }
+
+
+}, [cycle, choices])
 
 
 
@@ -671,7 +791,6 @@ useEffect(() => {
                 <div className="hnf-button-container">
                     <button id="hnf-button-0" style={{zIndex: 3}}onClick={(e) => setChoice(e)} data-id="0" className="hnf-button"></button>
                     <button id="hnf-button-1" style={{zIndex: 4}}onClick={(e) => setChoice(e)} data-id="1" className="hnf-button"></button>
-
                 </div>
                 <div className='overlay'>
               </div>
