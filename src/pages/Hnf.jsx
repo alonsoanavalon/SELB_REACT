@@ -223,6 +223,8 @@ export default function HNF() {
 
     const heartTest = () => {
 
+        setStartTimeHearts(new Date().getTime());
+
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(6);
@@ -452,7 +454,7 @@ export default function HNF() {
         setTimeout(() => {
             setOption(0, 'flower');
             setCycle(68);
-            setStartTimeHeartAndFlowers(new Date().getTime())
+                    setStartTimeHeartAndFlowers(new Date().getTime())
         }, 66000)
 
     }
@@ -500,6 +502,7 @@ export default function HNF() {
             const isCorrect = exampleTest(choice, 'flower');
             if (isCorrect) {
                 setChoices(prevValue => {
+    
                     let newValue = prevValue;
                     newValue[cycle] = {
                         choice,
