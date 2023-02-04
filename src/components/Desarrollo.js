@@ -11,6 +11,9 @@ export default function Desarrollo(){
                 <li>
                     <a className="btn btn-success" href="/hnf">HNF</a>
                 </li>
+                <li>
+                    <a className="btn btn-success" href="/fonologico">Fonologico</a>
+                </li>
                 
                 
             </ul>

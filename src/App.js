@@ -20,6 +20,7 @@ import Respaldo from './pages/Respaldo'
 import Parents from './pages/Parents';
 import ParentsForm from './pages/ParentsForm';
 import Aces from './pages/Aces';
+import Fonologico from './pages/Fonologico';
 import Wally from './pages/Wally';
 import Corsi from './pages/Corsi'
 import Moments from './pages/Moments'
@@ -241,6 +242,7 @@ function App() {
           <Route path="/aces" element={<Aces/>}></Route>
           <Route path="/corsi" element={<Corsi/>}></Route>
           <Route path="/hnf" element={<HNF/>}></Route>
+          <Route path="/fonologico" element={<Fonologico/>}></Route>
           <Route path="/wally" element={<Wally/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
