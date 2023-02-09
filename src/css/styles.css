@@ -1259,6 +1259,10 @@ template {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.play-button {
+  cursor: pointer;
+}
+
 html {
   background-color: #fff;
 }
