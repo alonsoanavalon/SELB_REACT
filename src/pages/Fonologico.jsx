@@ -205,7 +205,7 @@ export default function Fonologico () {
 
     const startGameA = () => {
         setStartGame(true);
-        setActualItem(items[21]);
+        setActualItem(items[0]);
     }
 
     const startGameB = () => {
@@ -219,16 +219,11 @@ export default function Fonologico () {
 
             if (prevValue[actualItem.id]) {
 
-                //aca ya es porque el valor esta creado
-
-                //eliminar del array si fuera necesario
-
                 if (Array.from(prevValue[actualItem.id]).length > 0) {
 
                     const actualLength = Array.from(prevValue[actualItem.id]).length
                     const testItems = [...prevValue[actualItem.id], e.target.innerHTML];
                     const newValues = testItems.filter(item => item !== e.target.innerHTML);
-                    debugger;
                     
                     if (actualLength === newValues.length) {
                         prevValue[actualItem.id] = new Set([...testItems]);
@@ -237,17 +232,7 @@ export default function Fonologico () {
                         prevValue[actualItem.id] = new Set([...newValues]);
 
                     }
-                
-
-                    // const newValues = testItems.filter(item => item !== e.target.innerHTML);
-
-                    // debugger;
-    
-                    // if (newValues.length == prevValue[actualItem.id].length) {
-                    //     prevValue[actualItem.id] = new Set([...prevValue[actualItem.id], e.target.innerHTML]);
-                    // } else {
-                    //     prevValue[actualItem.id] = new Set([...prevValue[actualItem.id]]);
-                    // }
+            
                 }
 
 
@@ -262,6 +247,11 @@ export default function Fonologico () {
            
         })
     }, [choices, actualItem])
+
+
+    const nextItem = () => {
+        setActualItem(items[actualItem.id+1])
+    }
 
     return (
         
@@ -298,11 +288,13 @@ export default function Fonologico () {
                         </div>
                         <div>
                             <div style={{marginBottom:".6rem"}}>
-                                <img src="/images/audio-headset.png" style={{width:"30px", marginRight:".5rem"}} alt="" />
-                                <p style={{display:"inline"}}>{actualItem.options.map((option) => `${option} `)}</p>
+                                <img src="/images/check.png" style={{width:"30px", marginRight:".5rem"}} alt="" />
+                                <p style={{display:"inline"}}>{
+                                actualItem.options && actualItem.options.map((option) => `${option} `)
+                                }</p>
                             </div>
                             <div>
-                                <img src="/images/check.png" style={{width:"30px", marginRight:".5rem"}} alt="" />
+                                <img src="/images/audio-headset.png" style={{width:"30px", marginRight:".5rem"}} alt="" />
                                 <p style={{display:"inline"}}>{actualItem.audioDescription}</p>
                             </div>
                         </div>
@@ -311,7 +303,7 @@ export default function Fonologico () {
                         <h4 style={{textAlign:"center"}}>Opciones</h4>
                         <div style={{display:"flex", flexDirection:"column"}}>
                             {
-                                actualItem.options.map((item) => 
+                                 actualItem.options && actualItem.options.map((item) => 
                                     <div style={{boxShadow:"1px 1px 1px 1px rgba(0, 0, 0, 0.1)", margin:".4rem", textAlign:"center", height:"30px"}} onClick={(e => saveItemChoice(e))}>{item}</div>
                                 )
                             }
@@ -320,7 +312,7 @@ export default function Fonologico () {
                     </div>
                 </div>
                 <div style={{display:"flex", width: "90%", margin:"0 auto", marginTop:"12rem", justifyContent:"center"}}>
-                <button className='btn btn-primary' style={{textAlign: "center", width:"150px"}}>Avanzar</button>
+                <button className='btn btn-primary' style={{textAlign: "center", width:"150px" }} onClick={nextItem}>Avanzar</button>
 
                 </div>
             </Fragment>
