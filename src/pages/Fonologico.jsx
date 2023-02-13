@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -198,6 +198,7 @@ export default function Fonologico () {
         },
     ])
 
+    const [choices, setChoices] = useState({})
     const [actualItem, setActualItem] = useState()
 
     const [description, setDescription] = useState("Si responde con el dígito primero califique el item de 0 y diga 'recuerda que debes decirme primero la palabra, luego el número'")
@@ -211,6 +212,57 @@ export default function Fonologico () {
         setStartGame(true);
         setActualItem(items[4]);
     }
+
+    const saveItemChoice = useCallback((e) =>{
+        setChoices(prevValue => {
+            debugger;
+
+            if (prevValue[actualItem.id]) {
+
+                //aca ya es porque el valor esta creado
+
+                //eliminar del array si fuera necesario
+
+                if (Array.from(prevValue[actualItem.id]).length > 0) {
+
+                    const actualLength = Array.from(prevValue[actualItem.id]).length
+                    const testItems = [...prevValue[actualItem.id], e.target.innerHTML];
+                    const newValues = testItems.filter(item => item !== e.target.innerHTML);
+                    debugger;
+                    
+                    if (actualLength === newValues.length) {
+                        prevValue[actualItem.id] = new Set([...testItems]);
+
+                    } else {
+                        prevValue[actualItem.id] = new Set([...newValues]);
+
+                    }
+                
+
+                    // const newValues = testItems.filter(item => item !== e.target.innerHTML);
+
+                    // debugger;
+    
+                    // if (newValues.length == prevValue[actualItem.id].length) {
+                    //     prevValue[actualItem.id] = new Set([...prevValue[actualItem.id], e.target.innerHTML]);
+                    // } else {
+                    //     prevValue[actualItem.id] = new Set([...prevValue[actualItem.id]]);
+                    // }
+                }
+
+
+
+            } else {
+                prevValue[actualItem.id] = [e.target.innerHTML];
+
+            }
+
+            return prevValue;
+
+           
+        })
+    }, [choices, actualItem])
+
     return (
         
         <Fragment>
@@ -239,7 +291,7 @@ export default function Fonologico () {
                         {actualItem.instruction}
                         <button className='btn btn-danger' style={{width:"150px"}}>Evaluar con 0</button>
                     </div>
-                        <div style={{display:"flex", justifyContent:"center", alignItems:"center", padding:"2rem 0  "}}>
+                        <div style={{display:"flex", justifyContent:"center", alignItems:"center", padding:"1rem 0 3rem 0  "}}>
                             <div className="play-button">
                             <img  src="/images/play-button.png" alt="play" style={{maxWidth:"150px", marginTop:"2rem"}} />
                             </div>
@@ -260,7 +312,7 @@ export default function Fonologico () {
                         <div style={{display:"flex", flexDirection:"column"}}>
                             {
                                 actualItem.options.map((item) => 
-                                    <div style={{boxShadow:"1px 1px 1px 1px rgba(0, 0, 0, 0.1)", margin:".4rem", textAlign:"center", height:"30px"}}>{item}</div>
+                                    <div style={{boxShadow:"1px 1px 1px 1px rgba(0, 0, 0, 0.1)", margin:".4rem", textAlign:"center", height:"30px"}} onClick={(e => saveItemChoice(e))}>{item}</div>
                                 )
                             }
                         </div>
