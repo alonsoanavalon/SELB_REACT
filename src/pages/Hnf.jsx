@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
+import {get, update, getMany, set} from 'idb-keyval'
 
 export default function HNF() {
     const [startTimeHearts, setStartTimeHearts] = useState();
@@ -8,6 +9,8 @@ export default function HNF() {
     const [firstBoxClass, setFirstBoxClass] = useState("hnf-box");
     const [secondBoxClass, setSecondBoxClass] = useState("hnf-box");
     const [cycle, setCycle] = useState(0);
+    const [isArray, setIsArray] = useState(false)
+
     const [answers] = useState({
         // Del 1 al 5 son en los que tiene que hacer click en el correcto o no pasa, son los de ejemplo.
         // 6 a 17 son el primero de corazones, es con tiempo
@@ -87,6 +90,126 @@ export default function HNF() {
 
     })
     const [choices, setChoices] = useState({})
+
+    function getMomentByDate(date) {
+        let dateBegin;
+        let dateUntil;
+        get('moments')
+        .then(res => {
+            res.map(element => {
+                dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW")
+                dateUntil = new Date(element['until']).toLocaleDateString("zh-TW")
+                if (date >= dateBegin && date <= dateUntil ) {
+                    return element['id']
+                } 
+                
+                
+            })
+        })
+    }
+
+    function saveTest(answers) {
+
+        let instrumentInfo = {}
+        let choicesArray = []
+
+        let testDataArray = ['selectedStudent', 'userData']
+
+        //Me queda arreglar esto, pq ahora al elegir el test no tenemos niño, ni fecha ni evaluador, entonces hay que ver eso dps
+        getMany(testDataArray).then(([firstVal, secondVal]) =>  { 
+            instrumentInfo['user_id'] = parseInt(secondVal['id'])
+            instrumentInfo['student_id'] = parseInt(firstVal)
+            instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
+        }
+        );
+
+        choicesArray.push(instrumentInfo)
+
+        //esto de 8 tendre q poner en bdd y 7 hnf
+        instrumentInfo['instrument'] = 7
+
+        choicesArray.push(answers) // estas deben ser las respuestas
+
+        //Luego viene toda la logica de si se repite o si se guarda en el backup etc.
+
+        get('backupTest')
+        .then(response => {
+            let backupLength = response.length
+            debugger;
+            if (Array.isArray(response) && response.length > 0) {
+                get('completedTests')
+                .then(res => {
+                    if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
+                        console.log(response, "Actualizando Backup")
+                        let arrayCounter = 0;
+                        response.forEach(array => {
+                            let responseMoment;
+                            let instrumentMoment;
+                            if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                                responseMoment = getMomentByDate(array[0]['date'])
+                                instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                                if (responseMoment === instrumentMoment) {
+                                    response.splice(arrayCounter, 1)
+                                } 
+                            }
+                            arrayCounter+= 1
+    
+                        })
+    
+                        update('backupTest', val => [...response, choicesArray])
+                    }
+                })
+            }
+        })
+
+
+        get('completedTests')
+        .then(response => {
+
+            if (!isArray) {
+                if (response.length === undefined) {
+                    update('completedTests', (val) => 
+                    [response , choicesArray])         
+                    setIsArray(true)
+                } else if (response.length === 0) {
+
+                    set('completedTests', [choicesArray])
+                } else {
+                    console.log(response, "Actualizando1")
+                    let arrayCounter = 0;
+                    response.forEach(array => {
+                        
+                        let responseMoment;
+                        let instrumentMoment;
+                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                            responseMoment = getMomentByDate(array[0]['date'])
+                            instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                            if (responseMoment === instrumentMoment) {
+                                response.splice(arrayCounter, 1)
+                            } 
+                        }
+                        arrayCounter+= 1
+
+                    })
+
+                    update('completedTests', val => [...response, choicesArray])
+
+                    
+                }
+            } else {
+                console.log(response, "Actualizando2")
+                update('completedTests', val => [...response, choicesArray])
+
+            }
+
+        })
+
+    }
+
 
     const startFirstTest = () => {
 
@@ -766,7 +889,8 @@ useEffect(() => {
             showCancelButton: false,
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.reload();
+                saveTest(choices);
+                window.location.href = '/';
             }
         })
     }, 3000)

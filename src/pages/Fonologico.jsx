@@ -1,17 +1,13 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-
+import React, { Fragment, useCallback, useState, useEffect } from 'react';
+import Swal from 'sweetalert2'
+import {get, update, getMany, set} from 'idb-keyval'
 
 export default function Fonologico () {
 
     const [startGame, setStartGame] = useState(false);
-    const [items, setItems] = useState([
+    const [isArray, setIsArray] = useState(false)
+    //los ids de aca de los items deben ser iguales en bbdd para que las choices tambien se guarden con el orden y se envien correctamente
+    const [items] = useState([
         {
             id: 0,
             title: "Ejemplo B",
@@ -199,10 +195,130 @@ export default function Fonologico () {
     ])
 
     const [choices, setChoices] = useState({})
-    const [actualItem, setActualItem] = useState()
-
+    const [actualItem, setActualItem] = useState({})
+    const [ zeroTimes, setZeroTimes ] = useState(0)
     const [description, setDescription] = useState("Si responde con el dígito primero califique el item de 0 y diga 'recuerda que debes decirme primero la palabra, luego el número'")
+    
+    function getMomentByDate(date) {
+        let dateBegin;
+        let dateUntil;
+        get('moments')
+        .then(res => {
+            res.map(element => {
+                dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW")
+                dateUntil = new Date(element['until']).toLocaleDateString("zh-TW")
+                if (date >= dateBegin && date <= dateUntil ) {
+                    return element['id']
+                } 
+                
+                
+            })
+        })
+    }
 
+    function saveTest(answers) {
+
+        let instrumentInfo = {}
+        let choicesArray = []
+
+        let testDataArray = ['selectedStudent', 'userData']
+
+        //Me queda arreglar esto, pq ahora al elegir el test no tenemos niño, ni fecha ni evaluador, entonces hay que ver eso dps
+        getMany(testDataArray).then(([firstVal, secondVal]) =>  { 
+            instrumentInfo['user_id'] = parseInt(secondVal['id'])
+            instrumentInfo['student_id'] = parseInt(firstVal)
+            instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
+        }
+        );
+
+        choicesArray.push(instrumentInfo)
+
+        //esto de 8 tendre q poner en bdd y 7 hnf
+        instrumentInfo['instrument'] = 8
+
+        choicesArray.push(answers) // estas deben ser las respuestas
+
+        //Luego viene toda la logica de si se repite o si se guarda en el backup etc.
+
+        get('backupTest')
+        .then(response => {
+            let backupLength = response.length
+            debugger;
+            if (Array.isArray(response) && response.length > 0) {
+                get('completedTests')
+                .then(res => {
+                    if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
+                        console.log(response, "Actualizando Backup")
+                        let arrayCounter = 0;
+                        response.forEach(array => {
+                            let responseMoment;
+                            let instrumentMoment;
+                            if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                                responseMoment = getMomentByDate(array[0]['date'])
+                                instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                                if (responseMoment === instrumentMoment) {
+                                    response.splice(arrayCounter, 1)
+                                } 
+                            }
+                            arrayCounter+= 1
+    
+                        })
+    
+                        update('backupTest', val => [...response, choicesArray])
+                    }
+                })
+            }
+        })
+
+
+        get('completedTests')
+        .then(response => {
+
+            if (!isArray) {
+                if (response.length === undefined) {
+                    update('completedTests', (val) => 
+                    [response , choicesArray])         
+                    setIsArray(true)
+                } else if (response.length === 0) {
+
+                    set('completedTests', [choicesArray])
+                } else {
+                    console.log(response, "Actualizando1")
+                    let arrayCounter = 0;
+                    response.forEach(array => {
+                        
+                        let responseMoment;
+                        let instrumentMoment;
+                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                            responseMoment = getMomentByDate(array[0]['date'])
+                            instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                            if (responseMoment === instrumentMoment) {
+                                response.splice(arrayCounter, 1)
+                            } 
+                        }
+                        arrayCounter+= 1
+
+                    })
+
+                    update('completedTests', val => [...response, choicesArray])
+
+                    
+                }
+            } else {
+                console.log(response, "Actualizando2")
+                update('completedTests', val => [...response, choicesArray])
+
+            }
+
+        })
+
+    }
+
+   
     const startGameA = () => {
         setStartGame(true);
         setActualItem(items[0]);
@@ -214,9 +330,12 @@ export default function Fonologico () {
     }
 
     const saveItemChoice = useCallback((e) =>{
-        setChoices(prevValue => {
-            debugger;
 
+        e.target.classList.toggle('active-option')
+
+        setChoices(prevValue => {
+            //aca el actualItem en lugar del actualItem para asignar el numero de item en las choices, utilizariamos el e.target.dataset.id, asi sabemos en cual item estamos y podriamos obtener los valores o setearlo
+            //La unica diferencia es el origen, antes estaba dado por los clicks, ahora esta dado por el slide
             if (prevValue[actualItem.id]) {
 
                 if (Array.from(prevValue[actualItem.id]).length > 0) {
@@ -235,23 +354,119 @@ export default function Fonologico () {
             
                 }
 
-
-
             } else {
                 prevValue[actualItem.id] = [e.target.innerHTML];
 
             }
-
             return prevValue;
 
            
         })
     }, [choices, actualItem])
 
+    const matchCounter = (choicesArray, answersArray) => {
+        const matches = [];
+        choicesArray.forEach((answer, index) => {
+            if (answer === answersArray[index]) {
+                matches.push(answer);
+            }
+        })
 
-    const nextItem = () => {
-        setActualItem(items[actualItem.id+1])
+        return matches;
     }
+
+    const nextItem = useCallback(() => {
+
+        if (choices && actualItem) {
+            const choicesArray = Array.from(choices[actualItem.id]);
+            const answersArray = actualItem.options;
+
+            if (actualItem.id === 22) {
+                Swal.fire({
+                    icon: 'success',
+                    title: "Test finalizado",
+                    allowOutsideClick: false,
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        saveAndExit(choices);
+                    }
+                })
+            } else if (actualItem.id === 0 || actualItem.id === 4){
+                choices[actualItem.id] = {
+                    options: {},
+                    value: 0
+                }
+                const selectedItems = document.querySelectorAll(".active-option");
+                selectedItems.forEach((item) => {
+                    item.classList.remove("active-option")
+                })
+                setActualItem(items[actualItem.id+1])
+            }else {
+
+
+                if (JSON.stringify(choicesArray) === JSON.stringify(answersArray)) {
+                    //tenemos que agregar el puntaje que serian 2 y mostrar las opciones
+                    setZeroTimes(0);
+                    choices[actualItem.id] = {
+                        options: choices[actualItem.id],
+                        value: 2
+                    }
+                } else {
+                    const matches = matchCounter(choicesArray, answersArray);
+
+                    if (matches.length >= 2) {
+                        //ahora esto se considera error, pero no tenemos un contador
+                        //de errores, o es el de zeros?
+                        window.alert("1 pto");
+                        choices[actualItem.id] = {
+                            options: {},
+                            value: 1
+                        }
+                    } else {
+                    //tenemos que calificar con 0 y mostrar las opciones
+                    choices[actualItem.id] = {
+                        options: {},
+                        value: 0,
+                    }
+                    }
+                    setZeroTimes(prevValue => prevValue+1);
+                }
+                //quitandole estilos a botones activos
+                const selectedItems = document.querySelectorAll(".active-option");
+                selectedItems.forEach((item) => {
+                    item.classList.remove("active-option")
+                })
+                setActualItem(items[actualItem.id+1])
+            }
+    
+
+        }
+
+
+    }, [choices, actualItem])
+
+    const saveAndExit = useCallback(() => {
+        saveTest(choices);
+        window.location.href = '/';
+
+    }, [choices, setChoices])
+
+    useEffect(() => {
+        if (zeroTimes >= 3 && choices) {
+            Swal.fire({
+                icon: 'error',
+                title: "Test finalizado",
+                allowOutsideClick: false,
+                html:"Haz cometido 3 errores consecutivos"
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    saveAndExit(choices);
+                }
+            })
+        }
+    }, [zeroTimes, choices])
 
     return (
         
@@ -279,7 +494,18 @@ export default function Fonologico () {
                     <div style={{width:"48%", display:"flex", flexDirection:"column"}}>
                     <div style={{display:"flex", flexDirection:"column", alignItems:"center", border:"1px solid #ddd", padding:"1rem", borderRadius:".5rem"}}>
                         {actualItem.instruction}
-                        <button className='btn btn-danger' style={{width:"150px"}}>Evaluar con 0</button>
+                        <button onClick={() => setZeroTimes(prevValue => {
+                            choices[actualItem.id] = {
+                                options: {},
+                                value: 0
+                            }
+                            const selectedItems = document.querySelectorAll(".active-option");
+                            selectedItems.forEach((item) => {
+                                item.classList.remove("active-option")
+                            })
+                            setActualItem(items[actualItem.id+1])
+                            return prevValue +1
+                        })}className='btn btn-danger' style={{width:"150px"}}>Evaluar con 0</button>
                     </div>
                         <div style={{display:"flex", justifyContent:"center", alignItems:"center", padding:"1rem 0 3rem 0  "}}>
                             <div className="play-button">
@@ -290,7 +516,7 @@ export default function Fonologico () {
                             <div style={{marginBottom:".6rem"}}>
                                 <img src="/images/check.png" style={{width:"30px", marginRight:".5rem"}} alt="" />
                                 <p style={{display:"inline"}}>{
-                                actualItem.options && actualItem.options.map((option) => `${option} `)
+                                actualItem.options && actualItem.options.map((option, key) => `${option} `)
                                 }</p>
                             </div>
                             <div>
@@ -303,8 +529,8 @@ export default function Fonologico () {
                         <h4 style={{textAlign:"center"}}>Opciones</h4>
                         <div style={{display:"flex", flexDirection:"column"}}>
                             {
-                                 actualItem.options && actualItem.options.map((item) => 
-                                    <div style={{boxShadow:"1px 1px 1px 1px rgba(0, 0, 0, 0.1)", margin:".4rem", textAlign:"center", height:"30px"}} onClick={(e => saveItemChoice(e))}>{item}</div>
+                                 actualItem.options && actualItem.options.map((item, key) => 
+                                    <div key={key} style={{boxShadow:"1px 1px 1px 1px rgba(0, 0, 0, 0.1)", margin:".4rem auto", textAlign:"center", height:"30px", width:"150px", borderRadius:".8rem"}} onClick={(e => saveItemChoice(e))}>{item}</div>
                                 )
                             }
                         </div>

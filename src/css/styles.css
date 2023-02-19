@@ -623,7 +623,7 @@ template {
 #instruments-list-wrapper #instruments-list {
   position: fixed;
   width: 350px;
-  height: 500px;
+  height: 600px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
   background-color: #fff;
   margin: auto;
@@ -1261,6 +1261,11 @@ template {
 
 .play-button {
   cursor: pointer;
+}
+
+.active-option {
+  color: #fff;
+  background-color: #20c997;
 }
 
 html {
