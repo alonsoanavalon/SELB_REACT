@@ -126,9 +126,19 @@ export default function HNF() {
         choicesArray.push(instrumentInfo)
 
         //esto de 8 tendre q poner en bdd y 7 hnf
-        instrumentInfo['instrument'] = 7
+        instrumentInfo['instrument'] = 7;
+        const answersArray = Object.entries(answers);
+        const parsedAnswers = answersArray.map((answer) => {
+            const id = parseInt(answer[0])+254;
+            return [
+                id,
+                answer[1],
+            ]
+        })
+        const formatedAnswers = Object.fromEntries(parsedAnswers);
+        debugger;
 
-        choicesArray.push(answers) // estas deben ser las respuestas
+        choicesArray.push(formatedAnswers) // estas deben ser las respuestas
 
         //Luego viene toda la logica de si se repite o si se guarda en el backup etc.
 
