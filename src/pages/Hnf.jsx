@@ -887,7 +887,7 @@ useEffect(() => {
     setFirstBoxClass("hnf-box");
     setSecondBoxClass("hnf-box");
         Swal.fire({
-            icon: 'warning',
+            icon: 'success',
             html: `El test ha finalizado`,
             showCancelButton: true,
             allowOutsideClick: false,
