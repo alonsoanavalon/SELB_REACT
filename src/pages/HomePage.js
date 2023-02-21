@@ -8,20 +8,25 @@ export default function HomePage() {
   const alert = useAlert()
 
   const [username, setUsername] = useState("")
+  const [savedFonoTests, setSavedFonoTests] = useState([])
+  const [savedHnfTests, setSavedHnfTests] = useState([])
   const [savedTejasTests, setSavedTejasTests] = useState([])
   const [savedCalculoTests, setSavedCalculoTests] = useState([])
   const [savedSdqTests, setSavedSdqTests] = useState([])
   const [savedWallyTests, setSavedWallyTests] = useState([])
   const [savedCorsiTests, setSavedCorsiTests] = useState([])
   const [savedAcesTests, setSavedAcesTests] = useState([])
-  const [tejasLength, setTejasLength] = useState(undefined)
+
 
   const [savedTests, setSavedTests] = useState(false)
+  const [tejasLength, setTejasLength] = useState(undefined)
   const [calculoLength, setCalculoLength] = useState(undefined)
   const [sdqLength, setSdqLength] = useState(undefined)
   const [wallyLength, setWallyLength] = useState(undefined)
   const [acesLength, setAcesLength] = useState(undefined)
   const [corsiLength, setCorsiLength] = useState(undefined)
+  const [hnfLength, setHnfLength] = useState(undefined)
+  const [fonoLength, setFonoLength] = useState(undefined)
   const [completeName, setCompleteName] = useState("")
 
   // function eliminarTestAntiguos() {
@@ -754,6 +759,8 @@ export default function HomePage() {
         let wally = 0;
         let aces = 0;
         let corsi = 0;
+        let hnf = 0;
+        let fono = 0;
 
         res.forEach(element => {
           if (element[0]['instrument'] === 1) {
@@ -778,9 +785,17 @@ export default function HomePage() {
           } if (element[0]['instrument'] === 6) {
             corsi++
             setSavedTests(true)
+          } 
+          if (element[0]['instrument'] === 7) {
+            hnf++
+          }
+          if (element[0]['instrument'] === 8) {
+            fono++
           }
         })
 
+        setSavedHnfTests(hnf)
+        setSavedFonoTests(fono)
         setSavedTejasTests(tejas)
         setSavedCalculoTests(calculo)
         setSavedWallyTests(wally)
@@ -824,6 +839,18 @@ export default function HomePage() {
           setCorsiLength(res)
         })
 
+        get('hnfLength')
+        .then(res => {
+          setHnfLength(res)
+        })
+
+
+        get('fonoLength')
+        .then(res => {
+          setFonoLength(res)
+        })
+
+
 
 
 
@@ -864,7 +891,7 @@ export default function HomePage() {
               confirmButtonText: '¿Deseas enviar los test?',
               showLoaderOnConfirm: true,
               preConfirm: async () => {
-                return fetch(/* 'http://localhost:3500/newevaluation'|| */ 'https://selb.bond/newevaluation', {
+                return fetch( 'http://localhost:3500/newevaluation'||  'https://selb.bond/newevaluation', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
@@ -985,7 +1012,14 @@ export default function HomePage() {
                   <th scope="row">Corsi</th>
                   <td>{savedCorsiTests && savedCorsiTests >= 0 ? savedCorsiTests : 0}</td>
                 </tr>
-
+                <tr>
+                  <th scope="row">HNF</th>
+                  <td>{savedHnfTests && savedHnfTests >= 0 ? savedHnfTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Fonológico</th>
+                  <td>{savedFonoTests && savedFonoTests >= 0 ? savedFonoTests : 0}</td>
+                </tr>
               </tbody>
             </table>
 
@@ -1038,6 +1072,24 @@ export default function HomePage() {
                 <tr>
                   <th scope="row">Wally</th>
                   <td>{wallyLength && wallyLength >= 0 ? wallyLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">Corsi</th>
+                  <td>{corsiLength && corsiLength >= 0 ? corsiLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">HNF</th>
+                  <td>{hnfLength && hnfLength >= 0 ? hnfLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">Fonológico</th>
+                  <td>{fonoLength && fonoLength >= 0 ? fonoLength : 0}</td>
 
                 </tr>
 

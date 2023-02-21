@@ -190,6 +190,55 @@ function App() {
                   set('wallyLength', res.data[0]['COUNT(*)'])
               }
               )
+
+              axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument:6,
+                    user: userId
+                }
+              })
+              .then(
+                    
+                   res => {
+                      set('corsiLength', res.data[0]['COUNT(*)'])
+                  }
+                  )
+                  axios({
+                    method: 'get',
+                    url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                    params: {
+                        instrument:7,
+                        user: userId
+                    }
+                  })
+                  .then(
+                        
+                       res => {
+                          set('hnfLength', res.data[0]['COUNT(*)'])
+                      }
+                      )
+                      .then(
+                    
+                        res => {
+                           set('corsiLength', res.data[0]['COUNT(*)'])
+                       }
+                       )
+                       axios({
+                         method: 'get',
+                         url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                         params: {
+                             instrument:8,
+                             user: userId
+                         }
+                       })
+                       .then(
+                             
+                            res => {
+                               set('fonoLength', res.data[0]['COUNT(*)'])
+                           }
+                           )
       }
     }      
 
