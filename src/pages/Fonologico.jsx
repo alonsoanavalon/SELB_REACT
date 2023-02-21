@@ -363,12 +363,12 @@ export default function Fonologico () {
     }
 
     const saveItemChoice = useCallback((e) =>{
-
         e.target.classList.toggle('active-option')
 
         setChoices(prevValue => {
             //aca el actualItem en lugar del actualItem para asignar el numero de item en las choices, utilizariamos el e.target.dataset.id, asi sabemos en cual item estamos y podriamos obtener los valores o setearlo
             //La unica diferencia es el origen, antes estaba dado por los clicks, ahora esta dado por el slide
+            debugger;
             if (prevValue[actualItem.id]) {
 
                 if (Array.from(prevValue[actualItem.id]).length > 0) {
@@ -391,6 +391,14 @@ export default function Fonologico () {
                 prevValue[actualItem.id] = [e.target.innerHTML];
 
             }
+
+
+            if (Array.from(prevValue[actualItem.id]).length === 0) {
+                prevValue[actualItem.id] = undefined;
+            }
+
+            console.log(prevValue)
+
             return prevValue;
 
            
@@ -410,10 +418,12 @@ export default function Fonologico () {
 
     const nextItem = useCallback(() => {
 
+
+
         if (choices && actualItem) {
             const choicesArray = Array.from(choices[actualItem.id]);
             const answersArray = actualItem.options;
-
+            debugger;
             if (actualItem.id === 22) {
                 Swal.fire({
                     icon: 'success',
@@ -486,6 +496,7 @@ export default function Fonologico () {
 
     useEffect(() => {
         if (zeroTimes >= 3 && choices) {
+            debugger;
             Swal.fire({
                 icon: 'error',
                 title: "Test finalizado",
@@ -501,13 +512,13 @@ export default function Fonologico () {
     }, [zeroTimes, choices])
 
     useEffect(() => {
-        if (actualItem.id === 0) {
+        if (actualItem.id === 0 && zeroTimes < 3) {
             Swal.fire({
                 icon:"warning",
                 title:"Ahora vas a escuchar las palabras y los números de la grabación.",
                 html:"Recuerda que debes decir primero la palabra y luego el número"
             })
-        } else if (actualItem.id === 4) {
+        } else if (actualItem.id === 4 && zeroTimes < 3) {
             Swal.fire({
                 icon: "warning",
                 title: "Ahora vas a escuchar otras palabras y otros números.",
@@ -559,16 +570,39 @@ export default function Fonologico () {
                     <div style={{display:"flex", flexDirection:"column", alignItems:"center", border:"1px solid #ddd", padding:".8rem", borderRadius:".5rem"}}>
                         {description}
                         <button disabled={audioPlaying ? true : false}onClick={() => setZeroTimes(prevValue => {
-                            choices[actualItem.id] = {
-                                options: {},
-                                value: 0
+
+
+                            if (actualItem.id !== 4 && actualItem.id !== 0) {
+                                choices[actualItem.id] = {
+                                    options: {},
+                                    value: 0
+                                }
+                                const selectedItems = document.querySelectorAll(".active-option");
+                                selectedItems.forEach((item) => {
+                                    item.classList.remove("active-option")
+                                })
+                                if (actualItem.id !== 22) {
+                                    setActualItem(items[actualItem.id+1])
+                                }
+                                return prevValue +1
+                            } else {
+
+                                choices[actualItem.id] = {
+                                    options: {},
+                                    value: 0
+                                }
+                                const selectedItems = document.querySelectorAll(".active-option");
+                                selectedItems.forEach((item) => {
+                                    item.classList.remove("active-option")
+                                })
+
+                                if (actualItem.id !== 22) {
+                                    setActualItem(items[actualItem.id+1])
+                                }
+
+                                return prevValue
                             }
-                            const selectedItems = document.querySelectorAll(".active-option");
-                            selectedItems.forEach((item) => {
-                                item.classList.remove("active-option")
-                            })
-                            setActualItem(items[actualItem.id+1])
-                            return prevValue +1
+                   
                         })}className='btn btn-danger' style={{width:"150px", margin:"1rem 0 .6rem 0"}}>Evaluar con 0</button>
                     </div>
                         <div style={{display:"flex", justifyContent:"center", alignItems:"center", padding:"1rem 0 1rem 0"}}>

@@ -213,12 +213,7 @@ function App() {
                         user: userId
                     }
                   })
-                  .then(
-                        
-                       res => {
-                          set('hnfLength', res.data[0]['COUNT(*)'])
-                      }
-                      )
+
                       .then(
                     
                         res => {
@@ -240,7 +235,7 @@ function App() {
                            }
                            )
       }
-    }      
+    }    
 
     get('completedTests')
     .then(res => {
