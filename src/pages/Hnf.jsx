@@ -729,10 +729,6 @@ export default function HNF() {
                 Swal.fire({
                     icon: 'warning',
                     html: `<p>Ahora iniciarás la prueba de CORAZONES pero contra el tiempo. Recuerda que debes presionar el boton que está en el MISMO LADO ¡Mucha Suerte! ... Comencemos</p>
-                    <div style="display: flex;">
-                    <img style="width:48%"src="/images/corazon-1.png">
-                    <img style="width:48%"src="/images/corazon-2.png">
-                    </div>
          `,
                     showCancelButton: true,
                     allowOutsideClick: false,
@@ -811,10 +807,6 @@ useEffect(() => {
             Swal.fire({
                 icon: 'warning',
                 html: `<p>Ahora iniciarás la prueba de FLORES pero contra el tiempo. Recuerda, cada vez que aparece una flor debes presionar el botón que está en el LADO CONTRARIO. ¡Mucha suerte! ... Comencemos.</p>
-                <div style="display: flex;">
-                <img style="width:48%"src="/images/corazon-1.png">
-                <img style="width:48%"src="/images/corazon-2.png">
-                </div>
      `,
                 showCancelButton: true,
                 allowOutsideClick: false,
@@ -851,10 +843,6 @@ useEffect(() => {
             Swal.fire({
                 icon: 'warning',
                 html: `<p>En esta prueba aparecerán CORAZONES y FLORES. Recuerda: CORAZONES al MISMO LADO y FLORES al LADO CONTRARIO. Tendrás que hacerlo contra el tiempo. ¡Mucha suerte! ... Comencemos</p>
-                <div style="display: flex;">
-                <img style="width:48%"src="/images/corazon-1.png">
-                <img style="width:48%"src="/images/corazon-2.png">
-                </div>
      `,
                 showCancelButton: true,
                 allowOutsideClick: false,
