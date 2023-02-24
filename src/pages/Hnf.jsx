@@ -915,11 +915,14 @@ useEffect(() => {
     return (
         <Fragment>
             <div className="hnf-container">
+
             
                 <div className="hnf-option-container">
-                    <div className={firstBoxClass} data-id="0"></div>
+                <img src="https://res.cloudinary.com/keyzen/image/upload/v1677206781/plus_bih1fy.png" style={{zIndex: "1", width:"100px", position:"absolute", top:0, left:0, bottom:0,right:0, margin:"auto"}} alt="" />
+
+                    <div style={{marginRight:"8rem"}}className={firstBoxClass} data-id="0"></div>
                     <div className="hnf-box hidden-container"></div>
-                    <div className={secondBoxClass} data-id="1"></div>
+                    <div style={{marginLeft:"8rem"}}className={secondBoxClass} data-id="1"></div>
       
                 </div>
 

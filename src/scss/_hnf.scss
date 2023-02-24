@@ -10,13 +10,16 @@
         border-radius:.5rem;
         margin:2rem;
         padding:2rem;
+        position:relative !important;
+        
     }
     
     .hnf-box {
         width:280px;
         height:200px;
-        border:1px solid #ccc;
         border-radius:.5rem;
+        background-color: #fff;
+        z-index:2;
     }
     
     .hnf-button-container {
@@ -45,6 +48,7 @@
     background-size: contain;
     background-repeat:no-repeat;
     background-position: center;
+    width:50% !important;
 } 
 
 .hnf-flower {
@@ -52,6 +56,7 @@
     background-size: contain;
     background-repeat:no-repeat;
     background-position: center;
+    width:50% !important;
 }
 
 .hnf-instructions-1 {

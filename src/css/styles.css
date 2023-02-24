@@ -1167,12 +1167,14 @@ template {
   border-radius: 0.5rem;
   margin: 2rem;
   padding: 2rem;
+  position: relative !important;
 }
 .hnf-container .hnf-box {
   width: 280px;
   height: 200px;
-  border: 1px solid #ccc;
   border-radius: 0.5rem;
+  background-color: #fff;
+  z-index: 2;
 }
 .hnf-container .hnf-button-container {
   display: flex;
@@ -1196,6 +1198,7 @@ template {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  width: 50% !important;
 }
 
 .hnf-flower {
@@ -1203,6 +1206,7 @@ template {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  width: 50% !important;
 }
 
 .hnf-instructions-1 {

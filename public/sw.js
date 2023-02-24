@@ -222,6 +222,7 @@ this.addEventListener("install", evt => {
                 "https://res.cloudinary.com/keyzen/video/upload/v1676861113/fonolo/item_19_nrdy1s.mp3",
                 "https://res.cloudinary.com/keyzen/video/upload/v1676861114/fonolo/item_20_tnunrt.mp3",
                 "https://res.cloudinary.com/keyzen/video/upload/v1676861113/fonolo/item_21_d87pwg.mp3",
+                "https://res.cloudinary.com/keyzen/image/upload/v1677206781/plus_bih1fy.png",
 
 
 
