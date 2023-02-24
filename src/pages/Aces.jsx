@@ -15,6 +15,13 @@ export default function Aces () {
     const [items, setItems] = useState([])
 
     useEffect(() => {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+        window.history.go(1);
+        }
+    }, [])
+
+    useEffect(() => {
 
         get('instrument/4')
         .then(

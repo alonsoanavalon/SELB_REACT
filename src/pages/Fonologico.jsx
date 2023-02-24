@@ -626,6 +626,13 @@ export default function Fonologico () {
         }
     }, [actualItem, setActualDescription, setActualOptions, setZeroText])
 
+    useEffect(() => {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+        window.history.go(1);
+        }
+    }, [])
+
     return (
         
         <Fragment>
