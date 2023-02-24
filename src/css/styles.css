@@ -558,7 +558,6 @@ template {
   color: #444;
 }
 .home-wrapper .table-wrapper {
-  margin-top: 2rem;
   display: flex;
   justify-content: space-evenly;
   align-items: baseline;
