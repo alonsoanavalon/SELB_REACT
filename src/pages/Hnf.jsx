@@ -728,7 +728,7 @@ export default function HNF() {
             setSecondBoxClass("hnf-box");
                 Swal.fire({
                     icon: 'warning',
-                    html: `<p>Bienvenido a la prueba de CORAZONES, es bastante simple. Cada vez que aparece un corazón, debes presionar el botón que está en el mismo lado que el corazón. (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
+                    html: `<p>Ahora iniciarás la prueba de CORAZONES pero contra el tiempo. Recuerda que debes presionar el boton que está en el MISMO LADO ¡Mucha Suerte! ... Comencemos</p>
                     <div style="display: flex;">
                     <img style="width:48%"src="/images/corazon-1.png">
                     <img style="width:48%"src="/images/corazon-2.png">
@@ -810,7 +810,7 @@ useEffect(() => {
         setSecondBoxClass("hnf-box");
             Swal.fire({
                 icon: 'warning',
-                html: `<p>Bienvenido a la prueba de FLORES, es bastante simple. Cada vez que aparece una FLOR, debes presionar el botón que está al lado contrario de la FLOR. (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
+                html: `<p>Ahora iniciarás la prueba de FLORES pero contra el tiempo. Recuerda, cada vez que aparece una flor debes presionar el botón que está en el LADO CONTRARIO. ¡Mucha suerte! ... Comencemos.</p>
                 <div style="display: flex;">
                 <img style="width:48%"src="/images/corazon-1.png">
                 <img style="width:48%"src="/images/corazon-2.png">
@@ -850,7 +850,7 @@ useEffect(() => {
         setSecondBoxClass("hnf-box");
             Swal.fire({
                 icon: 'warning',
-                html: `<p>Bienvenido a la prueba de CORAZONES, es bastante simple. Cada vez que aparece un corazón, debes presionar el botón que está en el mismo lado que el corazón. (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
+                html: `<p>En esta prueba aparecerán CORAZONES y FLORES. Recuerda: CORAZONES al MISMO LADO y FLORES al LADO CONTRARIO. Tendrás que hacerlo contra el tiempo. ¡Mucha suerte! ... Comencemos</p>
                 <div style="display: flex;">
                 <img style="width:48%"src="/images/corazon-1.png">
                 <img style="width:48%"src="/images/corazon-2.png">
