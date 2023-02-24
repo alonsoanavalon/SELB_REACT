@@ -760,10 +760,10 @@ export default function HNF() {
         setSecondBoxClass("hnf-box");
             Swal.fire({
                 icon: 'warning',
-                html: `<p>Bienvenido a la prueba de FLORES, es bastante simple. Cada vez que aparece un corazón, debes presionar el botón que está al lado contrario de la FLOR (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
+                html: `<p>Bienvenido a la prueba de FLORES, es bastante simple. Cada vez que aparece una flor, debes presionar el botón que está al LADO CONTRARIO de la flor (Entonces si aparece acá, presionas este. Y si aparece acá, presionas este botón). El que viene a continuación es un ensayo. ¿Lo has entendido? ... (espere la respuesta del niño) ... Comencemos.</p>
                 <div style="display: flex;">
-                <img style="width:48%"src="/images/corazon-1.png">
-                <img style="width:48%"src="/images/corazon-2.png">
+                <img style="width:48%"src="/images/flowers-1.png">
+                <img style="width:48%"src="/images/flowers-2.png">
                 </div>
      `,
                 showCancelButton: true,
