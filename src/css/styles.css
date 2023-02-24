@@ -1261,6 +1261,14 @@ template {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.container-hnf {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
 .play-button {
   cursor: pointer;
 }
