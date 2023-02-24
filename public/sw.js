@@ -47,6 +47,8 @@ this.addEventListener("install", evt => {
                 '/images/smiling-face.png',
                 '/images/poker-face.png',
                 '/images/flower.png',
+                '/images/flowers-1.png',
+                '/images/flowers-2.png',
                 '/images/flor.png',
                 '/images/heart.png',
                 '/images/corazon.png',
