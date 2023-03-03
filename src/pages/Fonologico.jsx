@@ -229,7 +229,23 @@ export default function Fonologico () {
     }
 
     function saveTest(answers) {
+        debugger;
+        let startItemPoint = Object.keys(answers).length;
+        let answersEntries = Object.entries(answers)
+        let leftItems = {};
+        items.forEach((item, key) => {
+            if (key >= startItemPoint) {
+                let obj = {
+                    options:{},
+                    value:0,
+                }
 
+                leftItems[key] = obj;
+            }
+        })
+
+
+        let allAnswers = Object.assign(answers, leftItems)
         let instrumentInfo = {}
         let choicesArray = []
 
@@ -248,7 +264,7 @@ export default function Fonologico () {
         //esto de 8 tendre q poner en bdd y 7 hnf
         instrumentInfo['instrument'] = 8
 
-        const answersArray = Object.entries(answers);
+        const answersArray = Object.entries(allAnswers);
 
         const parsedAnswers = answersArray.map((answer) => {
             const id = parseInt(answer[0])+322;
