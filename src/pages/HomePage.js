@@ -788,9 +788,11 @@ export default function HomePage() {
           } 
           if (element[0]['instrument'] === 7) {
             hnf++
+            setSavedTests(true)
           }
           if (element[0]['instrument'] === 8) {
             fono++
+                        setSavedTests(true)
           }
         })
 
@@ -891,7 +893,7 @@ export default function HomePage() {
               confirmButtonText: '¿Deseas enviar los test?',
               showLoaderOnConfirm: true,
               preConfirm: async () => {
-                return fetch( /*'http://localhost:3500/newevaluation'||*/  'https://selb.bond/newevaluation', {
+                return fetch( /*'http://localhost:3500/newevaluation'|| */ 'https://selb.bond/newevaluation', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'

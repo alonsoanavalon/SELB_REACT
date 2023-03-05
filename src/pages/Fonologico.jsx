@@ -267,7 +267,7 @@ export default function Fonologico () {
         const answersArray = Object.entries(allAnswers);
 
         const parsedAnswers = answersArray.map((answer) => {
-            const id = parseInt(answer[0])+322;
+            const id = parseInt(answer[0])+323;
             return [
                 id,
                 {

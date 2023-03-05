@@ -12,9 +12,9 @@ export default function HNF() {
     const [isArray, setIsArray] = useState(false)
 
     const [answers] = useState({
-        // Del 1 al 5 son en los que tiene que hacer click en el correcto o no pasa, son los de ejemplo.
-        // 6 a 17 son el primero de corazones, es con tiempo
-        // 18 a 23 es el test de flores ( que hay que apretar el contrario, estos serian las respuestas correctas en relacion a botones, no a donde aparece la flor sino que al contrario)
+        // Del 0 al 5 son en los que tiene que hacer click en el correcto o no pasa, son los de ejemplo.
+        // 6 a 17  -- [6-18?] son el primero de corazones, es con tiempo
+        // 18 a 23   - [19-24?]es el test de flores ( que hay que apretar el contrario, estos serian las respuestas correctas en relacion a botones, no a donde aparece la flor sino que al contrario)
         // 24 a 35 son el flores
         // 36 al final es una bomba de combinaciones pero estoy siempre guardando el boton correcto
 
@@ -108,7 +108,31 @@ export default function HNF() {
         })
     }
 
-    function saveTest(answers) {
+    function saveTest(testAnswers) {
+
+        debugger;
+        
+        const parsedHNFAnswers = Object.entries(answers);
+        const parsedHNFChoices = Object.entries(testAnswers);
+        const parsedHNFResults = {};
+
+        parsedHNFChoices.forEach((hnfChoice) => {
+            const id = hnfChoice[0]
+            //Estamos comprobando si la respuesta es correcta, por eso preguntamos si la respuesta guardada al nivel del id de la respuesta dada es igual a la respuesta que esta en las respuestas correctas, si es correcto devuelve 1 sino 0.
+            if (hnfChoice[1].choice == parsedHNFAnswers[id][1]) {
+                parsedHNFResults[id] = {
+                    choice: 1,
+                    time: hnfChoice[1].time
+                }
+            } else {
+                parsedHNFResults[id] = {
+                    choice: 0,
+                    time: hnfChoice[1].time
+                } 
+            }
+        })
+
+        debugger;
 
         let instrumentInfo = {}
         let choicesArray = []
@@ -127,8 +151,9 @@ export default function HNF() {
 
         //esto de 8 tendre q poner en bdd y 7 hnf
         instrumentInfo['instrument'] = 7;
-        const answersArray = Object.entries(answers);
+        const answersArray = Object.entries(parsedHNFResults);
         const parsedAnswers = answersArray.map((answer) => {
+            debugger;
             const id = parseInt(answer[0])+254;
             return [
                 id,

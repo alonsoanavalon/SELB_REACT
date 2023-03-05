@@ -97,6 +97,7 @@ export default function Excel () {
         const schools = getSelectedSchool()
         const moment = getMoment()
         const instrument = getInstrument()
+     
         const dataObject = {}
 
 
@@ -170,6 +171,8 @@ export default function Excel () {
             <select  className="form-select" placeholder='Instrumentos' id="instrumentSelect" defaultValue="empty">
                 <option value="empty" disabled>Instrumentos</option>
                 {renderInstruments()}
+                <option key={0}value={0}>Todos</option> 
+
             </select>   
             
             <button id="btn-excel"className='btn btn-primary' onClick={getCsv}>Obtener datos</button>
