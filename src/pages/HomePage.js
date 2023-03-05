@@ -29,31 +29,43 @@ export default function HomePage() {
   const [fonoLength, setFonoLength] = useState(undefined)
   const [completeName, setCompleteName] = useState("")
 
-  // function eliminarTestAntiguos() {
-  //   get('completedTests')
-  //     .then(res => {
-  //       let counterEliminados = 0;
-  //       const testNuevos = res.filter((test) => {
-  //         const fechaTest = new Date(test[0].date)
-  //         const fechaLimite = new Date('2022/10/31')
+  function eliminarTestAntiguos() {
 
-  //         if (fechaTest > fechaLimite) {
-  //           return test;
-  //         } else {
-  //           counterEliminados++
-  //         }
-  //       })
-  //       return [testNuevos, counterEliminados];
-  //     })
-  //     .then((data) => {
-  //       window.alert('Se eliminaron: ' + data[1] + ' test antiguos')
-  //       update('completedTests', val => data[0])
-
-  //       setTimeout(() => {
-  //         window.location.pathname = '/'
-  //       }, 2000)
-  //     })
-  // }
+    Swal.fire({
+      icon: "info",
+      title:"¿Deseas limpiar los test antiguos para iniciar un nuevo periodo de evaluacion?",
+      html:"No te preocupes, los test permanecerán en el respaldo si no lo has reiniciado",
+      showConfirmButton: true
+    })
+    .then(result => {
+      if (result.isConfirmed) {
+        get('completedTests')
+        .then(res => {
+          let counterEliminados = 0;
+          const testNuevos = res.filter((test) => {
+            const fechaTest = new Date(test[0].date)
+            const fechaLimite = new Date('2023/03/05')
+  
+            if (fechaTest > fechaLimite) {
+              return test;
+            } else {
+              counterEliminados++
+            }
+          })
+          return [testNuevos, counterEliminados];
+        })
+        .then((data) => {
+          Swal.fire('Se eliminaron: ' + data[1] + ' test antiguos')
+          update('completedTests', val => data[0])
+  
+          setTimeout(() => {
+            window.location.pathname = '/'
+          }, 2000)
+        })
+      }
+    })
+   
+  }
 
   useEffect(() => {
     get('backupTest')
@@ -893,7 +905,7 @@ export default function HomePage() {
               confirmButtonText: '¿Deseas enviar los test?',
               showLoaderOnConfirm: true,
               preConfirm: async () => {
-                return fetch( /*'http://localhost:3500/newevaluation'|| */ 'https://selb.bond/newevaluation', {
+                return fetch(/* 'http://localhost:3500/newevaluation'||*/  'https://selb.bond/newevaluation', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
@@ -1030,7 +1042,7 @@ export default function HomePage() {
             </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button>}
 
               {/* Esta funcion me elimina los test guardados entre X fechas */}
-            {/* <button className="btn btn-info" onClick={eliminarTestAntiguos}>Eliminar test antiguos</button> */}
+            <button className="btn btn-info" onClick={eliminarTestAntiguos}>Eliminar test antiguos</button>
 
 
 
