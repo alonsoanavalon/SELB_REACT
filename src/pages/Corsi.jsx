@@ -312,7 +312,6 @@ export default function Corsi () {
         setTimeout(() => {
             //Ahora va el sonido "Ahora"
             boxes.forEach((box) => {
-                box.addEventListener('dblclick', (event) => {window.alert("doble")});
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
