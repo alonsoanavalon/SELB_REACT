@@ -1075,14 +1075,13 @@ template {
   height: calc(100% - 60px);
 }
 .corsi-container .game-box {
-  width: 90%;
+  width: 1000px;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   padding: 2rem;
   padding-top: 4rem;
-  border-right: 1px solid #ccc;
 }
 .corsi-container .game-box .corsi-box {
   border: 1px solid #fff;
@@ -1127,9 +1126,15 @@ template {
   margin-left: 4rem;
   margin-top: -6rem;
 }
+@media (min-width: 1200px) {
+  .corsi-container .game-box {
+    gap: 2.5rem;
+  }
+}
 
 .switch-on {
-  background-color: #fff;
+  border: 1px solid #4897be !important;
+  background-color: #4897be;
 }
 
 .hidden {

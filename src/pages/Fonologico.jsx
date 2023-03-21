@@ -229,7 +229,6 @@ export default function Fonologico () {
     }
 
     function saveTest(answers) {
-        debugger;
         let startItemPoint = Object.keys(answers).length;
         let answersEntries = Object.entries(answers)
         let leftItems = {};
@@ -286,7 +285,6 @@ export default function Fonologico () {
         get('backupTest')
         .then(response => {
             let backupLength = response.length
-            debugger;
             if (Array.isArray(response) && response.length > 0) {
                 get('completedTests')
                 .then(res => {
@@ -404,13 +402,12 @@ export default function Fonologico () {
     }
 
     const saveItemChoice = useCallback((e) =>{
-        e.target.classList.toggle('active-option')
-        debugger;
+        e.target.classList.toggle('active-option');
 
         setChoices(prevValue => {
             //aca el actualItem en lugar del actualItem para asignar el numero de item en las choices, utilizariamos el e.target.dataset.id, asi sabemos en cual item estamos y podriamos obtener los valores o setearlo
             //La unica diferencia es el origen, antes estaba dado por los clicks, ahora esta dado por el slide
-            debugger;
+
             if (prevValue[actualItem.id]) {
 
                 if (Array.from(prevValue[actualItem.id]).length > 0) {
@@ -460,8 +457,6 @@ export default function Fonologico () {
 
     const nextItem = useCallback(() => {
 
-        debugger;
-
         if (choices && actualItem) {
 
             if (choices[actualItem.id] === undefined) {
@@ -481,7 +476,7 @@ export default function Fonologico () {
             } else {
             const choicesArray = Array.from(choices[actualItem.id]);
             const answersArray = actualItem.options;
-            debugger;
+
             if (actualItem.id === 23) {
                 Swal.fire({
                     icon: 'success',
@@ -558,20 +553,14 @@ export default function Fonologico () {
 
     }, [choices, setChoices])
 
-    useEffect(() => {
-        if (zeroTimes >= 0) {
-            debugger;
-        }
-    }, [zeroTimes])
 
     useEffect(() => {
         if (zeroTimes >= 3 && choices) {
-            debugger;
             Swal.fire({
-                icon: 'error',
+                icon: 'info',
                 title: "Test finalizado",
                 allowOutsideClick: false,
-                html:"Haz cometido 3 errores consecutivos"
+                showConfirmButton: true,
             })
             .then((result) => {
                 if (result.isConfirmed) {
@@ -627,7 +616,6 @@ export default function Fonologico () {
 
     useEffect(() => {
         if (actualItem.audioDescription && actualItem.options) {
-            debugger;
             var miCadena = actualItem.audioDescription;
             var expresionRegular = /,/g;
             var nuevaCadena = miCadena.replace(expresionRegular, "-");

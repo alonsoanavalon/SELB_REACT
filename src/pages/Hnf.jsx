@@ -110,8 +110,6 @@ export default function HNF() {
 
     function saveTest(testAnswers) {
 
-        debugger;
-        
         const parsedHNFAnswers = Object.entries(answers);
         const parsedHNFChoices = Object.entries(testAnswers);
         const parsedHNFResults = {};
@@ -132,8 +130,6 @@ export default function HNF() {
             }
         })
 
-        debugger;
-
         let instrumentInfo = {}
         let choicesArray = []
 
@@ -153,7 +149,6 @@ export default function HNF() {
         instrumentInfo['instrument'] = 7;
         const answersArray = Object.entries(parsedHNFResults);
         const parsedAnswers = answersArray.map((answer) => {
-            debugger;
             const id = parseInt(answer[0])+254;
             return [
                 id,
@@ -161,7 +156,6 @@ export default function HNF() {
             ]
         })
         const formatedAnswers = Object.fromEntries(parsedAnswers);
-        debugger;
 
         choicesArray.push(formatedAnswers) // estas deben ser las respuestas
 
@@ -170,7 +164,6 @@ export default function HNF() {
         get('backupTest')
         .then(response => {
             let backupLength = response.length
-            debugger;
             if (Array.isArray(response) && response.length > 0) {
                 get('completedTests')
                 .then(res => {
@@ -917,7 +910,6 @@ useEffect(() => {
 
     setTimeout(() => {
         setChoices(prevValue => {
-            debugger;
             return prevValue;
         })
     setFirstBoxClass("hnf-box");

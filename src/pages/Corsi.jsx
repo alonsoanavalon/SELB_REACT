@@ -93,7 +93,6 @@ export default function Corsi () {
         get('backupTest')
         .then(response => {
             let backupLength = response.length
-            debugger;
             if (Array.isArray(response) && response.length > 0) {
                 get('completedTests')
                 .then(res => {
@@ -204,11 +203,16 @@ export default function Corsi () {
 
 
         Swal.fire({
-            title: "Test finalizado por errores",
+            title: "Test finalizado",
+            showConfirmButton: true,
+            allowOutsideClick: false,
         })
-        setTimeout(() => {
-            window.location.href = '/'
-        }, [2000])
+        .then((data) => {
+            if (data.isConfirmed) {
+                window.location.href = '/'
+            }
+        })
+
 
     }
 
@@ -931,8 +935,8 @@ export default function Corsi () {
             }
           }).then((result) => {
             if (result.isConfirmed) {
-                e.target.innerHTML = "Avanzar"
-                e.target.disabled = true;
+                // e.target.innerHTML = "Avanzar"
+                // e.target.disabled = true;
                 //corsiExampleReverse()
                 corsiExample();
 
@@ -1078,6 +1082,10 @@ export default function Corsi () {
         }
     }, [errorCounter])
 
+    useEffect(() => {
+        startGame();
+    }, [])
+
 
     useEffect(() => {
         if (errorCounterReverse > 0) {
@@ -1153,8 +1161,7 @@ export default function Corsi () {
                         <div className="corsi-box box-9"></div>
                         <div className="corsi-box box-10"></div>
                     </div>
-               
-                        <button className="btn btn-primary corsi-start" onClick={startGame}>Comenzar</button>
+
                 </div>
             
 

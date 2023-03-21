@@ -58,7 +58,6 @@ export default function Excel () {
                 .then(
                     async (res) => {
                         if (res.status === 200) {
-                            debugger;
                             const updateMoments = await getData('moments');
                             if (updateMoments) {
                                 window.location.reload();

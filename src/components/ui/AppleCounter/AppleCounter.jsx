@@ -173,10 +173,11 @@ export default function AppleCounter (props) {
 
         if (props.counter >= 6) {
             Swal.fire({
-                title: 'Haz cometido 6 errores',
+                title: 'Test finalizado',
                 text: "¿Deseas salir?",
-                icon: 'warning',
+                icon: 'info',
                 showCancelButton: true,
+                allowOutsideClick: false,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 cancelButtonText: 'Cancelar',
