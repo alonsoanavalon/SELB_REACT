@@ -292,7 +292,7 @@ export default function Corsi () {
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
 
-            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            var audio = new Audio('./sounds/go.mp3');
             audio.play();
 
 
@@ -320,7 +320,7 @@ export default function Corsi () {
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
 
-            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            var audio = new Audio('./sounds/go.mp3');
             audio.play();
         }, 6000)
     }
@@ -349,7 +349,7 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
-            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            var audio = new Audio('./sounds/go.mp3');
             audio.play();
         }, 8000)
     }
@@ -381,7 +381,7 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
-            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            var audio = new Audio('./sounds/go.mp3');
             audio.play();
         }, 10000)
     }
@@ -417,7 +417,7 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
-            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            var audio = new Audio('./sounds/go.mp3');
             audio.play();
         }, 12000)
     }
@@ -454,7 +454,7 @@ export default function Corsi () {
                 box.addEventListener(("click"), (e) => touchableBoxes(e, callback))
                 box.addEventListener(("touch"), (e) => touchableBoxes(e, callback))
             })
-            var audio = new Audio('https://res.cloudinary.com/keyzen/video/upload/v1668980132/selb/corsi/ahora_azsmlw.mp3');
+            var audio = new Audio('./sounds/go.mp3');
             audio.play();
         }, 14000)
     }

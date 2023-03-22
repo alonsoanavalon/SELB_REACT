@@ -1,17 +1,18 @@
-let cacheData = "app-v2";
+let cacheData = "app-v3";
 this.addEventListener("install", evt => {
     console.log("installing")
-    caches.delete("app-v11")
-    caches.delete("app-v10")
+
     caches.delete("app-v1")
     caches.delete("app-v2")
-    caches.delete("app-v3")
+    // caches.delete("app-v3")
     caches.delete("app-v4")
     caches.delete("app-v5")
     caches.delete("app-v6")
     caches.delete("app-v7")
     caches.delete("app-v8")
     caches.delete("app-v9")
+    caches.delete("app-v10")
+    caches.delete("app-v11")
 
 
     evt.waitUntil(
@@ -60,6 +61,7 @@ this.addEventListener("install", evt => {
                 '/images/check.png',
                 '/images/play-button.png',
                 '/images/corazon-2.png',
+                './sounds/go.mp3',
                 'https://fonts.googleapis.com/css2?family=Kanit:wght@800;900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap',
                 "https://res.cloudinary.com/keyzen/image/upload/v1645727162/selb/tejaslee/book/01_pzeieo.jpg",
                 "https://res.cloudinary.com/keyzen/image/upload/v1645727162/selb/tejaslee/book/02_kphnm6.jpg",
