@@ -62,8 +62,6 @@ this.addEventListener("install", evt => {
                 '/images/play-button.png',
                 '/images/corazon-2.png',
                 './sounds/go.mp3',
-                './sounds/item0.mp3',
-                '/sounds/item0.mp3',
                 'https://fonts.googleapis.com/css2?family=Kanit:wght@800;900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap',
                 "https://res.cloudinary.com/keyzen/image/upload/v1645727162/selb/tejaslee/book/01_pzeieo.jpg",
                 "https://res.cloudinary.com/keyzen/image/upload/v1645727162/selb/tejaslee/book/02_kphnm6.jpg",
