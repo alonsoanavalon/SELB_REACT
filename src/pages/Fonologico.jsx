@@ -22,7 +22,7 @@ export default function Fonologico () {
             id: 1,
             title: "Ejemplo B",
             instruction:"Si responde con el dígito primero califique el item de 0 y diga 'recuerda que debes decirme primero la palabra, luego el número'",
-            audio: "./sounds/item.mp3",
+            audio: "./sounds/item-zero.mp3",
             audioDescription: "9, manzana",
             options: ["Manzana", "9"]
         },
