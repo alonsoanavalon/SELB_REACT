@@ -1173,7 +1173,7 @@ template {
   position: relative !important;
 }
 .hnf-container .hnf-box {
-  width: 40px;
+  width: 50%;
   height: 200px;
   border-radius: 0.5rem;
   background-color: #fff;
@@ -1201,15 +1201,13 @@ template {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  width: 58% !important;
 }
 
 .hnf-flower {
-  background-image: url("/public/images/corazon.png");
+  background-image: url("/public/images/flower.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  width: 58% !important;
 }
 
 .hnf-instructions-1 {
@@ -1223,6 +1221,13 @@ template {
   width: 80%;
   margin: 2rem auto;
   text-align: center;
+}
+
+.plusOverlay {
+  background-color: #fff;
+  z-index: 5;
+  width: 300px !important;
+  border: 1px solid red;
 }
 
 .first-example {

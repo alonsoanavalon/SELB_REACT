@@ -379,21 +379,25 @@ export default function HNF() {
         setTimeout(() => {
             setOption(1, 'heart');
             setCycle(6);
+
             setStartTimeHearts(new Date().getTime());
         }, 2000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(7);
+
             setStartTimeHearts(new Date().getTime());
         }, 4000)
         setTimeout(() => {
             setOption(0, 'heart');
             setCycle(8);
+
             setStartTimeHearts(new Date().getTime());
         }, 6000)
         setTimeout(() => {
             setOption(1, 'heart'); 
             setCycle(9);
+
             setStartTimeHearts(new Date().getTime());
         }, 8000)
         setTimeout(() => {
@@ -623,6 +627,7 @@ export default function HNF() {
                         choice,
                         time: null
                     };
+
                     setFirstBoxClass("hnf-box");
                     setSecondBoxClass("hnf-box");
                     return newValue;
@@ -948,9 +953,11 @@ useEffect(() => {
                 <div className="hnf-option-container">
                 <img src="https://res.cloudinary.com/keyzen/image/upload/v1677206781/plus_bih1fy.png" style={{zIndex: "1", width:"100px", position:"absolute", top:0, left:0, bottom:0,right:0, margin:"auto"}} alt="" />
 
-                    <div style={{marginRight:"8rem"}}className={firstBoxClass} data-id="0"></div>
+                    <div className={firstBoxClass} data-id="0"></div>
+                    <div className="plusOverlay"></div>
                     <div className="hnf-box hidden-container"></div>
-                    <div style={{marginLeft:"8rem"}}className={secondBoxClass} data-id="1"></div>
+                    <div className="plusOverlay"></div>
+                    <div className={secondBoxClass} data-id="1"></div>
       
                 </div>
 
@@ -958,6 +965,7 @@ useEffect(() => {
       
                 <div className="hnf-button-container">
                     <button id="hnf-button-0" style={{zIndex: 3}}onClick={(e) => setChoice(e)} data-id="0" className="hnf-button"></button>
+
                     <button id="hnf-button-1" style={{zIndex: 4}}onClick={(e) => setChoice(e)} data-id="1" className="hnf-button"></button>
                 </div>
                 <div className='overlay'>

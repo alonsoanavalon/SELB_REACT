@@ -1,12 +1,12 @@
-let cacheData = "app-v1";
+let cacheData = "app-v5";
 this.addEventListener("install", evt => {
     console.log("installing")
 
-    // caches.delete("app-v1")
+    caches.delete("app-v1")
     caches.delete("app-v2")
     caches.delete("app-v3")
     caches.delete("app-v4")
-    caches.delete("app-v5")
+    // caches.delete("app-v5")
     caches.delete("app-v6")
     caches.delete("app-v7")
     caches.delete("app-v8")
@@ -50,11 +50,9 @@ this.addEventListener("install", evt => {
                 '/images/sad.png',
                 '/images/smiling-face.png',
                 '/images/poker-face.png',
-                '/images/flower.png',
                 '/images/flowers-1.png',
                 '/images/flowers-2.png',
-                '/images/flor.png',
-                '/images/heart.png',
+                '/images/flower.png',
                 '/images/corazon.png',
                 '/images/corazon-1.png',
                 '/images/audio-headset.png',
