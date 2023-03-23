@@ -190,7 +190,7 @@ export default function Fonologico () {
             id: 22,
             title: "Item 20",
             instruction:"Si responde con el dígito primero califique el item de 0 y diga 'recuerda que debes decirme primero la palabra, luego el número'",
-            audio: "./sounds/item-tweenty.mp3",
+            audio: "./sounds/item-twenty.mp3",
             audioDescription: "Galleta, 1, tortuga, 5, mesa, 6, manopla, 3",
             options: ["Galleta", "Tortuga", "Mesa", "Manopla", "1", "5", "6", "3"]
         },
