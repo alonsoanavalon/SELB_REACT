@@ -63,6 +63,7 @@ this.addEventListener("install", evt => {
                 '/images/corazon-2.png',
                 './sounds/go.mp3',
                 './sounds/item-zero.mp3',
+                './sounds/item-one.mp3',
                 './sounds/item-two.mp3',
                 './sounds/item-three.mp3',
                 './sounds/item-example-c.mp3',
