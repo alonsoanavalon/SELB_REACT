@@ -1,4 +1,4 @@
-let cacheData = "app-v6";
+let cacheData = "app-v7";
 this.addEventListener("install", evt => {
     console.log("installing")
 
@@ -7,8 +7,8 @@ this.addEventListener("install", evt => {
     caches.delete("app-v3")
     caches.delete("app-v4")
     caches.delete("app-v5")
-    // caches.delete("app-v6")
-    caches.delete("app-v7")
+    caches.delete("app-v6")
+    // caches.delete("app-v7")
     caches.delete("app-v8")
     caches.delete("app-v9")
     caches.delete("app-v10")
@@ -63,6 +63,27 @@ this.addEventListener("install", evt => {
                 '/images/corazon-2.png',
                 './sounds/go.mp3',
                 './sounds/item-zero.mp3',
+                './sounds/item-two.mp3',
+                './sounds/item-three.mp3',
+                './sounds/item-example-c.mp3',
+                './sounds/item-four.mp3',
+                './sounds/item-five.mp3',
+                './sounds/item-six.mp3',
+                './sounds/item-seven.mp3',
+                './sounds/item-eight.mp3',
+                './sounds/item-nine.mp3',
+                './sounds/item-ten.mp3',
+                './sounds/item-eleven.mp3',
+                './sounds/item-twelve.mp3',
+                './sounds/item-thirteen.mp3',
+                './sounds/item-fourteen.mp3',
+                './sounds/item-fifteen.mp3',
+                './sounds/item-sixteen.mp3',
+                './sounds/item-seventeen.mp3',
+                './sounds/item-eighteen.mp3',
+                './sounds/item-nineteen.mp3',
+                './sounds/item-twenty.mp3',
+                './sounds/item-twentyone.mp3',
                 // algo de estas mierdas me esta cagando el offline.
                 // './sounds/item0.mp3',
                 // '/sounds/item0.mp3',
