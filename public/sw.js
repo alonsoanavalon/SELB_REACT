@@ -1,12 +1,12 @@
-let cacheData = "app-v4";
+let cacheData = "app-v5";
 this.addEventListener("install", evt => {
     console.log("installing")
 
     caches.delete("app-v1")
     caches.delete("app-v2")
     caches.delete("app-v3")
-    // caches.delete("app-v4")
-    caches.delete("app-v5")
+    caches.delete("app-v4")
+    // caches.delete("app-v5")
     caches.delete("app-v6")
     caches.delete("app-v7")
     caches.delete("app-v8")
@@ -62,6 +62,7 @@ this.addEventListener("install", evt => {
                 '/images/play-button.png',
                 '/images/corazon-2.png',
                 './sounds/go.mp3',
+                './sounds/item.mp3',
                 // algo de estas mierdas me esta cagando el offline.
                 // './sounds/item0.mp3',
                 // '/sounds/item0.mp3',
