@@ -67,6 +67,7 @@ export default function Parents() {
             alert.show('Debe elegir cada una de las opciones', {type:'error'})
         } else {
             set('selectedStudent', $selectedStudent)
+
             navigate('/sdq')
         }       
         

@@ -13,6 +13,16 @@ import Item from '../components/Item'
 export default function Aces () {
 
     const [items, setItems] = useState([])
+    const [studentName, setStudentName] = useState()
+
+    useEffect(() => {
+
+        get('selectedStudentName')
+        .then((data) => {
+            setStudentName(data)
+        })
+
+    }, [])
 
     useEffect(() => {
         window.history.pushState(null, null, window.location.href);
@@ -37,6 +47,8 @@ export default function Aces () {
 
 
     return (
+
+        <div style={{overflow:"hidden"}}>
         
         <Fragment>
             <div className="aces-test">
@@ -48,9 +60,11 @@ export default function Aces () {
             }} */
             spaceBetween={0}
             allowTouchMove={false}
+            style={{height:"100%"}}
+            preventInteractionOnTransition={true}
             >
 
-            <SwiperSlide className="next aces-direction aces-next">
+            <SwiperSlide className="next aces-direction aces-next column-instruction">
                 <Instruction instruction="“Ahora voy a mostrarte algunas imágenes de niños y niñas y quiero que tú me digas cómo se siente cada uno. Ella/Él se siente ¿feliz, triste, enojada/o, o asustada/o?. ¿Lo has entendido?… (espere respuesta del niño) Comencemos...”"/>
 
 
@@ -82,5 +96,7 @@ export default function Aces () {
             </Swiper>
             </div>
         </Fragment>
+        </div>
     )
+    
 }

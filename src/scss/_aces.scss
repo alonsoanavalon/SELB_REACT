@@ -1,3 +1,8 @@
+.aces-test {
+    height:100%;
+    overflow:hidden;
+}
+
 .aces-direction {
     display:flex;
     flex-direction: column !important;
@@ -16,6 +21,7 @@
 .aces-page-item {
     max-width:100%;
     margin-left:0;
+
 
 }
 

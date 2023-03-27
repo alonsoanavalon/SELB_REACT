@@ -951,7 +951,7 @@ useEffect(() => {
 
             
                 <div className="hnf-option-container">
-                <img src="https://res.cloudinary.com/keyzen/image/upload/v1677206781/plus_bih1fy.png" style={{zIndex: "1", width:"100px", position:"absolute", top:0, left:0, bottom:0,right:0, margin:"auto"}} alt="" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Plus_symbol.svg" style={{zIndex: "1", width:"230px", position:"absolute", top:0, left:0, bottom:0,right:0, margin:"auto"}} alt="" />
 
                     <div className={firstBoxClass} data-id="0"></div>
                     <div className="plusOverlay"></div>

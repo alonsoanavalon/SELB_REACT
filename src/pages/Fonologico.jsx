@@ -656,7 +656,7 @@ export default function Fonologico () {
                 startGame && 
                 <Fragment>
 
-                <div style={{textAlign:"center", marginTop:"1rem", width: "90%", margin:"1.5rem auto"}}>
+                <div style={{textAlign:"center", marginTop:"1rem", width: "90%", margin:"1rem auto"}}>
                     <h3>{actualItem.title}</h3>
           
 
@@ -664,7 +664,7 @@ export default function Fonologico () {
                 <div style={{ boxSizing:"border-box", display:"flex", width: "90%", margin:"0 auto", justifyContent:"center", alignItems:"flex-start", alignContent:"center", height:"300px", gap:"2rem"}}>
                     <div style={{width:"48%", display:"flex", flexDirection:"column"}}>
                     <div style={{display:"flex", flexDirection:"column", alignItems:"center", border:"1px solid #ddd", padding:".8rem", borderRadius:".5rem"}}>
-                        {description}
+                        <p style={{ fontSize:".9rem"}}>{description}</p>
                     
                         <button disabled={audioPlaying ? true : false}onClick={() => {   
                             
@@ -675,7 +675,7 @@ export default function Fonologico () {
                                 setZeroText("Evaluar con 0")
                             }
                    
-                        }}className='btn btn-danger' style={{width:"150px", margin:"1rem 0 .6rem 0"}}>{zeroText}</button>
+                        }}className='btn btn-danger' style={{width:"150px", margin:".4rem 0 .2rem 0"}}>{zeroText}</button>
                     </div>
                         <div style={{display:"flex", justifyContent:"center", alignItems:"center", padding:"1rem 0 1rem 0"}}>
                             <div className="play-button" onClick={playInstruction}>
@@ -683,13 +683,13 @@ export default function Fonologico () {
                             </div>
                         </div>
                         <div>
-                        <div style={{marginBottom:".6rem", border:"1px solid #ddd", padding:".3rem" ,borderRadius:".4rem"}}>
-                                <h5>Descripción del audio</h5>
+                        <div style={{marginBottom:".6rem", padding:".3rem" ,borderRadius:".4rem"}}>
+                                <h5 className="title-answers">Descripción del audio</h5>
                                 <img src="/images/audio-headset.png" style={{width:"30px", marginRight:".5rem"}} alt="" />
                                 <p style={{display:"inline"}}>{actualDescription}</p>
                             </div>
-                            <div style={{border:"1px solid #ddd", padding:".3rem" ,borderRadius:".4rem"}}>
-                                <h5>Respuestas correctas</h5>
+                            <div style={{padding:".3rem" ,borderRadius:".4rem"}}>
+                                <h5 className="title-answers">Respuestas correctas</h5>
                                 <img src="/images/check.png" style={{width:"30px", marginRight:".5rem"}} alt="" />
                                 <p style={{display:"inline"}}>{actualOptions}</p>
                             </div>
@@ -707,7 +707,7 @@ export default function Fonologico () {
 
                     </div>
                 </div>
-                <div style={{display:"flex", width: "90%", margin:"0 auto", marginTop:"14rem", justifyContent:"center"}}>
+                <div className="go-btn">
                 <button disabled={audioPlaying ? true : false}className='btn btn-primary' style={{textAlign: "center", width:"150px" }} onClick={nextItem}>Avanzar</button>
 
                 </div>

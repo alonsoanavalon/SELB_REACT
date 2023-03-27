@@ -961,6 +961,11 @@ template {
   text-align: center;
 }
 
+.aces-test {
+  height: 100%;
+  overflow: hidden;
+}
+
 .aces-direction {
   display: flex;
   flex-direction: column !important;
@@ -1286,8 +1291,95 @@ template {
   background-color: #20c997;
 }
 
+.go-btn {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 14rem;
+  justify-content: center;
+}
+
+@media (max-height: 560px) {
+  p {
+    font-size: 0.95rem;
+  }
+  h2 {
+    font-size: 1.5rem !important;
+  }
+  .main-description {
+    font-size: 1.2rem;
+    padding: 0 !important;
+  }
+  #root .aside-menu a {
+    padding: 0;
+  }
+  .instruments-list div {
+    padding: 0;
+  }
+  .page-item img {
+    max-width: 500px;
+  }
+  .containerBox {
+    height: 300px !important;
+    width: 600px !important;
+  }
+  .containerBox > .landing-area > .piece-inside,
+  .containerBox > .landing-area > .piece-inside-countable,
+  .containerBox > .pieces-container > .piece {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .play-button {
+    width: 50px;
+    height: 50px;
+  }
+  .play-button img {
+    width: 50px !important;
+  }
+  .go-btn {
+    margin-top: 5rem;
+    margin-left: -12rem;
+  }
+  .title-answers {
+    font-size: 1rem;
+  }
+  .item-image-wally img {
+    max-width: 350px;
+  }
+  .aces-page-item img {
+    width: 400px;
+  }
+  .column-instruction .instruction {
+    height: 350px;
+    width: 350px;
+    margin: -3rem;
+  }
+  .column-instruction .instruction p {
+    font-size: 1rem;
+  }
+  .corsi-container {
+    padding-top: 2rem;
+  }
+  .corsi-container .game-box {
+    padding: 1rem;
+    padding-top: 0;
+    gap: 2.5rem;
+  }
+  .hnf-button-container .hnf-button {
+    width: 350px !important;
+    height: 200px !important;
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
+    background-color: #f3f3f7;
+  }
+}
 html {
   background-color: #fff;
+}
+
+.first-instrument {
+  height: 100%;
 }
 
 body, html {
@@ -1309,6 +1401,11 @@ img {
 
 .hamburger-inner, .hamburger-inner:after, .hamburger-inner:before {
   background-color: #fff !important;
+}
+
+.swiper {
+  height: 100%;
+  overflow: hidden;
 }
 
 .swiper-button-disabled {

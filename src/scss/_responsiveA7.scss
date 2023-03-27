@@ -1,0 +1,132 @@
+
+// Mediaqueries
+
+
+// Large devices (desktops, 992px and up)
+@media (max-height: 560px) { 
+    p {
+        font-size:.95rem;
+    }
+
+    h2 {
+        font-size:1.5rem !important;
+    }
+
+    .main-description {
+        font-size: 1.2rem;
+        padding:0 !important;
+    }
+    #root .aside-menu a {
+  
+        padding:0;
+
+    }
+
+    .instruments-list {
+        div {
+            padding: 0;
+        }
+    }
+
+    .page-item {
+        img {
+            max-width:500px;
+        }
+    }
+
+    //calculo
+
+    
+    .containerBox {
+        height:300px !important;
+        width:600px !important;
+    }
+
+
+    .containerBox > .landing-area > .piece-inside,
+    .containerBox > .landing-area > .piece-inside-countable,
+    .containerBox > .pieces-container > .piece  {
+        width:50px !important;
+        height:50px !important;
+    }
+
+
+    //Fono
+
+    .play-button {
+        width:50px;
+        height:50px;
+        img {
+            width:50px !important;
+        }
+    }
+
+    .go-btn {
+        margin-top:5rem;
+        margin-left:-12rem;
+    }
+
+    .title-answers {
+        font-size:1rem;
+    }
+
+    //Wally
+
+    .item-image-wally {
+        img {
+            max-width: 350px;
+        }
+       
+    }
+
+    //aces
+    .aces-page-item {
+
+        img {
+            width:400px;
+        }
+    
+    }
+
+    .column-instruction {
+
+        .instruction {
+            height:350px;
+            width:350px;
+            margin:-3rem;
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    }
+
+    //Corsi
+
+    .corsi-container {
+        padding-top:2rem;
+    }
+
+    .corsi-container .game-box {
+        padding:1rem;
+        padding-top:0;
+        gap:2.5rem;
+    }
+
+    //hnf
+
+    .hnf-button-container {
+
+        .hnf-button {
+            width:350px !important;
+            height:200px !important;
+            border-radius:.5rem;
+            border:none;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
+            background-color:#f3f3f7;
+        }
+
+    }
+
+
+}

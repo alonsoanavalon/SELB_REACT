@@ -35,7 +35,10 @@ export default function Wally () {
 
 
     return (
+        <div style={{overflow:"hidden"}}>
 <Fragment>
+
+
 
         <div className="aces-test">
               <Swiper
@@ -343,5 +346,6 @@ export default function Wally () {
             </Swiper>
             </div>
         </Fragment>
+        </div>
     )
 }

@@ -68,7 +68,9 @@ export default function TejasLee () {
     
     
     return (
-        <Fragment>
+
+
+        <div style={{ height:"100%"}}>
             
 
             <div className="first-instrument">
@@ -332,6 +334,7 @@ que me digas el nombre de cada una. Si no conoces alguna letra está bien, inté
                 </Swiper>
 
             </div>
-        </Fragment>
+            </div>
+
     )
 }

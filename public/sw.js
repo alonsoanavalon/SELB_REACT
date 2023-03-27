@@ -1,4 +1,4 @@
-let cacheData = "app-v8";
+let cacheData = "app-v9";
 this.addEventListener("install", evt => {
     console.log("installing")
 
@@ -9,8 +9,8 @@ this.addEventListener("install", evt => {
     caches.delete("app-v5")
     caches.delete("app-v6")
     caches.delete("app-v7")
-    // caches.delete("app-v8")
-    caches.delete("app-v9")
+    caches.delete("app-v8")
+    // caches.delete("app-v9")
     caches.delete("app-v10")
     caches.delete("app-v11")
 
@@ -254,6 +254,7 @@ this.addEventListener("install", evt => {
                 "https://res.cloudinary.com/keyzen/video/upload/v1676861114/fonolo/item_20_tnunrt.mp3",
                 "https://res.cloudinary.com/keyzen/video/upload/v1676861113/fonolo/item_21_d87pwg.mp3",
                 "https://res.cloudinary.com/keyzen/image/upload/v1677206781/plus_bih1fy.png",
+                "https://upload.wikimedia.org/wikipedia/commons/9/9e/Plus_symbol.svg",
 
 
 

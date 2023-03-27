@@ -18,11 +18,15 @@
 @import 'moments';
 @import 'hnf';
 @import 'fonologico';
+@import 'responsiveA7';
 
 html {
     background-color: #fff;
 }
 
+.first-instrument {
+    height:100%;
+}
 body, html {
     -webkit-touch-callout: none; /* Safari */
     -webkit-user-select: none; /* Chrome */     
@@ -44,6 +48,10 @@ img {
     background-color: #fff !important;
 }
 
+.swiper {
+    height:100%;
+    overflow:hidden;
+}
 .swiper-button-disabled {
     visibility: hidden !important;
 }
