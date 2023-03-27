@@ -1299,7 +1299,7 @@ template {
   justify-content: center;
 }
 
-@media (max-height: 600px) {
+@media (max-height: 650px) {
   p {
     font-size: 0.95rem;
   }
