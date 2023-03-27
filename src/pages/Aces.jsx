@@ -49,7 +49,6 @@ export default function Aces () {
     return (
 
         <div style={{overflow:"hidden"}}>
-        
         <Fragment>
             <div className="aces-test">
               <Swiper
