@@ -1213,6 +1213,7 @@ template {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  width: 10px;
 }
 
 .hnf-instructions-1 {
@@ -1344,7 +1345,7 @@ template {
     font-size: 1rem;
   }
   .item-image-wally img {
-    max-width: 350px;
+    max-width: 420px;
   }
   .aces-page-item img {
     width: 400px;
@@ -1416,9 +1417,9 @@ img {
 .swiper-button-prev {
   background-color: #3aafb9;
   color: #fff !important;
-  width: 70px !important;
+  width: 45px !important;
   margin-top: 25vh !important;
-  padding: 2.2rem;
+  padding: 1rem;
   border-radius: 2rem;
   -webkit-border-radius: 2rem;
   -moz-border-radius: 2rem;
