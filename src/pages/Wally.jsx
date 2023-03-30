@@ -14,6 +14,14 @@ import ImageAction from '../components/Wally/ImageAction';
 export default function Wally () {
 
     const [wallyItems, setWallyItems] = useState([]);
+    const [studentName, setStudentName] = useState("")
+    useEffect(() => {
+
+        get('selectedStudentName')
+        .then(studentName => setStudentName(studentName))
+
+    }, [])
+
 
     useEffect(() => {
 
@@ -35,7 +43,7 @@ export default function Wally () {
 
 
     return (
-        <div style={{overflow:"hidden", height:"100%"}}>
+        <div style={{overflow:"hidden", height:"100%", paddingTop:"1.5rem"}}>
 <Fragment>
 
 
@@ -344,8 +352,15 @@ export default function Wally () {
                 
 
             </Swiper>
+
+
             </div>
+
+
         </Fragment>
+
+        <p style={{position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
+
         </div>
     )
 }

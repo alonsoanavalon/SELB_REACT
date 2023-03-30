@@ -211,6 +211,13 @@ export default function Fonologico () {
     const [ zeroTimes, setZeroTimes ] = useState(0)
     const [description, setDescription] = useState("Si responde con el dígito primero califique el item de 0 y diga 'recuerda que debes decirme primero la palabra, luego el número'")
     
+    const [studentName, setStudentName] = useState("")
+    useEffect(() => {
+
+        get('selectedStudentName')
+        .then(studentName => setStudentName(studentName))
+
+    }, [])
     function getMomentByDate(date) {
         let dateBegin;
         let dateUntil;
@@ -267,7 +274,6 @@ export default function Fonologico () {
 
         const parsedAnswers = answersArray.map((answer) => {
             const id = parseInt(answer[0])+323;
-            debugger;
             return [
                 id,
                 {
@@ -480,7 +486,6 @@ export default function Fonologico () {
 
             if (actualItem.id === 23) {
 
-                debugger;
 
 
                 if (JSON.stringify(choicesArray) === JSON.stringify(answersArray)) {
@@ -521,7 +526,6 @@ export default function Fonologico () {
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        debugger;
                         saveAndExit(choices);
                     }
                 })
@@ -600,7 +604,7 @@ export default function Fonologico () {
                 showConfirmButton: true,
             })
             .then((result) => {
-                debugger;
+    
                 if (result.isConfirmed) {
                     saveAndExit(choices);
                 }
@@ -676,7 +680,7 @@ export default function Fonologico () {
     }, [])
 
     return (
-        
+        <div style={{overflow:"hidden", height:"100%", paddingTop:"1.5rem"}}>
         <Fragment>
             {
                 !startGame &&
@@ -753,5 +757,8 @@ export default function Fonologico () {
             }
 
         </Fragment>
+        <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
+
+        </div>
     )
 }

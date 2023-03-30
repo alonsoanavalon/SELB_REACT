@@ -39,6 +39,15 @@ export default function Corsi () {
     const [allAnswers, setAllAnswers] = useState({});
     const [isArray, setIsArray] = useState(false)
 
+    const [studentName, setStudentName] = useState("")
+    useEffect(() => {
+
+        get('selectedStudentName')
+        .then(studentName => setStudentName(studentName))
+
+    }, [])
+
+
     const blink = (num) => {
         const boxes = document.querySelectorAll(".corsi-box");
         setTimeout(() => {
@@ -1144,7 +1153,9 @@ export default function Corsi () {
         };
     }, [])
     return (
+        
         <Fragment>
+                    <div style={{overflow:"hidden", height:"100%", paddingTop:"1.5rem", backgroundColor:"#333"}}>
                 
                 <div className="corsi-container">
 
@@ -1163,8 +1174,9 @@ export default function Corsi () {
                     </div>
 
                 </div>
-            
+                <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
 
+                </div>
         </Fragment>
     )
 }

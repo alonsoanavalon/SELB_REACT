@@ -14,6 +14,7 @@ export default function Aces () {
 
     const [items, setItems] = useState([])
     const [studentName, setStudentName] = useState()
+    
 
     useEffect(() => {
 
@@ -48,7 +49,7 @@ export default function Aces () {
 
     return (
 
-        <div style={{overflow:"hidden", height:"100%"}}>
+        <div style={{overflow:"hidden", height:"100%", paddingTop:"1.5rem"}}>
         <Fragment>
             <div className="aces-test">
               <Swiper
@@ -95,6 +96,9 @@ export default function Aces () {
             </Swiper>
             </div>
         </Fragment>
+
+        <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
+
         </div>
     )
     

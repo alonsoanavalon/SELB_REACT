@@ -30,6 +30,7 @@ export default function Calculo () {
     const [wrongCounter, setWrongCounter] = useState(0)
     const [lastWrongAnswer, setLastWrongAnswer] = useState() 
     const [thisAnswer, setThisAnswer] = useState()
+    const [studentName, setStudentName] = useState("")
     
 
 /* 
@@ -40,6 +41,14 @@ document.onmousemove = function (e) {
     console.log(`X is ${x} and Y is ${y}`)
 }
 */
+
+
+    useEffect(() => {
+
+        get('selectedStudentName')
+        .then(studentName => setStudentName(studentName))
+
+    }, [])
 
     useEffect(() => {
  
@@ -244,6 +253,7 @@ document.onmousemove = function (e) {
 
     }
     return (
+        <div style={{overflow:"hidden", height:"100%"}}>
         <div>
            <AppleCounter counter={wrongCounter}/>
         <Swiper
@@ -523,6 +533,10 @@ document.onmousemove = function (e) {
                     </SwiperSlide>
 
         </Swiper>
+        </div>
+        <div>
+            <p style={{margin:"2rem auto 0 auto", width:"100%", textAlign:"start", padding:"0 1rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
+        </div>
         </div>
       );
 

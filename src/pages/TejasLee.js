@@ -37,6 +37,17 @@ export default function TejasLee () {
     const [initialSound, setInitialSound] = useState([])
     const [storySound, setStorySound] = useState([])
     const [auditiveComprehension, setAuditiveComprehension] = useState([])
+    const [studentName, setStudentName] = useState()
+    
+
+    useEffect(() => {
+
+        get('selectedStudentName')
+        .then((data) => {
+            setStudentName(data)
+        })
+
+    }, [])
 
     useEffect(() => {
 
@@ -70,7 +81,7 @@ export default function TejasLee () {
     return (
 
 
-        <div style={{ height:"100%"}}>
+        <div style={{ height:"100%", paddingTop:"1.5rem"}}>
             
 
             <div className="first-instrument">
@@ -334,6 +345,7 @@ que me digas el nombre de cada una. Si no conoces alguna letra está bien, inté
                 </Swiper>
 
             </div>
+            <p style={{position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
             </div>
 
     )

@@ -724,7 +724,7 @@ template {
   line-height: 2rem;
   min-width: 300px;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: transparent;
   padding: 2rem;
   border-radius: 0.5rem;
   -webkit-border-radius: 0.5rem;
@@ -1338,7 +1338,7 @@ template {
     width: 50px !important;
   }
   .go-btn {
-    margin-top: 5rem;
+    margin-top: 5.5rem;
     margin-left: -12rem;
   }
   .title-answers {
@@ -1418,7 +1418,7 @@ img {
   background-color: #3aafb9;
   color: #fff !important;
   width: 45px !important;
-  margin-top: 25vh !important;
+  margin-top: 30vh !important;
   padding: 1rem;
   border-radius: 2rem;
   -webkit-border-radius: 2rem;

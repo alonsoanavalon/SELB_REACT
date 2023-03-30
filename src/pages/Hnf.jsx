@@ -11,6 +11,15 @@ export default function HNF() {
     const [cycle, setCycle] = useState(0);
     const [isArray, setIsArray] = useState(false)
 
+    const [studentName, setStudentName] = useState("")
+    useEffect(() => {
+
+        get('selectedStudentName')
+        .then(studentName => setStudentName(studentName))
+
+    }, [])
+    
+
     const [answers] = useState({
         // Del 0 al 5 son en los que tiene que hacer click en el correcto o no pasa, son los de ejemplo.
         // 6 a 17  -- [6-18?] son el primero de corazones, es con tiempo
@@ -946,6 +955,7 @@ useEffect(() => {
 
 
     return (
+        <div style={{overflow:"hidden", height:"100%", paddingTop:"1.5rem"}}>
         <Fragment>
             <div className="hnf-container">
 
@@ -977,5 +987,8 @@ useEffect(() => {
  
             </div>
         </Fragment>
+        <p style={{margin:"2rem auto 0 auto", width:"100%", textAlign:"start", padding:"0 1rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
+
+        </div>
     )
 }
