@@ -933,7 +933,7 @@ export default function Corsi () {
             title: '¿Deseas comenzar el juego?',
             html: `A continuación van a aparecer 10 cuadrados en la pantalla. De todos ellos, algunos se van a encender en un determinado orden. Una vez que escuches la palabra "Ahora", tú tendrás que tocar los cuadrados en el mismo orden en que se encendieron. Los dos primeros son de práctica y a medida que avance el juego se encenderán mas cuadrados. ¿Lo has entendido? (espere la respuesta del niño). Comencemos`,
             icon: 'warning',
-            showCancelButton: true,
+            showCancelButton: false,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             cancelButtonText: 'Cancelar',
@@ -1155,7 +1155,6 @@ export default function Corsi () {
     return (
         
         <Fragment>
-                    <div style={{overflow:"hidden", height:"100%", paddingTop:"1.5rem", backgroundColor:"#333"}}>
                 
                 <div className="corsi-container">
 
@@ -1174,9 +1173,10 @@ export default function Corsi () {
                     </div>
 
                 </div>
-                <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
-
+                <div>
+                <p style={{textAlign:"start", paddingLeft:"1rem", paddingTop:"2.3rem",color:"#aaa", backgroundColor:"#333"}}>Estudiante: {studentName && studentName} </p>
                 </div>
+         
         </Fragment>
     )
 }
