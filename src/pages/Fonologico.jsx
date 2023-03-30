@@ -267,6 +267,7 @@ export default function Fonologico () {
 
         const parsedAnswers = answersArray.map((answer) => {
             const id = parseInt(answer[0])+323;
+            debugger;
             return [
                 id,
                 {
@@ -478,6 +479,41 @@ export default function Fonologico () {
             const answersArray = actualItem.options;
 
             if (actualItem.id === 23) {
+
+                debugger;
+
+
+                if (JSON.stringify(choicesArray) === JSON.stringify(answersArray)) {
+                    //tenemos que agregar el puntaje que serian 2 y mostrar las opciones
+                    setZeroTimes(0);
+                    choices[actualItem.id] = {
+                        options: choices[actualItem.id],
+                        value: 2
+                    }
+                } else {
+                    const matches = matchCounter(choicesArray, answersArray);
+
+                    if (matches.length >= 2) {
+                        choices[actualItem.id] = {
+                            options: choices[actualItem.id],
+                            value: 1
+                        }
+                    } else {
+                    //tenemos que calificar con 0 y mostrar las opciones
+                        choices[actualItem.id] = {
+                            options: choices[actualItem.id],
+                            value: 0,
+                        }
+                    }
+
+                    if (zeroText === 'Revertir') {
+                        setZeroTimes(prevValue => prevValue+1);
+                    } else{
+                        setZeroTimes(prevValue => prevValue+1);
+                    }
+  
+                }
+
                 Swal.fire({
                     icon: 'success',
                     title: "Test finalizado",
@@ -485,6 +521,7 @@ export default function Fonologico () {
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
+                        debugger;
                         saveAndExit(choices);
                     }
                 })
@@ -563,6 +600,7 @@ export default function Fonologico () {
                 showConfirmButton: true,
             })
             .then((result) => {
+                debugger;
                 if (result.isConfirmed) {
                     saveAndExit(choices);
                 }
