@@ -8,6 +8,7 @@ export default function Respaldo () {
     const [csvDataRespaldo, setCsvDataRespaldo] = useState()
     const [userData, setUserData] = useState("")
     const alert = useAlert()
+    const [jsonData, setJsonData] = useState([])
 
     useEffect(() => {
 
@@ -47,7 +48,18 @@ export default function Respaldo () {
                         instrumentName = instrument['name']
                     }
                 })
-                Object.entries(test[1]).map((element) => element[1] === "" ? answers.push(0) : answers.push(element[1]))
+                Object.entries(test[1]).map((element) => {
+                    if (instrumentName == "HNF") {
+                        element[1] === "" ? answers.push(0) : answers.push(element[1].choice)
+                    } else if (instrumentName == "Fonológico") {
+                        element[1] === "" ? answers.push(0) : answers.push(element[1].options.toString())
+                    } else {
+                        element[1] === "" ? answers.push(0) : answers.push(element[1])
+                    }
+
+                })
+
+                setJsonData(prevValue => [...prevValue, [test[0], test[1]]])
                 localArray.push(instrumentName, test[0]['date'], studentName, ...answers, "FIN", JSON.stringify(test))
                 testArray.push(localArray)
     
@@ -55,6 +67,22 @@ export default function Respaldo () {
             setCsvDataRespaldo(testArray)
         })
 
+    }
+
+    function exportUserInfo(testArray) {
+
+        const fileData = JSON.stringify(testArray);
+        const blob = new Blob([fileData], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.download = "respaldo-administrador.json";
+        link.href = url;
+        link.click();
+      }
+
+
+    function downloadJson(testArray) {
+        exportUserInfo(testArray)
     }
 
 
@@ -123,10 +151,14 @@ export default function Respaldo () {
                         {
                             (csvDataRespaldo !== undefined) && 
                             <Fragment>
-                                <CSVLink className="btn btn-success "filename="respaldo-test" data={csvDataRespaldo}>Descargar</CSVLink>
-                               
-                            </Fragment>
+    
+                                <CSVLink className="btn btn-success "filename="respaldo-test" data={csvDataRespaldo}>Descargar respaldo evaluador</CSVLink>
+                                 </Fragment>
 
+
+                        }
+                        {
+                            (csvDataRespaldo !== undefined && jsonData !== undefined) && <button onClick={(e) => downloadJson(jsonData)} className="btn btn-primary">Descargar respaldo administrador</button>
 
                         }
 
