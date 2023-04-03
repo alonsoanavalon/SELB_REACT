@@ -531,7 +531,8 @@ export default function Fonologico () {
                 Swal.fire({
                     icon: 'info',
                     title: "Test finalizado",
-                    allowOutsideClick: false,
+                    showCancelButton: false,
+                    allowOutsideClick:false,
                     showConfirmButton: true,
                     confirmButtonText: 'Guardar test',
                     showLoaderOnConfirm: true,
@@ -549,13 +550,14 @@ export default function Fonologico () {
                         )
                       })
                   },
-                  allowOutsideClick: () => !Swal.isLoading()
+
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire({
                             showCancelButton: false,
                             confirmButtonColor: '#3085d6',
+                            allowOutsideClick:false,
                             icon:"success",
                             title:"El test ha sido guardado",
                             confirmButtonText: 'Finalizar test y salir',
@@ -640,7 +642,8 @@ export default function Fonologico () {
             Swal.fire({
                 icon: 'info',
                 title: "Test finalizado",
-                allowOutsideClick: false,
+                showCancelButton:false,
+                allowOutsideClick:false,
                 confirmButtonColor: '#3085d6',
                 showConfirmButton: true,
                 confirmButtonText: 'Guardar test',
@@ -659,13 +662,13 @@ export default function Fonologico () {
                     )
                   })
               },
-              allowOutsideClick: () => !Swal.isLoading()
             })
             .then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
                         showCancelButton: false,
                         confirmButtonColor: '#3085d6',
+                        allowOutsideClick:false,
                         icon:"success",
                         title:"El test ha sido guardado",
                         confirmButtonText: 'Finalizar test y salir',
