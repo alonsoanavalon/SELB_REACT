@@ -31,6 +31,7 @@ export default function Calculo () {
     const [lastWrongAnswer, setLastWrongAnswer] = useState() 
     const [thisAnswer, setThisAnswer] = useState()
     const [studentName, setStudentName] = useState("")
+    const [countedValue, setCountedValue] = useState(0)
     
 
 /* 
@@ -252,6 +253,29 @@ document.onmousemove = function (e) {
         }
 
     }
+
+
+    const restarCountedValue = (e) => {
+     
+        e.preventDefault();
+        if (countedValue > 0) {
+            setCountedValue(prevValue =>{
+                if (prevValue > 0) {
+                    return prevValue -1 
+                    } else {
+                        return prevValue
+                    }
+                }) 
+        }
+
+
+    }
+
+    const sumarCountedValue = (e) => {
+        e.preventDefault();
+        setCountedValue(prevValue => prevValue +1)
+
+    }
     return (
         <div style={{overflow:"hidden", height:"100%"}}>
         <div>
@@ -438,9 +462,11 @@ document.onmousemove = function (e) {
                         <form key={item.itemId} id={item.instrumentName +"-"+item.num} className="instrument-form">
                             <input type="hidden" value={item.instrumentId} name="instrument"/>
                             <input type="hidden" value={item.itemId} name="key"/>
-                            <label className="form-check-label"><input className="quantification-value" type="number" name={item.instrumentName}/></label>
-
-                     
+                            <div  style={{display:"flex", gap:".5rem"}}>
+                            <button  className="btn btn-dark" onClick={(e) => restarCountedValue(e)}>-</button>
+                            <label className="form-check-label"><input className="quantification-value" type="number" disabled min="0" name={item.instrumentName} value={countedValue ? countedValue : 0}/></label>
+                            <button className="btn btn-dark"  onClick={(e) => sumarCountedValue(e)}>+</button>
+                            </div>
                         </form>
                     </div>
 
