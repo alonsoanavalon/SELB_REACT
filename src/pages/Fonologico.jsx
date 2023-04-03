@@ -629,12 +629,7 @@ export default function Fonologico () {
     const saveAndExit = useCallback(async () => {
 
         const saveResponse = await saveTest(choices);
-        get('backupTest').then((value) => {
-            window.alert(`BACKUP: ${value.length}`)
-        })
-        get('completedTests').then((value) => {
-            window.alert(`TEST: ${value.length}`)
-        })
+
         return saveResponse;
 
     }, [choices, setChoices])
