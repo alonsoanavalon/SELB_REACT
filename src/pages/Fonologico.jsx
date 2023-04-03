@@ -235,7 +235,7 @@ export default function Fonologico () {
         })
     }
 
-    function saveTest(answers) {
+    async function saveTest(answers) {
         let startItemPoint = Object.keys(answers).length;
         let answersEntries = Object.entries(answers)
         let leftItems = {};
@@ -289,23 +289,61 @@ export default function Fonologico () {
 
         //Luego viene toda la logica de si se repite o si se guarda en el backup etc.
 
-        get('backupTest')
-        .then(response => {
-            let backupLength = response.length
-            if (Array.isArray(response) && response.length > 0) {
-                get('completedTests')
-                .then(res => {
-                    if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
-                        console.log(response, "Actualizando Backup")
+        try {
+            await get('backupTest')
+            .then(response => {
+                let backupLength = response.length
+                if (Array.isArray(response) && response.length > 0) {
+                    get('completedTests')
+                    .then(res => {
+                        if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
+                            console.log(response, "Actualizando Backup")
+                            let arrayCounter = 0;
+                            response.forEach(array => {
+                                let responseMoment;
+                                let instrumentMoment;
+                                if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+    
+                                    responseMoment = getMomentByDate(array[0]['date'])
+                                    instrumentMoment = getMomentByDate(instrumentInfo['date'])
+    
+                                    if (responseMoment === instrumentMoment) {
+                                        response.splice(arrayCounter, 1)
+                                    } 
+                                }
+                                arrayCounter+= 1
+        
+                            })
+        
+                            update('backupTest', val => [...response, choicesArray])
+                        }
+                    })
+                }
+            })
+    
+            await get('completedTests')
+            .then(response => {
+    
+                if (!isArray) {
+                    if (response.length === undefined) {
+                        update('completedTests', (val) => 
+                        [response , choicesArray])         
+                        setIsArray(true)
+                    } else if (response.length === 0) {
+    
+                        set('completedTests', [choicesArray])
+                    } else {
+                        console.log(response, "Actualizando1")
                         let arrayCounter = 0;
                         response.forEach(array => {
+                            
                             let responseMoment;
                             let instrumentMoment;
                             if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
-
+    
                                 responseMoment = getMomentByDate(array[0]['date'])
                                 instrumentMoment = getMomentByDate(instrumentInfo['date'])
-
+    
                                 if (responseMoment === instrumentMoment) {
                                     response.splice(arrayCounter, 1)
                                 } 
@@ -314,55 +352,26 @@ export default function Fonologico () {
     
                         })
     
-                        update('backupTest', val => [...response, choicesArray])
-                    }
-                })
-            }
-        })
-
-
-        get('completedTests')
-        .then(response => {
-
-            if (!isArray) {
-                if (response.length === undefined) {
-                    update('completedTests', (val) => 
-                    [response , choicesArray])         
-                    setIsArray(true)
-                } else if (response.length === 0) {
-
-                    set('completedTests', [choicesArray])
-                } else {
-                    console.log(response, "Actualizando1")
-                    let arrayCounter = 0;
-                    response.forEach(array => {
+                        update('completedTests', val => [...response, choicesArray])
+    
                         
-                        let responseMoment;
-                        let instrumentMoment;
-                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
-
-                            responseMoment = getMomentByDate(array[0]['date'])
-                            instrumentMoment = getMomentByDate(instrumentInfo['date'])
-
-                            if (responseMoment === instrumentMoment) {
-                                response.splice(arrayCounter, 1)
-                            } 
-                        }
-                        arrayCounter+= 1
-
-                    })
-
+                    }
+                } else {
+                    console.log(response, "Actualizando2")
                     update('completedTests', val => [...response, choicesArray])
-
-                    
+    
                 }
-            } else {
-                console.log(response, "Actualizando2")
-                update('completedTests', val => [...response, choicesArray])
+    
+            })
 
-            }
+            return true
+        } catch (err) {
+            console.error(err);
+            Swal.fire({icon:"error", title:"Ha ocurrido un error en el guardado"})
+            return false
+        }
 
-        })
+
 
     }
 
@@ -520,13 +529,42 @@ export default function Fonologico () {
                 }
 
                 Swal.fire({
-                    icon: 'success',
+                    icon: 'info',
                     title: "Test finalizado",
                     allowOutsideClick: false,
+                    showConfirmButton: true,
+                    confirmButtonText: 'Guardar test',
+                    showLoaderOnConfirm: true,
+                  preConfirm: async () => {
+                    return saveAndExit(choices)
+                      .then(response => {
+                        if (response !== true) {
+                          throw new Error(response.statusText)
+                        }
+                        return response
+                      })
+                      .catch(error => {
+                        Swal.showValidationMessage(
+                          `Ha ocurrido un error en el envío de datos desde el dispositivo`
+                        )
+                      })
+                  },
+                  allowOutsideClick: () => !Swal.isLoading()
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        saveAndExit(choices);
+                        Swal.fire({
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            icon:"success",
+                            title:"El test ha sido guardado",
+                            confirmButtonText: 'Finalizar test y salir',
+                          }).then(_ => {
+                              setTimeout(() => {
+                                window.location.pathname = '/'
+                              }, 3000)
+                          })
+          
                     }
                 })
             } else if (actualItem.id === 0 || actualItem.id === 1 || actualItem.id === 5){
@@ -588,9 +626,16 @@ export default function Fonologico () {
 
     }, [choices, actualItem, zeroText])
 
-    const saveAndExit = useCallback(() => {
-        saveTest(choices);
-        window.location.href = '/';
+    const saveAndExit = useCallback(async () => {
+
+        const saveResponse = await saveTest(choices);
+        get('backupTest').then((value) => {
+            window.alert(`BACKUP: ${value.length}`)
+        })
+        get('completedTests').then((value) => {
+            window.alert(`TEST: ${value.length}`)
+        })
+        return saveResponse;
 
     }, [choices, setChoices])
 
@@ -601,12 +646,40 @@ export default function Fonologico () {
                 icon: 'info',
                 title: "Test finalizado",
                 allowOutsideClick: false,
+                confirmButtonColor: '#3085d6',
                 showConfirmButton: true,
+                confirmButtonText: 'Guardar test',
+                showLoaderOnConfirm: true,
+              preConfirm: async () => {
+                return saveAndExit(choices)
+                  .then(response => {
+                    if (response !== true) {
+                      throw new Error(response.statusText)
+                    }
+                    return response
+                  })
+                  .catch(error => {
+                    Swal.showValidationMessage(
+                      `Ha ocurrido un error en el envío de datos desde el dispositivo`
+                    )
+                  })
+              },
+              allowOutsideClick: () => !Swal.isLoading()
             })
             .then((result) => {
-    
                 if (result.isConfirmed) {
-                    saveAndExit(choices);
+                    Swal.fire({
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        icon:"success",
+                        title:"El test ha sido guardado",
+                        confirmButtonText: 'Finalizar test y salir',
+                      }).then(_ => {
+                          setTimeout(() => {
+                            window.location.pathname = '/'
+                          }, 3000)
+                      })
+      
                 }
             })
         }
