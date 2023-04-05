@@ -76,7 +76,7 @@ export default function Corsi () {
         })
     }
 
-    function saveCorsi(answers) {
+    async function saveCorsi(answers) {
 
         let instrumentInfo = {}
         let choicesArray = []
@@ -98,8 +98,9 @@ export default function Corsi () {
         choicesArray.push(answers) // estas deben ser las respuestas
 
         //Luego viene toda la logica de si se repite o si se guarda en el backup etc.
-
-        get('backupTest')
+        debugger;
+        try {
+        await get('backupTest')
         .then(response => {
             let backupLength = response.length
             if (Array.isArray(response) && response.length > 0) {
@@ -131,7 +132,7 @@ export default function Corsi () {
         })
 
 
-        get('completedTests')
+        await get('completedTests')
         .then(response => {
 
             if (!isArray) {
@@ -173,11 +174,16 @@ export default function Corsi () {
             }
 
         })
-
+        return true   
+        }  catch (err) {
+            console.error(err);
+            Swal.fire({icon:"error", title:"Ha ocurrido un error en el guardado"})
+            return false
+        }
     }
 
 
-    const saveTest = () => {
+    const saveTest = async () => {
         //guardartest
 
         const respuestas = [orderedTries, firstExampleAnswer, secondExampleAnswer, firstTestFirstAnswer, firstTestSecondAnswer, secondTestFirstAnswer, secondTestSecondAnswer, thirdTestFirstAnswer, thirdTestSecondAnswer, fourthTestFirstAnswer, fourthTestSecondAnswer, fifthTestFirstAnswer];
@@ -212,15 +218,45 @@ export default function Corsi () {
 
 
         Swal.fire({
-            title: "Test finalizado",
-            showConfirmButton: true,
+            icon: 'success',
+            html: `El test ha finalizado`,
+            showCancelButton: false,
             allowOutsideClick: false,
-        })
-        .then((data) => {
-            if (data.isConfirmed) {
-                window.location.href = '/'
-            }
-        })
+            width:"50em",
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Guardar Test',
+            preConfirm: async () => {
+                return saveCorsi(answersObject)
+                  .then(response => {
+                    if (response !== true) {
+                        Swal.fire("Ha ocurrido un error en el guardado de datos")
+                    }
+                    return response
+                  })
+                  .catch(error => {
+                    Swal.fire("Ha ocurrido un error en el guardado de datos")
+
+                  })
+              },
+            })
+            .then( async (result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick:false,
+                        icon:"success",
+                        title:"El test ha sido guardado",
+                        confirmButtonText: 'Finalizar test y salir',
+                      }).then(_ => {
+                          setTimeout(() => {
+                            window.location.pathname = '/'
+                          }, 3000)
+                      })
+                        
+                
+                }
+            })
 
 
     }
