@@ -173,21 +173,28 @@ export default function Instruction (props) {
         
                             update('completedTests', val => [...response, choicesArray])
         
-                            
-                        }
-                    } else {
-                        console.log(response, "Actualizando2")
-                        update('completedTests', val => [...response, choicesArray])
-        
-                    }
-        
+                                    
                     alert.show('Test guardado con éxito', {
                         type:'success'
                     })
         
                     setTimeout(() => {
                         navigate('/')
-                    }, 2000)
+                    }, 3000)
+                        }
+                    } else {
+                        console.log(response, "Actualizando2")
+                        update('completedTests', val => [...response, choicesArray])
+                
+                        alert.show('Test guardado con éxito', {
+                            type:'success'
+                        })
+            
+                        setTimeout(() => {
+                            navigate('/')
+                        }, 3000)
+                    }
+
         
                 })   
             }
@@ -341,22 +348,28 @@ export default function Instruction (props) {
                             })
         
                             update('completedTests', val => [...response, choicesArray])
-        
+                            alert.show('Test guardado con éxito', {
+                                type:'success'
+                            })
+                
+                            setTimeout(() => {
+                                navigate('/')
+                            }, 3000)
                             
                         }
                     } else {
                         console.log(response, "Actualizando2")
                         update('completedTests', val => [...response, choicesArray])
-        
+                        alert.show('Test guardado con éxito', {
+                            type:'success'
+                        })
+            
+                        setTimeout(() => {
+                            navigate('/')
+                        }, 3000)
                     }
         
-                    alert.show('Test guardado con éxito', {
-                        type:'success'
-                    })
-        
-                    setTimeout(() => {
-                        navigate('/')
-                    }, 2000)
+
         
                 })   
             }
