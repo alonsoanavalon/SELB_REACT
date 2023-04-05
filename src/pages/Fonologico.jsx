@@ -649,6 +649,7 @@ export default function Fonologico () {
                 confirmButtonText: 'Guardar test',
                 showLoaderOnConfirm: true,
               preConfirm: async () => {
+                debugger;
                 return saveAndExit(choices)
                   .then(response => {
                     if (response !== true) {
@@ -657,9 +658,8 @@ export default function Fonologico () {
                     return response
                   })
                   .catch(error => {
-                    Swal.showValidationMessage(
-                      `Ha ocurrido un error en el envío de datos desde el dispositivo`
-                    )
+                    Swal.fire("Ha ocurrido un error en el guardado de datos")
+
                   })
               },
             })
