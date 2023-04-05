@@ -28,7 +28,7 @@ export default function AppleCounter (props) {
         })
     }
 
-    function saveInstrumentOnline() {
+    async function saveInstrumentOnline() {
         let choices = {}
         let instrumentInfo = {}
         let choicesArray = []
@@ -84,9 +84,9 @@ export default function AppleCounter (props) {
         instrumentInfo['instrument'] = parseInt(allInstruments[0]['instrument'].value)
 
         choicesArray.push(choices)
-
-
-        get('backupTest')
+        debugger;
+        try {
+        await get('backupTest')
         .then(response => {
             let backupLength = response.length
             if (Array.isArray(response) && response.length > 0) {
@@ -119,7 +119,7 @@ export default function AppleCounter (props) {
         })
 
 
-        get('completedTests')
+        await get('completedTests')
         .then(response => {
 
             if (!isArray) {
@@ -158,33 +158,55 @@ export default function AppleCounter (props) {
 
             }
 
-            alert.show('Test guardado con éxito', {
-                type:'success'
-            })
-
-            setTimeout(() => {
-                navigate('/')
-            }, 2000)
-
         })   
+        return true    
+    } catch (err) {
+        console.error(err);
+        Swal.fire({icon:"error", title:"Ha ocurrido un error en el guardado"})
+        return false
+    }
     }
 
     useEffect(() => {
 
         if (props.counter >= 6) {
             Swal.fire({
-                title: 'Test finalizado',
-                text: "¿Deseas salir?",
-                icon: 'info',
-                showCancelButton: true,
+                icon: 'success',
+                html: `El test ha finalizado!`,
+                showCancelButton: false,
                 allowOutsideClick: false,
+                width:"50em",
                 confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Si, salir y guardar'
+                confirmButtonText: 'Guardar Test',
+                preConfirm: async () => {
+                    return saveInstrumentOnline()
+                      .then(response => {
+                        if (response !== true) {
+                            Swal.fire("Ha ocurrido un error en el guardado de datos")
+                        }
+                        return response
+                      })
+                      .catch(error => {
+                        Swal.fire("Ha ocurrido un error en el guardado de datos")
+    
+                      })
+                  },
               }).then((result) => {
                 if (result.isConfirmed) {
-                    saveInstrumentOnline()
+                    Swal.fire({
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick:false,
+                        icon:"success",
+                        title:"El test ha sido guardado",
+                        confirmButtonText: 'Finalizar test y salir',
+                      }).then(_ => {
+                          setTimeout(() => {
+                            window.location.pathname = '/'
+                          }, 3000)
+                      })
+                        
+                
                 }
               })
         }
