@@ -903,6 +903,7 @@ export default function HomePage() {
               cancelButtonText: 'Cancelar',
               cancelButtonColor: '#cc4846',
               confirmButtonColor: "#1674d8",
+              allowOutsideClick: false,
               confirmButtonText: '¿Deseas enviar los test?',
               showLoaderOnConfirm: true,
               preConfirm: async () => {
@@ -925,14 +926,15 @@ export default function HomePage() {
                     )
                   })
               },
-              allowOutsideClick: () => !Swal.isLoading()
             }).then((result) => {
               if (result.isConfirmed) {
                 Swal.fire({
                   showCancelButton: true,
                   cancelButtonText: 'Finalizar',
-                  cancelButtonColor: '#E6BB34',
-                  confirmButtonColor: "#70C851",
+                  cancelButtonColor: '#70C851',
+                  confirmButtonColor: "#E6BB34",
+                  showConfirmButton: false,
+                  allowOutsideClick: false,
                   confirmButtonText: 'Finalizar y eliminar test por enviar',
                   title: `${result.value.statusText}`,
                   html: `<b>Total enviados</b>: ${result.value.instrumentsLength}
@@ -1043,7 +1045,7 @@ export default function HomePage() {
             </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button>}
 
               {/* Esta funcion me elimina los test guardados entre X fechas */}
-            <button className="btn btn-info"  style={{marginLeft:"2rem"}}onClick={eliminarTestAntiguos}>Eliminar test antiguos</button>
+            {/* <button className="btn btn-info"  style={{marginLeft:"2rem"}}onClick={eliminarTestAntiguos}>Eliminar test antiguos</button> */}
 
 
 
