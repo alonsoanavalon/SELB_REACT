@@ -117,7 +117,7 @@ export default function HNF() {
         })
     }
 
-    function saveTest(testAnswers) {
+    async function saveTest(testAnswers) {
 
         const parsedHNFAnswers = Object.entries(answers);
         const parsedHNFChoices = Object.entries(testAnswers);
@@ -170,7 +170,8 @@ export default function HNF() {
 
         //Luego viene toda la logica de si se repite o si se guarda en el backup etc.
 
-        get('backupTest')
+        try {
+        await get('backupTest')
         .then(response => {
             let backupLength = response.length
             if (Array.isArray(response) && response.length > 0) {
@@ -202,7 +203,7 @@ export default function HNF() {
         })
 
 
-        get('completedTests')
+        await get('completedTests')
         .then(response => {
 
             if (!isArray) {
@@ -244,6 +245,13 @@ export default function HNF() {
             }
 
         })
+
+        return true    
+        } catch (err) {
+            console.error(err);
+            Swal.fire({icon:"error", title:"Ha ocurrido un error en el guardado"})
+            return false
+        }
 
     }
 
@@ -931,18 +939,41 @@ useEffect(() => {
         Swal.fire({
             icon: 'success',
             html: `El test ha finalizado`,
-            showCancelButton: true,
+            showCancelButton: false,
             allowOutsideClick: false,
             width:"50em",
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: 'Confirmar',
-            showCancelButton: false,
-        }).then((result) => {
+            confirmButtonText: 'Guardar Test',
+            preConfirm: async () => {
+                return saveTest(choices)
+                  .then(response => {
+                    if (response !== true) {
+                        Swal.fire("Ha ocurrido un error en el guardado de datos")
+                    }
+                    return response
+                  })
+                  .catch(error => {
+                    Swal.fire("Ha ocurrido un error en el guardado de datos")
+
+                  })
+              },
+            })
+       .then( async (result) => {
             if (result.isConfirmed) {
-                saveTest(choices);
-                window.location.href = '/';
+                Swal.fire({
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    allowOutsideClick:false,
+                    icon:"success",
+                    title:"El test ha sido guardado",
+                    confirmButtonText: 'Finalizar test y salir',
+                  }).then(_ => {
+                      setTimeout(() => {
+                        window.location.pathname = '/'
+                      }, 3000)
+                  })
+                    
+            
             }
         })
     }, 3000)
