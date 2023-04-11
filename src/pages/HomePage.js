@@ -922,7 +922,7 @@ export default function HomePage() {
                   })
                   .catch(error => {
                     Swal.showValidationMessage(
-                      `Ha ocurrido un error en el envío de datos desde el dispositivo`
+                      `Ha ocurrido un error en el envío de datos desde el dispositivo: ${error.message}`
                     )
                   })
               },
