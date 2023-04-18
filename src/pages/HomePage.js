@@ -45,7 +45,7 @@ export default function HomePage() {
           let counterEliminados = 0;
           const testNuevos = res.filter((test) => {
             const fechaTest = new Date(test[0].date)
-            const fechaLimite = new Date('2023/03/05')
+            const fechaLimite = new Date('2023/04/17')
   
             if (fechaTest > fechaLimite) {
               return test;
@@ -278,7 +278,7 @@ export default function HomePage() {
                   cancelButtonText: 'Finalizar',
                   cancelButtonColor: '#70C851',
                   confirmButtonColor: "#E6BB34",
-                  showConfirmButton: true,
+                  showConfirmButton: false,
                   allowOutsideClick: false,
                   confirmButtonText: 'Finalizar y eliminar test por enviar',
                   title: `${result.value.statusText}`,
@@ -390,7 +390,7 @@ export default function HomePage() {
             </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button>}
 
               {/* Esta funcion me elimina los test guardados entre X fechas */}
-            {/* <button className="btn btn-info"  style={{marginLeft:"2rem"}}onClick={eliminarTestAntiguos}>Eliminar test antiguos</button> */}
+            <button className="btn btn-info"  style={{marginLeft:"2rem"}}onClick={eliminarTestAntiguos}>Eliminar test antiguos</button>
 
 
 
