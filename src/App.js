@@ -26,7 +26,7 @@ import Corsi from './pages/Corsi'
 import Moments from './pages/Moments'
 import Desarrollo from './components/Desarrollo';
 import HNF from './pages/Hnf';
-
+import ReportPanel from './pages/ReportPanel'
 
 
 const cookies = new Cookies();
@@ -281,6 +281,7 @@ function App() {
           <Route path="/moments" element={<Moments/>}></Route>
           <Route path="/respaldo" element={<Respaldo/>}></Route>
           <Route path="/parents" element={<Parents/>}></Route>
+          <Route path="/report-panel" element={<ReportPanel/>}></Route>
           <Route path="/desarrollo" element={<Desarrollo/>}></Route>
           <Route path="/sdq" element={<ParentsForm/>}></Route>
           <Route path="/aces" element={<Aces/>}></Route>
