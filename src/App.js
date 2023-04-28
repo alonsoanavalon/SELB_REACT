@@ -27,6 +27,9 @@ import Moments from './pages/Moments'
 import Desarrollo from './components/Desarrollo';
 import HNF from './pages/Hnf';
 import ReportPanel from './pages/ReportPanel'
+import SchoolSelector from './pages/SchoolSelector';
+import Charts from './pages/Charts';
+import StudentSelector from './pages/StudentSelector';
 
 
 const cookies = new Cookies();
@@ -282,8 +285,11 @@ function App() {
           <Route path="/respaldo" element={<Respaldo/>}></Route>
           <Route path="/parents" element={<Parents/>}></Route>
           <Route path="/report-panel" element={<ReportPanel/>}></Route>
+          <Route path="/school-selector" element={<SchoolSelector/>}></Route>
           <Route path="/desarrollo" element={<Desarrollo/>}></Route>
           <Route path="/sdq" element={<ParentsForm/>}></Route>
+          <Route path="/charts" element={<Charts/>}></Route>
+          <Route path="/student-selector" element={<StudentSelector/>}></Route>
           <Route path="/aces" element={<Aces/>}></Route>
           <Route path="/corsi" element={<Corsi/>}></Route>
           <Route path="/hnf" element={<HNF/>}></Route>
