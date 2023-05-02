@@ -12,13 +12,11 @@ export default function SchoolSelector() {
     const [courses, setCourses] = useState([])
     const [filteredCourses, setFilteredCourses] = useState([])
     const [filteredStudents, setFilteredStudents] = useState([])
-    const [students, setStudents] = useState([])
 
     useEffect(() => {
 
         get('schools').then(schools => setSchools(schools))
         get('courses').then(courses => setCourses(courses))
-        get('students').then(students => setStudents(students))
 
     }, [])
 
@@ -37,18 +35,6 @@ export default function SchoolSelector() {
         $courseSelect.disabled = false;
     }
 
-    const getStudents = (evt) => {
-        let $courseSelect = document.getElementById("courseSelect")
-        let $courseId = evt.target.value
-        
-        let $studentsSelect = document.getElementById("studentSelect")
-        let $filteredStudents = students.filter(student => parseInt(student.courseId) === parseInt($courseId))
-        let $filteredStudentsToRender = $filteredStudents.map(student => <option key={student.studentId} value={student.studentId}> {student.name + " " + student.surname}</option>)
-
-        setFilteredStudents($filteredStudentsToRender)
-        $courseSelect.value = $courseId
-        $studentsSelect.disabled = false;
-    }   
 
     const getFormValues = () => {
         let $courseSelectValue = document.getElementById("courseSelect").value
@@ -62,12 +48,13 @@ export default function SchoolSelector() {
         debugger;
         let $formValues = getFormValues()
 
-        let $selectedSchool = $formValues[1]
+        let $selectedCourse = $formValues[1]
 
         if ($formValues.includes("empty")) {
             alert.show('Debe elegir cada una de las opciones', {type:'error'})
         } else {
             navigate('/student-selector')
+            set('selectedCourse', $selectedCourse)
         }       
         
     }
@@ -80,7 +67,7 @@ export default function SchoolSelector() {
                 <option value="empty" disabled>Colegios</option>
                 {renderSchools()}
             </select>   
-            <select onChange={getStudents} className="form-select" placeholder='Cursos' id="courseSelect" defaultValue="empty" disabled>
+            <select className="form-select" placeholder='Cursos' id="courseSelect" defaultValue="empty" disabled>
             <option value="empty" disabled>Cursos</option>
             {filteredCourses}
             </select>

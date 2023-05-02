@@ -1,5 +1,19 @@
 import styled from 'styled-components';
 
+export const CenteredContainer = styled.div`
+    display:flex;
+    justify-content:center;
+    align-content:center;
+
+`
+export const DataTableContainer = styled.div`
+    width: 80%;
+    border:2px solid #ccc;
+    padding:2rem;
+    margin:4rem auto;
+
+`
+
 export const Container = styled.div`
     width:100%;
     height:calc(100% - 60px);
@@ -26,6 +40,10 @@ export const ReportButton = styled.div`
     justify-content:center;
     align-items:center;
     border-bottom:1px solid #ccc;
+    background-color:#1674D8;
+    color:#fff;
+    font-size:1.5rem;
+    font-weight:bold;
 `
 
 export const OtherButton = styled.div`
@@ -34,4 +52,8 @@ export const OtherButton = styled.div`
     justify-content:center;
     align-items:center;
     border:1px solid #ccc;
+    background-color:#38A3A5;
+    color:#fff;
+    font-size:1.5rem;
+    font-weight:bold;
 `
