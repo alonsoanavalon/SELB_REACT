@@ -10,46 +10,14 @@ import {
 } from "react-bs-datatable";
 import { useEffect, useState } from "react";
 import axios from 'axios'
-import { get } from "idb-keyval";
+import { get, set } from "idb-keyval";
 import { DataTableContainer, CenteredContainer } from "./style.ts";
+import { useNavigate } from "react-router-dom";
 
-
-const STORY_HEADERS = [
-  {
-    prop: "name",
-    title: "Estudiante",
-    isFilterable: true,
-    isSortable: true
-  },
-  {
-    prop: "surname"
-  },
-  {
-    prop: "rut",
-    title: "Rut"
-  },
-  {
-    prop: "school",
-    title: "Colegio"
-  },
-  {
-    prop: "button",
-    cell: (row) => (
-      <Button
-        variant="outline-primary"
-        size="sm"
-        onClick={() => {
-          alert(`${row.name}'s chart`);
-        }}
-      >
-        Click me
-      </Button>
-    )
-  }
-];
-
-// Then, use it in a component.
 export default function StudentSelector() {
+
+  const navigate = useNavigate()
+
 
   const [students, setStudents] = useState()
 
@@ -65,6 +33,15 @@ export default function StudentSelector() {
 
   }, [])
 
+  const showStudentCharts = (studentRut) => {
+    debugger;
+    set('selectedStudentRut', studentRut)
+    .then((
+      navigate(`/charts/${studentRut}`)
+    ))
+  }
+
+
   return (
     <>
       {
@@ -73,7 +50,37 @@ export default function StudentSelector() {
           <DataTableContainer>
             <DatatableWrapper
               body={students}
-              headers={STORY_HEADERS}
+              headers={[
+                {
+                  prop: "name",
+                  title: "Estudiante",
+                  isFilterable: true,
+                  isSortable: true
+                },
+                {
+                  prop: "surname"
+                },
+                {
+                  prop: "rut",
+                  title: "Rut"
+                },
+                {
+                  prop: "school",
+                  title: "Colegio"
+                },
+                {
+                  prop: "button",
+                  cell: (row) => (
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      onClick={(e) => showStudentCharts(row.rut)}
+                    >
+                      Click me
+                    </Button>
+                  )
+                }
+              ]}
               paginationOptionsProps={{
                 initialState: {
                   rowsPerPage: 10,

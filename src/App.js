@@ -28,7 +28,7 @@ import Desarrollo from './components/Desarrollo';
 import HNF from './pages/Hnf';
 import ReportPanel from './pages/ReportPanel'
 import SchoolSelector from './pages/SchoolSelector';
-import Charts from './pages/Charts';
+import Charts from './pages/charts/Charts';
 import StudentSelector from './pages/StudentSelector';
 
 
@@ -288,7 +288,7 @@ function App() {
           <Route path="/school-selector" element={<SchoolSelector/>}></Route>
           <Route path="/desarrollo" element={<Desarrollo/>}></Route>
           <Route path="/sdq" element={<ParentsForm/>}></Route>
-          <Route path="/charts" element={<Charts/>}></Route>
+          <Route path="/charts/:studentRut" element={<Charts/>}></Route>
           <Route path="/student-selector" element={<StudentSelector/>}></Route>
           <Route path="/aces" element={<Aces/>}></Route>
           <Route path="/corsi" element={<Corsi/>}></Route>
