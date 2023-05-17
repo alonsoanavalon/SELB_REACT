@@ -8,16 +8,6 @@ const [droppables, setDroppables] = useState([
 ]);
 
 
-function getStyle(style, snapshot) {
-    if (!snapshot.isDropAnimating) {
-      return style;
-    }
-    return {
-      ...style,
-      // cannot be 0, but make it super tiny
-      transitionDuration: `0.001s`,
-    };
-  }
 
 const removeItemFromDroppable = (draggableItem, sourceId, droppables) => {
     const selectedItemId = droppables[sourceId].items.indexOf(draggableItem)
@@ -47,25 +37,13 @@ const onDragEnd  = (result, droppables) => {
 
     return(
         <Fragment>
-            <h3 style={{ margin: "2rem"}}>Test en etapa de prueba</h3>
-            <ul>
-                <li>
-                    <a className="btn btn-success" href="/corsi">Corsi</a>
-                </li>
-                <li>
-                    <a className="btn btn-success" href="/hnf">HNF</a>
-                </li>
-                <li>
-                    <a className="btn btn-success" href="/fonologico">Fonologico</a>
-                </li>
-
 
         {
-            droppables.length > 0 &&  <DragDropContext onDragEnd={result => onDragEnd(result, droppables)}>
+            droppables.length > 0 && <div style={{zIndex:1000, backgroundColor:"#fff", border:"1px solid red", position:"absolute", top:"0", height:"100%", width:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}> <DragDropContext onDragEnd={result => onDragEnd(result, droppables)}>
             <div style={{ display: 'flex', borderTop:"4rem solid black", width:"90%", margin:"0 auto" }}>
               {droppables.map(droppable => (
                 <div key={droppable.id} style={{ flex: 1, margin: '8px' }}>
-                  <Droppable droppableId={droppable.id} direction='vertical' verticalAlignment='bottom'>
+                  <Droppable droppableId={droppable.id} direction='vertical' verticalAlignment='bottom' isDropAnimating={false}>
                     {(provided, snapshot) => (
                       <div
                         ref={provided.innerRef}
@@ -120,12 +98,13 @@ const onDragEnd  = (result, droppables) => {
               ))}
             </div>
           </DragDropContext>
+          </div>
         }
 
  
                 
                 
-            </ul>
+      
         </Fragment>
     );
 
