@@ -1375,6 +1375,13 @@ template {
     background-color: #f3f3f7;
   }
 }
+.firstStick {
+  background-image: url("/public/images/stick.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 html {
   background-color: #fff;
 }

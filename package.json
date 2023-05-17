@@ -16,8 +16,11 @@
     "react-alert-template-basic": "^1.0.2",
     "react-alert-template-mui": "^1.0.7",
     "react-audio-player": "^0.17.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.1.1",
     "react-csv": "^2.2.2",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^17.0.2",
     "react-multi-select-component": "^4.2.3",
     "react-pageflip": "^2.0.3",
@@ -55,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-beautiful-dnd": "^13.1.4",
     "axios": "^0.26.0",
     "dotenv-webpack": "^7.1.0",
     "file-saver": "^2.0.5",
