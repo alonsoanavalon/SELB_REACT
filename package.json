@@ -19,8 +19,6 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.1.1",
     "react-csv": "^2.2.2",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^17.0.2",
     "react-multi-select-component": "^4.2.3",
     "react-pageflip": "^2.0.3",
