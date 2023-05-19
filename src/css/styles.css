@@ -1377,9 +1377,23 @@ template {
 }
 .firstStick {
   background-image: url("/public/images/stick.png");
-  background-position: center;
+  background-position: bottom;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 30px 230px;
+}
+
+.secondStick {
+  background-image: url("/public/images/stick.png");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 30px 160px;
+}
+
+.thirdStick {
+  background-image: url("/public/images/stick.png");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 30px 90px;
 }
 
 html {

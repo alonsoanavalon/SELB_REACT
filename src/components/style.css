@@ -1,0 +1,22 @@
+div[data-rbd-placeholder-context-id] {
+    display: none !important;
+    transition: 3s !important;
+}
+
+div[data-rbd-draggable-context-id] {
+    transition: 90000000s !important;
+}
+
+#draggingElement {
+    transition: 0.00001s !important;
+}
+
+#notDraggingElement {
+    transition: 90000000s !important;
+}
+
+#droppingElement {
+    transition: 10  s !important;
+
+}
+
