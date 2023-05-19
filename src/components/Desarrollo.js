@@ -107,7 +107,7 @@ const onDragStart = (result, droppables) => {
                       >
                         <div style={{ transition: 'none !important' }}>
                         {droppable.items.map((item, index) => (
-                          <Draggable key={item} draggableId={item} index={index} isDragDisabled={index === 0 ? false : true} >
+                          <Draggable key={item} draggableId={item} index={index} isDragDisabled={index === 0 ? false : true} shouldRespectForcePress={true}>
                             {(provided, snapshot, key) => {
                                const draggableStyle = getStyle(provided.draggableProps.style, snapshot);
                                return (<div
