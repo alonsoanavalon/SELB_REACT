@@ -7,6 +7,7 @@ import axios from 'axios';
 import { set, get }from 'idb-keyval';
 import { useParams } from 'react-router-dom';
 import { PieContainer } from './style.ts';
+import { GroupedBarChart } from './GroupedBarChart';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -146,7 +147,7 @@ export default function Charts(props) {
           
         }
         {
-          selectedChart == 2 && <>Segundo Gráfico</>
+          selectedChart == 2 && <><GroupedBarChart></GroupedBarChart></>
         }
         {
           selectedChart == 3 && <>Tercer Gráfico</>
