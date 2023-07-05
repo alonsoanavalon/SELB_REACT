@@ -30,6 +30,10 @@ import ReportPanel from './pages/ReportPanel'
 import SchoolSelector from './pages/SchoolSelector';
 import Charts from './pages/charts/Charts';
 import StudentSelector from './pages/StudentSelector';
+import SessionsByCourse from './pages/SessionsByCourse';
+import ActivitiesBySessionAndCourse from './pages/ActivitiesBySessionAndCourse'
+import ExercisesByStudentActivity from './pages/ExercisesByStudentActivity';
+import ActivitiesBySessionAndStudent from './pages/ActivitiesBySessionAndStudent';
 
 
 const cookies = new Cookies();
@@ -295,6 +299,11 @@ function App() {
           <Route path="/hnf" element={<HNF/>}></Route>
           <Route path="/fonologico" element={<Fonologico/>}></Route>
           <Route path="/wally" element={<Wally/>}></Route>
+          <Route path="/sessions/course/:id" element={<SessionsByCourse/>}/>
+          <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse/>}/>
+          <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity/>}/>
+          <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent/>}/>
+
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
       

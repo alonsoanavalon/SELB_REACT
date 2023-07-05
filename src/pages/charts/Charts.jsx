@@ -6,8 +6,7 @@ import SelectChart from './SelectChart';
 import axios from 'axios';
 import { set, get }from 'idb-keyval';
 import { useParams } from 'react-router-dom';
-import { PieContainer } from './style.ts';
-import { GroupedBarChart } from './GroupedBarChart';
+import { PieContainer } from './style.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -28,7 +27,7 @@ export default function Charts(props) {
     if (selectedChart) {
       if (selectedChart == 1) {
 
-        const url = `http://localhost:8000/api/chart/student/${studentRut}`
+        const url = `http://164.92.71.11:8000/api/chart/student/${studentRut}`
         axios(url)
         .then(res => {
           ; 
@@ -39,11 +38,12 @@ export default function Charts(props) {
       }
     }
   }, [selectedChart, setStudentData])
+  
 
-  const groupDataByActivity = useCallback(() => {
+  const groupDataByActivity = useCallback((studentData) => {
 
     if (studentData) {
-      ;
+      
       const allActivities = studentData.map((exercise) => exercise.activity_id)
       const activities = new Set(allActivities);
   
@@ -62,55 +62,60 @@ export default function Charts(props) {
 
   }, [studentData])
 
+
+  const setChartDataByActivity = useCallback((studentData) => {
+    //agrupa por actividad
+    const groupedDataByActivity = groupDataByActivity(studentData);
+    //parsea, es decir, transforma a 1 o 0
+    const parsedDataByActivity = groupedDataByActivity.map((activity) => {
+      let completedExercises = 0;
+      let failedExercises = 0;
+      activity.exercises.forEach((exercise) => {
+        //Esto debe contar cuanto es nulo como malo o no? preguntar.
+        if (exercise.result == 0 || exercise.result == null) {
+          failedExercises++;
+        } else if (exercise.result == 1) {
+          completedExercises++;
+        }
+      })
+      return {...activity, completedExercises, failedExercises};
+    })
+
+    //devolvemos, labels y datasets con la data correspondiente.
+    return parsedDataByActivity.map((parsedDataActivity) => {
+      return {
+        activityId: parsedDataActivity.activity_id,
+        chartData: {
+          labels: ['Logrado', 'No Logrado'],
+          datasets: [
+            {
+              label: 'Ensayos Logrados y No Logrados',
+              data: [parsedDataActivity.completedExercises, parsedDataActivity.failedExercises],
+              backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+              ],
+              borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+              ],
+              borderWidth: 1,
+            },
+          ],
+        }
+      }
+    })
+
+  }, [])
+
+
   useEffect(() =>{
 
     if (studentData && selectedChart) {
       if (selectedChart == 1) {
 
-        const groupedDataByActivity = groupDataByActivity();
-        const parsedDataByActivity = groupedDataByActivity.map((activity) => {
-          let completedExercises = 0;
-          let failedExercises = 0;
-          activity.exercises.forEach((exercise) => {
-            //Esto debe contar cuanto es nulo como malo o no? preguntar.
-            if (exercise.result == 0 || exercise.result == null) {
-              failedExercises++;
-            } else if (exercise.result == 1) {
-              completedExercises++;
-            }
-          })
-          return {...activity, completedExercises, failedExercises};
-        })
+        const chartDataByActivity = setChartDataByActivity(studentData);
 
-        const chartDataByActivity = parsedDataByActivity.map((parsedDataActivity) => {
-          return {
-            activityId: parsedDataActivity.activity_id,
-            chartData: {
-              labels: ['Logrado', 'No Logrado'],
-              datasets: [
-                {
-                  label: 'Ensayos Logrados y No Logrados',
-                  data: [parsedDataActivity.completedExercises, parsedDataActivity.failedExercises],
-                  backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-
-            
-                  ],
-                  borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 99, 132, 1)',
-
-                  ],
-                  borderWidth: 1,
-                },
-              ],
-            }
-            }
-
-        })
-
-        debugger;
         setChartData(chartDataByActivity)
 
       }
@@ -136,9 +141,12 @@ export default function Charts(props) {
         {
           (selectedChart == 1 && chartData.length > 0) && <PieContainer>
             {
-              chartData.map((data) => 
+              chartData.map((data) =>{
+     
+                return <PieChart data={data} />
+              } 
               
-                <PieChart data={data} />
+
              
               )
             }
@@ -147,7 +155,7 @@ export default function Charts(props) {
           
         }
         {
-          selectedChart == 2 && <><GroupedBarChart></GroupedBarChart></>
+          selectedChart == 2 && <></>
         }
         {
           selectedChart == 3 && <>Tercer Gráfico</>

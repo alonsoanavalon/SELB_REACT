@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import Swal from 'sweetalert2'
-import { ReportPanelContainer, ReportButton, OtherButton, Container } from './style.ts';
+import { ReportPanelContainer, ReportButton, OtherButton, Container } from './style.js';
 export default function ReportPanel () {
 
     const openReports = () => {

@@ -84,7 +84,6 @@ export default function AppleCounter (props) {
         instrumentInfo['instrument'] = parseInt(allInstruments[0]['instrument'].value)
 
         choicesArray.push(choices)
-        debugger;
         try {
         await get('backupTest')
         .then(response => {

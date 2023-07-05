@@ -4,11 +4,24 @@ export const CenteredContainer = styled.div`
     display:flex;
     justify-content:center;
     align-content:center;
+    border:1px solid #ccc;
+    width:90%;
+    margin:1rem auto;
 
+
+`
+
+export const SinglePie = styled.div`
+   display:flex;
+   flex-direction:column;
+   gap:1rem;
+   margin-top:4rem;
+    justify-content:center;
+    align-items: center;
+    width:35%;
 `
 export const DataTableContainer = styled.div`
     width: 80%;
-    border:2px solid #ccc;
     padding:2rem;
     margin:4rem auto;
 
@@ -56,4 +69,11 @@ export const OtherButton = styled.div`
     color:#fff;
     font-size:1.5rem;
     font-weight:bold;
+`
+
+export const GroupedChartWrapper = styled.div`
+    border:1px solid #ccc;
+    width:48%;
+    height:48%;
+    padding:.5rem;
 `
