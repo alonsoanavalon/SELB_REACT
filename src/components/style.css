@@ -16,7 +16,7 @@ div[data-rbd-draggable-context-id] {
 }
 
 #droppingElement {
-    transition: 10  s !important;
+    transition: 10s !important;
 
 }
 

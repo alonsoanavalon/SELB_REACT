@@ -50,21 +50,19 @@ const freezeDraggables = (draggables, selectedDraggable) => {
 }
 
 
-const onDragEnd  = (result, droppables) => {
+const onDragEnd = (result, droppables) => {
     const sourceId = result.source.droppableId;
-    debugger;
     const destinationId = result.destination.droppableId;
     const itemId = result.draggableId;
     const updatedDroppables = updateDroppables(itemId, sourceId, destinationId, droppables)
     setDroppables(updatedDroppables);
+    
     const draggables = document.querySelectorAll('div[data-rbd-draggable-context-id]');
     draggables.forEach((draggable) => {
       if (draggable.innerHTML == itemId) {
         draggable.setAttribute('id', 'droppingElement')
-        debugger;
       }
     })
-    debugger;
 };
 
 
@@ -73,10 +71,6 @@ const onDragStart = (result, droppables) => {
   freezeDraggables(draggables, result.draggableId);
   const sourceId = result.source.droppableId;
 }
-
-
-
-
 
     return(
         <Fragment>
@@ -95,7 +89,6 @@ const onDragStart = (result, droppables) => {
                           width:"50px",
                           margin:"0 auto",
                           paddingTop: droppable.items.length == 1 ? `calc(66px * 2)`: droppable.items.length === 2 ? `calc(66px * 1)` : droppable.items.length == 3 ? `0` : 0, 
-                      
                           marginBottom:"-0.3rem",
                           display:"flex",
                           flexDirection:"column",
@@ -127,12 +120,7 @@ const onDragStart = (result, droppables) => {
                                   background: item === "Item 1" ? '#3e98eb' : item === "Item 2" ? '#f34a4a': item === 'Item 3' ? '#f0f019' : 'white',
                                   color:"transparent",
                                   transform: "none!important",
-                                  
-                                  
-
-                                  
                                   ...provided.draggableProps.style
-                                  
                                 }}
                               >
                                 {item}  
@@ -140,7 +128,6 @@ const onDragStart = (result, droppables) => {
                             }}
                           </Draggable>
                         ))}
-                
                         </div>
                         {provided.placeholder}
                       </div>
@@ -152,9 +139,6 @@ const onDragStart = (result, droppables) => {
           </DragDropContext>
           </div>
         }
-
- 
-      
         </Fragment>
     );
 
