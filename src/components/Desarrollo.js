@@ -1,16 +1,15 @@
 import { useState, Fragment, useCallback, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './style.css';
-import LondonTowerStick from './LondonTowerStick';
 export default function Desarrollo(){
 
 const [droppables, setDroppables] = useState([
     { id: '0', items: ['Item 1', 'Item 2', 'Item 3'] }, { id: '1', items: [] }, { id: '2', items: [] }
 ]);
 
-const [firstDroppable, setFirstDroppable] =  { id: '0', items: ['Item 1', 'Item 2', 'Item 3'] }
-const [secondDroppable, setSecondDroppable] = { id: '1', items: [] }
-const [thirdDroppable, setThirdDroppable] = { id: '2', items: [] }
+const [firstDroppable, setFirstDroppable] =  useState({ id: '0', items: ['Item 1', 'Item 2', 'Item 3'] })
+const [secondDroppable, setSecondDroppable] = useState({ id: '1', items: [] })
+const [thirdDroppable, setThirdDroppable] = useState({ id: '2', items: [] })
 
 function getStyle(style, snapshot) {
   if (!snapshot.isDropAnimating) {
@@ -29,21 +28,60 @@ function getStyle(style, snapshot) {
 // sino que tendrá que haber una validacion, si la destinacion id = 0 seria fist stick id = 1 seria 2ndo stick
 // ya que la idea es separar en estados diferentes los stick
 
-const STICK = {
+const STICKS = {
   FIRST_STICK: 0,
   SECOND_STICK: 1,
   THIRD_STICK: 2
 }
 
 const removeItemFromDroppable = (draggableItem, sourceId, droppables) => {
-    const selectedItemId = droppables[sourceId].items.indexOf(draggableItem)
-    droppables[sourceId].items.splice(selectedItemId , 1)
-    return droppables;
+  debugger;
+    if (sourceId == STICKS.FIRST_STICK) {
+      const droppableItems = firstDroppable.items;
+      const selectedItemId = droppableItems.indexOf(draggableItem);
+      const updatedValue = firstDroppable.items.splice(selectedItemId, 1)
+      setFirstDroppable(prevValue => prevValue.items.splice(selectedItemId, 1));
+      return [updatedValue, secondDroppable, thirdDroppable];
+    } 
+
+    if (sourceId == STICKS.SECOND_STICK) {
+      const droppableItems = secondDroppable.items;
+      const selectedItemId = droppableItems.indexOf(draggableItem);
+      const updatedValue = secondDroppable.items.splice(selectedItemId, 1)
+      setSecondDroppable(prevValue => prevValue.items.splice(selectedItemId, 1));
+      return [firstDroppable, updatedValue, thirdDroppable];
+    }
+
+    if (sourceId == STICKS.THIRD_STICK) {
+      const droppableItems = thirdDroppable.items;
+      const selectedItemId = droppableItems.indexOf(draggableItem);
+      const updatedValue = thirdDroppable.items.splice(selectedItemId, 1);
+      setThirdDroppable(prevValue => prevValue.items.splice(selectedItemId, 1));
+      return [firstDroppable, secondDroppable, updatedValue];
+    }
+
 }
 
 const addItemToDroppable = (draggableItem, destinationId, droppables) => {
-    droppables[destinationId].items.unshift(draggableItem)
-    return droppables;
+
+debugger;
+    if (destinationId == STICKS.FIRST_STICK) {
+      const updatedDroppable = firstDroppable.items.unshift(draggableItem)
+      setFirstDroppable(prevValue => prevValue.items.unshift(draggableItem));
+      return [updatedDroppable, secondDroppable, thirdDroppable]
+    } 
+
+    if (destinationId == STICKS.SECOND_STICK) {
+      const updatedDroppable = secondDroppable.items.unshift(draggableItem)
+      setSecondDroppable(prevValue => prevValue.items.unshift(draggableItem));
+      return [firstDroppable, updatedDroppable, thirdDroppable]
+    }
+
+    if (destinationId == STICKS.THIRD_STICK) {
+      const updatedDroppable = thirdDroppable.items.unshift(draggableItem)
+      setThirdDroppable(prevValue => prevValue.items.unshift(draggableItem));
+      return [firstDroppable, secondDroppable, updatedDroppable]
+    }
 }
 
 const updateDroppables = (draggableItem, sourceId, destinationId, droppables) => {
@@ -52,8 +90,7 @@ const updateDroppables = (draggableItem, sourceId, destinationId, droppables) =>
     return droppables;
 }
 
-const freezeDraggables = (draggables, selectedDraggable) => {
-  
+const freezeInactiveDraggablesWhileDragging = (draggables, selectedDraggable) => {
   draggables.forEach((draggable) => {
     if (draggable.innerHTML !== selectedDraggable) {
       draggable.setAttribute('id', 'notDraggingElement')
@@ -70,21 +107,12 @@ const onDragEnd = (result, droppables) => {
     const itemId = result.draggableId;
     const updatedDroppables = updateDroppables(itemId, sourceId, destinationId, droppables)
     setDroppables(updatedDroppables);
-
-    const draggables = document.querySelectorAll('div[data-rbd-draggable-context-id]');
-    draggables.forEach((draggable) => {
-      if (draggable.innerHTML == itemId) {
-        draggable.setAttribute('id', 'droppingElement')
-      }
-    })
-
-    //definir
 };
 
 
 const onDragStart = (result, droppables) => {
   const draggables = document.querySelectorAll('div[data-rbd-draggable-context-id]');
-  freezeDraggables(draggables, result.draggableId);
+  freezeInactiveDraggablesWhileDragging(draggables, result.draggableId);
   const sourceId = result.source.droppableId;
 }
 
