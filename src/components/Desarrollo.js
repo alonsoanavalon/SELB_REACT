@@ -1,6 +1,6 @@
-import { useState, Fragment, useCallback, useEffect } from 'react'
+import { useState, Fragment } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import './  style.css';
+import './style.css';
 export default function Desarrollo(){
 
 const [droppables, setDroppables] = useState([
@@ -15,16 +15,11 @@ function getStyle(style, snapshot) {
   }
   return {
     ...style,
-    // cannot be 0, but make it super tiny
     transitionDuration: `1000s`,
     transform: "none !important",
  
   };
 }
-
-//tendre que cambiar las destinaciones por id, ya no se sacaran directamente desde droppables
-// sino que tendrá que haber una validacion, si la destinacion id = 0 seria fist stick id = 1 seria 2ndo stick
-// ya que la idea es separar en estados diferentes los stick
 
 const STICKS = {
   FIRST_STICK: 0,
@@ -47,13 +42,12 @@ const exchangeDroppables = (draggableItem, sourceId, destinationId, droppables) 
   const destinationItem = droppables[destinationId].items[0];
   const sourceItem = draggableItem;
 
-  debugger;
-
- 
   removeItemFromDroppable(sourceId, droppables)
   removeItemFromDroppable(destinationId, droppables)
   addItemToDroppable(sourceItem, destinationId, droppables)
   if (destinationItem !== undefined) {
+    //Si no existe un item en el droppable de destino no lo agregaremos en el de origen
+    //si no se agregaba un circulo blanco por el undefined
     addItemToDroppable(destinationItem, sourceId, droppables)
   }
 
@@ -64,8 +58,10 @@ const exchangeDroppables = (draggableItem, sourceId, destinationId, droppables) 
 const updateDroppables = (draggableItem, sourceId, destinationId, droppables) => {
 
   if (sourceId === destinationId) {
+    //si el destino es el mismo droppable no se hace nada.
     return droppables;
   }
+  //Si es el 3ero o el 2ndo tienen limites, si lo alcanzan se hace el intercambio de fichas
   if (destinationId == STICKS.THIRD_STICK ) {
     return exchangeDroppables(draggableItem, sourceId, destinationId, droppables)
   } 
@@ -73,6 +69,7 @@ const updateDroppables = (draggableItem, sourceId, destinationId, droppables) =>
     return exchangeDroppables(draggableItem, sourceId, destinationId, droppables)
   }
 
+  //la primera vara tiene como limite el total de fichas.
   removeItemFromDroppable(sourceId, droppables);
   addItemToDroppable(draggableItem, destinationId, droppables);
   return droppables;
@@ -88,7 +85,6 @@ const freezeInactiveDraggablesWhileDragging = (draggables, selectedDraggable) =>
   })
 }
 
-
 const onDragEnd = (result, droppables) => {
     const sourceId = result.source.droppableId;
     const destinationId = result.destination.droppableId;
@@ -97,16 +93,13 @@ const onDragEnd = (result, droppables) => {
     setDroppables(updatedDroppables);
 };
 
-
-const onDragStart = (result, droppables) => {
+const onDragStart = (result) => {
   const draggables = document.querySelectorAll('div[data-rbd-draggable-context-id]');
   freezeInactiveDraggablesWhileDragging(draggables, result.draggableId);
-  const sourceId = result.source.droppableId;
 }
 
     return(
         <Fragment>
-
         {
             droppables.length > 0 && 
             <div style={{transform: "none!important", zIndex:1000, backgroundColor:"#fff", border:"1px solid red", position:"absolute", top:"0", height:"100%", width:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}> <DragDropContext  onDragStart={result => onDragStart(result, droppables)} onDragEnd={result => onDragEnd(result, droppables)} >
