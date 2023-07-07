@@ -1,15 +1,13 @@
 import { useState, Fragment, useCallback, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import './style.css';
+import './  style.css';
 export default function Desarrollo(){
 
 const [droppables, setDroppables] = useState([
-    { id: '0', items: ['Item 1', 'Item 2', 'Item 3'] }, { id: '1', items: [] }, { id: '2', items: [] }
+    { id: '0', items: ['Item 1'] }, 
+    { id: '1', items: ['Item 2'] }, 
+    { id: '2', items: ['Item 3'] }
 ]);
-
-const [firstDroppable, setFirstDroppable] =  useState({ id: '0', items: ['Item 1', 'Item 2', 'Item 3'] })
-const [secondDroppable, setSecondDroppable] = useState({ id: '1', items: [] })
-const [thirdDroppable, setThirdDroppable] = useState({ id: '2', items: [] })
 
 function getStyle(style, snapshot) {
   if (!snapshot.isDropAnimating) {
@@ -34,60 +32,50 @@ const STICKS = {
   THIRD_STICK: 2
 }
 
-const removeItemFromDroppable = (draggableItem, sourceId, droppables) => {
-  debugger;
-    if (sourceId == STICKS.FIRST_STICK) {
-      const droppableItems = firstDroppable.items;
-      const selectedItemId = droppableItems.indexOf(draggableItem);
-      const updatedValue = firstDroppable.items.splice(selectedItemId, 1)
-      setFirstDroppable(prevValue => prevValue.items.splice(selectedItemId, 1));
-      return [updatedValue, secondDroppable, thirdDroppable];
-    } 
-
-    if (sourceId == STICKS.SECOND_STICK) {
-      const droppableItems = secondDroppable.items;
-      const selectedItemId = droppableItems.indexOf(draggableItem);
-      const updatedValue = secondDroppable.items.splice(selectedItemId, 1)
-      setSecondDroppable(prevValue => prevValue.items.splice(selectedItemId, 1));
-      return [firstDroppable, updatedValue, thirdDroppable];
-    }
-
-    if (sourceId == STICKS.THIRD_STICK) {
-      const droppableItems = thirdDroppable.items;
-      const selectedItemId = droppableItems.indexOf(draggableItem);
-      const updatedValue = thirdDroppable.items.splice(selectedItemId, 1);
-      setThirdDroppable(prevValue => prevValue.items.splice(selectedItemId, 1));
-      return [firstDroppable, secondDroppable, updatedValue];
-    }
-
+const removeItemFromDroppable = (sourceId, droppables) => {
+  droppables[sourceId].items.splice(0 , 1)
+  return droppables;
 }
 
 const addItemToDroppable = (draggableItem, destinationId, droppables) => {
+  droppables[destinationId].items.unshift(draggableItem)
+  return droppables;
+}
 
-debugger;
-    if (destinationId == STICKS.FIRST_STICK) {
-      const updatedDroppable = firstDroppable.items.unshift(draggableItem)
-      setFirstDroppable(prevValue => prevValue.items.unshift(draggableItem));
-      return [updatedDroppable, secondDroppable, thirdDroppable]
-    } 
+const exchangeDroppables = (draggableItem, sourceId, destinationId, droppables) => {
 
-    if (destinationId == STICKS.SECOND_STICK) {
-      const updatedDroppable = secondDroppable.items.unshift(draggableItem)
-      setSecondDroppable(prevValue => prevValue.items.unshift(draggableItem));
-      return [firstDroppable, updatedDroppable, thirdDroppable]
-    }
+  const destinationItem = droppables[destinationId].items[0];
+  const sourceItem = draggableItem;
 
-    if (destinationId == STICKS.THIRD_STICK) {
-      const updatedDroppable = thirdDroppable.items.unshift(draggableItem)
-      setThirdDroppable(prevValue => prevValue.items.unshift(draggableItem));
-      return [firstDroppable, secondDroppable, updatedDroppable]
-    }
+  debugger;
+
+ 
+  removeItemFromDroppable(sourceId, droppables)
+  removeItemFromDroppable(destinationId, droppables)
+  addItemToDroppable(sourceItem, destinationId, droppables)
+  if (destinationItem !== undefined) {
+    addItemToDroppable(destinationItem, sourceId, droppables)
+  }
+
+  return droppables;
+
 }
 
 const updateDroppables = (draggableItem, sourceId, destinationId, droppables) => {
-    removeItemFromDroppable(draggableItem, sourceId, droppables);
-    addItemToDroppable(draggableItem, destinationId, droppables);
+
+  if (sourceId === destinationId) {
     return droppables;
+  }
+  if (destinationId == STICKS.THIRD_STICK ) {
+    return exchangeDroppables(draggableItem, sourceId, destinationId, droppables)
+  } 
+  if (destinationId == STICKS.SECOND_STICK && droppables[STICKS.SECOND_STICK].items.length >= 2) {
+    return exchangeDroppables(draggableItem, sourceId, destinationId, droppables)
+  }
+
+  removeItemFromDroppable(sourceId, droppables);
+  addItemToDroppable(draggableItem, destinationId, droppables);
+  return droppables;
 }
 
 const freezeInactiveDraggablesWhileDragging = (draggables, selectedDraggable) => {
