@@ -1,11 +1,16 @@
 import { useState, Fragment, useCallback, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './style.css';
+import LondonTowerStick from './LondonTowerStick';
 export default function Desarrollo(){
 
 const [droppables, setDroppables] = useState([
     { id: '0', items: ['Item 1', 'Item 2', 'Item 3'] }, { id: '1', items: [] }, { id: '2', items: [] }
 ]);
+
+const [firstDroppable, setFirstDroppable] =  { id: '0', items: ['Item 1', 'Item 2', 'Item 3'] }
+const [secondDroppable, setSecondDroppable] = { id: '1', items: [] }
+const [thirdDroppable, setThirdDroppable] = { id: '2', items: [] }
 
 function getStyle(style, snapshot) {
   if (!snapshot.isDropAnimating) {
@@ -20,6 +25,15 @@ function getStyle(style, snapshot) {
   };
 }
 
+//tendre que cambiar las destinaciones por id, ya no se sacaran directamente desde droppables
+// sino que tendrá que haber una validacion, si la destinacion id = 0 seria fist stick id = 1 seria 2ndo stick
+// ya que la idea es separar en estados diferentes los stick
+
+const STICK = {
+  FIRST_STICK: 0,
+  SECOND_STICK: 1,
+  THIRD_STICK: 2
+}
 
 const removeItemFromDroppable = (draggableItem, sourceId, droppables) => {
     const selectedItemId = droppables[sourceId].items.indexOf(draggableItem)
@@ -56,13 +70,15 @@ const onDragEnd = (result, droppables) => {
     const itemId = result.draggableId;
     const updatedDroppables = updateDroppables(itemId, sourceId, destinationId, droppables)
     setDroppables(updatedDroppables);
-    
+
     const draggables = document.querySelectorAll('div[data-rbd-draggable-context-id]');
     draggables.forEach((draggable) => {
       if (draggable.innerHTML == itemId) {
         draggable.setAttribute('id', 'droppingElement')
       }
     })
+
+    //definir
 };
 
 
@@ -76,69 +92,180 @@ const onDragStart = (result, droppables) => {
         <Fragment>
 
         {
-            droppables.length > 0 && <div style={{transform: "none!important", zIndex:1000, backgroundColor:"#fff", border:"1px solid red", position:"absolute", top:"0", height:"100%", width:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}> <DragDropContext  onDragStart={result => onDragStart(result, droppables)} onDragEnd={result => onDragEnd(result, droppables)} >
-            <div style={{ display: 'flex', borderBottom:"1.5rem solid black", width:"90%", margin:"0 auto", justifyContent: "space-evenly" }}>
-              {droppables.map(droppable => (
-                <div key={droppable.id} style={{ width:"100px", margin: '8px' , display:"flex", justifyContent:"space-around"}}>
-                  <Droppable  droppableId={droppable.id}  verticalAlignment='bottom'  isDropAnimating={false} reta={true} ignoreContainerClipping >
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        style={{
-                          height:"280px",
-                          width:"50px",
-                          margin:"0 auto",
-                          paddingTop: droppable.items.length == 1 ? `calc(66px * 2)`: droppable.items.length === 2 ? `calc(66px * 1)` : droppable.items.length == 3 ? `0` : 0, 
-                          marginBottom:"-0.3rem",
-                          display:"flex",
-                          flexDirection:"column",
-                          justifyContent:"end",
-        
-                        }}
-                        className={droppable.id == 0 ? 'firstStick' : droppable.id == 1 ? 'secondStick' : droppable.id == 2 ? 'thirdStick' : '' }
-                        {...provided.droppableProps}
-                      >
-                        <div style={{ transition: 'none !important' }}>
-                        {droppable.items.map((item, index) => (
-                          <Draggable key={item} draggableId={item} index={index} isDragDisabled={index === 0 ? false : true} shouldRespectForcePress={true}>
-                            {(provided, snapshot, key) => {
-                               const draggableStyle = getStyle(provided.draggableProps.style, snapshot);
-                               return (<div
-                               
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                
-                                style={{
-                                  ...draggableStyle,
-                                  userSelect: 'none',
-                                  padding: '8px',
-                                  height:'50px',
-                                  width:'50px',
-                                  borderRadius:'50%',
-                                  margin:'1rem auto',
-                                  background: item === "Item 1" ? '#3e98eb' : item === "Item 2" ? '#f34a4a': item === 'Item 3' ? '#f0f019' : 'white',
-                                  color:"transparent",
-                                  transform: "none!important",
-                                  ...provided.draggableProps.style
-                                }}
-                              >
-                                {item}  
-                              </div>)
-                            }}
-                          </Draggable>
-                        ))}
-                        </div>
-                        {provided.placeholder}
-                      </div>
-                    )}
-                  </Droppable>
+            droppables.length > 0 && 
+            <div style={{transform: "none!important", zIndex:1000, backgroundColor:"#fff", border:"1px solid red", position:"absolute", top:"0", height:"100%", width:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}> <DragDropContext  onDragStart={result => onDragStart(result, droppables)} onDragEnd={result => onDragEnd(result, droppables)} >
+              <div style={{ display: 'flex', borderBottom:"1.5rem solid black", width:"90%", margin:"0 auto", justifyContent: "space-evenly" }}>
+                <div key={droppables[0]} style={{ width:"100px", margin: '8px' , display:"flex", justifyContent:"space-around"}}>
+                            <Droppable  droppableId={droppables[0].id}  verticalAlignment='bottom'  isDropAnimating={false} reta={true} ignoreContainerClipping >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  style={{
+                                    height:"280px",
+                                    width:"50px",
+                                    margin:"0 auto",
+                                    paddingTop: droppables[0].items.length == 1 ? `calc(66px * 2)`: droppables[0].items.length === 2 ? `calc(66px * 1)` : droppables[0].items.length == 3 ? `0` : 0, 
+                                    marginBottom:"-0.3rem",
+                                    display:"flex",
+                                    flexDirection:"column",
+                                    justifyContent:"end",
+                  
+                                  }}
+                                  className={'firstStick'}
+                                  {...provided.droppableProps}
+                                >
+                                  <div style={{ transition: 'none !important' }}>
+                                  {droppables[0].items.map((item, index) => (
+                                    <Draggable key={item} draggableId={item} index={index} isDragDisabled={index === 0 ? false : true} shouldRespectForcePress={true}>
+                                      {(provided, snapshot, key) => {
+                                        const draggableStyle = getStyle(provided.draggableProps.style, snapshot);
+                                        return (<div
+                                        
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          
+                                          style={{
+                                            ...draggableStyle,
+                                            userSelect: 'none',
+                                            padding: '8px',
+                                            height:'50px',
+                                            width:'50px',
+                                            borderRadius:'50%',
+                                            margin:'1rem auto',
+                                            background: item === "Item 1" ? '#3e98eb' : item === "Item 2" ? '#f34a4a': item === 'Item 3' ? '#f0f019' : 'white',
+                                            color:"transparent",
+                                            transform: "none!important",
+                                            ...provided.draggableProps.style
+                                          }}
+                                        >
+                                          {item}  
+                                        </div>)
+                                      }}
+                                    </Draggable>
+                                  ))}
+                                  </div>
+                                  {provided.placeholder}
+                                </div>
+                              )}
+                            </Droppable>
                 </div>
-              ))}
-            </div>
+                <div key={droppables[1]} style={{ width:"100px", margin: '8px' , display:"flex", justifyContent:"space-around"}}>
+                            <Droppable  droppableId={droppables[1].id}  verticalAlignment='bottom'  isDropAnimating={false} reta={true} ignoreContainerClipping >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  style={{
+                                    height:"280px",
+                                    width:"50px",
+                                    margin:"0 auto",
+                                    paddingTop: droppables[1].items.length == 1 ? `calc(66px * 2)`: droppables[1].items.length === 2 ? `calc(66px * 1)` : droppables[1].items.length == 3 ? `0` : 0, 
+                                    marginBottom:"-0.3rem",
+                                    display:"flex",
+                                    flexDirection:"column",
+                                    justifyContent:"end",
+                  
+                                  }}
+                                  className={'secondStick'}
+                                  {...provided.droppableProps}
+                                >
+                                  <div style={{ transition: 'none !important' }}>
+                                  {droppables[1].items.map((item, index) => (
+                                    <Draggable key={item} draggableId={item} index={index} isDragDisabled={index === 0 ? false : true} shouldRespectForcePress={true}>
+                                      {(provided, snapshot, key) => {
+                                        const draggableStyle = getStyle(provided.draggableProps.style, snapshot);
+                                        return (<div
+                                        
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          
+                                          style={{
+                                            ...draggableStyle,
+                                            userSelect: 'none',
+                                            padding: '8px',
+                                            height:'50px',
+                                            width:'50px',
+                                            borderRadius:'50%',
+                                            margin:'1rem auto',
+                                            background: item === "Item 1" ? '#3e98eb' : item === "Item 2" ? '#f34a4a': item === 'Item 3' ? '#f0f019' : 'white',
+                                            color:"transparent",
+                                            transform: "none!important",
+                                            ...provided.draggableProps.style
+                                          }}
+                                        >
+                                          {item}  
+                                        </div>)
+                                      }}
+                                    </Draggable>
+                                  ))}
+                                  </div>
+                                  {provided.placeholder}
+                                </div>
+                              )}
+                            </Droppable>
+                </div>
+                <div key={droppables[2]} style={{ width:"100px", margin: '8px' , display:"flex", justifyContent:"space-around"}}>
+                            <Droppable max={1}droppableId={droppables[2].id}  verticalAlignment='bottom'  isDropAnimating={false} reta={true} ignoreContainerClipping >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  style={{
+                                    height:"280px",
+                                    width:"50px",
+                                    margin:"0 auto",
+                                    paddingTop: droppables[2].items.length == 1 ? `calc(66px * 2)`: droppables[2].items.length === 2 ? `calc(66px * 1)` : droppables[2].items.length == 3 ? `0` : 0, 
+                                    marginBottom:"-0.3rem",
+                                    display:"flex",
+                                    flexDirection:"column",
+                                    justifyContent:"end",
+                  
+                                  }}
+                                  className={'thirdStick'}
+                                  {...provided.droppableProps}
+                                >
+                                  <div style={{ transition: 'none !important' }}>
+                                  {droppables[2].items.map((item, index) => (
+                                    <Draggable key={item} draggableId={item} index={index} isDragDisabled={index === 0 ? false : true} shouldRespectForcePress={true}>
+                                      {(provided, snapshot, key) => {
+                                        const draggableStyle = getStyle(provided.draggableProps.style, snapshot);
+                                        return (<div
+                                        
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          
+                                          style={{
+                                            ...draggableStyle,
+                                            userSelect: 'none',
+                                            padding: '8px',
+                                            height:'50px',
+                                            width:'50px',
+                                            borderRadius:'50%',
+                                            margin:'1rem auto',
+                                            background: item === "Item 1" ? '#3e98eb' : item === "Item 2" ? '#f34a4a': item === 'Item 3' ? '#f0f019' : 'white',
+                                            color:"transparent",
+                                            transform: "none!important",
+                                            ...provided.draggableProps.style
+                                          }}
+                                        >
+                                          {item}  
+                                        </div>)
+                                      }}
+                                    </Draggable>
+                                  ))}
+                                  </div>
+                                  {provided.placeholder}
+                                </div>
+                              )}
+                            </Droppable>
+                </div>
+              </div>
           </DragDropContext>
           </div>
         }
+
+
         </Fragment>
     );
 
