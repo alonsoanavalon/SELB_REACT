@@ -50,32 +50,32 @@ function App() {
     }
   }
 
-  function postDataInDatabase () {
-    if(navigator.onLine) {
-      console.log("Ahora vamos a guardar los datos")
-      get('newUsers')
-      .then(users => {
+  // function postDataInDatabase () {
+  //   if(navigator.onLine) {
+  //     console.log("Ahora vamos a guardar los datos")
+  //     get('newUsers')
+  //     .then(users => {
       
-        if (users) {
-          console.log("guardando")
-          fetch("https://selb.bond/test", {
-            method : 'POST',
-            headers : {'Content-Type':'application/json'},
-            body: JSON.stringify(users) 
-          })
-          del('newUsers')
-        } else {
-          console.log("no hay nada q guardar")
-        }
+  //       if (users) {
+  //         console.log("guardando")
+  //         fetch("https://selb.bond/test", {
+  //           method : 'POST',
+  //           headers : {'Content-Type':'application/json'},
+  //           body: JSON.stringify(users) 
+  //         })
+  //         del('newUsers')
+  //       } else {
+  //         console.log("no hay nada q guardar")
+  //       }
 
-      })
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+  //     })
+  //     .then(res => console.log(res))
+  //     .catch(err => console.log(err))
 
-    } else {
-      console.log("Ahora no vamos a guardar los datos, navegador offline")
-    }
-  }
+  //   } else {
+  //     console.log("Ahora no vamos a guardar los datos, navegador offline")
+  //   }
+  // }
 
 
 
@@ -88,7 +88,6 @@ function App() {
       setIsLogged(true)
     }
 
-    postDataInDatabase()
     getData('instruments')
     getData('moments')
     getData('schools')

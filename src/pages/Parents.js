@@ -76,7 +76,7 @@ export default function Parents() {
     return (
         <Fragment>
             <div className="sdq-form-container">
-            <h2 class="h2 text-center p-4">Formulario apoderados</h2>
+            <h2 className="h2 text-center p-4">Formulario apoderados</h2>
             <select onChange={getCourses}className="form-select" placeholder='Colegios' id="schoolSelect" defaultValue="empty">
                 <option value="empty" disabled>Colegios</option>
                 {renderSchools()}

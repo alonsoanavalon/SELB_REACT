@@ -232,8 +232,6 @@ export default function HomePage() {
 
 
 
-  savedTejasTests === undefined ? console.log("Ta indefinido", savedTejasTests) : console.log("Ta definido", savedTejasTests, savedTejasTests.length)
-
   function sendNewInstrument() {
 
     get('completedTests')

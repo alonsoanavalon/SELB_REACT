@@ -329,7 +329,7 @@ document.onmousemove = function (e) {
         </SwiperSlide>
 
         <SwiperSlide>
-        <h5 class="game-title">Coloca UNA ficha aquí</h5>
+        <h5 className="game-title">Coloca UNA ficha aquí</h5>
         <div className='containerBox'>
 
             <div className='pieces-container'>

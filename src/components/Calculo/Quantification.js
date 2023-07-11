@@ -178,7 +178,7 @@ export default function Quantification (props) {
 
     return (
         <Fragment>
-            <h5 class="game-title">{props.title}</h5>
+            <h5 className="game-title">{props.title}</h5>
             <div className='containerBox'>
 
 

@@ -74,8 +74,8 @@ export default function Excel () {
         <Fragment>
     
             { moments.length > 0 &&
-             <table class="table table-moments">
-             <thead class="thead-dark">
+             <table className="table table-moments">
+             <thead className="thead-dark">
              <h2>Momentos</h2>
                  <tr>
       
@@ -94,7 +94,7 @@ export default function Excel () {
                  )}
 
              </tbody>
-             <input class="btn btn-primary mt-" id="moment-btn" onClick={generateNewMoment} type="submit" value="Crear momento" />
+             <input className="btn btn-primary mt-" id="moment-btn" onClick={generateNewMoment} type="submit" value="Crear momento" />
          </table> 
          }
            

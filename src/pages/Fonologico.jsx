@@ -758,9 +758,9 @@ export default function Fonologico () {
                     <Fragment>
                         <h1 style={{textAlign:"center", marginTop:"3rem"}}>Seleccione un punto de partida</h1>
                         <div style={{ display:"flex", width: "90%", margin:"0 auto", justifyContent:"center", alignItems:"center", alignContent:"center", height:"300px", gap:"2rem"}}>
-                            <div onClick={startGameA} class="btn btn-success">Ejemplo A</div>
-                            <div onClick={startGameB} class="btn btn-success">Ejemplo B</div>
-                            <div onClick={startGameC}class="btn btn-success">Ejemplo C</div>
+                            <div onClick={startGameA} className="btn btn-success">Ejemplo A</div>
+                            <div onClick={startGameB} className="btn btn-success">Ejemplo B</div>
+                            <div onClick={startGameC}className="btn btn-success">Ejemplo C</div>
                         </div>
                     </Fragment>
             }
