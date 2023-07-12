@@ -102,7 +102,7 @@ export default function Item (props) {
                                                
                         <img src={props.picture} alt={props.pictureName}/>
                         <div className="main-content-wrapper aces-content-wrapper" >
-                            <form className="aces-form" onClick={props.onclick} key={props.itemId} id={props.instrumentName +"-"+props.num} className="instrument-form">
+                            <form className="aces-form instrument-form" onClick={props.onclick} key={props.itemId} id={props.instrumentName +"-"+props.num}>
                                 <input type="hidden" value={props.instrumentId} name="instrument"/>
                                 <input type="hidden" value={props.itemId} name="key"/>
                                 {

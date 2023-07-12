@@ -20,3 +20,11 @@ div[data-rbd-draggable-context-id] {
 
 }
 
+.stick-number {
+    position: absolute;
+    bottom: -4rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color:#fff;
+}
+

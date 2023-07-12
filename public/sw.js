@@ -1,4 +1,4 @@
-let cacheData = "app-v15";
+let cacheData = "app-v16";
 this.addEventListener("install", evt => {
     console.log("installing")
 
@@ -16,7 +16,7 @@ this.addEventListener("install", evt => {
     caches.delete("app-v12")
     caches.delete("app-v13")
     caches.delete("app-v14")
-    // caches.delete("app-v15")
+    caches.delete("app-v15")
 
 
     evt.waitUntil(
@@ -256,18 +256,21 @@ this.addEventListener("install", evt => {
                 "https://res.cloudinary.com/keyzen/video/upload/v1676861113/fonolo/item_21_d87pwg.mp3",
                 "https://res.cloudinary.com/keyzen/image/upload/v1677206781/plus_bih1fy.png",
                 "https://upload.wikimedia.org/wikipedia/commons/9/9e/Plus_symbol.svg",
-
-
-
-
-
-
-          
-
-
-
-
-
+                '/images/example-0.png',
+                '/images/exercise-1.png',
+                '/images/exercise-2.png',
+                '/images/exercise-3.png',
+                '/images/exercise-4.png',
+                '/images/exercise-5.png',
+                '/images/exercise-6.png',
+                '/images/exercise-7.png',
+                '/images/exercise-8.png',
+                '/images/exercise-9.png',
+                '/images/exercise-10.png',
+                '/images/exercise-11.png',
+                '/images/exercise-12.png',
+                '/images/arrow-previous.png',
+                '/images/arrow-next.png',
             ])
         })
     )
