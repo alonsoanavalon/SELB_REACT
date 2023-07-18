@@ -2,6 +2,7 @@ import { useState, Fragment, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Swal from 'sweetalert2';
 import './style.css';
+import { CORRECT_ANSWERS } from './constants';
 
 export default function Desarrollo() {
 
@@ -16,18 +17,15 @@ export default function Desarrollo() {
 
   const [droppables, setDroppables] = useState([]);
   const [selectedInstruction, setSelectedInstruction] = useState();
+  const [timer, setTimer] = useState(0);
+  const [correctAnswer, setCorrectAnswer] = useState(false);
   const [visibleInstruction, setVisibleInstruction] = useState(true);
-  // {
-  //     options: {
-  //         firstStick: ['AZ','AM'],
-  //         secondStick: ['R'],
-  //         thirdStick: [],
-  //         time: '18,2',
-  //         movements: '5'
-  //     },
-  //     value: 0
-  // }
-  const [results, setResults] = useState([])
+  const [activeTimer, setActiveTimer] = useState(false)
+  const [correctAnswers] = useState(CORRECT_ANSWERS)
+  const [tries, setTries] = useState(0);
+  const [finish, setFinish] = useState(false);
+ 
+  const [results, setResults] = useState({})
   const [step, setStep] = useState(0)
 
   const STICKS = {
@@ -104,7 +102,8 @@ export default function Desarrollo() {
         <p>Tienes que copiar el orden en que están las pelotas en la imagen
         Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
         <img style="width:90%"src="/images/exercise-1.png">
-      `
+      `,
+      tries: 2
     },
     3: {
       id: 3,
@@ -121,10 +120,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+            <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
             <p>Tienes que copiar el orden en que están las pelotas en la imagen
             Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
             <img style="width:90%"src="/images/exercise-2.png">
-          `
+          `,
+      tries: 2
     },
     4: {
       id: 4,
@@ -141,10 +142,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
             <p>Tienes que copiar el orden en que están las pelotas en la imagen
             Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
             <img style="width:90%"src="/images/exercise-3.png">
-          `
+          `,
+          tries: 3
     },
     5: {
       id: 5,
@@ -161,10 +164,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
           <p>Tienes que copiar el orden en que están las pelotas en la imagen
           Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
           <img style="width:90%"src="/images/exercise-4.png">
-        `
+        `,
+        tries: 3
     },
     6: {
       id: 6,
@@ -181,10 +186,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
         <p>Tienes que copiar el orden en que están las pelotas en la imagen
         Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
         <img style="width:90%"src="/images/exercise-5.png">
-      `
+      `,
+      tries: 4
     },
     7: {
       id: 7,
@@ -201,10 +208,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
       <p>Tienes que copiar el orden en que están las pelotas en la imagen
       Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
       <img style="width:90%"src="/images/exercise-6.png">
-    `
+    `,
+    tries: 4
     },
     8: {
       id: 8,
@@ -221,10 +230,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
       <p>Tienes que copiar el orden en que están las pelotas en la imagen
       Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
       <img style="width:90%"src="/images/exercise-7.png">
-    `
+    `,
+    tries: 4
     },
     9: {
       id: 9,
@@ -241,10 +252,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
       <p>Tienes que copiar el orden en que están las pelotas en la imagen
       Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
       <img style="width:90%"src="/images/exercise-8.png">
-    `
+    `,
+    tries: 4
     },
     10: {
       id: 10,
@@ -261,10 +274,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
       <p>Tienes que copiar el orden en que están las pelotas en la imagen
       Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
       <img style="width:90%"src="/images/exercise-9.png">
-    `
+    `,
+    tries: 4
     },
     11: {
       id: 11,
@@ -281,10 +296,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
       <p>Tienes que copiar el orden en que están las pelotas en la imagen
       Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
       <img style="width:90%"src="/images/exercise-10.png">
-    `
+    `,
+    tries: 5
     },
     12: {
       id: 12,
@@ -301,10 +318,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
       <p>Tienes que copiar el orden en que están las pelotas en la imagen
       Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
       <img style="width:90%"src="/images/exercise-11.png">
-    `
+    `,
+    tries: 5
     },
     13: {
       id: 13,
@@ -321,10 +340,12 @@ export default function Desarrollo() {
         }
       ],
       alert: `
+      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
       <p>Tienes que copiar el orden en que están las pelotas en la imagen
       Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
       <img style="width:90%"src="/images/exercise-12.png">
-    `
+    `,
+    tries: 5
     },
 
   }
@@ -407,13 +428,22 @@ export default function Desarrollo() {
   }
 
   const onDragEnd = (result, droppables) => {
-    //aca tengo que capturar el intento, indepediente de que lo suelte en un droppable, cuenta el intento
     if (result.destination?.droppableId) {
       const sourceId = result.source.droppableId;
       const destinationId = result.destination.droppableId;
       const itemId = result.draggableId;
       const updatedDroppables = updateDroppables(itemId, sourceId, destinationId, droppables)
       setDroppables(updatedDroppables);
+    }
+
+    setTries(prevTries => prevTries +1)
+
+    const correctAnswer = isCorrectAnswer();
+    if (correctAnswer) {
+      setActiveTimer(false)
+      setTimeout(() => {
+        finishStep(correctAnswer)
+      }, 1000)
     }
 
   };
@@ -429,6 +459,86 @@ export default function Desarrollo() {
     }
   }
 
+  function isCorrectAnswer() {
+    const stepAnswers = correctAnswers[step];
+    let points = 0;
+    for (let i = 0; i <= 2; i++) {
+      if (JSON.stringify(stepAnswers[i]) == JSON.stringify(droppables[i].items)) {
+        points = points + 1
+      } 
+    }
+    const isCorrect = points === 3 ? true : false
+    return isCorrect;
+  }
+
+  function saveAnswer(correctAnswer) {
+    let value = correctAnswer;
+    if (tries > STICKS_BY_STEP[step].tries) {
+      value = false;
+    }
+    const answer = {
+      options: {
+        firstStick: droppables[0].items,
+        secondStick: droppables[1].items,
+        thirdStick: droppables[2].items,
+        time: timer,
+        tries,
+      },
+      value,
+    }
+    setResults(prevResults => {
+      prevResults[step] = answer;
+      return prevResults;
+    })
+
+    //tomar droppables y su orden de draggables
+    //tomar el tiempo que se ha demorado
+    //tomar la cantidad de movimientos realizados
+    //tomar el step en el que estamos 
+    //isCorrectAnswer para el value
+    //setea la answer al state
+
+  // {
+  //     options: {
+  //         firstStick: ['AZ','AM'],
+  //         secondStick: ['R'],
+  //         thirdStick: [],
+  //         time: '18,2',
+  //         movements: '5'
+  //     },
+  //     value: 0
+  // }
+  }
+
+  useEffect(() => {
+    if (finish && results) {
+      debugger;
+      Swal.fire("Se guarda el test")
+    }
+  }, [finish, results])
+
+  function finishStep(correctAnswer) {
+    if (step == 13) {
+      saveAnswer(correctAnswer);
+      resetTimer()
+      setFinish(true)
+    } else if (step > 1) {
+      saveAnswer(correctAnswer);
+      resetTimer();
+      nextStep();
+    } else {
+      console.log("no se guarda el dato")
+      resetTimer();
+      nextStep();
+    }
+  }
+
+  function resetTimer() {
+    setTimer(0)
+    setActiveTimer(false)
+    setCorrectAnswer(false)
+  }
+
   function showExample(html, exerciseNumber) {
     if (exerciseNumber) {
       Swal.fire({
@@ -436,9 +546,14 @@ export default function Desarrollo() {
         confirmButtonColor: '#3085d6',
         allowOutsideClick: false,
         html,
-        icon: "info",
+        icon: "success",
         title: `Ejercicio ${exerciseNumber}`,
         confirmButtonText: 'Continuar',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          setActiveTimer(true)
+        }
       })
     } else {
       Swal.fire({
@@ -455,6 +570,7 @@ export default function Desarrollo() {
   }
 
   function nextStep() {
+    setTries(0)
     setStep(step => step + 1)
     if (STICKS_BY_STEP[step + 1].instructions) {
       setSelectedInstruction(STICKS_BY_STEP[step + 1].instructions[0])
@@ -482,13 +598,38 @@ export default function Desarrollo() {
     }
   }
 
+  useEffect(() => {
+    if (activeTimer) {
+      let interval;
+      if (timer < 10) {
+        interval = setInterval(() => {
+          setTimer(prevTimer => prevTimer + 1);
+        }, 1000);
+      }  else {
+        clearInterval(interval);
+        finishStep(false)
+      }
+    // Limpiamos el intervalo cuando el componente se desmonte
+    return () => clearInterval(interval);
+    }
+
+  }, [timer, correctAnswer, activeTimer]);
+ 
   return (
     <Fragment>
       {
         droppables.length > 0 &&
         <div style={{ transform: "none!important", zIndex: 1000, backgroundColor: "#fff", position: "absolute", top: "0", height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}> <DragDropContext onDragStart={result => onDragStart(result, droppables)} onDragEnd={result => onDragEnd(result, droppables)} >
           <div style={{ width: "100%", position: "relative", padding: "4rem 3rem 0" }}>
-
+          <div>
+            {
+              timer
+            }
+            <br></br>
+            {
+              step
+            }
+          </div>
           <div style={{visibility: !visibleInstruction && 'hidden'}}>
           <button
               style={{
@@ -524,7 +665,7 @@ export default function Desarrollo() {
               onClick={
                 (e) => {
                   e.preventDefault();
-                  nextStep()
+                  finishStep(false)
                 }
               }>Siguiente</button>
 

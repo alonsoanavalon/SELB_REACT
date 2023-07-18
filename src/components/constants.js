@@ -5,7 +5,7 @@ export const STICKS_ORDER = {
 }
 
 export const STICKS_INFO = {
-    0: {
+    2: {
         id: 0,
         droppables: [
             { id: '0', items: ['R'] },
@@ -35,7 +35,7 @@ export const STICKS_INFO = {
             }
         ]
     },
-    1: {
+    3: {
         id: 1,
         droppables: [
             { id: '0', items: ['R', 'AM'] },
@@ -55,7 +55,7 @@ export const STICKS_INFO = {
       `
 
     },
-    2: {
+    4: {
         id: 2,
         droppables: [
             { id: '0', items: ['R', 'AM'] },
@@ -74,7 +74,7 @@ export const STICKS_INFO = {
             <img style="width:48%"src="/images/flowers-1.png">
           `
     },
-    3: {
+    5: {
         id: 3,
         droppables: [
             { id: '0', items: ['R', 'AM'] },
@@ -88,4 +88,69 @@ export const STICKS_INFO = {
             }
         ],
     }
+}
+
+export const TIME_LIMIT_IN_SECONDS = 30;
+
+export const CORRECT_ANSWERS = {
+    2: {
+        0: [],
+        1: ['AM', 'AZ'],
+        2: ['R']
+    },
+    3: {
+        0: ['AM'],
+        1: ['R'],
+        2: ['AZ']
+    },
+    4: {
+        0: ['AZ', 'AM'],
+        1: ['R'],
+        2: []
+    },
+    5: {
+        0: ['AM'],
+        1: ['AZ', 'R'],
+        2: []
+    },
+    6: {
+        0: ['AM', 'R'],
+        1: ['AZ'],
+        2: []
+    },
+    7: {
+        0: ['AZ'],
+        1: ['AM', 'R'],
+        2: []
+    },
+    8: {
+        0: ['AZ', 'R'],
+        1: [],
+        2: ['AM']
+    },
+    9: {
+        0: [],
+        1: ['AZ', 'R'],
+        2: ['AM']
+    },
+    10: {
+        0: ['AZ', 'AM', 'R'],
+        1: [],
+        2: []
+    },
+    11: {
+        0: ['AM', 'AZ', 'R'],
+        1: [],
+        2: []
+    },
+    12: {
+        0: ['AM', 'AZ'],
+        1: ['R'],
+        2: []
+    },
+    13: {
+        0: ['AZ'],
+        1: ['R'],
+        2: ['AM']
+    },
 }
