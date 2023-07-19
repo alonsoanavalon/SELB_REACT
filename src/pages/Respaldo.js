@@ -53,7 +53,11 @@ export default function Respaldo () {
                         element[1] === "" ? answers.push(0) : answers.push(element[1].choice)
                     } else if (instrumentName == "Fonológico") {
                         element[1] === "" ? answers.push(0) : answers.push(element[1].options.toString())
-                    } else {
+                    } else if (instrumentName == "TorreLondres") {
+                        element[1] === "" ? answers.push(0) : answers.push(element[1].value.toString())
+                    }
+                    
+                    else {
                         element[1] === "" ? answers.push(0) : answers.push(element[1])
                     }
 

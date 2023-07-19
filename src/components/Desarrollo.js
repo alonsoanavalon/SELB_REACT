@@ -3,8 +3,155 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Swal from 'sweetalert2';
 import './style.css';
 import { CORRECT_ANSWERS } from './constants';
+import {get, update, getMany, set} from 'idb-keyval'
 
 export default function Desarrollo() {
+
+  const [isArray, setIsArray] = useState(false)
+
+  function getMomentByDate(date) {
+    let dateBegin;
+    let dateUntil;
+    get('moments')
+    .then(res => {
+        res.map(element => {
+            dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW")
+            dateUntil = new Date(element['until']).toLocaleDateString("zh-TW")
+            if (date >= dateBegin && date <= dateUntil ) {
+                return element['id']
+            } 
+            
+            
+        })
+    })
+}
+
+
+
+  async function saveTest(answers) {
+    debugger;
+
+
+    let instrumentInfo = {}
+    let choicesArray = []
+
+    let testDataArray = ['selectedStudent', 'userData']
+
+    //Me queda arreglar esto, pq ahora al elegir el test no tenemos niño, ni fecha ni evaluador, entonces hay que ver eso dps
+    getMany(testDataArray).then(([firstVal, secondVal]) =>  { 
+        instrumentInfo['user_id'] = parseInt(secondVal['id'])
+        instrumentInfo['student_id'] = parseInt(firstVal)
+        instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
+    }
+    );
+
+    choicesArray.push(instrumentInfo)
+
+    instrumentInfo['instrument'] = 9
+
+    const answersArray = Object.entries(answers);
+    const parsedAnswers = answersArray.map((answer) => {
+        const id = parseInt(answer[0])+345;
+        return [
+            id,
+            {
+                options: answer[1].options,
+                value: answer[1].value
+            }
+        ]
+    })
+    const formatedAnswers = Object.fromEntries(parsedAnswers);
+
+
+    choicesArray.push(formatedAnswers) // estas deben ser las respuestas
+
+    //Luego viene toda la logica de si se repite o si se guarda en el backup etc.
+
+    try {
+        await get('backupTest')
+        .then(response => {
+            let backupLength = response.length
+            if (Array.isArray(response) && response.length > 0) {
+                get('completedTests')
+                .then(res => {
+                    if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
+                        console.log(response, "Actualizando Backup")
+                        let arrayCounter = 0;
+                        response.forEach(array => {
+                            let responseMoment;
+                            let instrumentMoment;
+                            if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                                responseMoment = getMomentByDate(array[0]['date'])
+                                instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                                if (responseMoment === instrumentMoment) {
+                                    response.splice(arrayCounter, 1)
+                                } 
+                            }
+                            arrayCounter+= 1
+    
+                        })
+    
+                        update('backupTest', val => [...response, choicesArray])
+                    }
+                })
+            }
+        })
+
+        await get('completedTests')
+        .then(response => {
+
+            if (!isArray) {
+                if (response.length === undefined) {
+                    update('completedTests', (val) => 
+                    [response , choicesArray])         
+                    setIsArray(true)
+                } else if (response.length === 0) {
+
+                    set('completedTests', [choicesArray])
+                } else {
+                    console.log(response, "Actualizando1")
+                    let arrayCounter = 0;
+                    response.forEach(array => {
+                        
+                        let responseMoment;
+                        let instrumentMoment;
+                        if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                            responseMoment = getMomentByDate(array[0]['date'])
+                            instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                            if (responseMoment === instrumentMoment) {
+                                response.splice(arrayCounter, 1)
+                            } 
+                        }
+                        arrayCounter+= 1
+
+                    })
+
+                    update('completedTests', val => [...response, choicesArray])
+
+                    
+                }
+            } else {
+                console.log(response, "Actualizando2")
+                update('completedTests', val => [...response, choicesArray])
+
+            }
+
+        })
+
+        return true
+    } catch (err) {
+        console.error(err);
+        Swal.fire({icon:"error", title:"Ha ocurrido un error en el guardado"})
+        return false
+    }
+
+
+
+}
 
 
   //Aca quede en que voy sumando mas etapas, tengo la duda de cual es la posicion inicial de cada etapa, o es siempre la misma?
@@ -22,7 +169,7 @@ export default function Desarrollo() {
   const [visibleInstruction, setVisibleInstruction] = useState(true);
   const [activeTimer, setActiveTimer] = useState(false)
   const [correctAnswers] = useState(CORRECT_ANSWERS)
-  const [tries, setTries] = useState(0);
+  const [tries, setTries] = useState(1);
   const [finish, setFinish] = useState(false);
  
   const [results, setResults] = useState({})
@@ -484,7 +631,7 @@ export default function Desarrollo() {
         time: timer,
         tries,
       },
-      value,
+      value: value ? 1 : 0
     }
     setResults(prevResults => {
       prevResults[step] = answer;
@@ -512,8 +659,7 @@ export default function Desarrollo() {
 
   useEffect(() => {
     if (finish && results) {
-      debugger;
-      Swal.fire("Se guarda el test")
+      saveTest(results)
     }
   }, [finish, results])
 
@@ -526,10 +672,12 @@ export default function Desarrollo() {
       saveAnswer(correctAnswer);
       resetTimer();
       nextStep();
+      setTries(1)
     } else {
       console.log("no se guarda el dato")
       resetTimer();
       nextStep();
+
     }
   }
 
@@ -570,7 +718,6 @@ export default function Desarrollo() {
   }
 
   function nextStep() {
-    setTries(0)
     setStep(step => step + 1)
     if (STICKS_BY_STEP[step + 1].instructions) {
       setSelectedInstruction(STICKS_BY_STEP[step + 1].instructions[0])
