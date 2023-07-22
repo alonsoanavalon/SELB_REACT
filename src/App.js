@@ -26,7 +26,8 @@ import Corsi from './pages/Corsi'
 import Moments from './pages/Moments'
 import Desarrollo from './components/Desarrollo';
 import HNF from './pages/Hnf';
-
+import Torre from './components/Torre';
+import Esc from './components/Esc';
 
 
 const cookies = new Cookies();
@@ -286,6 +287,8 @@ function App() {
           <Route path="/corsi" element={<Corsi/>}></Route>
           <Route path="/hnf" element={<HNF/>}></Route>
           <Route path="/fonologico" element={<Fonologico/>}></Route>
+          <Route path="/torre" element={<Torre/>}></Route>
+          <Route path="/esc" element={<Esc/>}></Route>
           <Route path="/wally" element={<Wally/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>

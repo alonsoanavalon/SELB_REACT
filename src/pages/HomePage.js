@@ -16,6 +16,8 @@ export default function HomePage() {
   const [savedWallyTests, setSavedWallyTests] = useState([])
   const [savedCorsiTests, setSavedCorsiTests] = useState([])
   const [savedAcesTests, setSavedAcesTests] = useState([])
+  const [savedTorreTests, setSavedTorreTests] = useState([])
+  const [savedEscTests, setSavedEscTests] = useState([])
 
 
   const [savedTests, setSavedTests] = useState(false)
@@ -27,6 +29,8 @@ export default function HomePage() {
   const [corsiLength, setCorsiLength] = useState(undefined)
   const [hnfLength, setHnfLength] = useState(undefined)
   const [fonoLength, setFonoLength] = useState(undefined)
+  const [torreLength, setTorreLength] = useState(undefined);
+  const [escLength, setEscLength] = useState(undefined);
   const [completeName, setCompleteName] = useState("")
 
   function eliminarTestAntiguos() {
@@ -119,6 +123,8 @@ export default function HomePage() {
         let corsi = 0;
         let hnf = 0;
         let fono = 0;
+        let torre = 0;
+        let esc = 0;
 
         res.forEach(element => {
           if (element[0]['instrument'] === 1) {
@@ -150,7 +156,15 @@ export default function HomePage() {
           }
           if (element[0]['instrument'] === 8) {
             fono++
-                        setSavedTests(true)
+            setSavedTests(true)
+          }
+          if (element[0]['instrument'] === 9) {
+            torre++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 10) {
+            esc++
+            setSavedTests(true);
           }
         })
 
@@ -162,6 +176,8 @@ export default function HomePage() {
         setSavedAcesTests(aces)
         setSavedSdqTests(sdq)
         setSavedCorsiTests(corsi)
+        setSavedTorreTests(torre)
+        setSavedEscTests(esc)
 
       })
 
@@ -209,6 +225,17 @@ export default function HomePage() {
         .then(res => {
           setFonoLength(res)
         })
+
+        get('torreLength')
+        .then(res => {
+          setTorreLength(res);
+        })
+
+        get('escLength')
+        .then(res => {
+          setEscLength(res);
+        })
+
 
 
 
@@ -380,6 +407,14 @@ export default function HomePage() {
                   <th scope="row">Fonológico</th>
                   <td>{savedFonoTests && savedFonoTests >= 0 ? savedFonoTests : 0}</td>
                 </tr>
+                <tr>
+                  <th scope="row">Torre de Londres</th>
+                  <td>{savedTorreTests && savedTorreTests >= 0 ? savedTorreTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">ESC</th>
+                  <td>{savedEscTests && savedEscTests >= 0 ? savedEscTests : 0}</td>
+                </tr>
               </tbody>
             </table>
 
@@ -452,6 +487,20 @@ export default function HomePage() {
                   <td>{fonoLength && fonoLength >= 0 ? fonoLength : 0}</td>
 
                 </tr>
+
+
+                <tr>
+                  <th scope="row">Torre de Londres</th>
+                  <td>{torreLength && torreLength >= 0 ? torreLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">ESC</th>
+                  <td>{escLength && escLength >= 0 ? escLength : 0}</td>
+
+                </tr>
+
 
               </tbody>
             </table>

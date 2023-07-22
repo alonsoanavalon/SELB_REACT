@@ -26,6 +26,10 @@ export default function ListedInstrument (props) {
             navigate('/hnf')
         } else if ($selectedInstrument == 8) {
             navigate('/fonologico')
+        } else if ($selectedInstrument == 9) {
+            navigate('/torre')
+        } else if ($selectedInstrument == 10) {
+            navigate('/esc')
         }
         
 
