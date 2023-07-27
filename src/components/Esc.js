@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate  } from 'react-router-dom'
-
+import { useAlert } from 'react-alert'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2'
 
 import EmpathyOptions from './EmpathyOptions';
 export default function Esc() {
-
+    const alert = useAlert()
     const navigate = useNavigate()
     const [wallyItems, setWallyItems] = useState([]);
     const [isArray, setIsArray] = useState(false)
@@ -78,118 +78,69 @@ export default function Esc() {
         })
     }
 
-    function saveEsc() {
+    async function saveTest(){
+        let choices = {}
+        let instrumentInfo = {}
+        let choicesArray = []
 
 
-        Swal.fire({
-            title: '¿Deseas finalizar y guardar el test?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: 'Si, guardar y salir'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let choices = {}
-                let instrumentInfo = {}
-                let choicesArray = []
-  
+        let testDataArray = ['selectedStudent', 'userData']
 
-                let testDataArray = ['selectedStudent', 'userData']
+        getMany(testDataArray).then(([firstVal, secondVal]) => {
+            instrumentInfo['user_id'] = parseInt(secondVal['id'])
+            instrumentInfo['student_id'] = parseInt(firstVal)
+            instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
+        }
+        );
 
-                getMany(testDataArray).then(([firstVal, secondVal]) => {
-                    instrumentInfo['user_id'] = parseInt(secondVal['id'])
-                    instrumentInfo['student_id'] = parseInt(firstVal)
-                    instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
-                }
-                );
+        choicesArray.push(instrumentInfo)
 
-                choicesArray.push(instrumentInfo)
+        let allInstruments = document.getElementById('.esc-form')
+        const radios = document.querySelectorAll('input[type="radio"]');
 
-                let allInstruments = document.getElementById('.esc-form')
-                const radios = document.querySelectorAll('input[type="radio"]');
-
-                radios.forEach(radio => {
-                    if (radio.checked) {
-                        if (correctAnswers[radio.dataset.id] == radio.value) {
-                            choices[radio.dataset.id] = {
-                                alternative: radio.value,
-                                value: 1
-                            }
-                        } else {
-                            choices[radio.dataset.id] = {
-                                alternative: radio.value,
-                                value: 0
-                            }
-                        }
-
-                    } else {
-                        if (!choices[radio.dataset.id]) {
-                            choices[radio.dataset.id] = {
-                                alternative: 0,
-                                value: 0
-                            }
-                        }
-
-
+        radios.forEach(radio => {
+            if (radio.checked) {
+                if (correctAnswers[radio.dataset.id] == radio.value) {
+                    choices[radio.dataset.id] = {
+                        alternative: radio.value,
+                        value: 1
                     }
-                })
+                } else {
+                    choices[radio.dataset.id] = {
+                        alternative: radio.value,
+                        value: 0
+                    }
+                }
 
-                debugger;
-
-                instrumentInfo['instrument'] = 10;
-
-                choicesArray.push(choices)
-
-                get('backupTest')
-                    .then(response => {
-                        let backupLength = response.length
-                        if (Array.isArray(response) && response.length > 0) {
-                            get('completedTests')
-                                .then(res => {
-                                    if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
-                                        console.log(response, "Actualizando Backup")
-                                        let arrayCounter = 0;
-                                        response.forEach(array => {
-                                            let responseMoment;
-                                            let instrumentMoment;
-                                            if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
-
-                                                responseMoment = getMomentByDate(array[0]['date'])
-                                                instrumentMoment = getMomentByDate(instrumentInfo['date'])
-
-                                                if (responseMoment === instrumentMoment) {
-                                                    response.splice(arrayCounter, 1)
-                                                }
-                                            }
-                                            arrayCounter += 1
-
-                                        })
-
-                                        update('backupTest', val => [...response, choicesArray])
-                                    }
-                                })
-                        }
-                    })
+            } else {
+                if (!choices[radio.dataset.id]) {
+                    choices[radio.dataset.id] = {
+                        alternative: 0,
+                        value: 0
+                    }
+                }
 
 
-                get('completedTests')
-                    .then(response => {
+            }
+        })
 
-                        if (!isArray) {
-                            if (response.length === undefined) {
-                                update('completedTests', (val) =>
-                                    [response, choicesArray])
-                                setIsArray(true)
-                            } else if (response.length === 0) {
+        debugger;
 
-                                set('completedTests', [choicesArray])
-                            } else {
-                                console.log(response, "Actualizando1")
+        instrumentInfo['instrument'] = 10;
+
+        choicesArray.push(choices)
+
+        try {
+            get('backupTest')
+            .then(response => {
+                let backupLength = response.length
+                if (Array.isArray(response) && response.length > 0) {
+                    get('completedTests')
+                        .then(res => {
+                            if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
+                                console.log(response, "Actualizando Backup")
                                 let arrayCounter = 0;
                                 response.forEach(array => {
-
                                     let responseMoment;
                                     let instrumentMoment;
                                     if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
@@ -205,32 +156,107 @@ export default function Esc() {
 
                                 })
 
-                                update('completedTests', val => [...response, choicesArray])
-
-
-                                alert.show('Test guardado con éxito', {
-                                    type: 'success'
-                                })
-
-                                setTimeout(() => {
-                                    navigate('/')
-                                }, 3000)
+                                update('backupTest', val => [...response, choicesArray])
                             }
-                        } else {
-                            console.log(response, "Actualizando2")
-                            update('completedTests', val => [...response, choicesArray])
-
-                            alert.show('Test guardado con éxito', {
-                                type: 'success'
-                            })
-
-                            setTimeout(() => {
-                                navigate('/')
-                            }, 3000)
-                        }
+                        })
+                }
+            })
 
 
-                    })
+        get('completedTests')
+            .then(response => {
+
+                if (!isArray) {
+                    if (response.length === undefined) {
+                        update('completedTests', (val) =>
+                            [response, choicesArray])
+                        setIsArray(true)
+                    } else if (response.length === 0) {
+
+                        set('completedTests', [choicesArray])
+                    } else {
+                        console.log(response, "Actualizando1")
+                        let arrayCounter = 0;
+                        response.forEach(array => {
+
+                            let responseMoment;
+                            let instrumentMoment;
+                            if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                                responseMoment = getMomentByDate(array[0]['date'])
+                                instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                                if (responseMoment === instrumentMoment) {
+                                    response.splice(arrayCounter, 1)
+                                }
+                            }
+                            arrayCounter += 1
+
+                        })
+
+                        update('completedTests', val => [...response, choicesArray])
+
+
+    
+                    }
+                } else {
+                    console.log(response, "Actualizando2")
+                    update('completedTests', val => [...response, choicesArray])
+                }
+
+
+            })
+            return true    
+        } catch (err) {
+            console.error(err);
+            Swal.fire({icon:"error", title:"Ha ocurrido un error en el guardado"})
+            return false
+        }
+  
+        
+    } 
+
+    function saveEsc() {
+
+
+        Swal.fire({
+            icon: 'success',
+            html: `El test ha finalizado`,
+            showCancelButton: false,
+            allowOutsideClick: false,
+            width:"50em",
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Guardar Test',
+            preConfirm: async () => {
+                return saveTest()
+                  .then(response => {
+                    if (response !== true) {
+                        Swal.fire("Ha ocurrido un error en el guardado de datos")
+                    }
+                    return response
+                  })
+                  .catch(error => {
+                    Swal.fire("Ha ocurrido un error en el guardado de datos")
+
+                  })
+              },
+            })
+       .then( async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    allowOutsideClick:false,
+                    icon:"success",
+                    title:"El test ha sido guardado",
+                    confirmButtonText: 'Finalizar test y salir',
+                  }).then(_ => {
+                      setTimeout(() => {
+                        window.location.pathname = '/'
+                      }, 3000)
+                  })
+                    
+            
             }
         })
 
@@ -297,7 +323,7 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
 
                                 {/* Primera */}
                                 <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <Instruction instruction="Items de ejercicio" />
+                                    <Instruction title="Items de ejercicio" instruction="Ahora voy a mostrarte unas imagenes y debes decirme como crees que se siente el personaje. Comencemos" />
                                 </SwiperSlide>
 
 

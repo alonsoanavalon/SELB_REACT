@@ -1438,6 +1438,13 @@ template {
   justify-content: center;
 }
 
+@media (min-width: 1200px) {
+  .esc-emotion {
+    width: 500px;
+    height: 250px;
+    box-sizing: border-box;
+  }
+}
 html {
   background-color: #fff;
 }

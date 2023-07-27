@@ -37,39 +37,39 @@ export default function HomePage() {
 
     Swal.fire({
       icon: "info",
-      title:"¿Deseas limpiar los test antiguos para iniciar un nuevo periodo de evaluacion?",
-      html:"No te preocupes, los test permanecerán en el respaldo si no lo has reiniciado",
+      title: "¿Deseas limpiar los test antiguos para iniciar un nuevo periodo de evaluacion?",
+      html: "No te preocupes, los test permanecerán en el respaldo si no lo has reiniciado",
       showConfirmButton: true,
       showCancelButton: true
     })
-    .then(result => {
-      if (result.isConfirmed) {
-        get('completedTests')
-        .then(res => {
-          let counterEliminados = 0;
-          const testNuevos = res.filter((test) => {
-            const fechaTest = new Date(test[0].date)
-            const fechaLimite = new Date('2023/04/17')
-  
-            if (fechaTest > fechaLimite) {
-              return test;
-            } else {
-              counterEliminados++
-            }
-          })
-          return [testNuevos, counterEliminados];
-        })
-        .then((data) => {
-          Swal.fire('Se eliminaron: ' + data[1] + ' test antiguos')
-          update('completedTests', val => data[0])
-  
-          setTimeout(() => {
-            window.location.pathname = '/'
-          }, 2000)
-        })
-      }
-    })
-   
+      .then(result => {
+        if (result.isConfirmed) {
+          get('completedTests')
+            .then(res => {
+              let counterEliminados = 0;
+              const testNuevos = res.filter((test) => {
+                const fechaTest = new Date(test[0].date)
+                const fechaLimite = new Date('2023/04/17')
+
+                if (fechaTest > fechaLimite) {
+                  return test;
+                } else {
+                  counterEliminados++
+                }
+              })
+              return [testNuevos, counterEliminados];
+            })
+            .then((data) => {
+              Swal.fire('Se eliminaron: ' + data[1] + ' test antiguos')
+              update('completedTests', val => data[0])
+
+              setTimeout(() => {
+                window.location.pathname = '/'
+              }, 2000)
+            })
+        }
+      })
+
   }
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export default function HomePage() {
     })
 
     // set('completedTests', [
-      
+
     // ])
 
     get('completedTests')
@@ -149,7 +149,7 @@ export default function HomePage() {
           } if (element[0]['instrument'] === 6) {
             corsi++
             setSavedTests(true)
-          } 
+          }
           if (element[0]['instrument'] === 7) {
             hnf++
             setSavedTests(true)
@@ -215,23 +215,23 @@ export default function HomePage() {
           setCorsiLength(res)
         })
 
-        get('hnfLength')
+      get('hnfLength')
         .then(res => {
           setHnfLength(res)
         })
 
 
-        get('fonoLength')
+      get('fonoLength')
         .then(res => {
           setFonoLength(res)
         })
 
-        get('torreLength')
+      get('torreLength')
         .then(res => {
           setTorreLength(res);
         })
 
-        get('escLength')
+      get('escLength')
         .then(res => {
           setEscLength(res);
         })
@@ -422,7 +422,7 @@ export default function HomePage() {
               {savedTests === true ? <button onClick={sendNewInstrument} className="button btn btn-primary">Enviar</button> : <button className="button btn btn-secondary" disabled>Enviar</button>}
             </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button>}
 
-              {/* Esta funcion me elimina los test guardados entre X fechas */}
+            {/* Esta funcion me elimina los test guardados entre X fechas */}
             {/* <button className="btn btn-info"  style={{marginLeft:"2rem"}}onClick={eliminarTestAntiguos}>Eliminar test antiguos</button> */}
 
 
