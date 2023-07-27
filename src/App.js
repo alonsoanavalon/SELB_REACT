@@ -1,5 +1,5 @@
-import {useState, useEffect, Fragment} from 'react'
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import { useState, useEffect, Fragment } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import axios from 'axios'
 import { del, get, set } from 'idb-keyval';
 import Cookies from 'universal-cookie';
@@ -37,7 +37,7 @@ function App() {
   const [userId, setUserId] = useState()
   const [isLogged, setIsLogged] = useState(false)
 
-  function getData (data) {
+  function getData(data) {
     let firstTime = true;
 
     if (navigator.onLine && firstTime) {
@@ -45,9 +45,9 @@ function App() {
       del(data)
       let url = /* `http://localhost:3500/${data}` || */ `https://selb.bond/${data}`
       axios(url)
-      .then(res => {
-        set(data, res.data)
-      })
+        .then(res => {
+          set(data, res.data)
+        })
     }
   }
 
@@ -56,7 +56,7 @@ function App() {
   //     console.log("Ahora vamos a guardar los datos")
   //     get('newUsers')
   //     .then(users => {
-      
+
   //       if (users) {
   //         console.log("guardando")
   //         fetch("https://selb.bond/test", {
@@ -80,10 +80,10 @@ function App() {
 
 
 
-  useEffect(() => { 
+  useEffect(() => {
 
     if (!cookies.get('id') && (window.location.pathname !== "/login")) {
-      window.location.href='/login'
+      window.location.href = '/login'
       setIsLogged(false)
     } else if (cookies.get('id')) {
       setIsLogged(true)
@@ -104,145 +104,181 @@ function App() {
     get('userData').then(res => {
       setUserId(res.id)
 
-      
 
-  })
 
-  /* Arreglar esto */
+    })
+
+    /* Arreglar esto */
 
     if (navigator.onLine) {
       if (userId !== undefined) {
 
         axios({
-            method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-            params: {
-                instrument:1,
-                user: userId
-            }
-        })
-        .then(
-         
-          res => {
-            
-            set('tejasLength', res.data[0]['COUNT(*)'])
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 1,
+            user: userId
           }
+        })
+          .then(
+
+            res => {
+
+              set('tejasLength', res.data[0]['COUNT(*)'])
+            }
           )
-            axios({
-              method: 'get',
-              url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-              params: {
-                  instrument:2,
-                  user: userId
-              }
-            })
+        axios({
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 2,
+            user: userId
+          }
+        })
+          .then(
+
+            res => {
+              set('calculoLength', res.data[0]['COUNT(*)'])
+            }
+          )
+
+
+        axios({
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 3,
+            user: userId
+          }
+        })
+          .then(
+
+            res => {
+              set('sdqLength', res.data[0]['COUNT(*)'])
+            }
+          )
+
+
+        axios({
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 4,
+            user: userId
+          }
+        })
+          .then(
+
+            res => {
+              set('acesLength', res.data[0]['COUNT(*)'])
+            }
+          )
+
+
+        axios({
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 5,
+            user: userId
+          }
+        })
+          .then(
+
+            res => {
+              set('wallyLength', res.data[0]['COUNT(*)'])
+            }
+          )
+
+        axios({
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 6,
+            user: userId
+          }
+        })
+          .then(
+
+            res => {
+              set('corsiLength', res.data[0]['COUNT(*)'])
+            }
+          )
+        axios({
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 7,
+            user: userId
+          }
+        })
+
+          .then(
+
+            res => {
+              set('corsiLength', res.data[0]['COUNT(*)'])
+            }
+          )
+
+
+        axios({
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 8,
+            user: userId
+          }
+        })
+          .then(
+
+            res => {
+              set('fonoLength', res.data[0]['COUNT(*)'])
+            }
+          )
+
+
+
+
+        axios({
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 9,
+            user: userId
+          }
+        })
+          .then(
+
+            res => {
+              set('torreLength', res.data[0]['COUNT(*)'])
+            }
+          )
+
+          
+          axios({
+            method: 'get',
+            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            params: {
+              instrument: 10,
+              user: userId
+            }
+          })
             .then(
-            
-                res => {
-                    set('calculoLength', res.data[0]['COUNT(*)'])
-                }
-                )
 
-              
-          axios({
-            method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-            params: {
-                instrument:3,
-                user: userId
-            }
-          })
-          .then(
-                
-               res => {
-                  set('sdqLength', res.data[0]['COUNT(*)'])
+              res => {
+                set('escLength', res.data[0]['COUNT(*)'])
               }
-              )
-              
-
-              axios({
-                method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-                params: {
-                    instrument:4,
-                    user: userId
-                }
-              })
-              .then(
-                    
-                   res => {
-                      set('acesLength', res.data[0]['COUNT(*)'])
-                  }
-                  )
-
-                
-          axios({
-            method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-            params: {
-                instrument:5,
-                user: userId
-            }
-          })
-          .then(
-                
-               res => {
-                  set('wallyLength', res.data[0]['COUNT(*)'])
-              }
-              )
-
-              axios({
-                method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-                params: {
-                    instrument:6,
-                    user: userId
-                }
-              })
-              .then(
-                    
-                   res => {
-                      set('corsiLength', res.data[0]['COUNT(*)'])
-                  }
-                  )
-                  axios({
-                    method: 'get',
-                    url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-                    params: {
-                        instrument:7,
-                        user: userId
-                    }
-                  })
-
-                      .then(
-                    
-                        res => {
-                           set('corsiLength', res.data[0]['COUNT(*)'])
-                       }
-                       )
-                       axios({
-                         method: 'get',
-                         url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-                         params: {
-                             instrument:8,
-                             user: userId
-                         }
-                       })
-                       .then(
-                             
-                            res => {
-                               set('fonoLength', res.data[0]['COUNT(*)'])
-                           }
-                           )
+            )
       }
-    }    
+    }
 
     get('completedTests')
-    .then(res => {
-      if (res === undefined) {
-        set('completedTests', [])
-      }
-    })
+      .then(res => {
+        if (res === undefined) {
+          set('completedTests', [])
+        }
+      })
 
 
 
@@ -257,42 +293,42 @@ function App() {
 
     <Fragment>
 
-          { isLogged && <Fragment>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossOrigin="anonymous"></link>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css" integrity="sha512-+mlclc5Q/eHs49oIOCxnnENudJWuNqX5AogCiqRBgKnpoplPzETg2fkgBFVC6WYUVxYYljuxPNG8RE7yBy1K+g==" crossOrigin="anonymous" referrerPolicy="no-referrer"/>
-            </Fragment>/* {/* } */} 
+      {isLogged && <Fragment>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossOrigin="anonymous"></link>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css" integrity="sha512-+mlclc5Q/eHs49oIOCxnnENudJWuNqX5AogCiqRBgKnpoplPzETg2fkgBFVC6WYUVxYYljuxPNG8RE7yBy1K+g==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+      </Fragment>/* {/* } */}
 
-          <BrowserRouter>
-          { isLogged && <Fragment>
-            <Navbar/>
+      <BrowserRouter>
+        {isLogged && <Fragment>
+          <Navbar />
 
-         <Aside/>
-         </Fragment>}
-        <Routes>       
-          { isLogged 
-          ?  <Route path="/" element={<HomePage/>}></Route>
-          : <Route path="/" element={<Login/>}></Route>}  
-          
-          <Route path="/students" element={<StudentList/>}></Route>
-          <Route path="/login" element={<Login/>}></Route>
-          <Route path="/tejaslee" element={<TejasLee/>}></Route>
-          <Route path="/calculo" element={<Calculo/>}></Route>
-          <Route path="/excel" element={<Excel/>}></Route>
-          <Route path="/moments" element={<Moments/>}></Route>
-          <Route path="/respaldo" element={<Respaldo/>}></Route>
-          <Route path="/parents" element={<Parents/>}></Route>
-          <Route path="/desarrollo" element={<Desarrollo/>}></Route>
-          <Route path="/sdq" element={<ParentsForm/>}></Route>
-          <Route path="/aces" element={<Aces/>}></Route>
-          <Route path="/corsi" element={<Corsi/>}></Route>
-          <Route path="/hnf" element={<HNF/>}></Route>
-          <Route path="/fonologico" element={<Fonologico/>}></Route>
-          <Route path="/torre" element={<Torre/>}></Route>
-          <Route path="/esc" element={<Esc/>}></Route>
-          <Route path="/wally" element={<Wally/>}></Route>
-          <Route path="*" element={<NotFoundPage/>}/>
+          <Aside />
+        </Fragment>}
+        <Routes>
+          {isLogged
+            ? <Route path="/" element={<HomePage />}></Route>
+            : <Route path="/" element={<Login />}></Route>}
+
+          <Route path="/students" element={<StudentList />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/tejaslee" element={<TejasLee />}></Route>
+          <Route path="/calculo" element={<Calculo />}></Route>
+          <Route path="/excel" element={<Excel />}></Route>
+          <Route path="/moments" element={<Moments />}></Route>
+          <Route path="/respaldo" element={<Respaldo />}></Route>
+          <Route path="/parents" element={<Parents />}></Route>
+          <Route path="/desarrollo" element={<Desarrollo />}></Route>
+          <Route path="/sdq" element={<ParentsForm />}></Route>
+          <Route path="/aces" element={<Aces />}></Route>
+          <Route path="/corsi" element={<Corsi />}></Route>
+          <Route path="/hnf" element={<HNF />}></Route>
+          <Route path="/fonologico" element={<Fonologico />}></Route>
+          <Route path="/torre" element={<Torre />}></Route>
+          <Route path="/esc" element={<Esc />}></Route>
+          <Route path="/wally" element={<Wally />}></Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      
+
       </BrowserRouter>
 
 
