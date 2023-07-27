@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { get } from 'idb-keyval';
+import { useNavigate  } from 'react-router-dom'
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -7,13 +8,32 @@ import 'swiper/css/scrollbar';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Instruction from '../components/Instruction'
+import {get, update, getMany, set} from 'idb-keyval'
 
-import ImageResponse from '../components/Wally/ImageResponse';
-import ImageAction from '../components/Wally/ImageAction';
+import Swal from 'sweetalert2'
+
+import EmpathyOptions from './EmpathyOptions';
 export default function Esc() {
 
+    const navigate = useNavigate()
     const [wallyItems, setWallyItems] = useState([]);
+    const [isArray, setIsArray] = useState(false)
     const [studentName, setStudentName] = useState("")
+    const [correctAnswers] = useState({
+        359: "1",
+        360: "2",
+        361: "3",
+        362: "4",
+        363: "1",
+        364: "2",
+        365: "3",
+        366: "4",
+        367: "1",
+        368: "2",
+        369: "3",
+        370: "4",
+
+    })
     useEffect(() => {
 
         get('selectedStudentName')
@@ -39,6 +59,184 @@ export default function Esc() {
             window.history.go(1);
         }
     }, [])
+
+
+    function getMomentByDate(date) {
+        let dateBegin;
+        let dateUntil;
+        get('moments')
+        .then(res => {
+            res.map(element => {
+                dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW")
+                dateUntil = new Date(element['until']).toLocaleDateString("zh-TW")
+                if (date >= dateBegin && date <= dateUntil ) {
+                    return element['id']
+                } 
+                
+                
+            })
+        })
+    }
+
+    function saveEsc() {
+
+
+        Swal.fire({
+            title: '¿Deseas finalizar y guardar el test?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Si, guardar y salir'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let choices = {}
+                let instrumentInfo = {}
+                let choicesArray = []
+  
+
+                let testDataArray = ['selectedStudent', 'userData']
+
+                getMany(testDataArray).then(([firstVal, secondVal]) => {
+                    instrumentInfo['user_id'] = parseInt(secondVal['id'])
+                    instrumentInfo['student_id'] = parseInt(firstVal)
+                    instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
+                }
+                );
+
+                choicesArray.push(instrumentInfo)
+
+                let allInstruments = document.getElementById('.esc-form')
+                const radios = document.querySelectorAll('input[type="radio"]');
+
+                radios.forEach(radio => {
+                    if (radio.checked) {
+                        if (correctAnswers[radio.dataset.id] == radio.value) {
+                            choices[radio.dataset.id] = {
+                                alternative: radio.value,
+                                value: 1
+                            }
+                        } else {
+                            choices[radio.dataset.id] = {
+                                alternative: radio.value,
+                                value: 0
+                            }
+                        }
+
+                    } else {
+                        if (!choices[radio.dataset.id]) {
+                            choices[radio.dataset.id] = {
+                                alternative: 0,
+                                value: 0
+                            }
+                        }
+
+
+                    }
+                })
+
+                debugger;
+
+                instrumentInfo['instrument'] = 10;
+
+                choicesArray.push(choices)
+
+                get('backupTest')
+                    .then(response => {
+                        let backupLength = response.length
+                        if (Array.isArray(response) && response.length > 0) {
+                            get('completedTests')
+                                .then(res => {
+                                    if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
+                                        console.log(response, "Actualizando Backup")
+                                        let arrayCounter = 0;
+                                        response.forEach(array => {
+                                            let responseMoment;
+                                            let instrumentMoment;
+                                            if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                                                responseMoment = getMomentByDate(array[0]['date'])
+                                                instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                                                if (responseMoment === instrumentMoment) {
+                                                    response.splice(arrayCounter, 1)
+                                                }
+                                            }
+                                            arrayCounter += 1
+
+                                        })
+
+                                        update('backupTest', val => [...response, choicesArray])
+                                    }
+                                })
+                        }
+                    })
+
+
+                get('completedTests')
+                    .then(response => {
+
+                        if (!isArray) {
+                            if (response.length === undefined) {
+                                update('completedTests', (val) =>
+                                    [response, choicesArray])
+                                setIsArray(true)
+                            } else if (response.length === 0) {
+
+                                set('completedTests', [choicesArray])
+                            } else {
+                                console.log(response, "Actualizando1")
+                                let arrayCounter = 0;
+                                response.forEach(array => {
+
+                                    let responseMoment;
+                                    let instrumentMoment;
+                                    if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
+
+                                        responseMoment = getMomentByDate(array[0]['date'])
+                                        instrumentMoment = getMomentByDate(instrumentInfo['date'])
+
+                                        if (responseMoment === instrumentMoment) {
+                                            response.splice(arrayCounter, 1)
+                                        }
+                                    }
+                                    arrayCounter += 1
+
+                                })
+
+                                update('completedTests', val => [...response, choicesArray])
+
+
+                                alert.show('Test guardado con éxito', {
+                                    type: 'success'
+                                })
+
+                                setTimeout(() => {
+                                    navigate('/')
+                                }, 3000)
+                            }
+                        } else {
+                            console.log(response, "Actualizando2")
+                            update('completedTests', val => [...response, choicesArray])
+
+                            alert.show('Test guardado con éxito', {
+                                type: 'success'
+                            })
+
+                            setTimeout(() => {
+                                navigate('/')
+                            }, 3000)
+                        }
+
+
+                    })
+            }
+        })
+
+
+
+    }
 
 
 
@@ -71,28 +269,28 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
 (tarjetas 1 a 8)  y pídele que señale la expresión que mejor represente cómo se sentirá el personaje"/>
                                 </SwiperSlide>
 
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
+                                <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
                                     <img class="esc-image" src='/images/esc-1.png' />
                                 </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
+                                <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
                                     <img class="esc-image" src='/images/esc-2.png' />
                                 </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
+                                <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
                                     <img class="esc-image" src='/images/esc-3.png' />
                                 </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
+                                <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
                                     <img class="esc-image" src='/images/esc-4.png' />
                                 </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
+                                <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
                                     <img class="esc-image" src='/images/esc-5.png' />
                                 </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
+                                <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
                                     <img class="esc-image" src='/images/esc-6.png' />
                                 </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
+                                <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
                                     <img class="esc-image" src='/images/esc-7.png' />
                                 </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
+                                <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
                                     <img class="esc-image" src='/images/esc-8.png' />
                                 </SwiperSlide>
 
@@ -104,237 +302,214 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-9.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-9.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+                                            itemId={359}
+                                            gender={"F"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-10.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-10.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+                                            itemId={360}
+                                            gender={"F"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-11.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-11.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+
+                                            itemId={361}
+                                            gender={"F"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-12.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-12.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+                                            itemId={362}
+                                            gender={"M"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-13.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-13.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+
+                                            itemId={363}
+                                            gender={"M"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-14.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-14.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+
+                                            itemId={364}
+                                            gender={"F"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-15.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-15.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+
+                                            itemId={365}
+                                            gender={"M"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-16.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-16.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+
+                                            itemId={366}
+                                            gender={"M"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-17.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-17.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+
+                                            itemId={367}
+                                            gender={"M"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-18.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-18.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+
+                                            itemId={368}
+                                            gender={"F"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-19.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-19.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+
+                                            itemId={369}
+                                            gender={"M"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
                                 <>
-                                <SwiperSlide key={wallyItems[0].itemId + "-media"}>
-                                    <img class="esc-image" src='/images/esc-20.png' />
-                                </SwiperSlide>
-                                <SwiperSlide key={wallyItems[0].itemId}>
-                                    <ImageResponse
-                                        title={wallyItems[0].title}
-                                        type="quiz"
-                                        other={false}
-                                        answer={wallyItems[0].answer}
-                                        instrumentId={wallyItems[0].instrumentId}
-                                        instrumentName={wallyItems[0].instrumentName}
-                                        num={wallyItems[0].num}
-                                        itemId={wallyItems[0].itemId}
-                                    />
-                                </SwiperSlide>
+                                    <SwiperSlide className="esc-slide" key={wallyItems[0].itemId + "-media"}>
+                                        <img class="esc-image" src='/images/esc-20.png' />
+                                    </SwiperSlide>
+                                    <SwiperSlide key={wallyItems[0].itemId}>
+                                        <EmpathyOptions
+                                            type="quiz"
+                                            instrumentId={10}
+                                            instrumentName={'ESC'}
+
+                                            itemId={370}
+                                            gender={"F"}
+                                        />
+                                    </SwiperSlide>
                                 </>
 
 
 
 
-                                <SwiperSlide>
-                                    <Instruction checkpoint={true} instruction="Lo hiciste muy bien" />
-                                </SwiperSlide>
+                                <SwiperSlide className="esc-slide">
+                                    <div style={{display:"flex", flexDirection:"column", justifyContent:"center", alignContent:"center", alignItems:"center"}}>
+                                        <h4>Lo hiciste muy bien</h4>
+                                        <button className="btn btn-primary mt-3" onClick={saveEsc}>Guardar</button>
+                                    </div>
+                                      
+                            </SwiperSlide>
 
                             </Fragment>
 

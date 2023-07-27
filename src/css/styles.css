@@ -1403,6 +1403,41 @@ template {
   width: 600px; /* Need a specific value to work */
 }
 
+.esc-emotion {
+  width: 350px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.esc-test {
+  display: flex;
+  flex-direction: column;
+}
+
+.esc-test:hover {
+  outline: 4px solid #3aafb9;
+}
+
+.esc-test:active {
+  outline: 4px solid #3aafb9;
+}
+
+.esc-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.esc-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
 html {
   background-color: #fff;
 }
