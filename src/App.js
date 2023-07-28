@@ -43,7 +43,7 @@ function App() {
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url = /* `http://localhost:3500/${data}` || */ `https://selb.bond/${data}`
+      let url =  /*`http://localhost:3500/${data}` ||*/  `https://selb.bond/${data}`
       axios(url)
         .then(res => {
           set(data, res.data)
@@ -100,6 +100,7 @@ function App() {
     getData('studies')
     getData('courses')
     getData('sdq')
+    getData('studies/active')
 
     get('userData').then(res => {
       setUserId(res.id)

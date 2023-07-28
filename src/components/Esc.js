@@ -124,7 +124,7 @@ export default function Esc() {
             }
         })
 
-        debugger;
+
 
         instrumentInfo['instrument'] = 10;
 

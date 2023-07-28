@@ -17,6 +17,7 @@ export default function Excel () {
     const [csvData, setCsvData] = useState()
     const [fileName, setFileName] = useState()
     const [filteredMoments, setFilteredMoments] = useState([])
+    const [studyId, setStudyId] = useState()
 
 
     useEffect(() => {
@@ -41,6 +42,7 @@ export default function Excel () {
     }, [])
 
     const setMomentsFiltered = (e) => {
+        setStudyId(e.target.value)
         setFilteredMoments(moments.filter(moment => moment.study_id == e.target.value))
     }
 
@@ -93,6 +95,11 @@ export default function Excel () {
         }
     }
 
+
+    function getStudyId () {
+
+    }
+
     const getCsv = () => {
         const schools = getSelectedSchool()
         const moment = getMoment()
@@ -113,6 +120,7 @@ export default function Excel () {
             dataObject['schools'] = schools
             dataObject['moment'] = moment
             dataObject['instrument'] = instrument
+            dataObject['studyId'] = studyId
 
             getFileName(instrument)
 

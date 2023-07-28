@@ -259,76 +259,119 @@ export default function HomePage() {
 
 
 
-  function sendNewInstrument() {
+  async function sendNewInstrument() {
+
+
+
 
     get('completedTests')
-      .then(
-        res => {
+      .then( async (res) => {
           if (res !== undefined) {
-            Swal.fire({
-              inputAttributes: {
-                autocapitalize: 'off'
-              },
+            const activeStudies = await get('studies/active');
+            const options = {}
+            activeStudies.forEach((study) => {
+              options[study.id] = study.name;
+            })
+            console.log(activeStudies)
+
+
+            const {value} = await Swal.fire({
+              title: 'Selecciona un estudio',
+              input: 'select',
+              inputOptions: options,
+              inputPlaceholder: 'Selecciona un estudio',
               showCancelButton: true,
-              cancelButtonText: 'Cancelar',
-              cancelButtonColor: '#cc4846',
-              confirmButtonColor: "#1674d8",
-              allowOutsideClick: false,
-              confirmButtonText: '¿Deseas enviar los test?',
-              showLoaderOnConfirm: true,
-              preConfirm: async () => {
-                return fetch('http://localhost:3500/newevaluation'||  'https://selb.bond/newevaluation', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(res)
-                })
-                  .then(response => {
-                    if (!response.ok) {
-                      throw new Error(response.statusText)
-                    }
-                    return response.json()
-                  })
-                  .catch(error => {
-                    Swal.showValidationMessage(
-                      `Ha ocurrido un error en el envío de datos desde el dispositivo: ${error.message}`
-                    )
-                  })
-              },
-            }).then((result) => {
-              if (result.isConfirmed) {
-                Swal.fire({
-                  showCancelButton: true,
-                  cancelButtonText: 'Finalizar',
-                  cancelButtonColor: '#70C851',
-                  confirmButtonColor: "#E6BB34",
-                  showConfirmButton: true,
-                  allowOutsideClick: false,
-                  confirmButtonText: 'Finalizar y eliminar test por enviar',
-                  title: `${result.value.statusText}`,
-                  html: `<b>Total enviados</b>: ${result.value.instrumentsLength}
-                                   <br>
-                                   <b>Ingresados</b>: ${result.value.createdCounter}
-                                   <br>
-                                   <b>Actualizados</b>: ${result.value.updatedCounter}
-                                   <br></br>
-                                   ${result.value.htmlText}`
-                }).then(result => {
-                  if (result.isConfirmed) {
-                    update('completedTests', val => [])
-                    setTimeout(() => {
-                      window.location.pathname = '/'
-                    }, 3000)
+              inputValidator: (value) => {
+                return new Promise((resolve) => {
+
+                  if (value !== '') {
+                    resolve()
                   } else {
-                    setTimeout(() => {
-                      window.location.pathname = '/'
-                    }, 3000)
+
+                    resolve('Necesitas seleccionar un estudio')
                   }
                 })
-
               }
             })
+
+            if (value) {
+
+              const studyId = value;
+
+                Swal.fire({
+                  inputAttributes: {
+                    autocapitalize: 'off'
+                  },
+                  showCancelButton: true,
+                  cancelButtonText: 'Cancelar',
+                  cancelButtonColor: '#cc4846',
+                  confirmButtonColor: "#1674d8",
+                  allowOutsideClick: false,
+                  confirmButtonText: '¿Deseas enviar los test?',
+                  showLoaderOnConfirm: true,
+                  preConfirm: async () => {
+                    return fetch(/*'http://localhost:3500/newevaluation'||*/  'https://selb.bond/newevaluation', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        studyId: studyId,
+                        instruments: res
+                      })
+                    })
+                      .then(response => {
+                        if (!response.ok) {
+                          throw new Error(response.statusText)
+                        }
+                        return response.json()
+                      })
+                      .catch(error => {
+                        Swal.showValidationMessage(
+                          `Ha ocurrido un error en el envío de datos desde el dispositivo: ${error.message}`
+                        )
+                      })
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    Swal.fire({
+                      showCancelButton: true,
+                      cancelButtonText: 'Finalizar',
+                      cancelButtonColor: '#70C851',
+                      confirmButtonColor: "#E6BB34",
+                      showConfirmButton: true,
+                      allowOutsideClick: false,
+                      confirmButtonText: 'Finalizar y eliminar test por enviar',
+                      title: `${result.value.statusText}`,
+                      html: `<b>Total enviados</b>: ${result.value.instrumentsLength}
+                                       <br>
+                                       <b>Ingresados</b>: ${result.value.createdCounter}
+                                       <br>
+                                       <b>Actualizados</b>: ${result.value.updatedCounter}
+                                       <br></br>
+                                       ${result.value.htmlText}`
+                    }).then(result => {
+                      if (result.isConfirmed) {
+                        update('completedTests', val => [])
+                        setTimeout(() => {
+                          window.location.pathname = '/'
+                        }, 3000)
+                      } else {
+                        setTimeout(() => {
+                          window.location.pathname = '/'
+                        }, 3000)
+                      }
+                    })
+    
+                  }
+                })
+              
+
+            }
+
+
+            
+
 
 
           }
