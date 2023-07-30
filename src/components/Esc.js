@@ -338,7 +338,9 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             instrumentName={'ESC'}
                                             itemId={359}
                                             gender={"F"}
+                                            referenceImage={'/images/esc-9.png'}
                                         />
+                                          
                                     </SwiperSlide>
                                 </>
 
@@ -353,6 +355,8 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             instrumentName={'ESC'}
                                             itemId={360}
                                             gender={"F"}
+                                            referenceImage={'/images/esc-10.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
@@ -367,10 +371,12 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             type="quiz"
                                             instrumentId={10}
                                             instrumentName={'ESC'}
-
                                             itemId={361}
                                             gender={"F"}
+                                            referenceImage={'/images/esc-11.png'}
+
                                         />
+      
                                     </SwiperSlide>
                                 </>
 
@@ -386,6 +392,8 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             instrumentName={'ESC'}
                                             itemId={362}
                                             gender={"M"}
+                                            referenceImage={'/images/esc-12.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
@@ -400,9 +408,10 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             type="quiz"
                                             instrumentId={10}
                                             instrumentName={'ESC'}
-
                                             itemId={363}
                                             gender={"M"}
+                                            referenceImage={'/images/esc-13.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
@@ -417,9 +426,10 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             type="quiz"
                                             instrumentId={10}
                                             instrumentName={'ESC'}
-
                                             itemId={364}
                                             gender={"F"}
+                                            referenceImage={'/images/esc-14.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
@@ -434,9 +444,10 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             type="quiz"
                                             instrumentId={10}
                                             instrumentName={'ESC'}
-
                                             itemId={365}
                                             gender={"M"}
+                                            referenceImage={'/images/esc-15.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
@@ -451,9 +462,10 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             type="quiz"
                                             instrumentId={10}
                                             instrumentName={'ESC'}
-
                                             itemId={366}
                                             gender={"M"}
+                                            referenceImage={'/images/esc-16.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
@@ -468,9 +480,10 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             type="quiz"
                                             instrumentId={10}
                                             instrumentName={'ESC'}
-
                                             itemId={367}
                                             gender={"M"}
+                                            referenceImage={'/images/esc-17.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
@@ -485,9 +498,10 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             type="quiz"
                                             instrumentId={10}
                                             instrumentName={'ESC'}
-
                                             itemId={368}
                                             gender={"F"}
+                                            referenceImage={'/images/esc-18.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
@@ -502,9 +516,10 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             type="quiz"
                                             instrumentId={10}
                                             instrumentName={'ESC'}
-
                                             itemId={369}
                                             gender={"M"}
+                                            referenceImage={'/images/esc-19.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
@@ -519,9 +534,10 @@ Si el niño(a) tiene dificultad para responder verbalmente, muestra las imágene
                                             type="quiz"
                                             instrumentId={10}
                                             instrumentName={'ESC'}
-
                                             itemId={370}
                                             gender={"F"}
+                                            referenceImage={'/images/esc-20.png'}
+
                                         />
                                     </SwiperSlide>
                                 </>
