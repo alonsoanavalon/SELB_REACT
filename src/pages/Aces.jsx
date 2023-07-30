@@ -97,7 +97,7 @@ export default function Aces () {
             </div>
         </Fragment>
 
-        <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
+        <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem", color: "#ddd", opacity:0.6}}>Estudiante: {studentName && studentName} </p>
 
         </div>
     )

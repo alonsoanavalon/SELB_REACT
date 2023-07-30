@@ -345,7 +345,7 @@ que me digas el nombre de cada una. Si no conoces alguna letra está bien, inté
                 </Swiper>
 
             </div>
-            <p style={{position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
+            <p style={{position:"absolute", textAlign:"start", left:"1rem", bottom:"-4rem",color: "#ddd", opacity:0.6}}>Estudiante: {studentName && studentName} </p>
             </div>
 
     )

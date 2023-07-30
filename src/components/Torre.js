@@ -799,8 +799,8 @@ export default function Torre() {
             <br></br>
             {
               step > 1 
-              ? <h5 style={{padding:"0", margin:"0", textAlign:"center"}}>Ejercicio {step-1}</h5>
-              : <h5 style={{padding:"0", margin:"0", textAlign:"center"}}>Item de Ensayo</h5>
+              ? <h5 style={{padding:"0", margin:"0", textAlign:"center", visibility: !visibleInstruction && 'hidden'}}>Ejercicio {step-1}</h5>
+              : <h5 style={{padding:"0", margin:"0", textAlign:"center", visibility: !visibleInstruction && 'hidden'}}>Item de Ensayo</h5>
 
             }
           </div>
@@ -1168,7 +1168,7 @@ export default function Torre() {
 
       }
     </Fragment>
-            <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"0", bottom:"0", right:"0", margin: "auto", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
+            <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"0", bottom:"0", right:"0", margin: "auto", color: "#ddd", opacity:0.6}}>Estudiante: {studentName && studentName} </p>
             </>
 
   );

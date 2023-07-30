@@ -561,7 +561,7 @@ document.onmousemove = function (e) {
         </Swiper>
         </div>
         <div>
-            <p style={{margin:"2rem auto 0 auto", width:"100%", textAlign:"start", padding:"0 1rem", color:"#aaa"}}>Estudiante: {studentName && studentName} </p>
+            <p style={{margin:"2rem auto 0 auto", width:"100%", textAlign:"start", padding:"0 1rem", color: "#ddd", opacity:0.6}}>Estudiante: {studentName && studentName} </p>
         </div>
         </div>
       );
