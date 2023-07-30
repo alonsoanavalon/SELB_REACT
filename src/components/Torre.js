@@ -18,7 +18,7 @@ export default function Torre() {
   const [correctAnswers] = useState(CORRECT_ANSWERS)
   const [tries, setTries] = useState(1);
   const [finish, setFinish] = useState(false);
- 
+  const [resetTimes, setResetTimes] = useState(0)
   const [results, setResults] = useState({})
   const [step, setStep] = useState(0)
   const [studentName, setStudentName] = useState("")
@@ -600,6 +600,8 @@ export default function Torre() {
   }
 
   function resetStep() {
+    setResetTimes(prevTimes => prevTimes + 1)
+    setTries(1)
     if (STICKS_BY_STEP) {
       setDroppables(STICKS_BY_STEP[step].droppables)
     }
@@ -624,11 +626,14 @@ export default function Torre() {
     }
     const answer = {
       options: {
-        firstStick: droppables[0].items,
-        secondStick: droppables[1].items,
-        thirdStick: droppables[2].items,
+        sticks: {
+          firstStick: droppables[0].items,
+          secondStick: droppables[1].items,
+          thirdStick: droppables[2].items,
+        },
         time: timer,
         tries,
+        resets: resetTimes
       },
       value: value ? 1 : 0
     }
@@ -691,15 +696,17 @@ export default function Torre() {
     if (step == 13) {
       saveAnswer(correctAnswer);
       resetTimer()
+      setResetTimes(0)
       setFinish(true)
     } else if (step > 1) {
       saveAnswer(correctAnswer);
       resetTimer();
+      setResetTimes(0)
       nextStep();
       setTries(1)
     } else {
-      console.log("no se guarda el dato")
       resetTimer();
+      setResetTimes(0)
       nextStep();
 
     }
@@ -1163,13 +1170,12 @@ export default function Torre() {
 
           </div> */}
 
-
         </div>
 
       }
     </Fragment>
             <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"0", bottom:"0", right:"0", margin: "auto", color: "#ddd", opacity:0.6}}>Estudiante: {studentName && studentName} </p>
-            </>
+    </>
 
   );
 
