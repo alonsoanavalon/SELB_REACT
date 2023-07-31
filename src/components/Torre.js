@@ -22,6 +22,7 @@ export default function Torre() {
   const [results, setResults] = useState({})
   const [step, setStep] = useState(0)
   const [studentName, setStudentName] = useState("")
+  const [finishedStep, setFinishedStep] = useState(false);
 
   useEffect(() => {
 
@@ -587,6 +588,7 @@ export default function Torre() {
     const correctAnswer = isCorrectAnswer();
     if (correctAnswer) {
       setActiveTimer(false)
+      setFinishedStep(true)
       setTimeout(() => {
         finishStep(correctAnswer)
       }, 600)
@@ -699,7 +701,7 @@ export default function Torre() {
       setResetTimes(0)
       setFinish(true)
     } else if (step > 1) {
-      debugger
+      
       saveAnswer(correctAnswer);
       resetTimer();
       setResetTimes(0)
@@ -763,6 +765,8 @@ export default function Torre() {
         showExample(html, null);
       }
     }
+
+    setFinishedStep(false)
   }
 
   function nextInstruction() {
@@ -792,7 +796,22 @@ export default function Torre() {
     }
 
   }, [timer, correctAnswer, activeTimer]);
- 
+
+  function disableDraggable (draggableIndex, finishedStep) {
+
+    if (draggableIndex) {
+      if (draggableIndex === 0) {
+        debugger;
+        return false;
+      } else {
+        return true;
+      }
+    } 
+
+    if (finishedStep) { 
+      return true }
+  }
+
   return (
     <>
     <Fragment>
@@ -993,7 +1012,7 @@ export default function Torre() {
                     >
                       <div style={{ transition: 'none !important' }}>
                         {droppables[0].items.map((item, index) => (
-                          <Draggable key={item} draggableId={item} index={index} isDragDisabled={index === 0 ? false : true} /* shouldRespectForcePress={true} */ >
+                          <Draggable key={item} draggableId={item} index={index} isDragDisabled={disableDraggable(index, finishedStep)} shouldRespectForcePress={false}>
                             {(provided, snapshot, key) => {
                               const draggableStyle = getStyle(provided.draggableProps.style, snapshot);
                               return (<div
@@ -1050,7 +1069,7 @@ export default function Torre() {
                     >
                       <div style={{ transition: 'none !important' }}>
                         {droppables[1].items.map((item, index) => (
-                          <Draggable key={item} draggableId={item} index={index} isDragDisabled={index === 0 ? false : true} /* shouldRespectForcePress={true} */ >
+                          <Draggable key={item} draggableId={item} index={index} isDragDisabled={disableDraggable(index, finishedStep)} shouldRespectForcePress={false}>
                             {(provided, snapshot, key) => {
                               const draggableStyle = getStyle(provided.draggableProps.style, snapshot);
                               return (<div
@@ -1107,7 +1126,7 @@ export default function Torre() {
                     >
                       <div style={{ transition: 'none !important' }}>
                         {droppables[2].items.map((item, index) => (
-                          <Draggable key={item} draggableId={item} index={index} isDragDisabled={index === 0 ? false : true} /* shouldRespectForcePress={true} */ >
+                          <Draggable key={item} draggableId={item} index={index} isDragDisabled={disableDraggable(index, finishedStep)} shouldRespectForcePress={false}>
                             {(provided, snapshot, key) => {
                               const draggableStyle = getStyle(provided.draggableProps.style, snapshot);
                               return (<div
