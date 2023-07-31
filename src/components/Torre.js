@@ -25,11 +25,17 @@ export default function Torre() {
   const [finishedStep, setFinishedStep] = useState(false);
 
   useEffect(() => {
-
-      get('selectedStudentName')
-      .then(studentName => setStudentName(studentName))
-
+      get('selectedStudentName').then(studentName => setStudentName(studentName))
   }, [])
+
+  useEffect(() => {
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+    window.history.go(1);
+    }
+}, [])
+
+
   function getMomentByDate(date) {
     let dateBegin;
     let dateUntil;
@@ -48,8 +54,6 @@ export default function Torre() {
 }
 
   async function saveTest(answers) {
-
-
     let instrumentInfo = {}
     let choicesArray = []
 
