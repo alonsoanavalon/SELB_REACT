@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { SwiperSlide } from 'swiper/react';
 
-export default function EmpathyOptions(props) {
+export default function  EmpathyOptions(props) {
 
     const [options, setOptions] = useState([])
 
@@ -157,7 +157,7 @@ export default function EmpathyOptions(props) {
                     {
                         options && options
                     }
-                    <img style={{width:"25%", outline:"1px solid #ccc"}} src={props.referenceImage}/>
+                    <img style={{width:"24%", outline:"1px solid #ccc"}} src={props.referenceImage}/>
 
 
                 </form>
