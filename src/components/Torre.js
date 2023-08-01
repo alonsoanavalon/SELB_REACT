@@ -246,8 +246,8 @@ export default function Torre() {
         }
       ],
       alert: `
-        <p>Tienes que copiar el orden en que están las pelotas en la imagen
-        Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
         <img style="width:90%"src="/images/exercise-1.png">
       `,
       tries: 2
@@ -267,9 +267,8 @@ export default function Torre() {
         }
       ],
       alert: `
-            <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-            <p>Tienes que copiar el orden en que están las pelotas en la imagen
-            Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
             <img style="width:90%"src="/images/exercise-2.png">
           `,
       tries: 2
@@ -289,9 +288,9 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-            <p>Tienes que copiar el orden en que están las pelotas en la imagen
-            Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
+
             <img style="width:90%"src="/images/exercise-3.png">
           `,
           tries: 3
@@ -311,9 +310,8 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-          <p>Tienes que copiar el orden en que están las pelotas en la imagen
-          Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
           <img style="width:90%"src="/images/exercise-4.png">
         `,
         tries: 3
@@ -333,9 +331,8 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-        <p>Tienes que copiar el orden en que están las pelotas en la imagen
-        Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
         <img style="width:90%"src="/images/exercise-5.png">
       `,
       tries: 4
@@ -355,9 +352,8 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-      <p>Tienes que copiar el orden en que están las pelotas en la imagen
-      Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
       <img style="width:90%"src="/images/exercise-6.png">
     `,
     tries: 4
@@ -377,9 +373,8 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-      <p>Tienes que copiar el orden en que están las pelotas en la imagen
-      Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
       <img style="width:90%"src="/images/exercise-7.png">
     `,
     tries: 4
@@ -399,9 +394,8 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-      <p>Tienes que copiar el orden en que están las pelotas en la imagen
-      Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
       <img style="width:90%"src="/images/exercise-8.png">
     `,
     tries: 4
@@ -421,9 +415,8 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-      <p>Tienes que copiar el orden en que están las pelotas en la imagen
-      Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
       <img style="width:90%"src="/images/exercise-9.png">
     `,
     tries: 4
@@ -443,9 +436,8 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-      <p>Tienes que copiar el orden en que están las pelotas en la imagen
-      Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
       <img style="width:90%"src="/images/exercise-10.png">
     `,
     tries: 5
@@ -465,9 +457,8 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-      <p>Tienes que copiar el orden en que están las pelotas en la imagen
-      Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
       <img style="width:90%"src="/images/exercise-11.png">
     `,
     tries: 5
@@ -487,9 +478,8 @@ export default function Torre() {
         }
       ],
       alert: `
-      <h4>¡Genial, haz pasado a la siguiente etapa!</h4>
-      <p>Tienes que copiar el orden en que están las pelotas en la imagen
-      Esta es la figura a la que debes llegar</p>
+      <p>Tienes que copiar el orden en que están las pelotas en la imagen</p>
+      <b>Esta es la figura a la que debes llegar</b>
       <img style="width:90%"src="/images/exercise-12.png">
     `,
     tries: 5
@@ -733,7 +723,7 @@ export default function Torre() {
         allowOutsideClick: false,
         html,
         icon: "success",
-        title: `Ejercicio ${exerciseNumber}`,
+        title: `Genial has pasado a la siguiente etapa`,
         confirmButtonText: 'Continuar',
       })
       .then((result) => {
@@ -873,12 +863,14 @@ export default function Torre() {
                   if (step > 1) {
                     if (timer !== TIME_LIMIT_IN_SECONDS) {
                       Swal.fire({
-                        showCancelButton: false,
+                        showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         allowOutsideClick: false,
                         icon: "info",
                         title: `¿Deseas finalizar esta etapa sin terminar?`,
                         confirmButtonText: 'Continuar',
+                        cancelButtonColor: 'rgb(243, 74, 74)',
+                        cancelButtonText: 'Cancelar',
                       })
                       .then((result) => {
                         if (result.isConfirmed) {
