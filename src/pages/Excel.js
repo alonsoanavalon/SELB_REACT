@@ -103,10 +103,14 @@ export default function Excel () {
     const getCsv = () => {
         const schools = getSelectedSchool()
         const moment = getMoment()
-        const instrument = getInstrument()
-     
+        let instrument = getInstrument()
+
         const dataObject = {}
 
+        if (instrument == 100) {
+            instrument = 6;
+            dataObject['countExamples'] = false;
+        }
 
         setCsvData(undefined)
 
@@ -121,13 +125,13 @@ export default function Excel () {
             dataObject['moment'] = moment
             dataObject['instrument'] = instrument
             dataObject['studyId'] = studyId
-
+            debugger;
             getFileName(instrument)
 
             
             axios({
                 method: 'post',
-                url:   /*'http://localhost:3500/excel'||*/ 'https://selb.bond/excel',
+                url:   'http://localhost:3500/excel'|| 'https://selb.bond/excel',
                 data: dataObject
             })
             .then(
@@ -178,8 +182,15 @@ export default function Excel () {
 
             <select  className="form-select" placeholder='Instrumentos' id="instrumentSelect" defaultValue="empty">
                 <option value="empty" disabled>Instrumentos</option>
+                <optgroup label="Todos">
                 {renderInstruments()}
-                {/* <option key={0}value={0}>Todos</option>  */}
+                </optgroup>
+                <optgroup label="Otros">
+                <option key={100} value={100}>Corsi (sin contar ejemplos) </option> 
+
+                </optgroup>
+
+                
 
             </select>   
             
