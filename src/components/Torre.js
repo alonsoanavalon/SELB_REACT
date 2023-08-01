@@ -715,22 +715,39 @@ export default function Torre() {
     setCorrectAnswer(false)
   }
 
-  function showExample(html, exerciseNumber) {
+  function showExample(html, exerciseNumber, isExample = false) {
     if (exerciseNumber) {
-      Swal.fire({
-        showCancelButton: false,
-        confirmButtonColor: '#3085d6',
-        allowOutsideClick: false,
-        html,
-        icon: "success",
-        title: `Genial has pasado a la siguiente etapa`,
-        confirmButtonText: 'Continuar',
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          setActiveTimer(true)
-        }
-      })
+      if (isExample) {
+        Swal.fire({
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          allowOutsideClick: true,
+          html,
+          icon: "info",
+          confirmButtonText: 'Continuar',
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            setActiveTimer(true)
+          }
+        })
+      } else {
+        Swal.fire({
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          allowOutsideClick: false,
+          html,
+          icon: "success",
+          title: `Genial has pasado a la siguiente etapa`,
+          confirmButtonText: 'Continuar',
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            setActiveTimer(true)
+          }
+        })
+      }
+
     } else {
       Swal.fire({
         showCancelButton: false,
@@ -907,9 +924,9 @@ export default function Torre() {
               e.preventDefault()
               const html = STICKS_BY_STEP[step].alert;
               if (STICKS_BY_STEP[step].exerciseNumber) {
-                showExample(html, STICKS_BY_STEP[step].exerciseNumber);
+                showExample(html, STICKS_BY_STEP[step].exerciseNumber, true);
               } else {
-                showExample(html, null);
+                showExample(html, null, true);
               }
             }}>Ejemplo</button>
 
