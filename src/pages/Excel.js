@@ -131,7 +131,7 @@ export default function Excel () {
             
             axios({
                 method: 'post',
-                url:  /* 'http://localhost:3500/excel'|| */'https://selb.bond/excel',
+                url:  'http://localhost:3500/excel'|| 'https://selb.bond/excel',
                 data: dataObject
             })
             .then(
@@ -182,7 +182,7 @@ export default function Excel () {
 
             <select  className="form-select" placeholder='Instrumentos' id="instrumentSelect" defaultValue="empty">
                 <option value="empty" disabled>Instrumentos</option>
-                <optgroup label="Todos">
+                <optgroup label="Principales">
                 {renderInstruments()}
                 </optgroup>
                 <optgroup label="Otros">
