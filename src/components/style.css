@@ -8,7 +8,8 @@ div[data-rbd-draggable-context-id] {
 }
 
 #draggingElement {
-    transition: 0.00001s !important;
+    transition: 0.0000001s !important;
+    background-color: red;
 }
 
 #notDraggingElement {
@@ -16,7 +17,7 @@ div[data-rbd-draggable-context-id] {
 }
 
 #droppingElement {
-    transition: 10s !important;
+    transition: 1000s !important;
 
 }
 

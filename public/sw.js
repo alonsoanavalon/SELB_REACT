@@ -35,6 +35,7 @@ this.addEventListener("install", evt => {
                 '/images/son.png',
                 '/images/man.png',
                 '/sounds/ahora.mp3',
+                '/sounds/dragging.wav',
                 '/students',
                 '/desarrollo',
                 '/menu.png',

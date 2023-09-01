@@ -565,16 +565,20 @@ export default function Desarrollo() {
   }
 
   const freezeInactiveDraggablesWhileDragging = (draggables, selectedDraggable) => {
+
     draggables.forEach((draggable) => {
       if (draggable.innerHTML !== selectedDraggable) {
+        debugger;
         draggable.setAttribute('id', 'notDraggingElement')
       } else {
+        debugger;
         draggable.setAttribute('id', 'draggingElement')
       }
     })
   }
 
   const onDragEnd = (result, droppables) => {
+    debugger;
     if (result.destination?.droppableId) {
       const sourceId = result.source.droppableId;
       const destinationId = result.destination.droppableId;
@@ -596,6 +600,7 @@ export default function Desarrollo() {
   };
 
   const onDragStart = (result) => {
+    debugger;
     const draggables = document.querySelectorAll('div[data-rbd-draggable-context-id]');
     freezeInactiveDraggablesWhileDragging(draggables, result.draggableId);
   }

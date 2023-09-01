@@ -13,7 +13,7 @@ export default function Torre() {
   const [selectedInstruction, setSelectedInstruction] = useState();
   const [timer, setTimer] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(false);
-  const [visibleInstruction, setVisibleInstruction] = useState(true);
+  const [visibleInstruction, setVisibleInstruction] = useState(false);
   const [activeTimer, setActiveTimer] = useState(false)
   const [correctAnswers] = useState(CORRECT_ANSWERS)
   const [tries, setTries] = useState(1);
@@ -23,6 +23,7 @@ export default function Torre() {
   const [step, setStep] = useState(0)
   const [studentName, setStudentName] = useState("")
   const [finishedStep, setFinishedStep] = useState(false);
+  const [visibleMenu, setVisibleMenu] = useState(false);
 
   useEffect(() => {
       get('selectedStudentName').then(studentName => setStudentName(studentName))
@@ -209,7 +210,8 @@ export default function Torre() {
           num: 4,
           description: "Las pelotas tienen siempre colocarse en las varas, no dejarlas afuera"
         }
-      ]
+      ],
+      img: "/images/example-0.png"
     },
     1: {
       id: 1,
@@ -228,7 +230,8 @@ export default function Torre() {
         <p>Tienes que copiar el orden en que están las pelotas en la imagen
         Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
         <img style="width:90%"src="/images/example-0.png">
-      `
+      `,
+      img: "/images/example-0.png"
 
     },
     2: {
@@ -251,6 +254,8 @@ export default function Torre() {
         <img style="width:90%"src="/images/exercise-1.png">
       `,
       tries: 2
+      ,
+      img: "/images/exercise-1.png"
     },
     3: {
       id: 3,
@@ -272,6 +277,8 @@ export default function Torre() {
             <img style="width:90%"src="/images/exercise-2.png">
           `,
       tries: 2
+      ,
+      img: "/images/exercise-2.png"
     },
     4: {
       id: 4,
@@ -294,6 +301,8 @@ export default function Torre() {
             <img style="width:90%"src="/images/exercise-3.png">
           `,
           tries: 3
+          ,
+          img: "/images/exercise-3.png"
     },
     5: {
       id: 5,
@@ -315,6 +324,8 @@ export default function Torre() {
           <img style="width:90%"src="/images/exercise-4.png">
         `,
         tries: 3
+        ,
+      img: "/images/exercise-4.png"
     },
     6: {
       id: 6,
@@ -336,6 +347,8 @@ export default function Torre() {
         <img style="width:90%"src="/images/exercise-5.png">
       `,
       tries: 4
+      ,
+      img: "/images/exercise-5.png"
     },
     7: {
       id: 7,
@@ -357,6 +370,8 @@ export default function Torre() {
       <img style="width:90%"src="/images/exercise-6.png">
     `,
     tries: 4
+    ,
+      img: "/images/exercise-6.png"
     },
     8: {
       id: 8,
@@ -378,6 +393,8 @@ export default function Torre() {
       <img style="width:90%"src="/images/exercise-7.png">
     `,
     tries: 4
+    ,
+      img: "/images/exercise-7.png"
     },
     9: {
       id: 9,
@@ -399,6 +416,8 @@ export default function Torre() {
       <img style="width:90%"src="/images/exercise-8.png">
     `,
     tries: 4
+    ,
+      img: "/images/exercise-8.png"
     },
     10: {
       id: 10,
@@ -420,6 +439,8 @@ export default function Torre() {
       <img style="width:90%"src="/images/exercise-9.png">
     `,
     tries: 4
+    ,
+      img: "/images/exercise-9.png"
     },
     11: {
       id: 11,
@@ -441,6 +462,8 @@ export default function Torre() {
       <img style="width:90%"src="/images/exercise-10.png">
     `,
     tries: 5
+    ,
+      img: "/images/exercise-10.png"
     },
     12: {
       id: 12,
@@ -462,6 +485,8 @@ export default function Torre() {
       <img style="width:90%"src="/images/exercise-11.png">
     `,
     tries: 5
+    ,
+      img: "/images/exercise-11.png"
     },
     13: {
       id: 13,
@@ -483,7 +508,9 @@ export default function Torre() {
       <img style="width:90%"src="/images/exercise-12.png">
     `,
     tries: 5
-    },
+    }
+    ,
+      img: "/images/exercise-12.png"
 
   }
 
@@ -559,6 +586,8 @@ export default function Torre() {
       if (draggable.innerHTML !== selectedDraggable) {
         draggable.setAttribute('id', 'notDraggingElement')
       } else {
+        var audio = new Audio('./sounds/dragging.wav');
+        audio.play();
         draggable.setAttribute('id', 'draggingElement')
       }
     })
@@ -607,9 +636,12 @@ export default function Torre() {
     const stepAnswers = correctAnswers[step];
     let points = 0;
     for (let i = 0; i <= 2; i++) {
-      if (JSON.stringify(stepAnswers[i]) == JSON.stringify(droppables[i].items)) {
-        points = points + 1
-      } 
+      if (stepAnswers) {
+        if (JSON.stringify(stepAnswers[i]) == JSON.stringify(droppables[i].items)) {
+          points = points + 1
+        } 
+      }
+    
     }
     const isCorrect = points === 3 ? true : false
     return isCorrect;
@@ -812,7 +844,6 @@ export default function Torre() {
 
     if (draggableIndex) {
       if (draggableIndex === 0) {
-        debugger;
         return false;
       } else {
         return true;
@@ -823,26 +854,81 @@ export default function Torre() {
       return true }
   }
 
+  function hiddeMenu() {
+    setVisibleMenu(prevValue => !prevValue)
+  }
+
+  useEffect(()=> {
+    if (droppables.length > 0) {
+      if (visibleMenu === false) {
+          document.querySelector("header").style.display = "none";
+      } else {
+        document.querySelector("header").style.display = "flex";
+
+      }
+    }
+  }, [visibleMenu, droppables])
+
   return (
-    <>
+    <div style={{position:"relative", height:"100%"}}>
     <Fragment>
       {
         droppables.length > 0 &&
-        <div style={{ transform: "none!important", zIndex: 1000, backgroundColor: "#fff", height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}> <DragDropContext onDragStart={result => onDragStart(result, droppables)} onDragEnd={result => onDragEnd(result, droppables)} >
+        <div style={{position:"relative", transform: "none!important", zIndex: 1000, backgroundColor: "#fff", height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}> <DragDropContext onDragStart={result => onDragStart(result, droppables)} onDragEnd={result => onDragEnd(result, droppables)} >
+          
+              
           <div style={{ width: "100%", position: "relative", padding: "4rem 3rem 0" }}>
+          <button style={{position:"absolute", left:"1rem", top:"1rem", width:"20px", height:"20px", borderRadius:"50%", border:"none", backgroundColor:"#ddd"}} onClick={
+                (e) => {
+                  e.preventDefault();
+                  hiddeMenu()
+                }
+              }></button>
           <div>
             {
-              timer === TIME_LIMIT_IN_SECONDS && <h5 style={{padding:"0", margin:"0", textAlign:"center"}}>¡Ha terminado el tiempo!</h5>
+              timer === TIME_LIMIT_IN_SECONDS && <h5 style={{padding:"0", margin:"0", textAlign:"center", position:"absolute", right:"5rem"}}>¡Ha terminado el tiempo!</h5>
             }
-            <br></br>
+
             {
               step > 1 
-              ? <h5 style={{padding:"0", margin:"0", textAlign:"center", visibility: !visibleInstruction && 'hidden'}}>Ejercicio {step-1}</h5>
-              : <h5 style={{padding:"0", margin:"0", textAlign:"center", visibility: !visibleInstruction && 'hidden'}}>Item de Ensayo</h5>
+              ? <h5 style={{padding:"0", margin:"0", textAlign:"center",     fontSize: "0.93rem",
+              width:"200px",
+              textAlign:"left",
+              color:"#333"}}>Ejercicio {step-1}</h5>
+              : <h5 style={{padding:"0", margin:"0", textAlign:"center",     fontSize: "0.93rem",
+              width:"200px",
+              textAlign:"left",
+              color:"#333"}}>Item de Ensayo</h5>
 
             }
           </div>
-          <div style={{visibility: !visibleInstruction && 'hidden'}}>
+
+          <div style={{visibility: visibleInstruction && 'hidden', display: visibleInstruction && 'none', textAlign:"center"}}>
+          {
+              <h6
+                style={{
+                  
+                  color: "#444",
+                  visibility: visibleInstruction && 'hidden',
+                  display: visibleInstruction && 'none',
+                  position: "absolute",
+                  fontSize: "0.93rem",
+                  width:"200px",
+                  textAlign:"left",
+                  color:"#a0a0a0"
+                }}
+              >
+                {selectedInstruction.description}
+              </h6>
+            }
+          <img  style={{width:"30%", opacity:"0.6", border:"1px solid #ccc"}}src={STICKS_BY_STEP[step].img}/>
+          </div>
+          <div >
+          
+
+            
+
+          </div>
           <button
               style={{
                 position: "absolute",
@@ -861,11 +947,10 @@ export default function Torre() {
                   resetStep()
                 }
               }>Reset</button>
-
-            <button
+          <button
               style={{
                 position: "absolute",
-                top: "0",
+                top: "7rem",
                 right: "6rem",
                 borderRadius: ".5rem",
                 height: "50px",
@@ -907,10 +992,8 @@ export default function Torre() {
               }>Siguiente</button>
 
 
-          </div>
 
-
-          <button style={{
+          {/* <button style={{
               position: "absolute",
               top: "0",
               right: "13rem",
@@ -928,81 +1011,16 @@ export default function Torre() {
               } else {
                 showExample(html, null, true);
               }
-            }}>Ejemplo</button>
+            }}>Ejemplo</button> */}
 
 
 
 
-                <div style={{
-                  position: "absolute",
-                  top: "0",
-                  left: "1rem",
-                  display: "flex",
-                  alignContent: "center",
-                  alignItems: "center",
-                  gap: "1rem"
-
-                }}>
-
-                  <button
-                    style={{
-                      height: "60px",
-                      width: "60px",
-                      border: "none",
-                      borderRadius: "50%",
-                      color: "#fff"
-
-                    }}
-                    onClick={
-                      (e) => {
-                        e.preventDefault();
-                        setVisibleInstruction(prevValue => !prevValue)
-                      }
-                    }>Ocultar</button>
-
-                    {
-                      STICKS_BY_STEP[step].instructions && 
-                      STICKS_BY_STEP[step].instructions.length > 1 && 
-                      <div>
-                        <button style={{ margin: "0 .5rem", border: "none", background: "transparent", visibility: !visibleInstruction && 'hidden'}} onClick={
-                          (e) => {
-                            e.preventDefault();
-                            previousInstruction();
-                          }
-                        } ><img src="/images/arrow-previous.png"/></button>
-
-                        <button style={{ border: "none", background: "transparent", visibility: !visibleInstruction && 'hidden' }} onClick={
-                          (e) => {
-                            e.preventDefault();
-                            nextInstruction();
-                          }
-                        }><img src="/images/arrow-next.png"/></button>
-                      </div>
-                    }
-                    
-      
-                </div>
 
 
 
 
-            {
-              selectedInstruction && <h6
-                style={{
-                  height: "60px",
-                  border: "1px solid #ccc",
-                  borderRadius: ".5rem",
-                  padding: ".7rem",
-                  margin: "1rem",
-                  color: "#444",
-                  visibility: !visibleInstruction && 'hidden'
-                }}
-              >
-                {selectedInstruction.description}
-              </h6>
-            }
-
-            <div style={{ display: 'flex', borderBottom: "2.5rem solid black", width: "80%", margin: "0 auto", justifyContent: "space-evenly" }}>
+            <div style={{ display: 'flex', borderBottom: "2.5rem solid black", width: "80%", margin: "0 auto", justifyContent: "space-evenly", marginBottom:"1rem" }}>
               <div style={{ width: "100px", margin: '8px', display: "flex", justifyContent: "space-around" }}>
                 <Droppable droppableId={droppables[0].id} verticalAlignment='bottom' isDropAnimating={false} reta={true} ignoreContainerClipping >
                   {(provided, snapshot) => (
@@ -1010,7 +1028,7 @@ export default function Torre() {
                       ref={provided.innerRef}
                       style={{
                         height: "280px",
-                        width: "50px",
+                        width: "200px",
                         margin: "0 auto",
                         paddingTop: droppables[0].items.length == 1 ? `calc(66px * 2)` : droppables[0].items.length === 2 ? `calc(66px * 1)` : droppables[0].items.length == 3 ? `0` : 0,
                         marginBottom: "-0.3rem",
@@ -1038,8 +1056,8 @@ export default function Torre() {
                                   ...draggableStyle,
                                   userSelect: 'none',
                                   padding: '8px',
-                                  height: '50px',
-                                  width: '50px',
+                                  height: '70px',
+                                  width: '70px',
                                   borderRadius: '50%',
                                   margin: '1rem auto',
                                   background: item === "AZ" ? '#3e98eb' : item === "R" ? '#f34a4a' : item === 'AM' ? '#f0f019' : 'white',
@@ -1068,7 +1086,7 @@ export default function Torre() {
                       ref={provided.innerRef}
                       style={{
                         height: "280px",
-                        width: "50px",
+                        width: "200px",
                         margin: "0 auto",
                         paddingTop: droppables[1].items.length == 1 ? `calc(66px * 2)` : droppables[1].items.length === 2 ? `calc(66px * 1)` : droppables[1].items.length == 3 ? `0` : 0,
                         marginBottom: "-0.3rem",
@@ -1095,8 +1113,8 @@ export default function Torre() {
                                   ...draggableStyle,
                                   userSelect: 'none',
                                   padding: '8px',
-                                  height: '50px',
-                                  width: '50px',
+                                  height: '70px',
+                                  width: '70px',
                                   borderRadius: '50%',
                                   margin: '1rem auto',
                                   background: item === "AZ" ? '#3e98eb' : item === "R" ? '#f34a4a' : item === 'AM' ? '#f0f019' : 'white',
@@ -1125,7 +1143,7 @@ export default function Torre() {
                       ref={provided.innerRef}
                       style={{
                         height: "280px",
-                        width: "50px",
+                        width: "200px",
                         margin: "0 auto",
                         paddingTop: droppables[2].items.length == 1 ? `calc(66px * 2)` : droppables[2].items.length === 2 ? `calc(66px * 1)` : droppables[2].items.length == 3 ? `0` : 0,
                         marginBottom: "-0.3rem",
@@ -1152,8 +1170,8 @@ export default function Torre() {
                                   ...draggableStyle,
                                   userSelect: 'none',
                                   padding: '8px',
-                                  height: '50px',
-                                  width: '50px',
+                                  height: '70px',
+                                  width: '70px',
                                   borderRadius: '50%',
                                   margin: '1rem auto',
                                   background: item === "AZ" ? '#3e98eb' : item === "R" ? '#f34a4a' : item === 'AM' ? '#f0f019' : 'white',
@@ -1207,8 +1225,8 @@ export default function Torre() {
 
       }
     </Fragment>
-            <p style={{zIndex: "100",position:"absolute", textAlign:"start", left:"0", bottom:"0", right:"0", margin: "auto", color: "#ddd", opacity:0.6}}>Estudiante: {studentName && studentName} </p>
-    </>
+            <p style={{ zIndex:"9000", color: "#ccc", opacity:0.8, position:"absolute", bottom:"-24px"}}>Estudiante: {studentName && studentName} </p>
+    </div>
 
   );
 
