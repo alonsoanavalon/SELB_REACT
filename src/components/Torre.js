@@ -676,6 +676,30 @@ export default function Torre() {
     return saveResponse;
   }
 
+  //crear un useeffect que al inicio del componente muestre una alerta con sweet alert para confirmar el inicio del test
+  useEffect(() => {
+    
+    Swal.fire({
+      showCancelButton: false,
+      confirmButtonColor: '#3085d6',
+      allowOutsideClick: false,
+      html: `¿Deseas iniciar?`,
+      icon: "info",
+      title: "Bienvenido",
+      confirmButtonText: 'Continuar',
+      showCancelButton: true,
+      cancelButtonColor: "#e01203",
+    })
+    .then((result => {
+      if (result.isConfirmed) {
+        return;
+      } else 
+      {
+        window.location.pathname = '/'
+      }
+    }))
+  }, [])
+
   useEffect( async () => {
     if (finish && results) {
       Swal.fire({
