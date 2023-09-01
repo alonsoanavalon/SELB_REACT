@@ -1225,7 +1225,7 @@ export default function Torre() {
 
       }
     </Fragment>
-            <p style={{ zIndex:"9000", color: "#ccc", opacity:0.8, position:"absolute", bottom:"-24px"}}>Estudiante: {studentName && studentName} </p>
+            <p style={{ zIndex:"9000", color: "#ccc", opacity:0.8, position:"absolute", bottom:"50px"}}>Estudiante: {studentName && studentName} </p>
     </div>
 
   );
