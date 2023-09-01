@@ -8,7 +8,7 @@ div[data-rbd-draggable-context-id] {
 }
 
 #draggingElement {
-    transition: 0.01s !important;
+    transition: 0.0001s !important;
 }
 
 #notDraggingElement {
