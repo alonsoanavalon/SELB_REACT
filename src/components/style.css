@@ -4,12 +4,11 @@ div[data-rbd-placeholder-context-id] {
 }
 
 div[data-rbd-draggable-context-id] {
-    transition: 90000000s !important;
+    transition: 9s !important;
 }
 
 #draggingElement {
-    transition: 0.0000001s !important;
-    background-color: red;
+    transition: 0.01s !important;
 }
 
 #notDraggingElement {
@@ -17,10 +16,9 @@ div[data-rbd-draggable-context-id] {
 }
 
 #droppingElement {
-    transition: 1000s !important;
+    transition: 10s !important;
 
 }
-
 .stick-number {
     position: absolute;
     bottom: -4rem;
