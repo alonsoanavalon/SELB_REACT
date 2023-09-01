@@ -683,9 +683,15 @@ export default function Torre() {
       showCancelButton: false,
       confirmButtonColor: '#3085d6',
       allowOutsideClick: false,
-      html: `¿Deseas iniciar?`,
+      html: `<h3>¿Deseas iniciar?</h3>
+      <br>
+      <h5>Recuerda que:</h5>
+      <ol>
+
+        <li>Debes presionar la ficha y luego moverla</li>
+        <li>La ficha sonará cuando sea presionada</li>
+      </ol>`,
       icon: "info",
-      title: "Bienvenido",
       confirmButtonText: 'Continuar',
       showCancelButton: true,
       cancelButtonColor: "#e01203",
