@@ -71,6 +71,7 @@
 }
 
 .aside-bar-active {
+    z-index:9999;
     transform:translate(0%);
     -webkit-transform:translate(0%);
     -moz-transform:translate(0%);
