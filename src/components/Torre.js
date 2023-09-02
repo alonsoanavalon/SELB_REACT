@@ -185,9 +185,10 @@ export default function Torre() {
     0: {
       id: 0,
       droppables: [
-        { id: '0', items: ['R'] },
+        { id: '0', items: ['AM'] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: ['AM'] }
+        { id: '2', items: ['R'] },
+
       ],
       instructions: [
         {
@@ -216,9 +217,11 @@ export default function Torre() {
     1: {
       id: 1,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] },
+
+
       ],
       instructions: [
         {
@@ -238,9 +241,11 @@ export default function Torre() {
       id: 2,
       exerciseNumber: 1,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] },
+
+
       ],
       instructions: [
         {
@@ -261,9 +266,11 @@ export default function Torre() {
       id: 3,
       exerciseNumber: 2,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] },
+
+
       ],
       instructions: [
         {
@@ -284,9 +291,11 @@ export default function Torre() {
       id: 4,
       exerciseNumber: 3,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] },
+
+
       ],
       instructions: [
         {
@@ -308,9 +317,11 @@ export default function Torre() {
       id: 5,
       exerciseNumber: 4,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] },
+
+
       ],
       instructions: [
         {
@@ -331,9 +342,9 @@ export default function Torre() {
       id: 6,
       exerciseNumber: 5,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] },
       ],
       instructions: [
         {
@@ -354,9 +365,9 @@ export default function Torre() {
       id: 7,
       exerciseNumber: 6,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] }
       ],
       instructions: [
         {
@@ -377,9 +388,9 @@ export default function Torre() {
       id: 8,
       exerciseNumber: 7,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] }
       ],
       instructions: [
         {
@@ -400,9 +411,9 @@ export default function Torre() {
       id: 9,
       exerciseNumber: 8,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] }
       ],
       instructions: [
         {
@@ -423,9 +434,9 @@ export default function Torre() {
       id: 10,
       exerciseNumber: 9,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] }
       ],
       instructions: [
         {
@@ -446,9 +457,11 @@ export default function Torre() {
       id: 11,
       exerciseNumber: 10,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] },
+
+
       ],
       instructions: [
         {
@@ -469,9 +482,9 @@ export default function Torre() {
       id: 12,
       exerciseNumber: 11,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '2', items: ['R', 'AM'] }
       ],
       instructions: [
         {
@@ -492,9 +505,10 @@ export default function Torre() {
       id: 13,
       exerciseNumber: 12,
       droppables: [
-        { id: '0', items: ['R', 'AM'] },
+        { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: [] }
+        { id: '', items: ['R', 'AM'] },
+
       ],
       instructions: [
         {
@@ -508,9 +522,10 @@ export default function Torre() {
       <img style="width:90%"src="/images/exercise-12.png">
     `,
     tries: 5
-    }
-    ,
+        ,
       img: "/images/exercise-12.png"
+    }
+
 
   }
 
@@ -563,11 +578,12 @@ export default function Torre() {
   }
 
   const updateDroppables = (draggableItem, sourceId, destinationId, droppables) => {
+    debugger;
     if (sourceId === destinationId) {
       return droppables;
     }
 
-    if (destinationId == STICKS.THIRD_STICK && droppables[STICKS.THIRD_STICK].items.length > 0) {
+    if (destinationId == STICKS.FIRST_STICK && droppables[STICKS.FIRST_STICK].items.length > 0) {
       return droppables;
       //se intarcambian o no pasa nada? creo que no pasa nada porque ahi se mueven 2 por 1 movimiento //preguntar.
       //return exchangeDroppables(draggableItem, sourceId, destinationId, droppables)
@@ -899,6 +915,12 @@ export default function Torre() {
     }
   }, [visibleMenu, droppables])
 
+  useEffect(() => {
+    if (STICKS_BY_STEP && step) {
+      console.log(STICKS_BY_STEP[step].img)
+    }
+  }, [STICKS_BY_STEP, step])
+
   return (
     <div style={{position:"relative", height:"100%"}}>
     <Fragment>
@@ -1104,7 +1126,7 @@ export default function Torre() {
                         ))}
                       </div>
                       {provided.placeholder}
-                      <h3 className='stick-number'>3</h3>
+                      <h3 className='stick-number'>1</h3>
                     </div>
                   )}
                 </Droppable>
@@ -1218,7 +1240,7 @@ export default function Torre() {
                         ))}
                       </div>
                       {provided.placeholder}
-                      <h3 className='stick-number'>1</h3>
+                      <h3 className='stick-number'>3</h3>
                     </div>
                   )}
                 </Droppable>

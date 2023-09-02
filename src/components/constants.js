@@ -8,9 +8,9 @@ export const STICKS_INFO = {
     2: {
         id: 0,
         droppables: [
-            { id: '0', items: ['R'] },
+            { id: '2', items: ['R'] },
             { id: '1', items: ['AZ'] },
-            { id: '2', items: ['AM'] }
+            { id: '0', items: ['AM'] }
         ],
         instructions: [
             {
@@ -38,9 +38,9 @@ export const STICKS_INFO = {
     3: {
         id: 1,
         droppables: [
-            { id: '0', items: ['R', 'AM'] },
+            { id: '2', items: ['R', 'AM'] },
             { id: '1', items: ['AZ'] },
-            { id: '2', items: [] }
+            { id: '0', items: [] }
         ],
         instructions: [
             {
@@ -58,9 +58,9 @@ export const STICKS_INFO = {
     4: {
         id: 2,
         droppables: [
-            { id: '0', items: ['R', 'AM'] },
+            { id: '2', items: ['R', 'AM'] },
             { id: '1', items: ['AZ'] },
-            { id: '2', items: [] }
+            { id: '0', items: [] }
         ],
         instructions: [
             {
@@ -77,9 +77,9 @@ export const STICKS_INFO = {
     5: {
         id: 3,
         droppables: [
-            { id: '0', items: ['R', 'AM'] },
+            { id: '2', items: ['R', 'AM'] },
             { id: '1', items: ['AZ'] },
-            { id: '2', items: [] }
+            { id: '0', items: [] }
         ],
         instructions: [
             {
@@ -94,63 +94,63 @@ export const TIME_LIMIT_IN_SECONDS = 300;
 
 export const CORRECT_ANSWERS = {
     2: {
-        0: [],
+        2: [],
         1: ['AM', 'AZ'],
-        2: ['R']
+        0: ['R']
     },
     3: {
-        0: ['AM'],
+        2: ['AM'],
         1: ['R'],
-        2: ['AZ']
+        0: ['AZ']
     },
     4: {
-        0: ['AZ', 'AM'],
+        2: ['AZ', 'AM'],
         1: ['R'],
-        2: []
+        0: []
     },
     5: {
-        0: ['AM'],
+        2: ['AM'],
         1: ['AZ', 'R'],
-        2: []
+        0: []
     },
     6: {
-        0: ['AM', 'R'],
+        2: ['AM', 'R'],
         1: ['AZ'],
-        2: []
+        0: []
     },
     7: {
-        0: ['AZ'],
+        2: ['AZ'],
         1: ['AM', 'R'],
-        2: []
+        0: []
     },
     8: {
-        0: ['AZ', 'R'],
+        2: ['AZ', 'R'],
         1: [],
-        2: ['AM']
+        0: ['AM']
     },
     9: {
-        0: [],
+        2: [],
         1: ['AZ', 'R'],
-        2: ['AM']
+        0: ['AM']
     },
     10: {
-        0: ['AZ', 'AM', 'R'],
+        2: ['AZ', 'AM', 'R'],
         1: [],
-        2: []
+        0: []
     },
     11: {
-        0: ['AM', 'AZ', 'R'],
+        2: ['AM', 'AZ', 'R'],
         1: [],
-        2: []
+        0: []
     },
     12: {
-        0: ['AM', 'AZ'],
+        2: ['AM', 'AZ'],
         1: ['R'],
-        2: []
+        0: []
     },
     13: {
-        0: ['AZ'],
+        2: ['AZ'],
         1: ['R'],
-        2: ['AM']
+        0: ['AM']
     },
 }

@@ -1,4 +1,4 @@
-.firstStick {
+.thirdStick {
     background-image: url('/public/images/stick.png');
     background-position: bottom;
     background-repeat: no-repeat;
@@ -12,44 +12,11 @@
     background-size: 30px 210px;
 }
 
-.thirdStick {
+.firstStick {
     background-image: url('/public/images/stick.png');
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: 30px 120px;
 }
 
-
-
-div[data-rbd-placeholder-context-id] {
-    display: none !important;
-    transition: 3s !important;
-}
-
-div[data-rbd-draggable-context-id] {
-    transition: 90000000s !important;
-}
-
-#draggingElement {
-    
-    transition: 0.000001s !important;
-
-}
-
-#notDraggingElement {
-    transition: 900000s !important;
-}
-
-#droppingElement {
-    transition: 10000s !important;
-
-}
-
-.stick-number {
-    position: absolute;
-    bottom: -4rem;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color:#fff;
-}
 
