@@ -40,7 +40,6 @@ export default function HomePage() {
     Swal.fire({
       icon: "info",
       title: "¿Deseas limpiar los test antiguos para iniciar un nuevo periodo de evaluacion?",
-      html: "No te preocupes, los test permanecerán en el respaldo si no lo has reiniciado",
       showConfirmButton: true,
       showCancelButton: true
     })
