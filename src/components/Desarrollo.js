@@ -417,7 +417,7 @@ export default function Desarrollo() {
       instructions: [
         {
           num: 0,
-          description: "En este caso tienes que realizar 4 movimientos"
+          description: "En este caso tienes que realizar 5 movimientos"
         }
       ],
       alert: `
@@ -426,7 +426,7 @@ export default function Desarrollo() {
       Esta es la figura a la que debes llegar y tu debes repetirla en el tuyo, practiquemos.</p>
       <img style="width:90%"src="/images/exercise-9.png">
     `,
-    tries: 4
+    tries: 5
     },
     11: {
       id: 11,
