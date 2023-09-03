@@ -187,9 +187,9 @@ export default function Torre() {
     0: {
       id: 0,
       droppables: [
-        { id: '0', items: ['AM'] },
+        { id: '0', items: ['R'] },
         { id: '1', items: ['AZ'] },
-        { id: '2', items: ['R'] },
+        { id: '2', items: ['AM'] },
 
       ],
       instructions: [
@@ -443,7 +443,7 @@ export default function Torre() {
       instructions: [
         {
           num: 0,
-          description: "En este caso tienes que realizar 4 movimientos"
+          description: "En este caso tienes que realizar 5 movimientos"
         }
       ],
       alert: `
@@ -451,7 +451,7 @@ export default function Torre() {
       <b>Esta es la figura a la que debes llegar</b>
       <img style="width:90%"src="/images/exercise-9.png">
     `,
-    tries: 4
+    tries: 5
     ,
       img: "/images/exercise-9.png"
     },
@@ -509,7 +509,7 @@ export default function Torre() {
       droppables: [
         { id: '0', items: [] },
         { id: '1', items: ['AZ'] },
-        { id: '', items: ['R', 'AM'] },
+        { id: '2', items: ['R', 'AM'] },
 
       ],
       instructions: [
@@ -611,6 +611,7 @@ export default function Torre() {
   }
 
   const onDragEnd = (result, droppables) => {
+    const correctOrder = isCorrectAnswer();
     if (result.destination?.droppableId) {
       const sourceId = result.source.droppableId;
       const destinationId = result.destination.droppableId;
@@ -621,7 +622,7 @@ export default function Torre() {
 
     if (isTimeOut) {
       setIsTimeOut(prevValue => !prevValue);
-      finishStep(false);
+      finishStep(false, correctOrder);
     }
 
     setTries(prevTries => prevTries +1)
@@ -630,7 +631,8 @@ export default function Torre() {
       setActiveTimer(false)
       setFinishedStep(true)
       setTimeout(() => {
-        finishStep(correctAnswer)
+        const correctOrder = isCorrectAnswer();
+        finishStep(correctAnswer, correctOrder)
       }, 600)
     }
 
@@ -665,8 +667,10 @@ export default function Torre() {
     return isCorrect;
   }
 
-  function saveAnswer(correctAnswer) {
+  function saveAnswer(correctAnswer, correctOrder) {
     let value = correctAnswer;
+
+    //preguntar. preguntar. en caso de que haga mas movimientos registramos como malo? independiente que haya quedado bien posicionado?
     if (tries > STICKS_BY_STEP[step].tries) {
       value = false;
     }
@@ -695,6 +699,7 @@ export default function Torre() {
         resets: resetTimes,
         isReset,
         timePenalization,
+        correctOrder,
       },
       value: value ? 1 : 0
     }
@@ -784,15 +789,14 @@ export default function Torre() {
     }
   }, [finish, results])
 
-  function finishStep(correctAnswer) {
+  function finishStep(correctAnswer, correctOrder) {
     if (step == 13) {
-      saveAnswer(correctAnswer);
+      saveAnswer(correctAnswer, correctOrder);
       resetTimer()
       setResetTimes(0)
       setFinish(true)
     } else if (step > 1) {
-      
-      saveAnswer(correctAnswer);
+      saveAnswer(correctAnswer, correctOrder);
       resetTimer();
       setResetTimes(0)
       nextStep();
@@ -1066,15 +1070,14 @@ export default function Torre() {
                       })
                       .then((result) => {
                         if (result.isConfirmed) {
-                          finishStep(false)
-  
+                          finishStep(false, false)
                         }
                       })
                     } else {
-                      finishStep(false)
+                      finishStep(false, false)
                     }
                   } else {
-                    finishStep(false)
+                    finishStep(false, false)
 
                   }
           
