@@ -16,7 +16,7 @@ export default function Torre() {
   const [visibleInstruction, setVisibleInstruction] = useState(false);
   const [activeTimer, setActiveTimer] = useState(false)
   const [correctAnswers] = useState(CORRECT_ANSWERS)
-  const [tries, setTries] = useState(1);
+  const [tries, setTries] = useState(0);
   const [finish, setFinish] = useState(false);
   const [resetTimes, setResetTimes] = useState(0)
   const [results, setResults] = useState({})
@@ -24,6 +24,8 @@ export default function Torre() {
   const [studentName, setStudentName] = useState("")
   const [finishedStep, setFinishedStep] = useState(false);
   const [visibleMenu, setVisibleMenu] = useState(false);
+  const [firstTouchTimer, setFirstTouchTimer] = useState(0)
+  const [isReset, setIsReset] = useState(0);
 
   useEffect(() => {
       get('selectedStudentName').then(studentName => setStudentName(studentName))
@@ -578,7 +580,6 @@ export default function Torre() {
   }
 
   const updateDroppables = (draggableItem, sourceId, destinationId, droppables) => {
-    debugger;
     if (sourceId === destinationId) {
       return droppables;
     }
@@ -641,8 +642,9 @@ export default function Torre() {
   }
 
   function resetStep() {
+    setIsReset(1)
     setResetTimes(prevTimes => prevTimes + 1)
-    setTries(1)
+    setTries(prevTries => prevTries * 2)
     if (STICKS_BY_STEP) {
       setDroppables(STICKS_BY_STEP[step].droppables)
     }
@@ -668,6 +670,17 @@ export default function Torre() {
     if (tries > STICKS_BY_STEP[step].tries) {
       value = false;
     }
+
+    let timePenalization;
+
+    if (timer < 60) {
+      timePenalization = 0;
+    } else if (timer >= 60 && timer < 120) {
+      timePenalization = 1;
+    } else if (timer >= 120) {
+      timePenalization = 2;
+    }
+
     const answer = {
       options: {
         sticks: {
@@ -675,12 +688,17 @@ export default function Torre() {
           secondStick: droppables[1].items,
           thirdStick: droppables[2].items,
         },
+        firstTouchTimer,
         time: timer,
-        tries,
-        resets: resetTimes
+        playTime: timer - firstTouchTimer,
+        tries: tries == 0 ? 0 : tries + 1,
+        resets: resetTimes,
+        isReset,
+        timePenalization,
       },
       value: value ? 1 : 0
     }
+
     setResults(prevResults => {
       prevResults[step] = answer;
       return prevResults;
@@ -778,7 +796,7 @@ export default function Torre() {
       resetTimer();
       setResetTimes(0)
       nextStep();
-      setTries(1)
+      setTries(0)
     } else {
       resetTimer();
       setResetTimes(0)
@@ -788,6 +806,8 @@ export default function Torre() {
   }
 
   function resetTimer() {
+    setIsReset(0)
+    setFirstTouchTimer(0)
     setTimer(0)
     setActiveTimer(false)
     setCorrectAnswer(false)
@@ -878,6 +898,7 @@ export default function Torre() {
           setTimer(prevTimer => prevTimer + 1);
         }, 1000);
       }  else {
+        setTries(20)
         clearInterval(interval);
         setIsTimeOut(true);
       }
@@ -885,6 +906,22 @@ export default function Torre() {
     }
 
   }, [timer, correctAnswer, activeTimer]);
+
+
+  useEffect(() => {
+    if (activeTimer) {
+      let interval;
+      if (tries == 0) {
+        interval = setInterval(() => {
+          setFirstTouchTimer(prevTimer => prevTimer + 1);
+        }, 1000);
+      } else {
+        clearInterval(interval);
+      }
+    return () => clearInterval(interval);
+    }
+
+  }, [firstTouchTimer, activeTimer, tries]);
 
   function disableDraggable (draggableIndex, finishedStep) {
 
@@ -915,11 +952,6 @@ export default function Torre() {
     }
   }, [visibleMenu, droppables])
 
-  useEffect(() => {
-    if (STICKS_BY_STEP && step) {
-      console.log(STICKS_BY_STEP[step].img)
-    }
-  }, [STICKS_BY_STEP, step])
 
   return (
     <div style={{position:"relative", height:"100%"}}>
@@ -930,13 +962,19 @@ export default function Torre() {
           
               
           <div style={{ width: "100%", position: "relative", padding: "4rem 3rem 0" }}>
+          <button style={{position:"absolute", left:"3.7rem", top:"1rem", width:"200px", height:"50px", border:"none", backgroundColor:"#fff"}} onClick={
+                (e) => {
+                  e.preventDefault();
+                  setVisibleInstruction(prevValue => !prevValue)
+                }
+              }></button>
           <button style={{position:"absolute", left:"1rem", top:"1rem", width:"20px", height:"20px", borderRadius:"50%", border:"none", backgroundColor:"#ddd"}} onClick={
                 (e) => {
                   e.preventDefault();
                   hiddeMenu()
                 }
               }></button>
-          <div>
+          <div style={{visibility: visibleInstruction && 'hidden', display: visibleInstruction && 'none'}}>
             {
               timer === TIME_LIMIT_IN_SECONDS && <h5 style={{padding:"0", margin:"0", textAlign:"center", position:"absolute", right:"5rem"}}>¡Ha terminado el tiempo!</h5>
             }
@@ -955,7 +993,7 @@ export default function Torre() {
             }
           </div>
 
-          <div style={{visibility: visibleInstruction && 'hidden', display: visibleInstruction && 'none', textAlign:"center"}}>
+          <div style={{textAlign:"center"}}>
           {
               <h6
                 style={{

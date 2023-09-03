@@ -90,7 +90,7 @@ export const STICKS_INFO = {
     }
 }
 
-export const TIME_LIMIT_IN_SECONDS = 300;
+export const TIME_LIMIT_IN_SECONDS = 120;
 
 export const CORRECT_ANSWERS = {
     2: {
