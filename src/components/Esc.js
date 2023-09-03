@@ -267,7 +267,7 @@ export default function Esc() {
 
 
     return (
-        <div style={{ overflow: "hidden", height: "100%", paddingTop: "1.5rem" }}>
+        <div style={{ overflow: "hidden", height: "100%"}}>
             <Fragment>
 
 

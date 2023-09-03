@@ -209,7 +209,7 @@ export default function Wally () {
                                         <ItemImage
                                             picture={wallyItems[6].picture}
                                             pictureName={wallyItems[6].pictureName}
-                                            title=" María/Juan le pidió a Bruno que jugara con él/ella. Pero Bruno dijo que no quería jugar con María/Juan. Él/Ella va a jugar con Tomás."
+                                            title=" María/Juan le pidió a Bruno que jugara con él/ella. Pero Bruno dijo que no quería jugar con María/Juan. Él va a jugar con Tomás."
                                         />
                 </SwiperSlide>
                 <SwiperSlide key={wallyItems[6].itemId}>
