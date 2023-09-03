@@ -55,6 +55,9 @@ export default function Respaldo () {
                         element[1] === "" ? answers.push(0) : answers.push(element[1].options.toString())
                     } else if (instrumentName == "TorreLondres") {
                         element[1] === "" ? answers.push(0) : answers.push(element[1].value.toString())
+                    } else if (instrumentName == "ESC") {
+                        debugger;
+                        element[1] === "" ? answers.push(0) : answers.push(element[1].value.toString())
                     }
                     
                     else {
