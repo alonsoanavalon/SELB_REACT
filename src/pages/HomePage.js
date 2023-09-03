@@ -35,6 +35,8 @@ export default function HomePage() {
 
   function eliminarTestAntiguos() {
 
+    const fechaLimite = new Date('2023/09/03')
+
     Swal.fire({
       icon: "info",
       title: "¿Deseas limpiar los test antiguos para iniciar un nuevo periodo de evaluacion?",
@@ -44,12 +46,32 @@ export default function HomePage() {
     })
       .then(result => {
         if (result.isConfirmed) {
+
+          
+          get('backupTest')
+          .then(res => {
+            let counterEliminados = 0;
+            const testNuevos = res.filter((test) => {
+              const fechaTest = new Date(test[0].date)
+
+              if (fechaTest > fechaLimite) {
+                return test;
+              } else {
+                counterEliminados++
+              }
+            })
+            return [testNuevos, counterEliminados];
+          })
+          .then((data) => {
+            update('backupTest', val => data[0])
+          })
+
+
           get('completedTests')
             .then(res => {
               let counterEliminados = 0;
               const testNuevos = res.filter((test) => {
                 const fechaTest = new Date(test[0].date)
-                const fechaLimite = new Date('2023/07/30')
 
                 if (fechaTest > fechaLimite) {
                   return test;
@@ -67,6 +89,7 @@ export default function HomePage() {
                 window.location.pathname = '/'
               }, 2000)
             })
+
         }
       })
 
@@ -466,7 +489,7 @@ export default function HomePage() {
             </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button>}
 
             {/* Esta funcion me elimina los test guardados entre X fechas */}
-            <button className="btn btn-info"  style={{marginLeft:"2rem"}}onClick={eliminarTestAntiguos}>Eliminar test antiguos</button>
+            <button className="btn btn-info"  style={{marginLeft:"2rem", color:"#fff"}}onClick={eliminarTestAntiguos}>Eliminar test antiguos</button>
 
 
 
