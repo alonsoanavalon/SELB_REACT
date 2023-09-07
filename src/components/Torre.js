@@ -1144,7 +1144,7 @@ export default function Torre() {
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-
+                                id='notDraggingElement'
                                 style={{
                                   ...draggableStyle,
                                   userSelect: 'none',
@@ -1201,7 +1201,7 @@ export default function Torre() {
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-
+                                id='notDraggingElement'
                                 style={{
                                   ...draggableStyle,
                                   userSelect: 'none',
@@ -1234,6 +1234,7 @@ export default function Torre() {
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
+                      
                       style={{
                         height: "280px",
                         width: "200px",
@@ -1258,7 +1259,7 @@ export default function Torre() {
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-
+                                id='notDraggingElement'
                                 style={{
                                   ...draggableStyle,
                                   userSelect: 'none',

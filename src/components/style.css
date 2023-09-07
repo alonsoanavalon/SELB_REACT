@@ -8,15 +8,15 @@ div[data-rbd-draggable-context-id] {
 }
 
 #draggingElement {
-    transition: 0.0001s !important;
+    transition: 0.001s !important;
 }
 
 #notDraggingElement {
-    transition: 90000000s !important;
+    transition: 100000s !important;
 }
 
 #droppingElement {
-    transition: 10s !important;
+    transition: 100000s !important;
 
 }
 .stick-number {
