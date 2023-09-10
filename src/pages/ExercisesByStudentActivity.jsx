@@ -15,7 +15,7 @@ export default function ExercisesByStudentActivity() {
   useEffect(() => {
     if (sessionId && courseId && activityId) {  
       debugger;
-      const url = `http://localhost:8000/api/session/course/${courseId}/session/${sessionId}/activity/${activityId}/student/${studentId}`;
+      const url = `https://selb.bond/api/session/course/${courseId}/session/${sessionId}/activity/${activityId}/student/${studentId}`;
       axios(url)
         .then(res => {
           debugger;

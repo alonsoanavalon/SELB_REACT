@@ -27,7 +27,7 @@ export default function Charts(props) {
     if (selectedChart) {
       if (selectedChart == 1) {
 
-        const url = `http://164.92.71.11:8000/api/chart/student/${studentRut}`
+        const url = `https://selb.bond/api/chart/student/${studentRut}`
         axios(url)
         .then(res => {
           ; 
