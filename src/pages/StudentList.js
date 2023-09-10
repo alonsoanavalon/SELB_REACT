@@ -31,7 +31,7 @@ export default function StudentList () {
 
 
     const renderSchools = () => {
-        return schools.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
+        return schools?.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
     }
 
     const getCourses = (evt) => {

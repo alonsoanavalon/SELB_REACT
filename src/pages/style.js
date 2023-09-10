@@ -30,6 +30,9 @@ export const DataTableContainer = styled.div`
 export const Container = styled.div`
     width:100%;
     height:calc(100% - 60px);
+    background-image: url('/images/japi-background.jpg');
+    background-size:cover;
+    background-repeat:no-repeat;
     display:flex;
     justify-content:center;
     align-items:center;

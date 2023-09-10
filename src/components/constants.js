@@ -154,3 +154,11 @@ export const CORRECT_ANSWERS = {
         0: ['AM']
     },
 }
+
+
+export const ROLES = {
+    ADMIN:"Admin",
+    EVALUATOR:"Evaluator",
+    TEACHER:"Teacher",
+    PARENT:"Parent"
+  }

@@ -30,6 +30,34 @@ body {
   margin-bottom: 0;
 }
 
+.header-japi {
+  background-color: #fff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: baseline;
+}
+.header-japi .japi-icon-wrapper {
+  font-family: "Kanit", sans-serif;
+  color: rgb(56, 163, 165);
+  font-weight: 800;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-evenly;
+  gap: 1.5rem;
+}
+.header-japi .japi-icon-wrapper #refresh-icon {
+  width: 30px;
+  cursor: pointer;
+}
+.header-japi .japi-icon-wrapper h4 {
+  margin-right: 2rem;
+  margin-bottom: 0;
+}
+
 .aside-bar {
   background-color: #fff;
   width: 100%;

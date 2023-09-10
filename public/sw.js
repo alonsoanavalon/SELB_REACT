@@ -71,6 +71,8 @@ this.addEventListener("install", evt => {
                 '/images/check.png',
                 '/images/play-button.png',
                 '/images/corazon-2.png',
+                '/images/japi.png',
+                '/images/japi-background.jpg',
                 './sounds/go.mp3',
                 './sounds/item-zero.mp3',
                 './sounds/item-one.mp3',

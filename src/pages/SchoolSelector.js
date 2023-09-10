@@ -21,7 +21,7 @@ export default function SchoolSelector() {
     }, [])
 
     const renderSchools = () => {
-        return schools.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
+        return schools?.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
     }
 
     const getCourses = (evt) => {
@@ -62,7 +62,7 @@ export default function SchoolSelector() {
     return (
         <Fragment>
             <div className="sdq-form-container">
-            <h2 class="h2 text-center p-4">Selector de curso</h2>
+            <h2 class="h2 text-start">Selector de curso</h2>
             <select onChange={getCourses}className="form-select" placeholder='Colegios' id="schoolSelect" defaultValue="empty">
                 <option value="empty" disabled>Colegios</option>
                 {renderSchools()}
@@ -71,10 +71,11 @@ export default function SchoolSelector() {
             <option value="empty" disabled>Cursos</option>
             {filteredCourses}
             </select>
-
+            <div>
             <button onClick={renderTest} className='btn btn-primary btn-parent'>
                 Comenzar
             </button>
+            </div>
             </div>
  
         </Fragment>

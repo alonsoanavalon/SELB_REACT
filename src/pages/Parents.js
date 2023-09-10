@@ -23,7 +23,7 @@ export default function Parents() {
     }, [])
 
     const renderSchools = () => {
-        return schools.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
+        return schools?.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
     }
 
     const getCourses = (evt) => {

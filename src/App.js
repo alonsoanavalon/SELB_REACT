@@ -35,14 +35,17 @@ import SessionsByCourse from './pages/SessionsByCourse';
 import ActivitiesBySessionAndCourse from './pages/ActivitiesBySessionAndCourse'
 import ExercisesByStudentActivity from './pages/ExercisesByStudentActivity';
 import ActivitiesBySessionAndStudent from './pages/ActivitiesBySessionAndStudent';
+import { ROLES } from './components/constants';
 
 
 const cookies = new Cookies();
 
 function App() {
 
-  const [userId, setUserId] = useState()
-  const [isLogged, setIsLogged] = useState(false)
+  const [userId, setUserId] = useState();
+  const [isLogged, setIsLogged] = useState(false);
+  const [userRole, setUserRole] = useState();
+
 
   function getData(data) {
     let firstTime = true;
@@ -110,7 +113,13 @@ function App() {
     getData('studies/active')
 
     get('userData').then(res => {
+
+      if (res) {
       setUserId(res.id)
+      setUserRole(res.role)
+      set('userRole', res.role) 
+      }
+
 
 
 
@@ -313,9 +322,20 @@ function App() {
           <Aside />
         </Fragment>}
         <Routes>
-          {isLogged
-            ? <Route path="/" element={<HomePage />}></Route>
-            : <Route path="/" element={<Login />}></Route>}
+
+          {
+            (!isLogged && userRole) 
+              ? <Route path="/" element={<Login />}></Route>
+              : (isLogged && userRole === ROLES.ADMIN)
+                ? <Route path="/" element={<HomePage />}></Route>
+                : (isLogged && userRole === ROLES.EVALUATOR)
+                  ? <Route path="/" element={<HomePage />}></Route>
+                  : (isLogged && userRole === ROLES.TEACHER)
+                    ? <Route path="/" element={<ReportPanel />}></Route>
+                    : (isLogged && userRole === ROLES.PARENT)
+                      ? <Route path="/" element={<ReportPanel />}></Route>
+                      : <Route path="/" element={<Login />}></Route>
+          }
 
           <Route path="/students" element={<StudentList />}></Route>
           <Route path="/login" element={<Login />}></Route>

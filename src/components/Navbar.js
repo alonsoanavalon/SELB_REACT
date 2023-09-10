@@ -1,13 +1,21 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useAlert } from 'react-alert'
 import Swal from 'sweetalert2'
+import { get } from 'idb-keyval';
+import { ROLES } from './constants';
 
 export default function NavBar() {
 
     const alert = useAlert()
-    const [asideState, setAsideState] = useState(false)
+    const [userRole, setUserRole] = useState('')
 
-    function showAside () {
+    useEffect(() => {
+        get('userRole').then((val) => {
+            setUserRole(val)
+        })
+    })
+
+    function showSelbAside () {
         let aside = document.querySelector("#root > div.aside-bar")
 
         if (aside.classList) {
@@ -33,20 +41,23 @@ export default function NavBar() {
             }
         }
 
+    }
 
 
- 
+    function showJapiAside () {
+        let aside = document.querySelector("#root > div.aside-bar")
 
-/*         if (asideState) {
-            alert("vamos a cerrarla")
-            aside.classList.remove('aside-bar-active')
-            aside.classList.add('aside-bar-hidden')
+        if (aside.classList) {
+            let asideIsActive = aside.classList.contains('aside-bar-active')        
+            if (asideIsActive) {
+                aside.classList.remove('aside-bar-active')
+                aside.classList.add('aside-bar-hidden')
+            } else {
 
-        } else {
-            alert("vamos a abrirla")
-            aside.classList.remove('aside-bar-hidden')
-            aside.classList.add('aside-bar-active')
-        } */
+                 aside.classList.add('aside-bar-active')
+
+            }
+        }
 
     }
 
@@ -84,13 +95,13 @@ export default function NavBar() {
     return (      
         <Fragment>
             {
-                            
-            window.location.pathname !== '/login' &&
+            userRole &&                             
+            (window.location.pathname !== '/login' && (userRole == ROLES.ADMIN || userRole == ROLES.EVALUATOR)) ?
                 <header className="header">
                     <button 
                     className="hamburger hamburger--collapse" 
                     type="button"
-                    onClick={showAside}
+                    onClick={showSelbAside}
                     >
                     <span className="hamburger-box">
                         <span className="hamburger-inner"></span>
@@ -109,6 +120,32 @@ export default function NavBar() {
                         </h4>
                     </div>
                 </header>
+                : (userRole == ROLES.EVALUATOR || userRole == ROLES.TEACHER) && 
+                <header className="header-japi">
+
+                <button 
+                style={{backgroundColor:"rgb(56, 163, 165)", borderRadius:"1rem"}}
+                className="hamburger hamburger--collapse" 
+                type="button"
+                onClick={showJapiAside}
+                >
+                <span className="hamburger-box">
+                    <span className="hamburger-inner"></span>
+                </span>
+
+                </button>
+
+                <div className='selb-icon-wrapper'>
+                    <h4
+                        onClick={showVersionInfo}
+                        className='selb-info'
+                    >
+
+                    </h4>
+                    <img src="/images/japi.png" style={{width:"150px", marginRight:".5rem"}} alt="" />
+                </div>
+
+            </header>
             }
         </Fragment>
     )
