@@ -1728,4 +1728,18 @@ input[type=number] {
   flex-direction: column;
 }
 
+.japi-container-center {
+  background-image: url("/public/images/japi-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /*# sourceMappingURL=styles.css.map */

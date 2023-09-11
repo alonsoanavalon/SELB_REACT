@@ -61,8 +61,8 @@ export default function SchoolSelector() {
 
     return (
         <Fragment>
-             <div className="japi-container">
-            <div className="sdq-form-container">
+             <div className="japi-container-center" style={{alignSelf:"center",  justifySelf:"center"}}>
+            <div className="sdq-form-container" style={{alignSelf:"center", justifySelf:"center"}}>
            
             <h2 class="h2 text-start" style={{color:"rgb(56, 163, 165)", fontWeight:"bold"}}>Selector de curso</h2>
             <select onChange={getCourses}className="form-select" placeholder='Colegios' id="schoolSelect" defaultValue="empty">

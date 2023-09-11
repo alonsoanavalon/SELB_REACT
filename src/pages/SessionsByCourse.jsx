@@ -25,9 +25,10 @@ export default function SessionsByCourse() {
 
   return (
     <>
-    <h1 style={{margin:"1rem 0 1rem 1rem"}}>Sesiones por curso</h1>
+    <div className="japi-container">
+    <h1 style={{margin:"1rem 0 1rem 1rem", color:"#555", fontWeight:"bold"}}>Sesiones por curso</h1>
         {(exercisesBySession?.length > 0) ? <>
-          <div style={{display:"flex", flexWrap:"wrap", gap:"1rem", margin:"1rem 0", padding:"1rem"}}>
+          <div style={{display:"flex", flexWrap:"wrap", gap:"1rem", margin:"1rem 0", padding:"1rem", backgroundColor:"#fff"}}>
             {
                 exercisesBySession.map((exercises, key) => 
                 <GroupedChartWrapper key={key-'chart'}>
@@ -42,6 +43,7 @@ export default function SessionsByCourse() {
             </div>
           </>
         }
+        </div>
     </>
   );
 }
