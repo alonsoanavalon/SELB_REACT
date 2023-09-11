@@ -118,7 +118,7 @@ export default function StudentSelector() {
   return (
     <>
       {
-        (students && chartData) && <>
+        (students && chartData) &&     <div className="japi-container">
           <CenteredContainer>
             <DataTableContainer>
               <DatatableWrapper
@@ -149,7 +149,7 @@ export default function StudentSelector() {
                         size="sm"
                         onClick={(e) => showStudentCharts(row.rut)}
                       >
-                        Click me
+                        Ver detalle
                       </Button>
                     )
                   }
@@ -206,7 +206,7 @@ export default function StudentSelector() {
           }
           </CenteredContainer>
   
-        </>
+        </div>
       }
 
     </>

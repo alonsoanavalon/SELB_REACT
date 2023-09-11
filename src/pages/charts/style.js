@@ -15,5 +15,5 @@ export const SinglePie = styled.div`
    margin-top:4rem;
     justify-content:center;
     align-items: center;
-    width:35%;
+    width:22%;
 `

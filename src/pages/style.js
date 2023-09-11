@@ -7,7 +7,7 @@ export const CenteredContainer = styled.div`
     border:1px solid #ccc;
     width:90%;
     margin:1rem auto;
-
+    background-color:#fff;
 
 `
 
@@ -39,7 +39,6 @@ export const Container = styled.div`
 `
 
 export const ReportPanelContainer = styled.div`
-    border:1px solid #ccc;
     display:flex;
     flex-wrap:wrap;
     width: 60%;
@@ -48,6 +47,8 @@ export const ReportPanelContainer = styled.div`
     border-radius:.8rem;
     overflow:hidden;
     cursor:pointer;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 11px 1px
+
 `
 
 export const ReportButton = styled.div`

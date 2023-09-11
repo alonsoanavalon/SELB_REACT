@@ -35,7 +35,7 @@ export default function ActivitiesBySessionAndCourse() {
     <>
         <h1 style={{margin:"1rem 0 1rem 1rem"}}>Actividades por sesión</h1>
         {(activitiesBySession?.length > 0) ? <>
-            <div style={{display:"flex", flexWrap:"wrap", gap:"1rem", justifyContent:"center", margin:"1rem 0"}}>
+          <div style={{display:"flex", flexWrap:"wrap", gap:"1rem", margin:"1rem 0", padding:"1rem"}}>
             {
                 activitiesBySession.map((activity, key) => 
                 <GroupedChartWrapper>
@@ -50,6 +50,6 @@ export default function ActivitiesBySessionAndCourse() {
             </div>
           </>
         }
-    </>
+   </>
   );
 }

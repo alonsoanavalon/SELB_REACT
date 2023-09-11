@@ -12,7 +12,7 @@ export default function PieChart(props) {
   return <>
     <SinglePie>
       {
-        props.data.activityId && <h2>Actividad {props.data.activityId}</h2>
+        props.data.activityId && <h5>Actividad {props.data.activityId}</h5>
       }
 
     <Pie data={props.data.chartData} />

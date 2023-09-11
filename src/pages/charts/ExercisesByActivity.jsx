@@ -42,8 +42,9 @@ export function ExercisesByActivity(props) {
         },
         responsive: true,
         interaction: {
-          mode: 'index',
+          mode: 'nearest',
           intersect: false,
+          axis: 'y'
         },
         scales: {
           x: {

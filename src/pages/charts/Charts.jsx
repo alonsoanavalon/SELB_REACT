@@ -18,10 +18,21 @@ export default function Charts(props) {
   const [selectedChart, setSelectedChart] = useState();
   const [studentData, setStudentData] = useState();
   const [chartData, setChartData] = useState([]);
+  const [data, setData] = useState();
 
   const displayAlert = useCallback((e) => {
     setSelectedChart(e.target.value)
   }, [setSelectedChart])
+
+  useEffect(() => {
+    if (studentRut) {
+      const url = `https://selb.bond/api/student/${studentRut}`
+      axios(url)
+      .then(res => {
+        setData(res.data[0]);
+      })
+    }
+  }, [])
   
   useEffect(() => {
     if (selectedChart) {
@@ -102,6 +113,7 @@ export default function Charts(props) {
               borderWidth: 1,
             },
           ],
+          
         }
       }
     })
@@ -123,10 +135,18 @@ export default function Charts(props) {
   }, [studentData, selectedChart])
   
   return <>
-    <h1>Gráficos</h1>
 
-    <select onChange={(e) => displayAlert(e)} class="form-select" aria-label="Default select example">
-      <option defaultValue="0" value="0">Selecciona un tipo de gráfico</option>
+  <div class="japi-container">
+
+    <div style={{width:"40%", backgroundColor:"#fff", padding:"2rem", borderRadius:".5rem", alignSelf:"flex-start", boxShadow: "#ccc 0px 1px 5px 0px"}}>
+  {
+    data && <h3>
+      {data.name} {data.surname}
+    </h3>
+  }
+
+    <select style={{width:"100%"}}onChange={(e) => displayAlert(e)} class="form-select" aria-label="Default select example">
+      <option defaultValue="1" value="1">Selecciona un tipo de gráfico</option>
       <option value="1">Nivel de logro por actividad</option>
       <option value="2">Actividades logradas por sesión</option>
       <option value="3">Ensayos logrados por sesión</option>
@@ -134,9 +154,12 @@ export default function Charts(props) {
       <option value="5">Habilidades</option>
     </select>
 
+    </div>
+  <div style={{width:"100%", maxHeight:"100%", backgroundColor:"#fff", padding:"1rem", borderRadius:".5rem", boxShadow: "#ccc 1px 1px 5px 0px"}}>
     {
-      (selectedChart && chartData) &&
-      selectedChart > 0 && <>
+      (selectedChart && chartData) 
+      ? selectedChart > 0 &&
+        <>
 
         {
           (selectedChart == 1 && chartData.length > 0) && <PieContainer>
@@ -155,7 +178,7 @@ export default function Charts(props) {
           
         }
         {
-          selectedChart == 2 && <></>
+          selectedChart == 2 && <>Segundo Gráfico</>
         }
         {
           selectedChart == 3 && <>Tercer Gráfico</>
@@ -168,10 +191,14 @@ export default function Charts(props) {
         }
 
 
-      </>
+
+        </>
+
+        : <h3>Selecciona un tipo de gráfico</h3>  
     }
+    </div>
 
-
+</div>
 
   </>
 }

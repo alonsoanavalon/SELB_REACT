@@ -37,6 +37,7 @@ body {
   justify-content: space-between;
   align-items: center;
   align-content: baseline;
+  position: sticky;
 }
 .header-japi .japi-icon-wrapper {
   font-family: "Kanit", sans-serif;
@@ -1712,6 +1713,19 @@ input[type=number] {
   padding: 0;
   margin: 0 1rem;
   width: 70px !important;
+}
+
+.japi-container {
+  background-image: url("/public/images/japi-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 10px;
+  flex-direction: column;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -61,8 +61,10 @@ export default function SchoolSelector() {
 
     return (
         <Fragment>
+             <div className="japi-container">
             <div className="sdq-form-container">
-            <h2 class="h2 text-start">Selector de curso</h2>
+           
+            <h2 class="h2 text-start" style={{color:"rgb(56, 163, 165)", fontWeight:"bold"}}>Selector de curso</h2>
             <select onChange={getCourses}className="form-select" placeholder='Colegios' id="schoolSelect" defaultValue="empty">
                 <option value="empty" disabled>Colegios</option>
                 {renderSchools()}
@@ -75,6 +77,7 @@ export default function SchoolSelector() {
             <button onClick={renderTest} className='btn btn-primary btn-parent'>
                 Comenzar
             </button>
+            </div>
             </div>
             </div>
  
