@@ -8,7 +8,7 @@ export default function NavBar() {
 
     const alert = useAlert()
     const [userRole, setUserRole] = useState('')
-    const [studentsLength, setStudentsLength] = useState(0)
+    const [studentsLength, setStudentsLength] = useState(undefined)
 
     useEffect(() => {
         get('userRole').then((val) => {
@@ -124,7 +124,7 @@ export default function NavBar() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
                         {
-                            studentsLength > 0 && <div> {studentsLength} </div>
+                            studentsLength && <div> {studentsLength} </div>
                         }
                         <button onClick={getStudentsLength}>
                             Obtener Cantidad Alumnos
