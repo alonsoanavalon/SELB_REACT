@@ -124,7 +124,7 @@ function App() {
 
 
     })
-
+  
     /* Arreglar esto */
 
     if (navigator.onLine) {
@@ -305,7 +305,6 @@ function App() {
 
 
 
-
   return (
 
     <Fragment>
@@ -323,7 +322,7 @@ function App() {
         </Fragment>}
         <Routes>
 
-          {
+          {/* {
             (!isLogged && userRole) 
               ? <Route path="/" element={<Login />}></Route>
               : (isLogged && userRole === ROLES.ADMIN)
@@ -335,7 +334,12 @@ function App() {
                     : (isLogged && userRole === ROLES.PARENT)
                       ? <Route path="/" element={<ReportPanel />}></Route>
                       : <Route path="/" element={<Login />}></Route>
-          }
+          } */}
+
+
+        {isLogged
+            ? <Route path="/" element={<HomePage />}></Route>
+            : <Route path="/" element={<Login />}></Route>}
 
           <Route path="/students" element={<StudentList />}></Route>
           <Route path="/login" element={<Login />}></Route>
