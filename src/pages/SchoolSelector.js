@@ -26,19 +26,25 @@ export default function SchoolSelector() {
             const students = await get('students')
             const schools = await get('schools')
 
+
             if (schools) {
+                if (courses) {
+                    setCourses(courses)
+                }
+        
+                if (students) {
+                    setFilteredStudents(students)
+                }
                 setSchools(schools)
-            } 
-    
-            if (courses) {
-                setCourses(courses)
-            }
-    
-            if (students) {
-                setFilteredStudents(students)
+                setIsLoading(false) // Establecer isLoading en false si se encuentran datos
+            } else {
+                // Si no se encuentran escuelas, programar un reintento después de 5 segundos
+                setTimeout(() => {
+                    fetchData();
+                }, 500); // Espera 5 segundos antes de reintentar
             }
 
-            setIsLoading(false) // Indicamos que hemos terminado de cargar los datos
+
         }
 
         fetchData()
