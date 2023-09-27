@@ -8,19 +8,37 @@ export default function SchoolSelector() {
     const alert = useAlert()
     const navigate = useNavigate()
  
-    const [schools, setSchools] = useState([])
-    const [courses, setCourses] = useState([])
+    const [schools, setSchools] = useState(null)
+    const [courses, setCourses] = useState(null)
     const [filteredCourses, setFilteredCourses] = useState([])
     const [filteredStudents, setFilteredStudents] = useState([])
 
-    useEffect(() => {
+    useEffect(async () => {
 
-        get('schools').then(schools => setSchools(schools))
-        get('courses').then(courses => setCourses(courses))
+        const moments = await get('moments')
+        const studies = await get('studies')
+        const courses = await get('courses')
+        const students = await get('students')
+        const schools = await get('schools')
+
+
+        debugger
+        if (schools) {
+            setSchools(schools)
+        }
+
+        if (courses) {
+            setCourses(courses)
+        }
+
+        if (students) {
+            setFilteredStudents(students)
+        }
 
     }, [])
 
     const renderSchools = () => {
+        debugger
         return schools?.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
     }
 
@@ -61,26 +79,30 @@ export default function SchoolSelector() {
 
     return (
         <Fragment>
-             <div className="japi-container-center" style={{alignSelf:"center",  justifySelf:"center"}}>
-            <div className="sdq-form-container" style={{alignSelf:"center", justifySelf:"center"}}>
-           
-            <h2 class="h2 text-start" style={{color:"rgb(56, 163, 165)", fontWeight:"bold"}}>Selector de curso</h2>
-            <select onChange={getCourses}className="form-select" placeholder='Colegios' id="schoolSelect" defaultValue="empty">
-                <option value="empty" disabled>Colegios</option>
-                {renderSchools()}
-            </select>   
-            <select className="form-select" placeholder='Cursos' id="courseSelect" defaultValue="empty" disabled>
-            <option value="empty" disabled>Cursos</option>
-            {filteredCourses}
-            </select>
-            <div>
-            <button onClick={renderTest} className='btn btn-primary btn-parent'>
-                Comenzar
-            </button>
-            </div>
-            </div>
-            </div>
- 
+
+            {
+                schools && <div className="japi-container-center" style={{alignSelf:"center",  justifySelf:"center"}}>
+                <div className="sdq-form-container" style={{alignSelf:"center", justifySelf:"center"}}>
+               
+                <h2 class="h2 text-start" style={{color:"rgb(56, 163, 165)", fontWeight:"bold"}}>Selector de curso</h2>
+                <select onChange={getCourses}className="form-select" placeholder='Colegios' id="schoolSelect" defaultValue="empty">
+                    <option value="empty" disabled>Colegios</option>
+                    {renderSchools()}
+                </select>   
+                <select className="form-select" placeholder='Cursos' id="courseSelect" defaultValue="empty" disabled>
+                <option value="empty" disabled>Cursos</option>
+                {filteredCourses}
+                </select>
+                <div>
+                <button onClick={renderTest} className='btn btn-primary btn-parent'>
+                    Comenzar
+                </button>
+                </div>
+                </div>
+                </div>
+     
+            }
+
         </Fragment>
     )
 }

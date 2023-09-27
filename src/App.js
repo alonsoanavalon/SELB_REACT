@@ -12,6 +12,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import Aside from './components/Aside'
 import Login from './pages/Login';
 import Navbar from './components/Navbar'
+import NavBarJapi from './components/NavbarJapi';
 import StudentList from './pages/StudentList'
 import TejasLee from './pages/TejasLee';
 import Calculo from './pages/Calculo';
@@ -27,7 +28,7 @@ import Moments from './pages/Moments'
 import Desarrollo from './components/Desarrollo';
 import HNF from './pages/Hnf';
 import Torre from './components/Torre';
-import Esc from './components/Esc';import ReportPanel from './pages/ReportPanel'
+import Esc from './components/Esc'; import ReportPanel from './pages/ReportPanel'
 import SchoolSelector from './pages/SchoolSelector';
 import Charts from './pages/charts/Charts';
 import StudentSelector from './pages/StudentSelector';
@@ -36,6 +37,7 @@ import ActivitiesBySessionAndCourse from './pages/ActivitiesBySessionAndCourse'
 import ExercisesByStudentActivity from './pages/ExercisesByStudentActivity';
 import ActivitiesBySessionAndStudent from './pages/ActivitiesBySessionAndStudent';
 import { ROLES } from './components/constants';
+import AsideJapi from './components/AsideJapi';
 
 
 const cookies = new Cookies();
@@ -89,6 +91,22 @@ function App() {
   // }
 
 
+  useEffect(async () => {
+
+    const user = await get('userData')
+
+
+    if (user) {
+      setUserId(user.id)
+      setUserRole(user.role)
+      set('userRole', user.role)
+    }
+
+
+
+
+
+  }, [])
 
   useEffect(() => {
 
@@ -112,19 +130,7 @@ function App() {
     getData('sdq')
     getData('studies/active')
 
-    get('userData').then(res => {
 
-      if (res) {
-      setUserId(res.id)
-      setUserRole(res.role)
-      set('userRole', res.role) 
-      }
-
-
-
-
-    })
-  
     /* Arreglar esto */
 
     if (navigator.onLine) {
@@ -272,28 +278,30 @@ function App() {
             }
           )
 
-          
-          axios({
-            method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-            params: {
-              instrument: 10,
-              user: userId
-            }
-          })
-            .then(
 
-              res => {
-                set('escLength', res.data[0]['COUNT(*)'])
-              }
-            )
+        axios({
+          method: 'get',
+          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          params: {
+            instrument: 10,
+            user: userId
+          }
+        })
+          .then(
+
+            res => {
+              set('escLength', res.data[0]['COUNT(*)'])
+            }
+          )
       }
     }
 
     get('completedTests')
       .then(res => {
         if (res === undefined) {
-          set('completedTests', [])
+          set('completedTests', [
+
+          ])
         }
       })
 
@@ -307,70 +315,137 @@ function App() {
 
   return (
 
+
     <Fragment>
 
-      {isLogged && <Fragment>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossOrigin="anonymous"></link>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css" integrity="sha512-+mlclc5Q/eHs49oIOCxnnENudJWuNqX5AogCiqRBgKnpoplPzETg2fkgBFVC6WYUVxYYljuxPNG8RE7yBy1K+g==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
-      </Fragment>/* {/* } */}
+      {
+        userRole ? <>
+          {(isLogged && userRole === ROLES.ADMIN)
+            ?
+            <>
+              <BrowserRouter>
+                <Fragment>
+                  <Navbar />
 
-      <BrowserRouter>
-        {isLogged && <Fragment>
-          <Navbar />
+                  <Aside />
+                </Fragment>
+                <Routes>
 
-          <Aside />
-        </Fragment>}
-        <Routes>
+                  <Route path="/" element={<HomePage />}></Route>
+                  <Route path="/students" element={<StudentList />}></Route>
+                  <Route path="/login" element={<Login />}></Route>
+                  <Route path="/tejaslee" element={<TejasLee />}></Route>
+                  <Route path="/calculo" element={<Calculo />}></Route>
+                  <Route path="/excel" element={<Excel />}></Route>
+                  <Route path="/moments" element={<Moments />}></Route>
+                  <Route path="/respaldo" element={<Respaldo />}></Route>
+                  <Route path="/parents" element={<Parents />}></Route>
+                  <Route path="/report-panel" element={<ReportPanel />}></Route>
+                  <Route path="/school-selector" element={<SchoolSelector />}></Route>
+                  <Route path="/desarrollo" element={<Desarrollo />}></Route>
+                  <Route path="/sdq" element={<ParentsForm />}></Route>
+                  <Route path="/charts/:studentRut" element={<Charts />}></Route>
+                  <Route path="/student-selector" element={<StudentSelector />}></Route>
+                  <Route path="/aces" element={<Aces />}></Route>
+                  <Route path="/corsi" element={<Corsi />}></Route>
+                  <Route path="/hnf" element={<HNF />}></Route>
+                  <Route path="/fonologico" element={<Fonologico />}></Route>
+                  <Route path="/torre" element={<Torre />}></Route>
+                  <Route path="/esc" element={<Esc />}></Route>
+                  <Route path="/wally" element={<Wally />}></Route>
+                  <Route path="/sessions/course/:id" element={<SessionsByCourse />} />
+                  <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse />} />
+                  <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />
+                  <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent />} />
 
-          {/* {
-            (!isLogged && userRole) 
-              ? <Route path="/" element={<Login />}></Route>
-              : (isLogged && userRole === ROLES.ADMIN)
-                ? <Route path="/" element={<HomePage />}></Route>
-                : (isLogged && userRole === ROLES.EVALUATOR)
-                  ? <Route path="/" element={<HomePage />}></Route>
-                  : (isLogged && userRole === ROLES.TEACHER)
-                    ? <Route path="/" element={<ReportPanel />}></Route>
-                    : (isLogged && userRole === ROLES.PARENT)
-                      ? <Route path="/" element={<ReportPanel />}></Route>
-                      : <Route path="/" element={<Login />}></Route>
-          } */}
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+
+              </BrowserRouter>
+            </>
+            : (isLogged && userRole === ROLES.TEACHER) 
+            
+            ? <>
+              <BrowserRouter>
+                <Fragment>
+                  <NavBarJapi />
+
+                  <AsideJapi />
+                </Fragment>
+                <Routes>
+
+                  <Route path="/" element={<ReportPanel />}></Route>
+                  <Route path="/login" element={<Login />}></Route>
+                  <Route path="/report-panel" element={<ReportPanel />}></Route>
+                  <Route path="/school-selector" element={<SchoolSelector />}></Route>
+                  <Route path="/charts/:studentRut" element={<Charts />}></Route>
+                  <Route path="/student-selector" element={<StudentSelector />}></Route>
+                  <Route path="/sessions/course/:id" element={<SessionsByCourse />} />
+                  <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse />} />
+                  <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />
+                  <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent />} />
+
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+
+              </BrowserRouter>
+
+              <></>
+            </>
+
+            : (isLogged && userRole === ROLES.PARENT) 
+            
+            ? <>
+            <BrowserRouter>
+              <Fragment>
+                <NavBarJapi />
+
+                <AsideJapi />
+              </Fragment>
+              <Routes>
+
+                <Route path="/" element={<ReportPanel />}></Route>
+                <Route path="/login" element={<Login />}></Route>
+                <Route path="/report-panel" element={<ReportPanel />}></Route>
+                <Route path="/school-selector" element={<SchoolSelector />}></Route>
+                <Route path="/charts/:studentRut" element={<Charts />}></Route>
+                <Route path="/student-selector" element={<StudentSelector />}></Route>
+                <Route path="/sessions/course/:id" element={<SessionsByCourse />} />
+                <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse />} />
+                <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />
+                <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent />} />
+
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+
+            </BrowserRouter>
+
+            <></>
+          </>
+            : <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Login />}></Route>
+              <Route path="/login" element={<Login />}></Route>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </BrowserRouter>
+          }
 
 
-        {isLogged
-            ? <Route path="/" element={<HomePage />}></Route>
-            : <Route path="/" element={<Login />}></Route>}
+        </>
 
-          <Route path="/students" element={<StudentList />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/tejaslee" element={<TejasLee />}></Route>
-          <Route path="/calculo" element={<Calculo />}></Route>
-          <Route path="/excel" element={<Excel />}></Route>
-          <Route path="/moments" element={<Moments />}></Route>
-          <Route path="/respaldo" element={<Respaldo />}></Route>
-          <Route path="/parents" element={<Parents />}></Route>
-          <Route path="/report-panel" element={<ReportPanel/>}></Route>
-          <Route path="/school-selector" element={<SchoolSelector/>}></Route>
-          <Route path="/desarrollo" element={<Desarrollo />}></Route>
-          <Route path="/sdq" element={<ParentsForm />}></Route>
-          <Route path="/charts/:studentRut" element={<Charts/>}></Route>
-          <Route path="/student-selector" element={<StudentSelector/>}></Route>
-          <Route path="/aces" element={<Aces />}></Route>
-          <Route path="/corsi" element={<Corsi />}></Route>
-          <Route path="/hnf" element={<HNF />}></Route>
-          <Route path="/fonologico" element={<Fonologico />}></Route>
-          <Route path="/torre" element={<Torre />}></Route>
-          <Route path="/esc" element={<Esc />}></Route>
-          <Route path="/wally" element={<Wally />}></Route>
-          <Route path="/sessions/course/:id" element={<SessionsByCourse/>}/>
-          <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse/>}/>
-          <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity/>}/>
-          <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent/>}/>
+          :
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Login />}></Route>
+              <Route path="/login" element={<Login />}></Route>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </BrowserRouter>
+      }
 
-      </BrowserRouter>
+
 
 
     </Fragment>

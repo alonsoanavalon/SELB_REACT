@@ -49,7 +49,8 @@ export default function Login () {
               id : data.id,
               name: data.name,
               surname: data.surname,
-              role: data.role
+              role: data.role,
+              email: data.email
             })
             cookies.set('id', data.id, {path:"/", sameSite: 'lax', maxAge: 31536000 })
             cookies.set('email', data.email, {path:"/" ,sameSite: 'lax', maxAge: 31536000 })
@@ -74,6 +75,33 @@ export default function Login () {
 
             <div className="signin">
               <form name="loginForm" id="loginForm" className="signin-form">
+                <div style={{backgroundColor:"#67B8D2", color:"#fff", padding:"1rem", borderRadius:".5rem"}}>
+                <h2 style={{textAlign:"center"}}>El equipo de Japi le da la bienvenida
+</h2>
+<h4 style={{textAlign:"center"}}>Acceda a su cuenta completando sus credenciales</h4>
+<br></br>
+<h6>Al iniciar sesión encontrará:</h6>
+  <h5 style={{color: "#fff", fontWeight:"bold"}}>Educadores</h5>
+
+<ol>
+  <li>Información de avance en Japi de su curso y de cada uno de los estudiantes</li>
+  <li>Información del desarrollo de las habilidades que sus estudiantes han practicado
+durante Japi</li>
+<li>Resultados de la evaluación de habilidades medidas en los estudiantes</li>
+</ol>
+
+
+<h5 style={{color: "#fff", fontWeight:"bold"}}>Apoderados</h5>
+
+<ol>
+  <li>Información de avance en Japi de su hijo/a o pupilo/a</li>
+  <li>Información del desarrollo de las habilidades que su hijo/a o pupilo/a ha practicado
+durante Japi</li>
+<li>Resultados de la evaluación de habilidades medidas en su hijo/a o pupilo/a</li>
+</ol>
+
+
+                </div>
                 <img src="/logo.png" alt="logo"/>
                 <h2 className="signin-title">Ingreso</h2>
                 <input type="text" name="username" placeholder='Username'/>

@@ -78,6 +78,5 @@ export const OtherButton = styled.div`
 export const GroupedChartWrapper = styled.div`
     border:1px solid #ccc;
     width:48%;
-    height:48%;
     padding:.5rem;
 `
