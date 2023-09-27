@@ -51,7 +51,7 @@ export default function Charts(props) {
       } else if (selectedChart == 2) {
         //aca tamos getGroupExercisesBySessionAndActivity
         
-        const url = `http://localhost:3500/api/session/student/${studentRut}/activity`;
+        const url = `https://selb.bond/api/session/student/${studentRut}/activity`;
         axios(url)
         .then(res => {
           
@@ -60,7 +60,7 @@ export default function Charts(props) {
 
         })
       } else if (selectedChart == 3) {
-        const url = `http://localhost:3500/api/session/student/${studentRut}/exercise`;
+        const url = `https://selb.bond/api/session/student/${studentRut}/exercise`;
         axios(url)
         .then(res => {
           
@@ -69,7 +69,7 @@ export default function Charts(props) {
 
         })
       } else if (selectedChart == 4) {
-        const url = `http://localhost:3500/api/session/student/${studentRut}/activity/skills`;
+        const url = `https://selb.bond/api/session/student/${studentRut}/activity/skills`;
         axios(url)
         .then(res => {
           
