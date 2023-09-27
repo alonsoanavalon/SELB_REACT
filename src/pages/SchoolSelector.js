@@ -13,27 +13,36 @@ export default function SchoolSelector() {
     const [filteredCourses, setFilteredCourses] = useState([])
     const [filteredStudents, setFilteredStudents] = useState([])
 
+    const [isLoading, setIsLoading] = useState(true) // Nuevo estado para controlar la carga de datos
+
+
     useEffect(async () => {
 
-        const moments = await get('moments')
-        const studies = await get('studies')
-        const courses = await get('courses')
-        const students = await get('students')
-        const schools = await get('schools')
+        
+        const fetchData = async () => {
+            const moments = await get('moments')
+            const studies = await get('studies')
+            const courses = await get('courses')
+            const students = await get('students')
+            const schools = await get('schools')
 
+            if (schools) {
+                setSchools(schools)
+            } 
+    
+            if (courses) {
+                setCourses(courses)
+            }
+    
+            if (students) {
+                setFilteredStudents(students)
+            }
 
-        debugger
-        if (schools) {
-            setSchools(schools)
+            setIsLoading(false) // Indicamos que hemos terminado de cargar los datos
         }
 
-        if (courses) {
-            setCourses(courses)
-        }
-
-        if (students) {
-            setFilteredStudents(students)
-        }
+        fetchData()
+   
 
     }, [])
 
@@ -80,8 +89,12 @@ export default function SchoolSelector() {
     return (
         <Fragment>
 
-            {
-                schools && <div className="japi-container-center" style={{alignSelf:"center",  justifySelf:"center"}}>
+{isLoading ? (
+                // Muestra un indicador de carga mientras se obtienen los datos
+                <div>Cargando...</div>
+            ) : schools ? (
+                // Muestra el contenido si schools tiene datos
+                <div className="japi-container-center" style={{alignSelf:"center",  justifySelf:"center"}}>
                 <div className="sdq-form-container" style={{alignSelf:"center", justifySelf:"center"}}>
                
                 <h2 class="h2 text-start" style={{color:"rgb(56, 163, 165)", fontWeight:"bold"}}>Selector de curso</h2>
@@ -100,8 +113,13 @@ export default function SchoolSelector() {
                 </div>
                 </div>
                 </div>
-     
-            }
+            ) : (
+                // Maneja el caso en que schools sea null o vacío
+                <div>No se encontraron escuelas.</div>
+            )}
+
+
+
 
         </Fragment>
     )
