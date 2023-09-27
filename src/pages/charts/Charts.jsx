@@ -304,10 +304,11 @@ export default function Charts(props) {
   }
 
     <select style={{width:"100%"}}onChange={(e) => displayAlert(e)} class="form-select" aria-label="Default select example">
-    <option defaultValue="4" value="4">Habilidades</option>
-      <option  value="1">Nivel de logro por actividad</option>
-      <option value="2">Actividades logradas por sesión</option>
+    <option defaultValue="4" value="2">Actividades logradas por sesión</option>
+      <option value="1">Nivel de logro por actividad</option>
+
       <option value="3">Ensayos logrados por sesión</option>
+      <option  value="4">Habilidades</option>
 
     </select>
 
