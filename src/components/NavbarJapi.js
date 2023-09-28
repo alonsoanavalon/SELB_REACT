@@ -94,8 +94,8 @@ export default function NavBarJapi() {
         
         const textInfo = `
         Version: 1.2.5 ||
-        Ultima Actualización: 10/09/2023 ||
-        Cache: v2.2
+        Ultima Actualización: 26/09/2023 ||
+        Cache: v2.8
         `
         alert.show(textInfo, {
             type:'success'
