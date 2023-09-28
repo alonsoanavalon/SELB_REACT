@@ -357,9 +357,9 @@ export default function HomePage() {
                 }).then((result) => {
                   if (result.isConfirmed) {
                     Swal.fire({
-                      showCancelButton: true,
-                      cancelButtonText: 'Finalizar',
-                      cancelButtonColor: '#70C851',
+                      showCancelButton: false,
+                      //cancelButtonText: 'Finalizar',
+                      //cancelButtonColor: '#70C851',
                       confirmButtonColor: "#E6BB34",
                       showConfirmButton: true,
                       allowOutsideClick: false,
