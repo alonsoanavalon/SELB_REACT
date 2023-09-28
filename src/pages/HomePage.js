@@ -363,7 +363,7 @@ export default function HomePage() {
                       confirmButtonColor: "#E6BB34",
                       showConfirmButton: true,
                       allowOutsideClick: false,
-                      confirmButtonText: 'Finalizar y eliminar test por enviar',
+                      confirmButtonText: 'Finalizar',
                       title: `${result.value.statusText}`,
                       html: `<b>Total enviados</b>: ${result.value.instrumentsLength}
                                        <br>
