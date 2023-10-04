@@ -488,7 +488,7 @@ export default function HomePage() {
             </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button>}
 
             {/* Esta funcion me elimina los test guardados entre X fechas */}
-            {/* <button className="btn btn-info"  style={{marginLeft:"2rem", color:"#fff"}}onClick={eliminarTestAntiguos}>Eliminar tests antiguos</button> */}
+            <button className="btn btn-info"  style={{marginLeft:"2rem", color:"#fff"}}onClick={eliminarTestAntiguos}>Eliminar tests antiguos</button>
 
 
 
