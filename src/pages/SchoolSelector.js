@@ -64,8 +64,8 @@ export default function SchoolSelector() {
         let $filteredCoursesToRender = $filteredCourses.map(course => <option key={course.course}value={course.course}> {course.courseName}</option>)
 
         setFilteredCourses($filteredCoursesToRender)
-        $courseSelect.value = "empty"
-        $courseSelect.disabled = false;
+        $courseSelect?.value = "empty"
+        $courseSelect?.disabled = false;
     }
 
 

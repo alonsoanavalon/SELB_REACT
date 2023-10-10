@@ -26,7 +26,7 @@ export default function  EmpathyOptions(props) {
                 <label className="esc-test">
                     <img className="esc-emotion" src="/images/esc-4.png" alt="profile" />
                     <input  type="radio" name={props.instrumentName} value="4" data-id={props.itemId}/>
-                </label>,
+                </label>
                 ])
             } else {
                 setOptions([
@@ -69,7 +69,7 @@ export default function  EmpathyOptions(props) {
                                <label className="esc-test">
                                <img className="esc-emotion" src="/images/esc-3.png" alt="profile" />
                                <input  type="radio" name={props.instrumentName} value="3"  data-id={props.itemId}/>
-                           </label>,
+                           </label>
                 ])
             } else {
                 setOptions([
@@ -91,7 +91,7 @@ export default function  EmpathyOptions(props) {
                                      <label className="esc-test">
                                      <img className="esc-emotion" src="/images/esc-7.png" alt="profile" />
                                      <input  type="radio" name={props.instrumentName} value="3" data-id={props.itemId}/>
-                                 </label>,
+                                 </label>
         
                     ])
             }
@@ -114,7 +114,7 @@ export default function  EmpathyOptions(props) {
                 <label className="esc-test" >
                      <img className="esc-emotion" src="/images/esc-1.png" alt="profile" />
                     <input  type="radio" name={props.instrumentName} value="1" data-id={props.itemId}/>
-                </label>,
+                </label>
 
                 ])
             } else {
@@ -137,7 +137,7 @@ export default function  EmpathyOptions(props) {
                   <label className="esc-test">
                         <img className="esc-emotion" src="/images/esc-5.png" alt="profile" />
                         <input  type="radio" name={props.instrumentName} value="1" data-id={props.itemId}/>
-                 </label>,
+                 </label>
         
                     ])
             }
