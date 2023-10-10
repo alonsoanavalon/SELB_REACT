@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useAlert } from 'react-alert'
 import Swal from 'sweetalert2'
 import { get, set } from 'idb-keyval';
+import {  useLocation } from 'react-router-dom';
+
 import { ROLES } from './constants';
 
 export default function NavBar() {
@@ -9,6 +11,8 @@ export default function NavBar() {
     const alert = useAlert()
     const [userRole, setUserRole] = useState('')
     const [studentsLength, setStudentsLength] = useState(undefined)
+    const [showReload, setShowReload] = useState(false)
+    const location = useLocation();
 
     useEffect(() => {
         get('userRole').then((val) => {
@@ -95,12 +99,21 @@ export default function NavBar() {
         const textInfo = `
         Version: 1.2.5 ||
         Ultima Actualización: 10/10/2023 ||
-        Cache: v3.1
+        Cache: v3.3
         `
         alert.show(textInfo, {
             type:'success'
         })
     }
+
+    useEffect(() => {
+        if (location.pathname === '/') {
+            setShowReload(true)
+        } else {
+            setShowReload(false) 
+        }
+    }, [location])
+
 
 
     return (      
@@ -122,9 +135,11 @@ export default function NavBar() {
                                     </button>
                 
                                     <div className='selb-icon-wrapper'>
-                                        <svg onClick={reloadPage} id="refresh-icon" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                       {
+                                       showReload && <svg onClick={reloadPage} id="refresh-icon" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                         </svg>
+                                       } 
                                         <h4
                                             onClick={showVersionInfo}
                                             className='selb-info'

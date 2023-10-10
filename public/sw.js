@@ -1,4 +1,4 @@
-let cacheData = "app-v33";
+let cacheData = "app-v34";
 this.addEventListener("install", evt => {
     console.log("installing")
 
@@ -34,6 +34,7 @@ this.addEventListener("install", evt => {
     caches.delete("app-v30")
     caches.delete("app-v31")
     caches.delete("app-v32")
+    caches.delete("app-v33")
 
 
 

@@ -109,6 +109,21 @@ function App() {
   }, [])
 
   useEffect(() => {
+    get('schools').then((
+      val => window.localStorage.setItem('schools', JSON.stringify(val))
+    ))
+    get('courses').then((
+      val => window.localStorage.setItem('courses', JSON.stringify(val))
+    ))
+    get('students').then((
+      val => window.localStorage.setItem('students', JSON.stringify(val))
+    ))
+    get('instruments').then((
+      val => window.localStorage.setItem('instruments', JSON.stringify(val))
+    ))
+  }, [])
+
+  useEffect(() => {
 
     if (!cookies.get('id') && (window.location.pathname !== "/login")) {
       window.location.href = '/login'

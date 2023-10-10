@@ -12,18 +12,59 @@ export default function StudentList () {
     const [filteredCourses, setFilteredCourses] = useState([])
     const [filteredStudents, setFilteredStudents] = useState([])
 
-    function getData(data, setter){
-        get(data)
-        .then(res => setter(res))
-    }
-
     useEffect(() => { 
 
-        get('students').then(students => setStudents(students))
-        getData('courses', setCourses)
-        getData('schools', setSchools)
+        get('schools').then(schools => {
+            if (!schools) {
+                debugger
+                let localSchools = window.localStorage.getItem('schools')
+                if (localSchools) {
+                    localSchools = JSON.parse(localSchools)
+                    setSchools(localSchools)
+
+                }
+            } else {
+                setSchools(schools)
+
+            }
+        })
+        get('courses').then(courses => {
+            if (!courses) {
+                let localCourses = window.localStorage.getItem('courses')
+                if (localCourses) {
+                    localCourses = JSON.parse(localCourses)
+                    setCourses(localCourses)
+                }
+            } else {
+                setCourses(courses)
+
+            }
+        })
+        get('students').then(students => {
+            if (!students) {
+                let localStudents = window.localStorage.getItem('students')
+                if (localStudents) {
+                    localStudents = JSON.parse(localStudents)
+                    setStudents(localStudents)
+                }
+            } else {
+                setStudents(students)
+
+            }
+        })
+
         get('instruments')
-        .then(data => data.filter(instrument => instrument['instrument_type_id'] === 1))
+        .then(data => {
+            if (!data) {
+                let localInstruments = window.localStorage.getItem('instruments')
+                if (localInstruments) {
+                    localInstruments = JSON.parse(localInstruments)
+                    return localInstruments.filter(instrument => instrument['instrument_type_id'] === 1)
+                }
+            } else {
+                return data.filter(instrument => instrument['instrument_type_id'] === 1)
+            }
+        })
         .then(filteredInstruments => setInstruments(filteredInstruments))
     
     }, [])
@@ -41,8 +82,12 @@ export default function StudentList () {
         let $filteredCoursesToRender = $filteredCourses.map(course => <option key={course.course}value={course.course}> {course.courseName}</option>)
 
         setFilteredCourses($filteredCoursesToRender)
-        $courseSelect.value = "empty"
-        $courseSelect.disabled = false;
+
+        if ($courseSelect) {
+            $courseSelect.value = "empty"
+            $courseSelect.disabled = false;
+        }
+
     }
 
 

@@ -66,18 +66,13 @@ export default function TejasLee () {
             }    
         )      
 
-
-
         window.history.pushState(null, null, window.location.href);
         window.onpopstate = function () {
         window.history.go(1);
      };
         
-        
 
     }, [])
-    
-    
     return (
 
 
@@ -314,9 +309,8 @@ que me digas el nombre de cada una. Si no conoces alguna letra está bien, inté
                     </SwiperSlide>
                     
                     <SwiperSlide>
-                        <Audio audio={storySound[0]}/>
+                        <Audio/>
                     </SwiperSlide>
-                  
                   {
                       auditiveComprehension.map(
                         item => 

@@ -47,7 +47,7 @@ export default function Parents() {
 
         setFilteredStudents($filteredStudentsToRender)
         $courseSelect.value = $courseId
-        $studentsSelect?.disabled = false;
+        $studentsSelect.disabled = false;
     }   
 
     const getFormValues = () => {
