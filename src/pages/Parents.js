@@ -33,7 +33,7 @@ export default function Parents() {
         let $filteredCoursesToRender = $filteredCourses.map(course => <option key={course.course}value={course.course}> {course.courseName}</option>)
 
         setFilteredCourses($filteredCoursesToRender)
-        $courseSelect?.value = "empty"
+        $courseSelect.value = "empty"
         $courseSelect?.disabled = false;
     }
 
@@ -46,7 +46,7 @@ export default function Parents() {
         let $filteredStudentsToRender = $filteredStudents.map(student => <option key={student.studentId} value={student.studentId}> {student.name + " " + student.surname}</option>)
 
         setFilteredStudents($filteredStudentsToRender)
-        $courseSelect?.value = $courseId
+        $courseSelect.value = $courseId
         $studentsSelect?.disabled = false;
     }   
 
