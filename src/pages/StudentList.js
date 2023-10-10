@@ -42,7 +42,7 @@ export default function StudentList () {
 
         setFilteredCourses($filteredCoursesToRender)
         $courseSelect.value = "empty"
-        $courseSelect?.disabled = false;
+        $courseSelect.disabled = false;
     }
 
 
