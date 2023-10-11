@@ -118,7 +118,7 @@ export default function StudentSelector() {
   return (
     <>
       {
-        (students && chartData) &&     <div className="japi-container">
+        (students && chartData) ?     <div className="japi-container">
           <CenteredContainer>
             <DataTableContainer>
               <DatatableWrapper
@@ -207,6 +207,8 @@ export default function StudentSelector() {
           </CenteredContainer>
   
         </div>
+        :
+        <>No se han encontrado datos</>
       }
 
     </>
