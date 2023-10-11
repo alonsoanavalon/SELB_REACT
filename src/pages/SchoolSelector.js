@@ -26,24 +26,35 @@ export default function SchoolSelector() {
             const students = await get('students')
             const schools = await get('schools')
 
-
-            if (schools) {
-                if (courses) {
+                if (!courses) {
+                    const localCourses = window.localStorage.getItem('courses');
+                    if (localCourses) {
+                        setCourses(JSON.parse(courses))
+                    }
+                } else {
                     setCourses(courses)
                 }
         
-                if (students) {
+                if (!students) {
+                    const localStudents = window.localStorage.getItem('students');
+                    if (localStudents) {
+                        setFilteredStudents(JSON.parse(students))
+                    }
+                } else {
                     setFilteredStudents(students)
                 }
-                setSchools(schools)
-                setIsLoading(false) // Establecer isLoading en false si se encuentran datos
-            } else {
-                // Si no se encuentran escuelas, programar un reintento después de 5 segundos
-                setTimeout(() => {
-                    fetchData();
-                }, 500); // Espera 5 segundos antes de reintentar
-            }
 
+                if (!schools) {
+                    const localSchools = window.localStorage.getItem('schools');
+                    if (localSchools) {
+                        setSchools(JSON.parse(schools))
+                    }
+                } else {
+                    setSchools(schools)
+                }
+
+                setIsLoading(false) // Establecer isLoading en false si se encuentran datos
+       
 
         }
 
@@ -53,14 +64,13 @@ export default function SchoolSelector() {
     }, [])
 
     const renderSchools = () => {
-        debugger
         return schools?.map(school => <option key={school.id}value={school.id}> {school.name}</option>)
     }
 
     const getCourses = (evt) => {
         let $schoolId = evt.target.value
         let $courseSelect = document.getElementById("courseSelect")
-        let $filteredCourses = courses.filter(course => parseInt(course.school) === parseInt($schoolId))
+        let $filteredCourses = courses?.filter(course => parseInt(course.school) === parseInt($schoolId))
         let $filteredCoursesToRender = $filteredCourses.map(course => <option key={course.course}value={course.course}> {course.courseName}</option>)
 
         setFilteredCourses($filteredCoursesToRender)
