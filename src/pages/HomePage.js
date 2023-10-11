@@ -483,9 +483,9 @@ export default function HomePage() {
               </tbody>
             </table>
 
-            {/* {navigator.onLine ? <Fragment>
+            {navigator.onLine ? <Fragment>
               {savedTests === true ? <button onClick={sendNewInstrument} className="button btn btn-primary">Enviar</button> : <button className="button btn btn-secondary" disabled>Enviar</button>}
-            </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button>} */}
+            </Fragment> : <button className="button btn btn-secondary" disabled>Enviar</button>}
 
             {/* Esta funcion me elimina los test guardados entre X fechas */}
             <button className="btn btn-info"  style={{marginLeft:"2rem", color:"#fff"}}onClick={eliminarTestAntiguos}>Eliminar tests antiguos</button>
