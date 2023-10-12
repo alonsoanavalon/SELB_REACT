@@ -15,8 +15,11 @@ export default function ReportPanel () {
             window.location.href = '/school-selector'
         } else if (role === ROLES.PARENT) {
             debugger
+            if (listParents?.length > 0) {
+                window.location.href = `/charts/${listParents[0].rut}`
+            }
             //aca tambien ver el tema de multiples niños
-            window.location.href = `/charts/${listParents[0].rut}`
+
         }
     }
 
