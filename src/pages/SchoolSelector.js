@@ -29,7 +29,8 @@ export default function SchoolSelector() {
                 if (!courses) {
                     const localCourses = window.localStorage.getItem('courses');
                     if (localCourses) {
-                        setCourses(JSON.parse(courses))
+                        const parsedCourses = JSON.parse(localCourses)
+                        setCourses(parsedCourses)
                     }
                 } else {
                     setCourses(courses)
@@ -38,7 +39,7 @@ export default function SchoolSelector() {
                 if (!students) {
                     const localStudents = window.localStorage.getItem('students');
                     if (localStudents) {
-                        setFilteredStudents(JSON.parse(students))
+                        setFilteredStudents(JSON.parse(localStudents))
                     }
                 } else {
                     setFilteredStudents(students)
@@ -47,7 +48,7 @@ export default function SchoolSelector() {
                 if (!schools) {
                     const localSchools = window.localStorage.getItem('schools');
                     if (localSchools) {
-                        setSchools(JSON.parse(schools))
+                        setSchools(JSON.parse(localSchools))
                     }
                 } else {
                     setSchools(schools)
