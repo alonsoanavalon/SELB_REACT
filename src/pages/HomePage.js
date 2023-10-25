@@ -332,46 +332,67 @@ export default function HomePage() {
                   confirmButtonText: '¿Deseas enviar los test?',
                   showLoaderOnConfirm: true,
                   preConfirm: async () => {
-                    return fetch( /*'http://localhost:3500/newevaluation'|| */ 'https://selb.bond/newevaluation', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                        studyId: studyId,
-                        instruments: res
-                      })
-                    })
-                      .then(response => {
-                        if (!response.ok) {
-                          throw new Error(response.statusText)
-                        }
-                        return response.json()
-                      })
-                      .catch(error => {
-                        Swal.showValidationMessage(
-                          `Ha ocurrido un error en el envío de datos desde el dispositivo: ${error.message}`
-                        )
-                      })
-                  },
+                    const batchSize = 30; // Tamaño del lote
+                    let start = 0;
+                    let end = Math.min(batchSize, res.length);
+                    let updateCounter = 0;
+                    let createdCounter = 0;
+                  
+                    while (start < res.length) {
+                      const currentBatch = res.slice(start, end);
+                  
+                      const response = await fetch('https://selb.bond/newevaluation', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          studyId: studyId,
+                          instruments: currentBatch,
+                        }),
+                      });
+                  
+                      if (!response.ok) {
+                        Swal.showValidationMessage(`Ha ocurrido un error en el envío de datos desde el dispositivo: ${response.statusText}`);
+                        return false;
+                      }
+                  
+                      const result = await response.json();
+                      updateCounter += result.updatedCounter;
+                      createdCounter += result.createdCounter;
+                      start = end;
+                      end = Math.min(end + batchSize, res.length);
+                    }
+                
+                    return {
+                      updatedCounter: updateCounter,
+                      createdCounter: createdCounter,
+                      instrumentsLength: res.length,
+                    };
+                  }
                 }).then((result) => {
                   if (result.isConfirmed) {
+                    const results = result.value;
+                    const createdCounter = results.createdCounter;
+                    const updatedCounter = results.updatedCounter; 
+                    const instrumentsLength = results.instrumentsLength;
                     Swal.fire({
                       showCancelButton: false,
-                      //cancelButtonText: 'Finalizar',
-                      //cancelButtonColor: '#70C851',
                       confirmButtonColor: "#E6BB34",
                       showConfirmButton: true,
                       allowOutsideClick: false,
                       confirmButtonText: 'Finalizar',
-                      title: `${result.value.statusText}`,
-                      html: `<b>Total enviados</b>: ${result.value.instrumentsLength}
+                      title: `Los test han sido enviados correctamente`,
+                      html: `<b>Total enviados</b>: ${instrumentsLength}
                                        <br>
-                                       <b>Ingresados</b>: ${result.value.createdCounter}
+                                       <b>Ingresados</b>: ${createdCounter}
                                        <br>
-                                       <b>Actualizados</b>: ${result.value.updatedCounter}
+                                       <b>Actualizados</b>: ${updatedCounter}
                                        <br></br>
-                                       ${result.value.htmlText}`
+                                       <p>Recuerda que la cantidad de test que se agregarán a tus "Test enviados" serán los <b>ingresados</b>, no aquellos <b>actualizados</b></p>
+                                       <br>
+                                       <p>En caso de que existan inconsistencias puedes descargar tu <a href="/respaldo">respaldo</a> y comunicarte con el administrador</p>
+                                      `
                     }).then(result => {
                       if (result.isConfirmed) {
                         update('completedTests', val => [])
@@ -387,32 +408,10 @@ export default function HomePage() {
     
                   }
                 })
-              
-
             }
-
-
-            
-
-
-
           }
         }
-
-
       )
-    /*         .then(
-                _ => {
-                    update('completedTests', val => [])
-                    setTimeout(() => {
-    
-                        window.location.pathname = '/'
-                    }, 1000)
-                }
-            ) */
-
-
-
   }
 
 
