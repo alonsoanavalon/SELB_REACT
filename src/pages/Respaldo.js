@@ -2,6 +2,7 @@ import React, {Fragment, useEffect, useState } from 'react';
 import {get, getMany, set} from 'idb-keyval'
 import { CSVLink } from "react-csv";
 import { useAlert } from 'react-alert'
+import Swal from 'sweetalert2';
 export default function Respaldo () {
 
 
@@ -9,7 +10,7 @@ export default function Respaldo () {
     const [userData, setUserData] = useState("")
     const alert = useAlert()
     const [jsonData, setJsonData] = useState([])
-
+    
     useEffect(() => {
 
         get('userData').then(res => {
@@ -56,7 +57,6 @@ export default function Respaldo () {
                     } else if (instrumentName == "TorreLondres") {
                         element[1] === "" ? answers.push(0) : answers.push(element[1].value.toString())
                     } else if (instrumentName == "ESC") {
-                        debugger;
                         element[1] === "" ? answers.push(0) : answers.push(element[1].value.toString())
                     }
                     
@@ -73,10 +73,75 @@ export default function Respaldo () {
             })
             setCsvDataRespaldo(testArray)
         })
+        .catch(error => {
+            console.log(error)
+            sendErrorLog(error)
+        });
 
     }
 
+    function sendErrorLog(error) {
+        let errorLog = {
+            error: error.message,
+            userData: userData,
+            date: new Date()
+        }
+
+        const url = 'https://selb.bond/api/error-log'
+
+        debugger;
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(errorLog),
+            headers: {
+              "Content-Type": "application/json",            },
+
+          })
+            .then((response) => {
+                if (response.status !== 200) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error al enviar el reporte",
+                        text: "Error al enviar el reporte",
+                    });
+
+                    console.log("Error al enviar el reporte")
+                } else {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Reporte enviado",
+                        text: "El reporte de error se ha enviado correctamente",
+                    });
+
+                    console.log("Reporte enviado")
+                }
+     
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error al enviar el reporte",
+                    text: error,
+                });
+                console.log(error);
+            });
+    }
+
     function exportUserInfo(testArray) {
+
+        try {
+          const fileData = JSON.stringify(testArray);
+          const blob = new Blob([fileData], { type: "text/plain" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.download = "respaldo-administrador.json";
+          link.href = url;
+          link.click();
+       
+        } catch (error) {
+          sendErrorLog(error);  
+          console.log(error);
+        }
 
         const fileData = JSON.stringify(testArray);
         const blob = new Blob([fileData], { type: "text/plain" });
@@ -137,7 +202,21 @@ export default function Respaldo () {
         })
     }
 
+
+    useEffect(() => {
+        const handleWindowError = (event) => {
+          // Maneja el error aquí
+          console.error('Error en el DOM:', event.error.message);
+          sendErrorLog(event.error)
+        };
     
+        window.addEventListener('error', handleWindowError);
+    
+        // Limpia el event listener cuando el componente se desmonta
+        return () => {
+          window.removeEventListener('error', handleWindowError);
+        };
+      }, []); 
 
     csvDataRespaldo && console.log(csvDataRespaldo)
     
