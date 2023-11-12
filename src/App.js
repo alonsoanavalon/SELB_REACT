@@ -310,7 +310,7 @@ function App() {
   }, [userId])
 
   useEffect(() => {
-    if (isLogged) {
+    if (isLogged && userId) {
       if (navigator.onLine) {
         window.localStorage.setItem('school-assignation', JSON.stringify([]));
         let url = /* `http://localhost:3500/api/school-assignation/${userId}` ||*/ `https://selb.bond/${userId}`
