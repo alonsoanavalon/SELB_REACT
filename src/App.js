@@ -63,48 +63,15 @@ function App() {
     }
   }
 
-  // function postDataInDatabase () {
-  //   if(navigator.onLine) {
-  //     console.log("Ahora vamos a guardar los datos")
-  //     get('newUsers')
-  //     .then(users => {
-
-  //       if (users) {
-  //         console.log("guardando")
-  //         fetch("https://selb.bond/test", {
-  //           method : 'POST',
-  //           headers : {'Content-Type':'application/json'},
-  //           body: JSON.stringify(users) 
-  //         })
-  //         del('newUsers')
-  //       } else {
-  //         console.log("no hay nada q guardar")
-  //       }
-
-  //     })
-  //     .then(res => console.log(res))
-  //     .catch(err => console.log(err))
-
-  //   } else {
-  //     console.log("Ahora no vamos a guardar los datos, navegador offline")
-  //   }
-  // }
-
-
   useEffect(async () => {
 
     const user = await get('userData')
-
 
     if (user) {
       setUserId(user.id)
       setUserRole(user.role)
       set('userRole', user.role)
     }
-
-
-
-
 
   }, [])
 
@@ -121,6 +88,7 @@ function App() {
     get('instruments').then((
       val => window.localStorage.setItem('instruments', JSON.stringify(val))
     ))
+    
   }, [])
 
   useEffect(() => {
@@ -308,6 +276,22 @@ function App() {
               set('escLength', res.data[0]['COUNT(*)'])
             }
           )
+
+
+          axios({
+            method: 'get',
+            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+            params: {
+              instrument: 7,
+              user: userId
+            }
+          })
+            .then(
+  
+              res => {
+                set('hnfLength', res.data[0]['COUNT(*)'])
+              }
+            )
       }
     }
 
@@ -324,6 +308,19 @@ function App() {
 
 
   }, [userId])
+
+  useEffect(() => {
+    if (isLogged) {
+      if (navigator.onLine) {
+        window.localStorage.setItem('school-assignation', JSON.stringify([]));
+        let url = /* `http://localhost:3500/api/school-assignation/${userId}` ||*/ `https://selb.bond/${userId}`
+        axios(url)
+          .then(res => {
+            window.localStorage.setItem('school-assignation', JSON.stringify(res.data));
+          })
+      }
+    }
+  }, [isLogged, userId])
 
 
 

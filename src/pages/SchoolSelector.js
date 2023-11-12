@@ -24,7 +24,7 @@ export default function SchoolSelector() {
             const studies = await get('studies')
             const courses = await get('courses')
             const students = await get('students')
-            const schools = await get('schools')
+            const schools = window.localStorage.getItem('school-assignation')
 
                 if (!courses) {
                     const localCourses = window.localStorage.getItem('courses');
@@ -46,12 +46,12 @@ export default function SchoolSelector() {
                 }
 
                 if (!schools) {
-                    const localSchools = window.localStorage.getItem('schools');
+                    const localSchools = window.localStorage.getItem('school-assignation');
                     if (localSchools) {
                         setSchools(JSON.parse(localSchools))
                     }
                 } else {
-                    setSchools(schools)
+                    setSchools(JSON.parse(schools))
                 }
 
                 setIsLoading(false) // Establecer isLoading en false si se encuentran datos
