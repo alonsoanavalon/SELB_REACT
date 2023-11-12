@@ -313,7 +313,7 @@ function App() {
     if (isLogged && userId) {
       if (navigator.onLine) {
         window.localStorage.setItem('school-assignation', JSON.stringify([]));
-        let url = /* `http://localhost:3500/api/school-assignation/${userId}` ||*/ `https://selb.bond/${userId}`
+        let url = /* `http://localhost:3500/api/school-assignation/${userId}` ||*/ `https://selb.bond/api/school-assignation/${userId}`
         axios(url)
           .then(res => {
             window.localStorage.setItem('school-assignation', JSON.stringify(res.data));
