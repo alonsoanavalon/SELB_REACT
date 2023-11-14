@@ -4,19 +4,50 @@ import { ReportPanelContainer, ReportButton, OtherButton, Container } from './st
 import { get, set, del } from 'idb-keyval';
 import axios from 'axios';
 import { ROLES } from '../components/constants.js';
+import Cookies from 'universal-cookie'
+
+
 export default function ReportPanel () {
 
     const [role, setUserRole] = useState(null)
     const [userEmail, setUserEmail] = useState(null)
-    const [listParents, setListParents] = useState(null)
+    const [dataLoaded, setDataLoaded] = useState(false)
+    const [dataParentsLoaded, setDataParentsLoaded] = useState(false)
+    const cookies = new Cookies()
+
+    function logout() {
+        cookies.remove('id',{path:'/'})
+        cookies.remove('email', {path:'/'})
+        window.location.pathname = '/login'
+    }
 
     const openReports = () => {
+        debugger
         if (role === ROLES.ADMIN || role === ROLES.TEACHER) {
             window.location.href = '/school-selector'
         } else if (role === ROLES.PARENT) {
             debugger
+            const listParents = JSON.parse(window.localStorage.getItem('listparents'))
+            debugger;
             if (listParents?.length > 0) {
-                window.location.href = `/charts/${listParents[0].rut}`
+                if (listParents.length == 1) {
+                    window.location.href = `/charts/${listParents[0].rut}`
+                } else {
+                    window.location.href = '/student-parent-selector'
+                }
+            } else {
+                Swal.fire({
+                    title: 'No hay estudiantes asociados a tu cuenta',
+                    text: 'Por favor contacta a tu colegio para que te asocie a un estudiante',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok',
+                    allowOutsideClick: false,
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        logout();
+                    }
+                })
             }
             //aca tambien ver el tema de multiples niños
 
@@ -46,13 +77,14 @@ export default function ReportPanel () {
           let url =  /*`http://localhost:3500/${data}` ||*/  `https://selb.bond/${data}`
           axios(url)
             .then(res => {
+                debugger;
                 //aca cambiar cuando sea mas de un estudiante por apoderado
                 if (res.data.length > 0) {
-                    setListParents(res.data)
-                    set('listparents',res.data)
+                    window.localStorage.setItem('listparents', JSON.stringify(res.data))
+                    setDataParentsLoaded(true)
 
                 } else {
-                    set('listparents',[])
+
                 }
 
             })
@@ -69,8 +101,8 @@ export default function ReportPanel () {
     useEffect(async () => {
         const userData = await get('userData')
         if (userData) {
-            
             getDataParents(`listparents/${userData.email}`)
+ 
         }
     }, [])
 
@@ -90,12 +122,30 @@ export default function ReportPanel () {
         getData('sdq')
         getData('studies/active')
 
+        setDataLoaded(true)
+        
+
     
     }, [])
 
+    useEffect(() => {
+
+        if (dataLoaded && role){
+            debugger
+            if (role === ROLES.PARENT && dataParentsLoaded) {
+
+                    openReports()
+ 
+            } else {
+                openReports()
+
+            }
+        }
+    }, [dataLoaded, role, dataParentsLoaded])
+
     return (
         <Fragment>
-            <Container>
+            {/* <Container>
     
             <ReportPanelContainer style={{cursor:"pointer"}}>
                 <ReportButton onClick={openReports}>
@@ -125,7 +175,7 @@ export default function ReportPanel () {
                 </OtherButton>
             </ReportPanelContainer>
 
-            </Container>
+            </Container> */}
 
 
         </Fragment>

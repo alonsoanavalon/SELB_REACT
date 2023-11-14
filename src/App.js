@@ -38,6 +38,7 @@ import ExercisesByStudentActivity from './pages/ExercisesByStudentActivity';
 import ActivitiesBySessionAndStudent from './pages/ActivitiesBySessionAndStudent';
 import { ROLES } from './components/constants';
 import AsideJapi from './components/AsideJapi';
+import StudentParentSelector from './pages/StudentParentSelector';
 
 
 const cookies = new Cookies();
@@ -420,6 +421,7 @@ function App() {
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/report-panel" element={<ReportPanel />}></Route>
                 <Route path="/school-selector" element={<SchoolSelector />}></Route>
+                <Route path="/student-parent-selector" element={<StudentParentSelector />}></Route>
                 <Route path="/charts/:studentRut" element={<Charts />}></Route>
                 <Route path="/student-selector" element={<StudentSelector />}></Route>
                 <Route path="/sessions/course/:id" element={<SessionsByCourse />} />

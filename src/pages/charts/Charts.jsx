@@ -289,7 +289,7 @@ export default function Charts(props) {
   }, [studentData, selectedChart])
 
   useEffect(() =>{
-    setSelectedChart(2)
+    setSelectedChart(4)
   }, [])
   
   return <>

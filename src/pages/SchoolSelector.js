@@ -17,8 +17,6 @@ export default function SchoolSelector() {
 
 
     useEffect(async () => {
-
-        
         const fetchData = async () => {
             const moments = await get('moments')
             const studies = await get('studies')
@@ -59,7 +57,14 @@ export default function SchoolSelector() {
 
         }
 
-        fetchData()
+        try {
+            setTimeout(() => {
+                fetchData()
+            }, 1500)
+        }
+        catch (error) {
+            console.log(error);
+        }
    
 
     }, [])

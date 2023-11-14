@@ -207,7 +207,7 @@ export default function StudentSelector() {
           </CenteredContainer>
   
         </div>
-        :
+        : 
         <>No se han encontrado datos</>
       }
 
