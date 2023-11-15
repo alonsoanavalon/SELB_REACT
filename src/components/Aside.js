@@ -39,6 +39,7 @@ export default function Aside() {
     function logout() {
         cookies.remove('id',{path:'/'})
         cookies.remove('email', {path:'/'})
+        window.localStorage.clear()
         window.location.pathname = '/login'
     }
     
