@@ -85,7 +85,7 @@ export default function ReportPanel () {
                     setDataParentsLoaded(true)
 
                 } else {
-
+                    setDataParentsLoaded(true)
                 }
 
             })
@@ -133,9 +133,12 @@ export default function ReportPanel () {
 
         if (dataLoaded && role){
             debugger
-            if (role === ROLES.PARENT && dataParentsLoaded) {
-
+            if (role === ROLES.PARENT) {
+                if (dataParentsLoaded) {
+                    debugger
                     openReports()
+                }
+
  
             } else {
                 openReports()
