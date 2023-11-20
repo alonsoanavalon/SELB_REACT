@@ -19,7 +19,7 @@ export default function ActivitiesBySessionAndCourse() {
       const url = `https://selb.bond/api/session/course/${courseId}/session/${sessionId}/activity`;
       axios(url)
         .then(res => {
-          debugger;
+          ;
           if (res.data) {
             setActivitiesBySession(res.data);
      

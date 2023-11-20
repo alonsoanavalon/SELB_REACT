@@ -108,7 +108,7 @@ export default function StudentSelector() {
     if (courseData) {
       const data = formatChartDataByExercises(courseData);
       setChartData(data)
-      debugger;
+      ;
     }
   }, [courseData])
 

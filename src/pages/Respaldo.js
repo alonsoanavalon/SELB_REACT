@@ -89,7 +89,7 @@ export default function Respaldo () {
 
         const url = 'https://selb.bond/api/error-log'
 
-        debugger;
+        ;
         fetch(url, {
             method: "POST",
             body: JSON.stringify(errorLog),

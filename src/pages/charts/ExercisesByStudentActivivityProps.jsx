@@ -13,7 +13,7 @@ export default function ExercisesByStudentActivityProps(props) {
 
   useEffect(() => {
     if (props) {
-        debugger;
+        ;
         setExercisesByStudentActivity(props.exercises)
     }
   }, [props])
@@ -64,9 +64,9 @@ export default function ExercisesByStudentActivityProps(props) {
 
       //preguntar.
       //aca lo mismo, estamos considerando a null como error
-      debugger;
+      ;
       const data = formatChartDataByExercises(exercisesByStudentActivity.exercises[0])
-      debugger;
+      ;
       setChartData(data)
 
     }

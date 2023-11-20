@@ -16,7 +16,7 @@ export default function StudentList () {
 
         get('schools').then(schools => {
             if (!schools) {
-                debugger
+                
                 let localSchools = window.localStorage.getItem('schools')
                 if (localSchools) {
                     localSchools = JSON.parse(localSchools)

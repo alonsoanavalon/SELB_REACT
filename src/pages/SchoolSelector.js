@@ -94,7 +94,7 @@ export default function SchoolSelector() {
     }
 
     const renderTest = () => {
-        debugger;
+        ;
         let $formValues = getFormValues()
 
         let $selectedCourse = $formValues[1]

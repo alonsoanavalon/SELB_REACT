@@ -23,13 +23,13 @@ export default function ReportPanel () {
     }
 
     const openReports = () => {
-        debugger
+        
         if (role === ROLES.ADMIN || role === ROLES.TEACHER) {
             window.location.href = '/school-selector'
         } else if (role === ROLES.PARENT) {
-            debugger
+            
             const listParents = JSON.parse(window.localStorage.getItem('listparents'))
-            debugger;
+            ;
             if (listParents?.length > 0) {
                 if (listParents.length == 1) {
                     window.location.href = `/charts/${listParents[0].rut}`
@@ -78,7 +78,7 @@ export default function ReportPanel () {
           let url =  /*`http://localhost:3500/${data}` ||*/  `https://selb.bond/${data}`
           axios(url)
             .then(res => {
-                debugger;
+                ;
                 //aca cambiar cuando sea mas de un estudiante por apoderado
                 if (res.data.length > 0) {
                     window.localStorage.setItem('listparents', JSON.stringify(res.data))
@@ -132,10 +132,10 @@ export default function ReportPanel () {
     useEffect(() => {
 
         if (dataLoaded && role){
-            debugger
+            
             if (role === ROLES.PARENT) {
                 if (dataParentsLoaded) {
-                    debugger
+                    
                     openReports()
                 }
 

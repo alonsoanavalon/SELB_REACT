@@ -3,6 +3,7 @@ import axios from 'axios'
 import Cookies from 'universal-cookie'
 import md5 from 'md5'
 import { set } from 'idb-keyval'
+import { WelcomeMessage } from './style.js'
 
 const cookies = new Cookies();
 
@@ -75,7 +76,7 @@ export default function Login () {
 
             <div className="signin">
               <form name="loginForm" id="loginForm" className="signin-form">
-                <div style={{backgroundColor:"#67B8D2", color:"#fff", padding:"1rem", borderRadius:".5rem"}}>
+                <WelcomeMessage>
                 <h2 style={{textAlign:"center"}}>El equipo de Japi le da la bienvenida
 </h2>
 <h4 style={{textAlign:"center"}}>Acceda a su cuenta completando sus credenciales</h4>
@@ -101,7 +102,7 @@ durante Japi</li>
 </ol>
 
 
-                </div>
+                </WelcomeMessage>
                 <img src="/logo.png" alt="logo"/>
                 <h2 className="signin-title">Ingreso</h2>
                 <input type="text" name="username" placeholder='Username'/>

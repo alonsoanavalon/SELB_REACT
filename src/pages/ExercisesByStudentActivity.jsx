@@ -14,11 +14,11 @@ export default function ExercisesByStudentActivity() {
 
   useEffect(() => {
     if (sessionId && courseId && activityId) {  
-      debugger;
+      ;
       const url = `https://selb.bond/api/session/course/${courseId}/session/${sessionId}/activity/${activityId}/student/${studentId}`;
       axios(url)
         .then(res => {
-          debugger;
+          ;
           if (res.data.exercises) {
             setExercisesByStudentActivity(res.data);
           }
@@ -75,9 +75,9 @@ export default function ExercisesByStudentActivity() {
 
       //preguntar.
       //aca lo mismo, estamos considerando a null como error
-      debugger;
+      ;
       const data = formatChartDataByExercises(exercisesByStudentActivity.exercises[0])
-      debugger;
+      ;
       setChartData(data)
 
     }

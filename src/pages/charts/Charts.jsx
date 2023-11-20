@@ -6,7 +6,7 @@ import SelectChart from './SelectChart';
 import axios from 'axios';
 import { set, get }from 'idb-keyval';
 import { useParams } from 'react-router-dom';
-import { PieContainer, SinglePie } from './style.js';
+import { PieContainer, SinglePie, StyledContainer } from './style.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -274,15 +274,15 @@ export default function Charts(props) {
       } else if (selectedChart == 2) {
 
         const chartDataBySession = processData(studentData)
-        debugger
+        
         setChartData(chartDataBySession)
       } else if (selectedChart == 3) {
         const chartDataBySession = processDataExercisesBySession(studentData)
-        debugger
+        
         setChartData(chartDataBySession)
       } else if (selectedChart == 4) {
         const chartDataBySession = processDataBySkill(studentData)
-        debugger
+        
         setChartData(chartDataBySession)
       }
     }
@@ -296,7 +296,9 @@ export default function Charts(props) {
 
   <div class="japi-container">
 
-    <div style={{width:"40%", backgroundColor:"#fff", padding:"2rem", borderRadius:".5rem", alignSelf:"flex-start", boxShadow: "#ccc 0px 1px 5px 0px"}}>
+    <StyledContainer>
+  
+  
   {
     data && <h3>
       {data.name} {data.surname}
@@ -312,7 +314,7 @@ export default function Charts(props) {
 
     </select>
 
-    </div>
+    </StyledContainer>
 
     
 

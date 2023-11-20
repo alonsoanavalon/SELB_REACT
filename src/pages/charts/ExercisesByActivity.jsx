@@ -31,7 +31,7 @@ export function ExercisesByActivity(props) {
 
   useEffect(() => {
     if (props) {
-      debugger;
+      ;
       const chartOptions = {
         indexAxis: 'y',
         plugins: {
@@ -73,7 +73,7 @@ export function ExercisesByActivity(props) {
         let exerciseSuccessData = 0;
         let exerciseErrorData = 0;
         if (studentData.exercises.length > 0) {
-          debugger;
+          ;
             studentData.exercises[0].forEach((exercise) => {
 
         
@@ -118,7 +118,7 @@ export function ExercisesByActivity(props) {
       const { students, successData, errorData } = formatExercises(props.data, sessionActivityExerciseStructure);
     
       const labels = students;
-      debugger;
+      ;
       const chartData = {
         labels,
         datasets: [
@@ -149,7 +149,7 @@ export function ExercisesByActivity(props) {
           studentName: student.studentName
         })
       })
-      debugger;
+      ;
       setStudents(studentData)
     }
   }, [data, props])

@@ -125,7 +125,7 @@ export default function Excel () {
             dataObject['moment'] = moment
             dataObject['instrument'] = instrument
             dataObject['studyId'] = studyId
-            debugger;
+            ;
             getFileName(instrument)
 
             

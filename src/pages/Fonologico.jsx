@@ -649,7 +649,7 @@ export default function Fonologico () {
                 confirmButtonText: 'Guardar test',
                 showLoaderOnConfirm: true,
               preConfirm: async () => {
-                debugger;
+                ;
                 return saveAndExit(choices)
                   .then(response => {
                     if (response !== true) {

@@ -24,7 +24,7 @@ export default function StudentParentSelector() {
             const studies = await get('studies')
             const courses = await get('courses')
             const students =JSON.parse(window.localStorage.getItem('listparents'));
-            debugger
+            
             if (students) {
                 setFilteredStudents(students)
 
@@ -57,7 +57,7 @@ export default function StudentParentSelector() {
     }
 
     const renderTest = () => {
-        debugger;
+        ;
         let $formValues = getFormValues()
         let $studentSelectValue = $formValues;
 

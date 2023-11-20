@@ -80,3 +80,15 @@ export const GroupedChartWrapper = styled.div`
     width:48%;
     padding:.5rem;
 `
+
+export const WelcomeMessage = styled.div`
+    background-color: #67B8D2;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: block; /* Mostrar por defecto en todos los dispositivos */
+
+    @media (max-width: 768px) {
+        display: none; /* Ocultar en dispositivos con ancho menor o igual a 768px (celulares) */
+    }
+`;

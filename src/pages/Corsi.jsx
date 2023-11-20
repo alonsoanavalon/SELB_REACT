@@ -98,7 +98,7 @@ export default function Corsi () {
         choicesArray.push(answers) // estas deben ser las respuestas
 
         //Luego viene toda la logica de si se repite o si se guarda en el backup etc.
-        debugger;
+        ;
         try {
         await get('backupTest')
         .then(response => {
