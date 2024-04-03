@@ -85,7 +85,12 @@ export default function StudentList () {
 
         if ($courseSelect) {
             $courseSelect.value = "empty"
-            $courseSelect.disabled = false;
+            if ($courseSelect) {
+                if ('disabled' in $courseSelect) {
+                    $courseSelect.disabled = false;
+                }
+            }
+
         }
 
     }
