@@ -34,7 +34,9 @@ export default function Parents() {
 
         setFilteredCourses($filteredCoursesToRender)
         $courseSelect.value = "empty"
+
         $courseSelect.disabled = false;
+
     }
 
     const getStudents = (evt) => {
@@ -47,7 +49,11 @@ export default function Parents() {
 
         setFilteredStudents($filteredStudentsToRender)
         $courseSelect.value = $courseId
+
+
         $studentsSelect.disabled = false;
+
+     
     }   
 
     const getFormValues = () => {

@@ -81,7 +81,9 @@ export default function SchoolSelector() {
 
         setFilteredCourses($filteredCoursesToRender)
         $courseSelect.value = "empty"
+
         $courseSelect.disabled = false;
+
     }
 
 

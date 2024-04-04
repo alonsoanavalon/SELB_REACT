@@ -305,8 +305,10 @@ export default function HNF() {
             const button0 = document.querySelector("#hnf-button-0");
             const button1 = document.querySelector("#hnf-button-1");
     
-            button0.disabled = false;
-            button1.disabled = false;
+
+            button0.disabled = true;
+            button1.disabled = true;
+
 
     }
 
