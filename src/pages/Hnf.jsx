@@ -308,7 +308,7 @@ export default function HNF() {
 
             button0.disabled = true;
             button1.disabled = true;
-
+s
 
     }
 
