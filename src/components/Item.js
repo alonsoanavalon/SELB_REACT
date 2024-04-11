@@ -30,6 +30,18 @@ export default function Item (props) {
         }
     }, [])
 
+    useEffect(() => {
+
+
+        document.querySelector('.instrument-form').addEventListener('submit', function(event) {
+            // Evita que el formulario se envíe
+            event.preventDefault();
+            return false;
+        })
+
+
+    }, [])
+
 
 
 
@@ -37,6 +49,10 @@ export default function Item (props) {
 
         let allInstructions = Array.from(document.querySelectorAll(".image-instruction"))
         allInstructions.map(instruction => instruction.classList.toggle("hidden"))
+    }
+
+    function preventOnSubmit (e) {
+        e.preventDefault()
     }
 
     if (props.type == 'quiz') {
@@ -47,7 +63,7 @@ export default function Item (props) {
                             {props.title} 
 
                         </h3>
-                        <form onSubmit="return false;" onClick={props.onclick} key={props.itemId} id={props.instrumentName +"-"+props.num} className="instrument-form">
+                        <form onSubmit={preventOnSubmit} onClick={props.onclick} key={props.itemId} id={props.instrumentName +"-"+props.num} className="instrument-form">
                             <input type="hidden" value={props.instrumentId} name="instrument"/>
                             <input type="hidden" value={props.itemId} name="key"/>
                             <label className="form-check-label">
@@ -68,7 +84,10 @@ export default function Item (props) {
                              </Fragment>}
                      
                         </form>
+
+                        
                     </div>
+
             </SwiperSlide>
         )
     }
