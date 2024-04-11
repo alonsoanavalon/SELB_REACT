@@ -47,7 +47,7 @@ export default function Item (props) {
                             {props.title} 
 
                         </h3>
-                        <form onClick={props.onclick} key={props.itemId} id={props.instrumentName +"-"+props.num} className="instrument-form">
+                        <form onSubmit="return false;" onClick={props.onclick} key={props.itemId} id={props.instrumentName +"-"+props.num} className="instrument-form">
                             <input type="hidden" value={props.instrumentId} name="instrument"/>
                             <input type="hidden" value={props.itemId} name="key"/>
                             <label className="form-check-label">
