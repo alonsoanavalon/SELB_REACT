@@ -32,7 +32,9 @@ export default function HomePage() {
   const [torreLength, setTorreLength] = useState(undefined);
   const [escLength, setEscLength] = useState(undefined);
   const [completeName, setCompleteName] = useState("")
-
+  const [lastTests, setLastTests] = useState([])
+  const [lastTestsArray, setLastTestsArray] = useState([])
+  const [lastTestLength, setLastTestLength] = useState(0)
 
   useEffect(() => {
     get('schools').then((
@@ -49,6 +51,67 @@ export default function HomePage() {
     ))
     
   }, [])
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      get('completedTests').then((
+        res => {
+          if (res !== undefined) {
+            setLastTests(res.slice(0, 10))
+            setLastTestLength(res.slice(0, 10).length) 
+          }
+        
+        }
+      ))
+    }, 1000)
+
+    
+  }, [])
+
+  const getStudentName = async (inputStudentId) => {
+    let studentName = ""
+    await get('students').then(res => {
+      if (res !== undefined){
+        const student = res.find(student => student.studentId === inputStudentId)
+        studentName = student.name + ' ' + student.surname
+      }
+
+
+    })
+
+    return studentName
+  }
+
+  const getInstrumentName = async (inputInstrumentId) => {
+    let instrumentName = ""
+    await get('instruments').then(res => {
+      if (res !== undefined) {
+        const instrument = res.find(instrument => instrument.id === inputInstrumentId)
+        instrumentName = instrument.name
+      }
+
+    })
+    return instrumentName 
+  }
+
+  useEffect(async() => {
+
+    if (lastTests.length > 0) {
+      const response = lastTests.map(async (test) => {
+        const studentName = await getStudentName(test[0].student_id)
+        const instrumentName = await getInstrumentName(test[0].instrument)
+        debugger
+        return {studentName: studentName, instrumentName: instrumentName, date: test[0].date}
+      })
+      Promise.all(response).then(resolvedResponse => {
+        setLastTestsArray(resolvedResponse)
+      })
+    }
+
+  }
+  , [lastTests])
+
   
   function  eliminarTestAntiguos() {
 
@@ -438,6 +501,38 @@ export default function HomePage() {
 
       <div className="home-wrapper">
         <h1>¡Hola {username}!</h1>
+
+        {
+          lastTestsArray.length > 0 && <div style={{overflowY:'auto', maxHeight: '300px', marginBottom:'50px '}}>
+                    {
+          (lastTestsArray.length == lastTestLength) ? <div>
+            <h4>Últimos test realizados</h4>
+            <table className="table table-home">
+              <thead className="thead-dark">
+                <tr>  
+                  <th scope="col">Estudiante</th>
+                  <th scope="col">Instrumento</th>
+                  <th scope="col">Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                {lastTestsArray.map((test, index) => {
+                  return <tr key={index}>
+                    <td>{test.studentName}</td>
+                    <td>{test.instrumentName}</td>
+                    <td>{test.date}</td>
+                  </tr>
+                })}
+              </tbody>
+            </table>
+          </div> : <div className="lastTests">
+            <h4>Últimos test realizados</h4>
+            <p>No hay test realizados</p>
+          </div>
+        }
+
+            </div>
+        }
 
 
         <div className="table-wrapper">
