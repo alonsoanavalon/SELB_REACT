@@ -105,7 +105,7 @@ export default function HomePage() {
         return {studentName: studentName, instrumentName: instrumentName, date: test[0].date}
       })
       Promise.all(response).then(resolvedResponse => {
-        setLastTestsArray(resolvedResponse)
+        setLastTestsArray(resolvedResponse.reverse())
       })
     }
 
