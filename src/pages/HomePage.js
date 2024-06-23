@@ -102,7 +102,9 @@ export default function HomePage() {
         const studentName = await getStudentName(test[0].student_id)
         const instrumentName = await getInstrumentName(test[0].instrument)
         debugger
-        return {studentName: studentName, instrumentName: instrumentName, date: test[0].date}
+        if (studentName){
+          return {studentName: studentName, instrumentName: instrumentName, date: test[0].date}
+        }
       })
       Promise.all(response).then(resolvedResponse => {
         setLastTestsArray(resolvedResponse.reverse())
@@ -476,7 +478,7 @@ export default function HomePage() {
                     }).then(result => {
                       if (result.isConfirmed) {
                         // descomentar esto para eliminar test luego de enviarlos
-                        // update('completedTests', val => [])
+                        update('completedTests', val => [])
                         setTimeout(() => {
                           window.location.pathname = '/'
                         }, 3000)

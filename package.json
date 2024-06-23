@@ -29,6 +29,7 @@
     "react-pageflip": "^2.0.3",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.1",
+    "react-select": "^5.8.0",
     "styled-components": "^5.3.10",
     "sweetalert2": "^11.4.14",
     "swiper": "^8.0.3",

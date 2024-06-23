@@ -93,9 +93,9 @@ export default function NavBarJapi() {
     function showVersionInfo () {
         
         const textInfo = `
-        Version: 1.2.7 ||
-        Ultima Actualización: 12/04/2024 ||
-        Cache: v3.6
+        Version: 1.2.8 ||
+        Ultima Actualización: 23/06/2024 ||
+        Cache: v3.7
         `
         alert.show(textInfo, {
             type:'success'
