@@ -12,7 +12,7 @@ import {get, update, getMany, set} from 'idb-keyval'
 
 import Swal from 'sweetalert2'
 
-import EmpathyOptions from './EmpathyOptions';
+import EmpathyOptions from '../components/EmpathyOptions';
 export default function Esc() {
     const alert = useAlert()
     const navigate = useNavigate()

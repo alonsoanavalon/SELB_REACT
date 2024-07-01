@@ -1,54 +1,15 @@
-let cacheData = "app-v44";
+//actualizar la version del cache cuando se realizan cambios en la app, para //service worker pueda actualizar el cache y no se quede con la version anterior 
+let cacheData = "app-v2.0.1";
 this.addEventListener("install", evt => {
     console.log("installing")
 
-    caches.delete("app-v1")
-    caches.delete("app-v2")
-    caches.delete("app-v3")
-    caches.delete("app-v4")
-    caches.delete("app-v5")
-    caches.delete("app-v6")
-    caches.delete("app-v7")
-    caches.delete("app-v8")
-    caches.delete("app-v9")
-    caches.delete("app-v10")
-    caches.delete("app-v11")
-    caches.delete("app-v12")
-    caches.delete("app-v13")
-    caches.delete("app-v14")
-    caches.delete("app-v15")
-    caches.delete("app-v16")
-    caches.delete("app-v17")
-    caches.delete("app-v18")
-    caches.delete("app-v19")
-    caches.delete("app-v20")
-    caches.delete("app-v21")
-    caches.delete("app-v22")
-    caches.delete("app-v23")
-    caches.delete("app-v24")
-    caches.delete("app-v25")
-    caches.delete("app-v26")
-    caches.delete("app-v27")
-    caches.delete("app-v28")
-    caches.delete("app-v29")
-    caches.delete("app-v30")
-    caches.delete("app-v31")
-    caches.delete("app-v32")
-    caches.delete("app-v33")
-    caches.delete("app-v34")
-    caches.delete("app-v35")
-    caches.delete("app-v36")
-    caches.delete("app-v37")
-    caches.delete("app-v38")
-    caches.delete("app-v39")
-    caches.delete("app-v40")
+    //asegurarnos que las tablets/clientes no tengan la version anterior del cache 
     caches.delete("app-v41")
     caches.delete("app-v42")
     caches.delete("app-v43")
+    caches.delete("app-v2.0")
 
-
-
-
+    //agregar los archivos al cache, si se agregan nuevos test o archivos a la app, se deben agregar aqui, sino no se podran cargar en modo offline
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
             cache.addAll([
