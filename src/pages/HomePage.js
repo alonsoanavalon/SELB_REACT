@@ -58,10 +58,9 @@ export default function HomePage() {
       get('completedTests').then((
         res => {
           if (res !== undefined) {
-            setLastTests(res.slice(0, 10))
-            setLastTestLength(res.slice(0, 10).length) 
+            setLastTests(res.slice(-10))
+            setLastTestLength(res.slice(-10).length) 
           }
-        
         }
       ))
     }, 1000)
@@ -210,9 +209,7 @@ export default function HomePage() {
       setCompleteName(`${res.name} ${res.surname}`)
     })
 
-    // set('completedTests', 
-
-    // )
+    // set('completedTests', val => []) // Aca se pueden ingresar el json del respaldo de administrador
 
     get('completedTests')
       .then(res => {
