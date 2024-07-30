@@ -61,7 +61,7 @@ export default function StudentList() {
                     return localInstruments.filter(instrument => instrument['instrument_type_id'] === 1);
                 }
             } else {
-                return data.filter(instrument => instrument['instrument_type_id'] === 1);
+                return data.filter(instrument => instrument['instrument_type_id'] === 1 && instrument['id'] < 11);
             }
         })
         .then(filteredInstruments => setInstruments(filteredInstruments));
