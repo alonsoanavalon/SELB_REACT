@@ -1,5 +1,5 @@
 //actualizar la version del cache cuando se realizan cambios en la app, para //service worker pueda actualizar el cache y no se quede con la version anterior 
-let cacheData = "app-v2.0.4";
+let cacheData = "app-v2.0.5";
 this.addEventListener("install", evt => {
     console.log("installing")
 
@@ -12,6 +12,8 @@ this.addEventListener("install", evt => {
     caches.delete("app-v2.0.1")
     caches.delete("app-v2.0.2")
     caches.delete("app-v2.0.3")
+    caches.delete("app-v2.0.4")
+
     
     
 
