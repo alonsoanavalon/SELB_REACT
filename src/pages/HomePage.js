@@ -14,6 +14,7 @@ export default function HomePage() {
   const [savedCalculoTests, setSavedCalculoTests] = useState([])
   const [savedSdqTests, setSavedSdqTests] = useState([])
   const [savedWallyTests, setSavedWallyTests] = useState([])
+  const [savedEMLTests, setSavedEMLTests] = useState([])
   const [savedCorsiTests, setSavedCorsiTests] = useState([])
   const [savedAcesTests, setSavedAcesTests] = useState([])
   const [savedTorreTests, setSavedTorreTests] = useState([])
@@ -25,6 +26,7 @@ export default function HomePage() {
   const [calculoLength, setCalculoLength] = useState(undefined)
   const [sdqLength, setSdqLength] = useState(undefined)
   const [wallyLength, setWallyLength] = useState(undefined)
+  const [emlLength, setEMLLength] = useState(undefined)
   const [acesLength, setAcesLength] = useState(undefined)
   const [corsiLength, setCorsiLength] = useState(undefined)
   const [hnfLength, setHnfLength] = useState(undefined)
@@ -223,6 +225,7 @@ export default function HomePage() {
         let fono = 0;
         let torre = 0;
         let esc = 0;
+        let eml = 0;
 
         res.forEach(element => {
           if (element[0]['instrument'] === 1) {
@@ -264,6 +267,10 @@ export default function HomePage() {
             esc++
             setSavedTests(true);
           }
+          if (element[0]['instrument'] === 11) {
+            eml++
+            setSavedTests(true);
+          }
         })
 
         setSavedHnfTests(hnf)
@@ -276,6 +283,7 @@ export default function HomePage() {
         setSavedCorsiTests(corsi)
         setSavedTorreTests(torre)
         setSavedEscTests(esc)
+        setSavedEMLTests(eml)
 
       })
 
@@ -306,35 +314,39 @@ export default function HomePage() {
         .then(res => {
           setWallyLength(res)
         })
-
-
-      get('corsiLength')
+        
+        
+        get('corsiLength')
         .then(res => {
-          setCorsiLength(res)
+            setCorsiLength(res)
         })
-
-      get('hnfLength')
+        
+        get('hnfLength')
         .then(res => {
-          setHnfLength(res)
+            setHnfLength(res)
         })
-
-
-      get('fonoLength')
+        
+        
+        get('fonoLength')
         .then(res => {
-          setFonoLength(res)
+            setFonoLength(res)
         })
-
-      get('torreLength')
+        
+        get('torreLength')
         .then(res => {
-          setTorreLength(res);
+            setTorreLength(res);
         })
-
-      get('escLength')
+        
+        get('escLength')
         .then(res => {
-          setEscLength(res);
+            setEscLength(res);
         })
-
-
+        
+        
+        get('emlLength')
+          .then(res => {
+            setEMLLength(res)
+          })
 
 
 
@@ -569,6 +581,11 @@ export default function HomePage() {
                 </tr>
 
                 <tr>
+                  <th scope="row">EML</th>
+                  <td>{savedEMLTests && savedEMLTests >= 0 ? savedEMLTests : 0}</td>
+                </tr>
+
+                <tr>
                   <th scope="row">Corsi</th>
                   <td>{savedCorsiTests && savedCorsiTests >= 0 ? savedCorsiTests : 0}</td>
                 </tr>
@@ -640,6 +657,12 @@ export default function HomePage() {
                 <tr>
                   <th scope="row">Wally</th>
                   <td>{wallyLength && wallyLength >= 0 ? wallyLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">EML</th>
+                  <td>{emlLength && emlLength >= 0 ? emlLength : 0}</td>
 
                 </tr>
 

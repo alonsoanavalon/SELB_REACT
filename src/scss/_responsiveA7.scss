@@ -78,45 +78,45 @@
         }
        
     }
-
+    
     //aces
     .aces-page-item {
-
+        
         img {
             width:400px;
         }
-    
+        
     }
-
+    
     .column-instruction {
-
+        
         .instruction {
             height:350px;
             width:350px;
             margin:-3rem;
-
+            
             p {
                 font-size: 1rem;
             }
         }
     }
-
+    
     //Corsi
-
+    
     .corsi-container {
         padding-top:2rem;
     }
-
+    
     .corsi-container .game-box {
         padding:1rem;
         padding-top:0;
         gap:2.5rem;
     }
-
+    
     //hnf
-
+    
     .hnf-button-container {
-
+        
         .hnf-button {
             width:350px !important;
             height:200px !important;
@@ -125,8 +125,17 @@
             box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
             background-color:#f3f3f7;
         }
-
+        
     }
 
+    //Wally2
 
+    .item-image-wally2 {
+        img {
+            max-width: 420px;
+        }
+        
+    }
+    
+    
 }

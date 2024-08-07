@@ -91,6 +91,27 @@ export default function Item (props) {
             </SwiperSlide>
         )
     }
+    if (props.type == 'eml') {
+        return (
+            <SwiperSlide>
+                     <div className="page-item">
+                        <h3 className='main-description'>
+                            {props.title}
+
+                        </h3>
+                        <form onSubmit={preventOnSubmit} onClick={props.onclick} key={props.itemId} id={props.instrumentName +"-"+props.num} className="instrument-form">
+                            <input type="hidden" value={props.instrumentId} name="instrument"/>
+                            <input type="hidden" value={props.itemId} name="key"/>
+                            <label className="form-check-label"><input className="form-check-input" type="radio" name={props.instrumentName} value={props.value1}/> {props.answer1}</label>
+                            <label className="form-check-label"><input className="form-check-input" type="radio" name={props.instrumentName} value={props.value2}/> {props.answer2}</label>
+                            <label className="form-check-label"><input className="form-check-input" type="radio" name={props.instrumentName} value={props.value3}/> {props.answer3}</label>
+                            <label className="form-check-label"><input className="form-check-input" type="radio" name={props.instrumentName} value={props.value4}/> {props.answer4}</label>
+                        </form>
+                    </div>
+
+            </SwiperSlide>
+        )
+    }
     else if (props.type == 'multimedia') {
         return (
             <Fragment>

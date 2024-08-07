@@ -23,6 +23,7 @@ import ParentsForm from './pages/ParentsForm';
 import Aces from './pages/Aces';
 import Fonologico from './pages/Fonologico';
 import Wally from './pages/Wally';
+import EML from './pages/EML';
 import Corsi from './pages/Corsi'
 import Moments from './pages/Moments'
 import Desarrollo from './components/Desarrollo';
@@ -121,6 +122,7 @@ function App() {
               set('tejasLength', res.data[0]['COUNT(*)'])
             }
           )
+          
         axios({
           method: 'get',
           url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
@@ -184,102 +186,118 @@ function App() {
             }
           )
 
-        axios({
-          method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-          params: {
-            instrument: 6,
-            user: userId
-          }
-        })
-          .then(
-
-            res => {
-              set('corsiLength', res.data[0]['COUNT(*)'])
-            }
-          )
-        axios({
-          method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-          params: {
-            instrument: 7,
-            user: userId
-          }
-        })
-
-          .then(
-
-            res => {
-              set('corsiLength', res.data[0]['COUNT(*)'])
-            }
-          )
-
-
-        axios({
-          method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-          params: {
-            instrument: 8,
-            user: userId
-          }
-        })
-          .then(
-
-            res => {
-              set('fonoLength', res.data[0]['COUNT(*)'])
-            }
-          )
-
-
-
-
-        axios({
-          method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-          params: {
-            instrument: 9,
-            user: userId
-          }
-        })
-          .then(
-
-            res => {
-              set('torreLength', res.data[0]['COUNT(*)'])
-            }
-          )
-
-
-        axios({
-          method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-          params: {
-            instrument: 10,
-            user: userId
-          }
-        })
-          .then(
-
-            res => {
-              set('escLength', res.data[0]['COUNT(*)'])
-            }
-          )
-
-
+          
           axios({
-            method: 'get',
-            url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
-            params: {
-              instrument: 7,
-              user: userId
-            }
-          })
+              method: 'get',
+              url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+              params: {
+                  instrument: 6,
+                  user: userId
+                }
+            })
             .then(
-  
-              res => {
-                set('hnfLength', res.data[0]['COUNT(*)'])
-              }
+                
+                res => {
+                    set('corsiLength', res.data[0]['COUNT(*)'])
+                }
             )
-      }
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 7,
+                    user: userId
+                }
+            })
+            
+            .then(
+                
+                res => {
+                    set('corsiLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 8,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('fonoLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            
+            
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 9,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('torreLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 10,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('escLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                instrument: 11,
+                user: userId
+                }
+            })
+                .then(
+    
+                res => {
+                    set('emlLength', res.data[0]['COUNT(*)'])
+                }
+                )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 7,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('hnfLength', res.data[0]['COUNT(*)'])
+                }
+            )
+        }
     }
 
     get('completedTests')
@@ -352,6 +370,7 @@ function App() {
                   <Route path="/torre" element={<Torre />}></Route>
                   <Route path="/esc" element={<Esc />}></Route>
                   <Route path="/wally" element={<Wally />}></Route>
+                  <Route path="/eml" element={<EML />}></Route>
                   <Route path="/sessions/course/:id" element={<SessionsByCourse />} />
                   <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse />} />
                   <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />

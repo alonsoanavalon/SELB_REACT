@@ -30,6 +30,8 @@ export default function ListedInstrument (props) {
             navigate('/torre')
         } else if ($selectedInstrument == 10) {
             navigate('/esc')
+        } else if ($selectedInstrument == 11) {
+            navigate('/eml')
         }
         
 

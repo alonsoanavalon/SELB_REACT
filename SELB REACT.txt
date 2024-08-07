@@ -1,0 +1,30 @@
+Node js: 16.3.0
+Npm: 7.15.1
+Nvm para manejar versiones de node
+React Js
+Vs code o tu editor de preferencia
+Administrador de base de datos como Mysql Workbench o Dbeaver
+
+//LOCAL
+HOST=164.92.71.11
+USERNAME=keyzen2022
+PASSWORD=$Selb2022
+PRODUCTION=false
+DATABASE_PORT=3306
+DATABASE=selb
+APP_PORT=3500
+
+//PROD
+HOST=localhost
+USERNAME=root
+PASSWORD=$Selb.#2022
+DATABASE_PORT=/var/run/mysqld/mysqld.sock
+PRODUCTION=true
+APP_PORT=3500
+DATABASE=selb
+
+joaquin@selb.fun 
+joaquinselb
+
+La aplicación web carga todo en INICIO
+Para revisar un nuevo valor es necesario recargar EN INICIO
