@@ -97,7 +97,7 @@ export default function EML () {
                 {
                     itemId: 1109,
                     num: 9, title: "9. Yo soy:",
-                    value1:"1", answer1: "un mal lector",
+                    value1:"1", answer1: "no lector",
                     value2:"2", answer2: "un lector aceptable",
                     value3:"3", answer3: "un buen lector",
                     value4:"4", answer4: "un muy buen lector"
