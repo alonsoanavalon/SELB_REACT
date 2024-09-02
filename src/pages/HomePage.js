@@ -19,6 +19,19 @@ export default function HomePage() {
   const [savedAcesTests, setSavedAcesTests] = useState([])
   const [savedTorreTests, setSavedTorreTests] = useState([])
   const [savedEscTests, setSavedEscTests] = useState([])
+  const [savedJapiTests, setSavedJapiTests] = useState([])
+  const [savedStroopnumTests, setSavedStroopnumTests] = useState([])
+  const [savedStroopcolTests, setSavedStroopcolTests] = useState([])
+  const [savedAutoconceptoTests, setSavedAutoconceptoTests] = useState([])
+  const [savedActMatTests, setSavedActMatTests] = useState([])
+  const [savedCmasrTests, setSavedCmasrTests] = useState([])
+  const [savedClptTests, setSavedClptTests] = useState([])
+  const [savedListeningSpanTests, setSavedListeningSpanTests] = useState([])
+  const [savedDigitSpanTests, setSavedDigitSpanTests] = useState([])
+  const [savedRegEmocionalTests, setSavedRegEmocionalTests] = useState([])
+  const [savedActCienciasTests, setSavedActCienciasTests] = useState([])
+  const [savedAnsMatTests, setSavedAnsMatTests] = useState([])
+  const [savedCountSpanTests, setSavedCountSpanTests] = useState([])
 
 
   const [savedTests, setSavedTests] = useState(false)
@@ -33,6 +46,20 @@ export default function HomePage() {
   const [fonoLength, setFonoLength] = useState(undefined)
   const [torreLength, setTorreLength] = useState(undefined);
   const [escLength, setEscLength] = useState(undefined);
+  const [japiLength, setJapiLength] = useState(undefined);
+  const [stroopnumLength, setStroopnumLength] = useState(undefined)
+  const [stroopcolLength, setStroopcolLength] = useState(undefined)
+  const [autoconceptoLength, setAutoconceptoLength] = useState(undefined)
+  const [actMatLength, setActMatLength] = useState(undefined)
+  const [cmasrLength, setCmasrLength] = useState(undefined)
+  const [clptLength, setClptLength] = useState(undefined)
+  const [listeningSpanLength, setListeningSpanLength] = useState(undefined)
+  const [digitSpanLength, setDigitSpanLength] = useState(undefined)
+  const [regEmocionalLength, setRegEmocionalLength] = useState(undefined)
+  const [actCienciasLength, setActCienciasLength] = useState(undefined)
+  const [ansMatLength, setAnsMatLength] = useState(undefined)
+  const [countSpanLength, setCountSpanLength] = useState(undefined)
+
   const [completeName, setCompleteName] = useState("")
   const [lastTests, setLastTests] = useState([])
   const [lastTestsArray, setLastTestsArray] = useState([])
@@ -226,6 +253,19 @@ export default function HomePage() {
         let torre = 0;
         let esc = 0;
         let eml = 0;
+        let japi = 0;
+        let stroopnum = 0;
+        let stroopcol = 0;
+        let autoconcepto = 0;
+        let actMat = 0;
+        let cmasr = 0;
+        let clpt = 0;
+        let listeningSpan = 0;
+        let digitSpan = 0;
+        let regEmocional = 0;
+        let actCiencias = 0;
+        let ansMat = 0;
+        let countSpan = 0;
 
         res.forEach(element => {
           if (element[0]['instrument'] === 1) {
@@ -271,6 +311,58 @@ export default function HomePage() {
             eml++
             setSavedTests(true);
           }
+          if (element[0]['instrument'] === 12) {
+            japi++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 13) {
+            stroopnum++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 14) {
+            stroopcol++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 15) {
+            autoconcepto++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 16) {
+            actMat++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 17) {
+            cmasr++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 20) {
+            clpt++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 21) {
+            listeningSpan++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 22) {
+            digitSpan++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 23) {
+            regEmocional++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 24) {
+            actCiencias++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 25) {
+            ansMat++
+            setSavedTests(true);
+          }
+          if (element[0]['instrument'] === 26) {
+            countSpan++
+            setSavedTests(true);
+          }
         })
 
         setSavedHnfTests(hnf)
@@ -284,7 +376,18 @@ export default function HomePage() {
         setSavedTorreTests(torre)
         setSavedEscTests(esc)
         setSavedEMLTests(eml)
-
+        setSavedStroopnumTests(stroopnum)
+        setSavedStroopcolTests(stroopcol);
+        setSavedAutoconceptoTests(autoconcepto);
+        setSavedActMatTests(actMat);
+        setSavedCmasrTests(cmasr);
+        setSavedClptTests(clpt);
+        setSavedListeningSpanTests(listeningSpan);
+        setSavedDigitSpanTests(digitSpan);
+        setSavedRegEmocionalTests(regEmocional);
+        setSavedActCienciasTests(actCiencias);
+        setSavedAnsMatTests(ansMat);
+        setSavedCountSpanTests(countSpan);
       })
 
     setTimeout(() => {
@@ -326,7 +429,6 @@ export default function HomePage() {
             setHnfLength(res)
         })
         
-        
         get('fonoLength')
         .then(res => {
             setFonoLength(res)
@@ -344,11 +446,76 @@ export default function HomePage() {
         
         
         get('emlLength')
-          .then(res => {
+        .then(res => {
             setEMLLength(res)
-          })
+        })
+        
 
-
+        
+        get('japiLength')
+        .then(res => {
+            setJapiLength(res)
+        })
+        
+        get('stroopnumLength')
+        .then(res => {
+            setStroopnumLength(res)
+        })
+        
+        get('stroopcolLength')
+        .then(res => {
+            setStroopcolLength(res)
+        })
+        
+        get('autoconceptoLength')
+        .then(res => {
+            setAutoconceptoLength(res)
+        })
+        
+        get('actMatLength')
+        .then(res => {
+            setActMatLength(res)
+        })
+        
+        get('cmasrLength')
+        .then(res => {
+            setCmasrLength(res)
+        })
+        
+        get('clptLength')
+        .then(res => {
+            setClptLength(res)
+        })
+        
+        get('listeningSpanLength')
+        .then(res => {
+            setListeningSpanLength(res)
+        })
+        
+        get('digitSpanLength')
+        .then(res => {
+            setDigitSpanLength(res)
+        })
+        
+        get('regEmocionalLength')
+        .then(res => {
+            setRegEmocionalLength(res)
+        })
+        
+        get('actCienciasLength')
+        .then(res => {
+            setActCienciasLength(res)
+        })
+        
+        get('ansMatLength')
+        .then(res => {
+            setAnsMatLength(res)
+        })
+        
+        get('countSpanLength')
+        .then(res => {
+            setCountSpanLength(res)
+        })
 
 
     }, 1000)
@@ -605,6 +772,58 @@ export default function HomePage() {
                   <th scope="row">ESC</th>
                   <td>{savedEscTests && savedEscTests >= 0 ? savedEscTests : 0}</td>
                 </tr>
+                <tr>
+                  <th scope="row">Japi</th>
+                  <td>{savedJapiTests && savedJapiTests >= 0 ? savedJapiTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">StroopNum</th>
+                  <td>{savedStroopnumTests && savedStroopnumTests >= 0 ? savedStroopnumTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">StroopCol</th>
+                  <td>{savedStroopcolTests && savedStroopcolTests >= 0 ? savedStroopcolTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Autoconcepto</th>
+                  <td>{savedAutoconceptoTests && savedAutoconceptoTests >= 0 ? savedAutoconceptoTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">ActMat</th>
+                  <td>{savedActMatTests && savedActMatTests >= 0 ? savedActMatTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Cmasr</th>
+                  <td>{savedCmasrTests && savedCmasrTests >= 0 ? savedCmasrTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Clpt</th>
+                  <td>{savedClptTests && savedClptTests >= 0 ? savedClptTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">ListeningSpan</th>
+                  <td>{savedListeningSpanTests && savedListeningSpanTests >= 0 ? savedListeningSpanTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">DigitSpan</th>
+                  <td>{savedDigitSpanTests && savedDigitSpanTests >= 0 ? savedDigitSpanTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">RegEmocional</th>
+                  <td>{savedRegEmocionalTests && savedRegEmocionalTests >= 0 ? savedRegEmocionalTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">ActCiencias</th>
+                  <td>{savedActCienciasTests && savedActCienciasTests >= 0 ? savedActCienciasTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">AnsMat</th>
+                  <td>{savedAnsMatTests && savedAnsMatTests >= 0 ? savedAnsMatTests : 0}</td>
+                </tr>
+                <tr>
+                  <th scope="row">CountSpan</th>
+                  <td>{savedCountSpanTests && savedCountSpanTests >= 0 ? savedCountSpanTests : 0}</td>
+                </tr>
               </tbody>
             </table>
 
@@ -694,6 +913,84 @@ export default function HomePage() {
                 <tr>
                   <th scope="row">ESC</th>
                   <td>{escLength && escLength >= 0 ? escLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">Japi</th>
+                  <td>{japiLength && japiLength >= 0 ? japiLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">StroopNum</th>
+                  <td>{stroopnumLength && stroopnumLength >= 0 ? stroopnumLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">StroopCol</th>
+                  <td>{stroopcolLength && stroopcolLength >= 0 ? stroopcolLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">Autoconcepto</th>
+                  <td>{autoconceptoLength && autoconceptoLength >= 0 ? autoconceptoLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">ActMat</th>
+                  <td>{actMatLength && actMatLength >= 0 ? actMatLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">Cmasr</th>
+                  <td>{cmasrLength && cmasrLength >= 0 ? cmasrLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">Clpt</th>
+                  <td>{clptLength && clptLength >= 0 ? clptLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">ListeningSpan</th>
+                  <td>{listeningSpanLength && listeningSpanLength >= 0 ? listeningSpanLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">DigitSpan</th>
+                  <td>{digitSpanLength && digitSpanLength >= 0 ? digitSpanLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">RegEmocional</th>
+                  <td>{regEmocionalLength && regEmocionalLength >= 0 ? regEmocionalLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">ActCiencias</th>
+                  <td>{actCienciasLength && actCienciasLength >= 0 ? actCienciasLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">AnsMat</th>
+                  <td>{ansMatLength && ansMatLength >= 0 ? ansMatLength : 0}</td>
+
+                </tr>
+
+                <tr>
+                  <th scope="row">CountSpan</th>
+                  <td>{countSpanLength && countSpanLength >= 0 ? countSpanLength : 0}</td>
 
                 </tr>
 

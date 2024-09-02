@@ -91,7 +91,7 @@ export default function Item (props) {
             </SwiperSlide>
         )
     }
-    if (props.type == 'eml') {
+    else if (props.type == 'eml') {
         return (
             <SwiperSlide>
                      <div className="page-item">

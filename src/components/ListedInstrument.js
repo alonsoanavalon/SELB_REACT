@@ -32,6 +32,32 @@ export default function ListedInstrument (props) {
             navigate('/esc')
         } else if ($selectedInstrument == 11) {
             navigate('/eml')
+        } else if ($selectedInstrument == 12) {
+            navigate('/japi')
+        } else if ($selectedInstrument == 13) {
+            navigate('/stroopnum')
+        } else if ($selectedInstrument == 14) {
+            navigate('/stroopcol')
+        } else if ($selectedInstrument == 15) {
+            navigate('/autoconcepto')
+        } else if ($selectedInstrument == 16) {
+            navigate('/actMat')
+        } else if ($selectedInstrument == 17) {
+            navigate('/cmasr')
+        } else if ($selectedInstrument == 20) {
+            navigate('/clpt')
+        } else if ($selectedInstrument == 21) {
+            navigate('/listSpan')
+        } else if ($selectedInstrument == 22) {
+            navigate('/digitSpan')
+        } else if ($selectedInstrument == 23) {
+            navigate('/regEmocional')
+        } else if ($selectedInstrument == 24) {
+            navigate('/actCiencias')
+        } else if ($selectedInstrument == 25) {
+            navigate('/ansMat')
+        } else if ($selectedInstrument == 26) {
+            navigate('/countSpan')
         }
         
 

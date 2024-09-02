@@ -23,7 +23,6 @@ import ParentsForm from './pages/ParentsForm';
 import Aces from './pages/Aces';
 import Fonologico from './pages/Fonologico';
 import Wally from './pages/Wally';
-import EML from './pages/EML';
 import Corsi from './pages/Corsi'
 import Moments from './pages/Moments'
 import Desarrollo from './components/Desarrollo';
@@ -40,6 +39,21 @@ import ActivitiesBySessionAndStudent from './pages/ActivitiesBySessionAndStudent
 import { ROLES } from './components/constants';
 import AsideJapi from './components/AsideJapi';
 import StudentParentSelector from './pages/StudentParentSelector';
+
+import EML from './pages/EML';
+import Japi from './pages/Japi';
+import StroopNum from './pages/StroopNum';
+import StroopCol from './pages/StroopCol';
+import Autoconcepto from './pages/Autoconcepto';
+import ActMat from './pages/ActMat';
+import Cmasr from './pages/Cmasr';
+import Clpt from './pages/Clpt';
+import ListeningSpan from './pages/ListeningSpan';
+import DigitSpan from './pages/DigitSpan';
+import RegEmocional from './pages/RegEmocional';
+import ActCiencias from './pages/ActCiencias';
+import AnsMat from './pages/AnsMat';
+import CountSpan from './pages/CountSpan';
 
 
 const cookies = new Cookies();
@@ -213,7 +227,7 @@ function App() {
             .then(
                 
                 res => {
-                    set('corsiLength', res.data[0]['COUNT(*)'])
+                    set('hnfLength', res.data[0]['COUNT(*)'])
                 }
             )
             
@@ -268,6 +282,8 @@ function App() {
             )
             
             
+
+
             axios({
                 method: 'get',
                 url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
@@ -287,14 +303,194 @@ function App() {
                 method: 'get',
                 url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
                 params: {
-                    instrument: 7,
+                instrument: 12,
+                user: userId
+                }
+            })
+                .then(
+    
+                res => {
+                    set('japiLength', res.data[0]['COUNT(*)'])
+                }
+                )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 13,
                     user: userId
                 }
             })
             .then(
                 
                 res => {
-                    set('hnfLength', res.data[0]['COUNT(*)'])
+                    set('stroopnumLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 14,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('stroopcolLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 15,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('autoconceptoLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 16,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('actMatLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 17,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('cmasrLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 20,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('clptLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 21,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('listeningSpanLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 22,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('digitSpanLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 23,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('regEmocionalLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 24,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('actCienciasLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 25,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('ansMatLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                params: {
+                    instrument: 26,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('countSpanLength', res.data[0]['COUNT(*)'])
                 }
             )
         }
@@ -371,6 +567,19 @@ function App() {
                   <Route path="/esc" element={<Esc />}></Route>
                   <Route path="/wally" element={<Wally />}></Route>
                   <Route path="/eml" element={<EML />}></Route>
+                  <Route path="/japi" element={<Japi />}></Route>
+                  <Route path="/stroopnum" element={<StroopNum />}></Route>
+                  <Route path="/stroopcol" element={<StroopCol />}></Route>
+                  <Route path="/autoconcepto" element={<Autoconcepto />}></Route>
+                  <Route path="/actMat" element={<ActMat />}></Route>
+                  <Route path="/cmasr" element={<Cmasr />}></Route>
+                  <Route path="/clpt" element={<Clpt />}></Route>
+                  <Route path="/listeningSpan" element={<ListeningSpan />}></Route>
+                  <Route path="/digitSpan" element={<DigitSpan />}></Route>
+                  <Route path="/regEmocional" element={<RegEmocional />}></Route>
+                  <Route path="/actCiencias" element={<ActCiencias />}></Route>
+                  <Route path="/ansMat" element={<AnsMat />}></Route>
+                  <Route path="/countSpan" element={<CountSpan />}></Route>
                   <Route path="/sessions/course/:id" element={<SessionsByCourse />} />
                   <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse />} />
                   <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />

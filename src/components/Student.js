@@ -7,6 +7,7 @@ export default function Student (props) {
 
         set('selectedStudent', evt.target.parentNode.dataset.id)
         set('selectedStudentName', evt.target.parentElement.children[1].innerHTML)
+        set('selectedStudentGender', props.genre)
 
         const $instrumentsList = document.querySelector("#instruments-list-wrapper")
         $instrumentsList.setAttribute("class", 'active')
