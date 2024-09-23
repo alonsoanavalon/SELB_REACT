@@ -27,14 +27,14 @@ export default function StroopCol() {
     const [isTextVisible, setIsTextVisible] = useState(false); // Inicialmente no mostrar el texto
     const [cycleRunning, setCycleRunning] = useState(false); // Controlar el ciclo
     const [isFinished, setIsFinished] = useState(false); // Inicialmente no mostrar el texto
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const startTimeRef = useRef(null);
     const audioRef = useRef(null);
     
     const [currentDictIndex, setCurrentDictIndex] = useState(0); // Índice del diccionario actual
     const [currentKeyIndex, setCurrentKeyIndex] = useState(0); // Clave actual en el diccionario
     const [instructionIndex, setInstructionIndex] = useState(0); // Clave actual en el diccionario
     const [highlight, setHighlight] = useState(0);
+    const [practiceAttempts, setPracticeAttempts] = useState(0);
 
     useEffect(() => {
         get('selectedStudentName').then(studentName => setStudentName(studentName));
@@ -122,82 +122,82 @@ export default function StroopCol() {
 
         return [
             // Congruente modelado
-            {  0: new StroopElement("AZUL", Color.blue, Color.null, Color.null),             1: new StroopElement("ROJO", Color.red, Color.null, Color.null),
-            2: new StroopElement("AMARILLO", Color.yellow, Color.null, Color.null),       3: new StroopElement("VERDE", Color.green, Color.null, Color.null)  
+            {  0: new StroopElement("AZUL", Color.blue, null, null),             1: new StroopElement("ROJO", Color.red, null, null),
+               2: new StroopElement("AMARILLO", Color.yellow, null, null),       3: new StroopElement("VERDE", Color.green, null, null)  
             },
 
             // Congruente práctica
-            {  0: new StroopElement("ROJO", Color.red, Color.red, Color.null),               1: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),
-            //    2: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),     3: new StroopElement("VERDE", Color.green, Color.green, Color.null),
-            //    4: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),     5: new StroopElement("VERDE", Color.green, Color.green, Color.null),
-            //    6: new StroopElement("ROJO", Color.red, Color.red, Color.null),               7: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),
-            //    8: new StroopElement("ROJO", Color.red, Color.red, Color.null),               9: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),
-            //   10: new StroopElement("VERDE", Color.green, Color.green, Color.null),         11: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null)  
+            {  0: new StroopElement("ROJO", Color.red, Color.red, null),               1: new StroopElement("AZUL", Color.blue, Color.blue, null),
+               2: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),     3: new StroopElement("VERDE", Color.green, Color.green, null),
+               4: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),     5: new StroopElement("VERDE", Color.green, Color.green, null),
+               6: new StroopElement("ROJO", Color.red, Color.red, null),               7: new StroopElement("AZUL", Color.blue, Color.blue, null),
+               8: new StroopElement("ROJO", Color.red, Color.red, null),               9: new StroopElement("AZUL", Color.blue, Color.blue, null),
+              10: new StroopElement("VERDE", Color.green, Color.green, null),         11: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null)  
             },
 
             // Congruente evaluación
-            {  0: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),     1: new StroopElement("ROJO", Color.red, Color.red, Color.null),
-            //    2: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),             3: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),
-            //    4: new StroopElement("VERDE", Color.green, Color.green, Color.null),          5: new StroopElement("ROJO", Color.red, Color.red, Color.null),
-            //    6: new StroopElement("VERDE", Color.green, Color.green, Color.null),          7: new StroopElement("ROJO", Color.red, Color.red, Color.null),
-            //    8: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),     9: new StroopElement("VERDE", Color.green, Color.green, Color.null),
-            //   10: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),            11: new StroopElement("VERDE", Color.green, Color.green, Color.null),
-            //   12: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),    13: new StroopElement("ROJO", Color.red, Color.red, Color.null),
-            //   14: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),    15: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),
-            //   16: new StroopElement("VERDE", Color.green, Color.green, Color.null),         17: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),
-            //   18: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),            19: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),
-            //   20: new StroopElement("VERDE", Color.green, Color.green, Color.null),         21: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),
-            //   22: new StroopElement("VERDE", Color.green, Color.green, Color.null),         23: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),
-            //   24: new StroopElement("ROJO", Color.red, Color.red, Color.null),              25: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),
-            //   26: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),            27: new StroopElement("ROJO", Color.red, Color.red, Color.null),
-            //   28: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),    29: new StroopElement("ROJO", Color.red, Color.red, Color.null),
-            //   30: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),    31: new StroopElement("AZUL", Color.blue, Color.blue, Color.null),
-            //   32: new StroopElement("ROJO", Color.red, Color.red, Color.null),              33: new StroopElement("VERDE", Color.green, Color.green, Color.null),
-            //   34: new StroopElement("ROJO", Color.red, Color.red, Color.null),              35: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),
-            //   36: new StroopElement("VERDE", Color.green, Color.green, Color.null),         37: new StroopElement("AMARILLO", Color.yellow, Color.yellow, Color.null),
-            //   38: new StroopElement("VERDE", Color.green, Color.green, Color.null),         39: new StroopElement("ROJO", Color.red, Color.red, Color.null)  
+            {  0: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),     1: new StroopElement("ROJO", Color.red, Color.red, null),
+               2: new StroopElement("AZUL", Color.blue, Color.blue, null),             3: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),
+               4: new StroopElement("VERDE", Color.green, Color.green, null),          5: new StroopElement("ROJO", Color.red, Color.red, null),
+               6: new StroopElement("VERDE", Color.green, Color.green, null),          7: new StroopElement("ROJO", Color.red, Color.red, null),
+               8: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),     9: new StroopElement("VERDE", Color.green, Color.green, null),
+              10: new StroopElement("AZUL", Color.blue, Color.blue, null),            11: new StroopElement("VERDE", Color.green, Color.green, null),
+              12: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),    13: new StroopElement("ROJO", Color.red, Color.red, null),
+              14: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),    15: new StroopElement("AZUL", Color.blue, Color.blue, null),
+              16: new StroopElement("VERDE", Color.green, Color.green, null),         17: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),
+              18: new StroopElement("AZUL", Color.blue, Color.blue, null),            19: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),
+              20: new StroopElement("VERDE", Color.green, Color.green, null),         21: new StroopElement("AZUL", Color.blue, Color.blue, null),
+              22: new StroopElement("VERDE", Color.green, Color.green, null),         23: new StroopElement("AZUL", Color.blue, Color.blue, null),
+              24: new StroopElement("ROJO", Color.red, Color.red, null),              25: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),
+              26: new StroopElement("AZUL", Color.blue, Color.blue, null),            27: new StroopElement("ROJO", Color.red, Color.red, null),
+              28: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),    29: new StroopElement("ROJO", Color.red, Color.red, null),
+              30: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),    31: new StroopElement("AZUL", Color.blue, Color.blue, null),
+              32: new StroopElement("ROJO", Color.red, Color.red, null),              33: new StroopElement("VERDE", Color.green, Color.green, null),
+              34: new StroopElement("ROJO", Color.red, Color.red, null),              35: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),
+              36: new StroopElement("VERDE", Color.green, Color.green, null),         37: new StroopElement("AMARILLO", Color.yellow, Color.yellow, null),
+              38: new StroopElement("VERDE", Color.green, Color.green, null),         39: new StroopElement("ROJO", Color.red, Color.red, null)  
             },
 
 
             
             // Incongruente modelado
-            {  0: new StroopElement("ROJO", Color.yellow, Color.null, Color.null),           1: new StroopElement("VERDE", Color.blue, Color.null, Color.null),
-            2: new StroopElement("AMARILLO", Color.red, Color.null, Color.null),          3: new StroopElement("AZUL", Color.green, Color.null, Color.null)  
+            {  0: new StroopElement("ROJO", Color.yellow, null, null),           1: new StroopElement("VERDE", Color.blue, null, null),
+               2: new StroopElement("AMARILLO", Color.red, null, null),          3: new StroopElement("AZUL", Color.green, null, null)  
             },
 
             // Incongruente práctica
-            {  0: new StroopElement("AMARILLO", Color.red, Color.red, Color.AMARILLO),       1: new StroopElement("VERDE", Color.blue, Color.blue, Color.VERDE),
-            //    2: new StroopElement("ROJO", Color.yellow, Color.yellow, Color.ROJO),         3: new StroopElement("AZUL", Color.green, Color.green, Color.AZUL),
-            //    4: new StroopElement("ROJO", Color.yellow, Color.yellow, Color.ROJO),         5: new StroopElement("VERDE", Color.blue, Color.blue, Color.VERDE),
-            //    6: new StroopElement("AMARILLO", Color.red, Color.red, Color.AMARILLO),       7: new StroopElement("AZUL", Color.green, Color.green, Color.AZUL),
-            //    8: new StroopElement("ROJO", Color.yellow, Color.yellow, Color.ROJO),         9: new StroopElement("VERDE", Color.blue, Color.blue, Color.VERDE), 
-            //   10: new StroopElement("AMARILLO", Color.red, Color.red, Color.AMARILLO),      11: new StroopElement("AZUL", Color.green, Color.green, Color.AZUL)  
+            {  0: new StroopElement("AMARILLO", Color.red, Color.red, Color.yellow),       1: new StroopElement("VERDE", Color.blue, Color.blue, Color.green),
+               2: new StroopElement("ROJO", Color.yellow, Color.yellow, Color.red),        3: new StroopElement("AZUL", Color.green, Color.green, Color.blue),
+               4: new StroopElement("ROJO", Color.yellow, Color.yellow, Color.red),        5: new StroopElement("VERDE", Color.blue, Color.blue, Color.green),
+               6: new StroopElement("AMARILLO", Color.red, Color.red, Color.yellow),       7: new StroopElement("AZUL", Color.green, Color.green, Color.blue),
+               8: new StroopElement("ROJO", Color.yellow, Color.yellow, Color.red),        9: new StroopElement("VERDE", Color.blue, Color.blue, Color.green), 
+              10: new StroopElement("AMARILLO", Color.red, Color.red, Color.yellow),      11: new StroopElement("AZUL", Color.green, Color.green, Color.blue)  
             },
 
             // Incongruente evaluación
-            {  0: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),   1: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //    2: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),       3: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //    4: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),   5: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //    6: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),       7: new StroopElement("ROJO", Color.blue, Color.blue, Color.ROJO),
-            //    8: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),   9: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   10: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),  11: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   12: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),      13: new StroopElement("ROJO", Color.blue, Color.blue, Color.ROJO),
-            //   14: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),      15: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   16: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),      17: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   18: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),  19: new StroopElement("ROJO", Color.blue, Color.blue, Color.ROJO),
-            //   20: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),      21: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   22: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),      23: new StroopElement("ROJO", Color.blue, Color.blue, Color.ROJO),
-            //   24: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),  25: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   26: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),  27: new StroopElement("ROJO", Color.blue, Color.blue, Color.ROJO),
-            //   28: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),      29: new StroopElement("ROJO", Color.blue, Color.blue, Color.ROJO),
-            //   30: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),      31: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   32: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),  33: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   34: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),  35: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   36: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.VERDE),      37: new StroopElement("AZUL", Color.red, Color.red, Color.AZUL),
-            //   38: new StroopElement("AMARILLO", Color.green, Color.green, Color.AMARILLO),  39: new StroopElement("ROJO", Color.blue, Color.blue, Color.ROJO),  
+            {  0: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),   1: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+               2: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),     3: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+               4: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),   5: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+               6: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),     7: new StroopElement("ROJO", Color.blue, Color.blue, Color.red),
+               8: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),   9: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              10: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),  11: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              12: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),    13: new StroopElement("ROJO", Color.blue, Color.blue, Color.red),
+              14: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),    15: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              16: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),    17: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              18: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),  19: new StroopElement("ROJO", Color.blue, Color.blue, Color.red),
+              20: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),    21: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              22: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),    23: new StroopElement("ROJO", Color.blue, Color.blue, Color.red),
+              24: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),  25: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              26: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),  27: new StroopElement("ROJO", Color.blue, Color.blue, Color.red),
+              28: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),    29: new StroopElement("ROJO", Color.blue, Color.blue, Color.red),
+              30: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),    31: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              32: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),  33: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              34: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),  35: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              36: new StroopElement("VERDE", Color.yellow, Color.yellow, Color.green),    37: new StroopElement("AZUL", Color.red, Color.red, Color.blue),
+              38: new StroopElement("AMARILLO", Color.green, Color.green, Color.yellow),  39: new StroopElement("ROJO", Color.blue, Color.blue, Color.red),  
             }
         ]
-    }, [Color.AMARILLO, Color.AZUL, Color.VERDE, Color.blue, Color.green, Color.null, Color.red, Color.yellow]);
+    }, [Color.yellow, Color.blue, Color.green, Color.red]);
 
     function getMomentByDate(date)
     {
@@ -295,6 +295,12 @@ export default function StroopCol() {
             else if(instructionIndex === 6 && currentKeyIndex !== 0)
             {
                 setCurrentDictIndex((prevIndex) => prevIndex + 1);
+                switch(currentDictIndex)
+                {
+                    case 0:     console.log("--- Congruente: Fase de práctica (intento " + (practiceAttempts+1) + ") ---");   break;
+                    case 3:     console.log("--- Incongruente: Fase de práctica (intento " + (practiceAttempts+1) + ") ---");   break;
+                    default:    break;
+                }
                 setCurrentKeyIndex(0);
             }
             else
@@ -302,25 +308,66 @@ export default function StroopCol() {
                 setIsTextVisible(false);
             }
         }
-    }, [currentDictIndex, currentKeyIndex, dictionaries, instructionIndex]);
+    }, [currentDictIndex, currentKeyIndex, dictionaries, instructionIndex, practiceAttempts]);
 
-    const handleButtonClick = (answer) =>
+    const handleButtonClick = (answer, element) =>
     {
         setIsTextVisible(false);
-        handleAnswer(answer);
+        handleAnswer(answer, element);
         nextElement();
     };
     
-    const handleAnswer = useCallback((answer) =>
+    const handleAnswer = useCallback((answer, element) =>
     {
-        setEndTime(Date.now());
-        answers[currentDictIndex][currentKeyIndex].answer = answer;
-        answers[currentDictIndex][currentKeyIndex].time = endTime - startTime;
-    }, [answers, currentDictIndex, currentKeyIndex, endTime, startTime]);
+        let ans = 3;
+        if(answer !== null)
+        {
+            if(answer === element.correctAnswer) ans = 1;
+            else if(answer === element.comisionError) ans = 2;
+            else ans = 4;
+        }
+        
+        answers[currentDictIndex][currentKeyIndex].time = Date.now() - startTimeRef;
+        answers[currentDictIndex][currentKeyIndex].score = ans;
+        console.log(element.textColor + " -> pressed " + answer + " -> " + ans);
+    }, [answers, currentDictIndex, currentKeyIndex, startTimeRef]);
     
     const handleSwitchDict = useCallback(() =>
     {
+        if((currentDictIndex === 1 || currentDictIndex === 4) && practiceAttempts < 2)
+        {
+            const practice = answers[currentDictIndex];
+            const requiredToPass = Math.ceil(Object.keys(practice).length * 0.6);
+            let corrects = 0;
+            for (let i = 0; i < Object.keys(practice).length; i++)
+            {
+                if(practice[i].score === 1) corrects++;
+            }
+            
+            if(corrects < requiredToPass)
+            {
+                setPracticeAttempts(prev => prev + 1);
+                setCurrentKeyIndex(0);
+
+                switch(currentDictIndex)
+                {
+                    case 1:     console.log("--- Congruente: Fase de práctica (intento " + (practiceAttempts+2) + ") ---");   break;
+                    case 4:     console.log("--- Incongruente: Fase de práctica (intento " + (practiceAttempts+2) + ") ---");   break;
+                    default:    break;
+                }
+                return;
+            }
+        }
+            
         let nextDictIndex = currentDictIndex + 1;
+        
+        switch(nextDictIndex)
+        {
+            case 2:     console.log("--- Congruente: Fase de evaluación ---");     break;
+            case 3:     console.log("--- Incongruente: Fase de modelado ---");     break;
+            case 5:     console.log("--- Incongruente: Fase de evaluación ---");   break;
+            default:    break;
+        }
 
         if (nextDictIndex >= dictionaries.length)
         {
@@ -328,9 +375,10 @@ export default function StroopCol() {
             return;
         }
 
+        setPracticeAttempts(0);
         setCurrentDictIndex(nextDictIndex);
         setCurrentKeyIndex(0);
-    }, [currentDictIndex, dictionaries.length]);
+    }, [answers, currentDictIndex, dictionaries.length, practiceAttempts]);
 
     const nextElement = useCallback(() =>
     {
@@ -380,7 +428,7 @@ export default function StroopCol() {
                 {
                     setIsTextVisible(true);
                     setButtonsDisabled(false);
-                    // setStartTime(Date.now());
+                    startTimeRef.current = Date.now()
                     timeoutRefs.current.push(setTimeout(() =>
                     {
                         // Ocultar número y pasar a la pantalla negra
@@ -388,7 +436,7 @@ export default function StroopCol() {
                         timeoutRefs.current.push(setTimeout(() =>
                         {
                             // Avanzar al siguiente ítem
-                            handleAnswer(3);
+                            handleAnswer(null, dictionaries[currentDictIndex][currentKeyIndex]);
                             nextElement();
                             
                         }, TIME_AFTER_NUMBER));
@@ -396,7 +444,7 @@ export default function StroopCol() {
                 }, TIME_AFTER_CROSS));
             }, TIME_CROSS_VISIBLE));
         }, TIME_BEFORE_CROSS));
-    }, [handleAnswer, nextElement]);
+    }, [currentDictIndex, currentKeyIndex, dictionaries, handleAnswer, nextElement]);
     
     useEffect(() =>
     {
@@ -415,6 +463,14 @@ export default function StroopCol() {
             timeoutRefs.current.forEach(clearTimeout);
         };
     }, [cycleRunning, runCycle]);
+
+    useEffect(() => 
+    {
+        if(isFinished)
+        {
+            setCycleRunning(false);
+        }
+    }, [isFinished])
     
 
     return (
@@ -438,15 +494,15 @@ export default function StroopCol() {
                             <div style={{color: dictionaries[currentDictIndex][currentKeyIndex].textColor}} className="stroopcol-central-text"> {dictionaries[currentDictIndex][currentKeyIndex].text} </div>
                         )}
                         <div className="stroopcol-button-grid stroopcol-button-grid-left">
-                            <button style={{backgroundColor: 'red'}}    className={`stroopcol-round-button ${highlight === 1 ? 'highlight' : ''}`} onClick={() => handleButtonClick(1)} disabled={buttonsDisabled}></button>
+                            <button style={{backgroundColor: 'red'}}    className={`stroopcol-round-button ${highlight === 1 ? 'highlight' : ''}`} onClick={() => handleButtonClick(Color.red,    dictionaries[currentDictIndex][currentKeyIndex])} disabled={buttonsDisabled}></button>
                             <button className="stroopcol-no-button" disabled={true}></button>
                             <button className="stroopcol-no-button" disabled={true}></button>
-                            <button style={{backgroundColor: 'green'}}  className={`stroopcol-round-button ${highlight === 2 ? 'highlight' : ''}`} onClick={() => handleButtonClick(2)} disabled={buttonsDisabled}></button>
+                            <button style={{backgroundColor: 'green'}}  className={`stroopcol-round-button ${highlight === 2 ? 'highlight' : ''}`} onClick={() => handleButtonClick(Color.green,  dictionaries[currentDictIndex][currentKeyIndex])} disabled={buttonsDisabled}></button>
                         </div> 
                         <div className="stroopcol-button-grid stroopcol-button-grid-right">
                             <button className="stroopcol-no-button" disabled={true}></button>
-                            <button style={{backgroundColor: 'yellow'}} className={`stroopcol-round-button ${highlight === 4 ? 'highlight' : ''}`} onClick={() => handleButtonClick(4)} disabled={buttonsDisabled}></button>
-                            <button style={{backgroundColor: 'blue'}}   className={`stroopcol-round-button ${highlight === 3 ? 'highlight' : ''}`} onClick={() => handleButtonClick(3)} disabled={buttonsDisabled}></button>
+                            <button style={{backgroundColor: 'yellow'}} className={`stroopcol-round-button ${highlight === 4 ? 'highlight' : ''}`} onClick={() => handleButtonClick(Color.yellow, dictionaries[currentDictIndex][currentKeyIndex])} disabled={buttonsDisabled}></button>
+                            <button style={{backgroundColor: 'blue'}}   className={`stroopcol-round-button ${highlight === 3 ? 'highlight' : ''}`} onClick={() => handleButtonClick(Color.blue,   dictionaries[currentDictIndex][currentKeyIndex])} disabled={buttonsDisabled}></button>
                             <button className="stroopcol-no-button" disabled={true}></button>
                         </div> 
                         <audio ref={audioRef} />

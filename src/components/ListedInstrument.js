@@ -47,7 +47,7 @@ export default function ListedInstrument (props) {
         } else if ($selectedInstrument == 20) {
             navigate('/clpt')
         } else if ($selectedInstrument == 21) {
-            navigate('/listSpan')
+            navigate('/listeningSpan')
         } else if ($selectedInstrument == 22) {
             navigate('/digitSpan')
         } else if ($selectedInstrument == 23) {

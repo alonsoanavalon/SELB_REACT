@@ -27,19 +27,18 @@ export default function StroopNum() {
     const [isTextVisible, setIsTextVisible] = useState(true); // Inicialmente no mostrar el texto
     const [cycleRunning, setCycleRunning] = useState(true); // Controlar el ciclo
     const [isFinished, setIsFinished] = useState(false); // Controlar el ciclo
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const startTimeRef = useRef(null);
     const audioRef = useRef(null);
     
     const [currentDictIndex, setCurrentDictIndex] = useState(0); // Índice del diccionario actual
     const [currentKeyIndex, setCurrentKeyIndex] = useState(0); // Clave actual en el diccionario
     const [instructionIndex, setInstructionIndex] = useState(0); // Clave actual en el diccionario
     const [highlight, setHighlight] = useState(0);
+    const [practiceAttempts, setPracticeAttempts] = useState(0);
 
     useEffect(() => {
         get('selectedStudentName').then(studentName => setStudentName(studentName));
     }, []);
-
     
     const answers = useMemo(() =>
     {    
@@ -53,15 +52,14 @@ export default function StroopNum() {
         }
 
         return [
-          { 0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),   },
+          {},
+          {  0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),
+             4: new StroopAnswer(-1, 0),   5: new StroopAnswer(-1, 0),   6: new StroopAnswer(-1, 0),   7: new StroopAnswer(-1, 0),
+             8: new StroopAnswer(-1, 0),   9: new StroopAnswer(-1, 0),  10: new StroopAnswer(-1, 0),  11: new StroopAnswer(-1, 0)    },
 
-          { 0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),
-            4: new StroopAnswer(-1, 0),   5: new StroopAnswer(-1, 0),   6: new StroopAnswer(-1, 0),   7: new StroopAnswer(-1, 0),
-            8: new StroopAnswer(-1, 0),   9: new StroopAnswer(-1, 0),  10: new StroopAnswer(-1, 0),  11: new StroopAnswer(-1, 0),   },
-
-          { 0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),
-            4: new StroopAnswer(-1, 0),   5: new StroopAnswer(-1, 0),   6: new StroopAnswer(-1, 0),   7: new StroopAnswer(-1, 0),
-            8: new StroopAnswer(-1, 0),   9: new StroopAnswer(-1, 0),  10: new StroopAnswer(-1, 0),  11: new StroopAnswer(-1, 0),
+          {  0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),
+             4: new StroopAnswer(-1, 0),   5: new StroopAnswer(-1, 0),   6: new StroopAnswer(-1, 0),   7: new StroopAnswer(-1, 0),
+             8: new StroopAnswer(-1, 0),   9: new StroopAnswer(-1, 0),  10: new StroopAnswer(-1, 0),  11: new StroopAnswer(-1, 0),
             12: new StroopAnswer(-1, 0),  13: new StroopAnswer(-1, 0),  14: new StroopAnswer(-1, 0),  15: new StroopAnswer(-1, 0),
             16: new StroopAnswer(-1, 0),  17: new StroopAnswer(-1, 0),  18: new StroopAnswer(-1, 0),  19: new StroopAnswer(-1, 0),
             20: new StroopAnswer(-1, 0),  21: new StroopAnswer(-1, 0),  22: new StroopAnswer(-1, 0),  23: new StroopAnswer(-1, 0),
@@ -70,15 +68,14 @@ export default function StroopNum() {
             32: new StroopAnswer(-1, 0),  33: new StroopAnswer(-1, 0),  34: new StroopAnswer(-1, 0),  35: new StroopAnswer(-1, 0),
             36: new StroopAnswer(-1, 0),  37: new StroopAnswer(-1, 0),  38: new StroopAnswer(-1, 0),  39: new StroopAnswer(-1, 0),   },
             
-          { 0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),   },
+          {},
+          {  0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),
+             4: new StroopAnswer(-1, 0),   5: new StroopAnswer(-1, 0),   6: new StroopAnswer(-1, 0),   7: new StroopAnswer(-1, 0),
+             8: new StroopAnswer(-1, 0),   9: new StroopAnswer(-1, 0),  10: new StroopAnswer(-1, 0),  11: new StroopAnswer(-1, 0)    },
 
-          { 0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),
-            4: new StroopAnswer(-1, 0),   5: new StroopAnswer(-1, 0),   6: new StroopAnswer(-1, 0),   7: new StroopAnswer(-1, 0),
-            8: new StroopAnswer(-1, 0),   9: new StroopAnswer(-1, 0),  10: new StroopAnswer(-1, 0),  11: new StroopAnswer(-1, 0),   },
-
-          { 0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),
-            4: new StroopAnswer(-1, 0),   5: new StroopAnswer(-1, 0),   6: new StroopAnswer(-1, 0),   7: new StroopAnswer(-1, 0),
-            8: new StroopAnswer(-1, 0),   9: new StroopAnswer(-1, 0),  10: new StroopAnswer(-1, 0),  11: new StroopAnswer(-1, 0),
+         {  0: new StroopAnswer(-1, 0),   1: new StroopAnswer(-1, 0),   2: new StroopAnswer(-1, 0),   3: new StroopAnswer(-1, 0),
+             4: new StroopAnswer(-1, 0),   5: new StroopAnswer(-1, 0),   6: new StroopAnswer(-1, 0),   7: new StroopAnswer(-1, 0),
+             8: new StroopAnswer(-1, 0),   9: new StroopAnswer(-1, 0),  10: new StroopAnswer(-1, 0),  11: new StroopAnswer(-1, 0),
             12: new StroopAnswer(-1, 0),  13: new StroopAnswer(-1, 0),  14: new StroopAnswer(-1, 0),  15: new StroopAnswer(-1, 0),
             16: new StroopAnswer(-1, 0),  17: new StroopAnswer(-1, 0),  18: new StroopAnswer(-1, 0),  19: new StroopAnswer(-1, 0),
             20: new StroopAnswer(-1, 0),  21: new StroopAnswer(-1, 0),  22: new StroopAnswer(-1, 0),  23: new StroopAnswer(-1, 0),
@@ -86,7 +83,6 @@ export default function StroopNum() {
             28: new StroopAnswer(-1, 0),  29: new StroopAnswer(-1, 0),  30: new StroopAnswer(-1, 0),  31: new StroopAnswer(-1, 0),
             32: new StroopAnswer(-1, 0),  33: new StroopAnswer(-1, 0),  34: new StroopAnswer(-1, 0),  35: new StroopAnswer(-1, 0),
             36: new StroopAnswer(-1, 0),  37: new StroopAnswer(-1, 0),  38: new StroopAnswer(-1, 0),  39: new StroopAnswer(-1, 0),   },
-
         ]
     }, []);
 
@@ -117,21 +113,21 @@ export default function StroopNum() {
 
             // Congruente práctica
             { 0: new StroopElement("4444", 4),      1: new StroopElement("22", 2),        2: new StroopElement("333", 3),       3: new StroopElement("1", 1),
-            //   4: new StroopElement("4444", 4),      5: new StroopElement("1", 1),         6: new StroopElement("333", 3),       7: new StroopElement("22", 2),
-            //   8: new StroopElement("333", 3),       9: new StroopElement("1", 1),        10: new StroopElement("4444", 4),     11: new StroopElement("22", 2)   
+              4: new StroopElement("4444", 4),      5: new StroopElement("1", 1),         6: new StroopElement("333", 3),       7: new StroopElement("22", 2),
+              8: new StroopElement("333", 3),       9: new StroopElement("1", 1),        10: new StroopElement("4444", 4),     11: new StroopElement("22", 2)   
             },
 
             // Congruente evaluación
             { 0: new StroopElement("4444", 4),      1: new StroopElement("1", 1),         2: new StroopElement("22", 2),        3: new StroopElement("333", 3),
-            //   4: new StroopElement("1", 1),         5: new StroopElement("22", 2),        6: new StroopElement("333", 3),       7: new StroopElement("4444", 4),
-            //   8: new StroopElement("333",3 ),       9: new StroopElement("22", 2),       10: new StroopElement("1", 1),        11: new StroopElement("4444", 4),
-            //  12: new StroopElement("1", 1),        13: new StroopElement("333", 3),      14: new StroopElement("22", 2),       15: new StroopElement("4444", 4),
-            //  16: new StroopElement("22", 2),       17: new StroopElement("1", 1),        18: new StroopElement("333", 3),      19: new StroopElement("4444", 4),
-            //  20: new StroopElement("1", 1),        21: new StroopElement("4444", 4),     22: new StroopElement("333", 3),      23: new StroopElement("22", 2),
-            //  24: new StroopElement("1", 1),        25: new StroopElement("4444", 4),     26: new StroopElement("22", 2),       27: new StroopElement("333", 3),
-            //  28: new StroopElement("22", 2),       29: new StroopElement("4444", 4),     30: new StroopElement("1", 1),        31: new StroopElement("333", 3),
-            //  32: new StroopElement("1", 1),        33: new StroopElement("4444", 4),     34: new StroopElement("22", 2),       35: new StroopElement("333", 3),
-            //  36: new StroopElement("22", 2),       37: new StroopElement("1", 1),        38: new StroopElement("4444", 4),     39: new StroopElement("333", 3)  
+              4: new StroopElement("1", 1),         5: new StroopElement("22", 2),        6: new StroopElement("333", 3),       7: new StroopElement("4444", 4),
+              8: new StroopElement("333",3 ),       9: new StroopElement("22", 2),       10: new StroopElement("1", 1),        11: new StroopElement("4444", 4),
+             12: new StroopElement("1", 1),        13: new StroopElement("333", 3),      14: new StroopElement("22", 2),       15: new StroopElement("4444", 4),
+             16: new StroopElement("22", 2),       17: new StroopElement("1", 1),        18: new StroopElement("333", 3),      19: new StroopElement("4444", 4),
+             20: new StroopElement("1", 1),        21: new StroopElement("4444", 4),     22: new StroopElement("333", 3),      23: new StroopElement("22", 2),
+             24: new StroopElement("1", 1),        25: new StroopElement("4444", 4),     26: new StroopElement("22", 2),       27: new StroopElement("333", 3),
+             28: new StroopElement("22", 2),       29: new StroopElement("4444", 4),     30: new StroopElement("1", 1),        31: new StroopElement("333", 3),
+             32: new StroopElement("1", 1),        33: new StroopElement("4444", 4),     34: new StroopElement("22", 2),       35: new StroopElement("333", 3),
+             36: new StroopElement("22", 2),       37: new StroopElement("1", 1),        38: new StroopElement("4444", 4),     39: new StroopElement("333", 3)  
             },
 
 
@@ -141,21 +137,21 @@ export default function StroopNum() {
 
             // Incongruente práctica
             { 0: new StroopElement("3", 1),        1: new StroopElement("44", 2),       2: new StroopElement("222", 3),       3: new StroopElement("4", 1),
-            //   4: new StroopElement("2", 1),        5: new StroopElement("11", 2),       6: new StroopElement("3333", 4),      7: new StroopElement("222", 3),
-            //   8: new StroopElement("444", 3),      9: new StroopElement("2", 1),       10: new StroopElement("111", 3),      11: new StroopElement("33", 2)     
+              4: new StroopElement("2", 1),        5: new StroopElement("11", 2),       6: new StroopElement("3333", 4),      7: new StroopElement("222", 3),
+              8: new StroopElement("444", 3),      9: new StroopElement("2", 1),       10: new StroopElement("111", 3),      11: new StroopElement("33", 2)     
             },
 
             // Incongruente evaluación
             { 0: new StroopElement("1111", 4),     1: new StroopElement("2", 1),        2: new StroopElement("111", 3),       3: new StroopElement("2222", 4),
-            //   4: new StroopElement("44", 2),       5: new StroopElement("3333", 4),     6: new StroopElement("4", 1),         7: new StroopElement("444", 3),
-            //   8: new StroopElement("3", 1),        9: new StroopElement("222", 3),     10: new StroopElement("11", 2),       11: new StroopElement("2222", 4),
-            //  12: new StroopElement("33", 2),      13: new StroopElement("2", 1),       14: new StroopElement("11", 2),       15: new StroopElement("3", 1),
-            //  16: new StroopElement("111", 3),     17: new StroopElement("1111", 4),    18: new StroopElement("444", 3),      19: new StroopElement("4", 1),
-            //  20: new StroopElement("44", 2),      21: new StroopElement("3333", 4),    22: new StroopElement("222", 3),      23: new StroopElement("33", 2),
-            //  24: new StroopElement("444", 3),     25: new StroopElement("2", 1),       26: new StroopElement("222", 3),      27: new StroopElement("3333", 4),
-            //  28: new StroopElement("11", 2),      29: new StroopElement("2222", 4),    30: new StroopElement("44", 2),       31: new StroopElement("4", 1),
-            //  32: new StroopElement("33", 2),      33: new StroopElement("1111", 4),    34: new StroopElement("111", 3),      35: new StroopElement("3", 1),
-            //  36: new StroopElement("444", 3),     37: new StroopElement("44", 2),      38: new StroopElement("1111", 4),     39: new StroopElement("4", 1)      
+              4: new StroopElement("44", 2),       5: new StroopElement("3333", 4),     6: new StroopElement("4", 1),         7: new StroopElement("444", 3),
+              8: new StroopElement("3", 1),        9: new StroopElement("222", 3),     10: new StroopElement("11", 2),       11: new StroopElement("2222", 4),
+             12: new StroopElement("33", 2),      13: new StroopElement("2", 1),       14: new StroopElement("11", 2),       15: new StroopElement("3", 1),
+             16: new StroopElement("111", 3),     17: new StroopElement("1111", 4),    18: new StroopElement("444", 3),      19: new StroopElement("4", 1),
+             20: new StroopElement("44", 2),      21: new StroopElement("3333", 4),    22: new StroopElement("222", 3),      23: new StroopElement("33", 2),
+             24: new StroopElement("444", 3),     25: new StroopElement("2", 1),       26: new StroopElement("222", 3),      27: new StroopElement("3333", 4),
+             28: new StroopElement("11", 2),      29: new StroopElement("2222", 4),    30: new StroopElement("44", 2),       31: new StroopElement("4", 1),
+             32: new StroopElement("33", 2),      33: new StroopElement("1111", 4),    34: new StroopElement("111", 3),      35: new StroopElement("3", 1),
+             36: new StroopElement("444", 3),     37: new StroopElement("44", 2),      38: new StroopElement("1111", 4),     39: new StroopElement("4", 1)      
             }
         ]
     }, []);
@@ -255,6 +251,12 @@ export default function StroopNum() {
             else if(instructionIndex === 6 && currentKeyIndex !== 0)
             {
                 setCurrentDictIndex((prevIndex) => prevIndex + 1);
+                switch(currentDictIndex)
+                {
+                    case 0:     console.log("--- Congruente: Fase de práctica (intento " + (practiceAttempts+1) + ") ---");   break;
+                    case 3:     console.log("--- Incongruente: Fase de práctica (intento " + (practiceAttempts+1) + ") ---");   break;
+                    default:    break;
+                }
                 setCurrentKeyIndex(0);
             }
             else
@@ -262,25 +264,67 @@ export default function StroopNum() {
                 setIsTextVisible(false);
             }
         }
-    }, [currentDictIndex, currentKeyIndex, dictionaries, instructionIndex]);
+    }, [currentDictIndex, currentKeyIndex, dictionaries, instructionIndex, practiceAttempts]);
 
-    const handleButtonClick = (answer) =>
+    const handleButtonClick = (answer, correct) =>
     {
         setIsTextVisible(false);
-        handleAnswer(answer);
+        handleAnswer(answer, correct);
         nextElement();
     };
 
-    const handleAnswer = useCallback((answer) =>
+    const handleAnswer = useCallback((answer, text) =>
     {
-        setEndTime(Date.now());
-        answers[currentDictIndex][currentKeyIndex].answer = answer;
-        answers[currentDictIndex][currentKeyIndex].time = endTime - startTime;
-    }, [answers, currentDictIndex, currentKeyIndex, endTime, startTime]);
+        let ans = 3;
+        if(answer !== 0)
+        {
+            const correct = text.length;
+            if(answer === correct) ans = 1;
+            else if(answer === Number(text[0])) ans = 2;
+            else ans = 4;
+        }
+        
+        answers[currentDictIndex][currentKeyIndex].time = Date.now() - startTimeRef;
+        answers[currentDictIndex][currentKeyIndex].score = ans;
+        console.log(text + " -> pressed " + answer + " -> " + ans);
+    }, [answers, currentDictIndex, currentKeyIndex]);
     
     const handleSwitchDict = useCallback(() =>
     {
+        if((currentDictIndex === 1 || currentDictIndex === 4) && practiceAttempts < 2)
+        {
+            const practice = answers[currentDictIndex];
+            const requiredToPass = Math.ceil(Object.keys(practice).length * 0.6);
+            let corrects = 0;
+            for (let i = 0; i < Object.keys(practice).length; i++)
+            {
+                if(practice[i].score === 1) corrects++;
+            }
+            
+            if(corrects < requiredToPass)
+            {
+                setPracticeAttempts(prev => prev + 1);
+                setCurrentKeyIndex(0);
+
+                switch(currentDictIndex)
+                {
+                    case 1:     console.log("--- Congruente: Fase de práctica (intento " + (practiceAttempts+2) + ") ---");   break;
+                    case 4:     console.log("--- Incongruente: Fase de práctica (intento " + (practiceAttempts+2) + ") ---");   break;
+                    default:    break;
+                }
+                return;
+            }
+        }
+            
         let nextDictIndex = currentDictIndex + 1;
+
+        switch(nextDictIndex)
+        {
+            case 2:     console.log("--- Congruente: Fase de evaluación ---");   break;
+            case 3:     console.log("--- Incongruente: Fase de modelado ---");     break;
+            case 5:     console.log("--- Incongruente: Fase de evaluación ---");   break;
+            default:    break;
+        }
 
         if (nextDictIndex >= dictionaries.length)
         {
@@ -288,9 +332,10 @@ export default function StroopNum() {
             return;
         }
 
+        setPracticeAttempts(0);
         setCurrentDictIndex(nextDictIndex);
         setCurrentKeyIndex(0);
-    }, [currentDictIndex, dictionaries.length]);
+    }, [answers, currentDictIndex, dictionaries.length, practiceAttempts]);
 
     const nextElement = useCallback(() =>
     {
@@ -316,6 +361,7 @@ export default function StroopNum() {
         else
             setCycleRunning(true);
     }, [currentDictIndex])
+    
 
     const runCycle = useCallback(() =>
     {
@@ -340,7 +386,7 @@ export default function StroopNum() {
                 {
                     setIsTextVisible(true);
                     setButtonsDisabled(false);
-                    // setStartTime(Date.now());
+                    startTimeRef.current = Date.now();
                     timeoutRefs.current.push(setTimeout(() =>
                     {
                         // Ocultar número y pasar a la pantalla negra
@@ -348,7 +394,7 @@ export default function StroopNum() {
                         timeoutRefs.current.push(setTimeout(() =>
                         {
                             // Avanzar al siguiente ítem
-                            handleAnswer(3);
+                            handleAnswer(0, "");
                             nextElement();
 
                         }, TIME_AFTER_NUMBER));
@@ -375,6 +421,14 @@ export default function StroopNum() {
             timeoutRefs.current.forEach(clearTimeout);
         };
     }, [cycleRunning, runCycle]);
+
+    useEffect(() => 
+    {
+        if(isFinished)
+        {
+            setCycleRunning(false);
+        }
+    }, [isFinished])
     
 
     return (
@@ -398,15 +452,15 @@ export default function StroopNum() {
                             <div className="stroopnum-central-text"> {dictionaries[currentDictIndex][currentKeyIndex].text} </div>
                         )}
                         <div className="stroopnum-button-grid stroopnum-button-grid-left">
-                            <button className={`stroopnum-round-button ${highlight === 1 ? 'highlight' : ''}`} onClick={() => handleButtonClick(1)} disabled={buttonsDisabled}>1</button>
+                            <button className={`stroopnum-round-button ${highlight === 1 ? 'highlight' : ''}`} onClick={() => handleButtonClick(1, dictionaries[currentDictIndex][currentKeyIndex].text)} disabled={buttonsDisabled}>1</button>
                             <button className="stroopnum-no-button" disabled={true}></button>
                             <button className="stroopnum-no-button" disabled={true}></button>
-                            <button className={`stroopnum-round-button ${highlight === 2 ? 'highlight' : ''}`} onClick={() => handleButtonClick(2)} disabled={buttonsDisabled}>2</button>
+                            <button className={`stroopnum-round-button ${highlight === 2 ? 'highlight' : ''}`} onClick={() => handleButtonClick(2, dictionaries[currentDictIndex][currentKeyIndex].text)} disabled={buttonsDisabled}>2</button>
                         </div>
                         <div className="stroopnum-button-grid stroopnum-button-grid-right">
                             <button className="stroopnum-no-button" disabled={true}></button>
-                            <button className={`stroopnum-round-button ${highlight === 4 ? 'highlight' : ''}`} onClick={() => handleButtonClick(4)} disabled={buttonsDisabled}>4</button>
-                            <button className={`stroopnum-round-button ${highlight === 3 ? 'highlight' : ''}`} onClick={() => handleButtonClick(3)} disabled={buttonsDisabled}>3</button>
+                            <button className={`stroopnum-round-button ${highlight === 4 ? 'highlight' : ''}`} onClick={() => handleButtonClick(4, dictionaries[currentDictIndex][currentKeyIndex].text)} disabled={buttonsDisabled}>4</button>
+                            <button className={`stroopnum-round-button ${highlight === 3 ? 'highlight' : ''}`} onClick={() => handleButtonClick(3, dictionaries[currentDictIndex][currentKeyIndex].text)} disabled={buttonsDisabled}>3</button>
                             <button className="stroopnum-no-button" disabled={true}></button>
                         </div>
                         <audio ref={audioRef} />

@@ -376,6 +376,7 @@ export default function HomePage() {
         setSavedTorreTests(torre)
         setSavedEscTests(esc)
         setSavedEMLTests(eml)
+        setSavedJapiTests(japi)
         setSavedStroopnumTests(stroopnum)
         setSavedStroopcolTests(stroopcol);
         setSavedAutoconceptoTests(autoconcepto);

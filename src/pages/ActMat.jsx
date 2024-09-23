@@ -14,14 +14,16 @@ import ActMat7 from "../components/ActMat/ActMat7.wav";
 import ActMat8 from "../components/ActMat/ActMat8.wav";
 import ActMatRec from "../components/ActMat/ActMatRec.wav";
 
-export default function Cmasr()
+export default function ActMat()
 {
     const [studentName, setStudentName] = useState("");
 
     const [isImageVisible, setIsImageVisible] = useState(true); // Controla la visibilidad de la imagen
     const [isFinished, setIsFinished] = useState(false); // Controla la visibilidad de la imagen
-    const [activeButton, setActiveButton] = useState(null);
     const [canGoNext, setCanGoNext] = useState(false); // Controla la visibilidad de la imagen
+    const [disableButtons, setDisableButtons] = useState(false);
+
+    const [activeButton, setActiveButton] = useState(null);
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const audioRef = useRef(null);
@@ -120,34 +122,50 @@ export default function Cmasr()
 
     useEffect(() =>
     {
-        if (audioRef.current)
+        const audioElement = audioRef.current;
+    
+        const handlePlay = () => { setDisableButtons(true); };
+    
+        const handleEnded = () =>
         {
-            setIsImageVisible(true);
-            audioRef.current.onended = () =>
+            setInstructionIndex((prevIndex) =>
             {
-                setInstructionIndex((prevIndex) =>
+                if (isImageVisible && prevIndex < instructionAudios.length - 1)
                 {
-                    if (prevIndex < instructionAudios.length - 1)
-                    {
-                        return prevIndex + 1;
-                    }
-                    else
-                    {
-                        setIsImageVisible(false);
-                        setStartTime(Date.now());
-                        return prevIndex; // Mantén el índice actual
-                    }
-                });
-            };
+                    return prevIndex + 1;
+                }
+                else
+                {
+                    setIsImageVisible(false);
+                    return prevIndex; // Mantener el índice actual
+                }
+            });
+            setDisableButtons(false);
+            setStartTime(Date.now());
+        };
+    
+        if (audioElement)
+        {
+            audioElement.addEventListener('play', handlePlay);
+            audioElement.addEventListener('ended', handleEnded);
         }
-    }, [audioRef, instructionAudios.length]);
+    
+        return () =>
+        {
+            if (audioElement)
+            {
+                audioElement.removeEventListener('play', handlePlay);
+                audioElement.removeEventListener('ended', handleEnded);
+            }
+        };
+    }, [audioRef, instructionAudios.length, isImageVisible]);
 
     function getMomentByDate(date)
     {
         let dateBegin;
         let dateUntil;
         get('moments').then(res => {
-            res.map(element => {
+            res.foreach(element => {
                 dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW");
                 dateUntil = new Date(element['until']).toLocaleDateString("zh-TW");
                 if (date >= dateBegin && date <= dateUntil) {
@@ -207,13 +225,13 @@ export default function Cmasr()
                     )}
                     <div className="actmat-button-container">
                         <button className="actmat-label">{questions[currentIndex].text1}</button>
-                        <button className={`actmat-button ${activeButton === 1 ? 'active' : ''} ${highlight1 === 1 ? 'highlight' : ''} ${highlight2 === 1 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(1)}>1</button>
-                        <button className={`actmat-button ${activeButton === 2 ? 'active' : ''} ${highlight1 === 2 ? 'highlight' : ''} ${highlight2 === 2 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(2)}>2</button>
-                        <button className={`actmat-button ${activeButton === 3 ? 'active' : ''} ${highlight1 === 3 ? 'highlight' : ''} ${highlight2 === 3 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(3)}>3</button>
-                        <button className={`actmat-button ${activeButton === 4 ? 'active' : ''} ${highlight1 === 4 ? 'highlight' : ''} ${highlight2 === 4 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(4)}>4</button>
-                        <button className={`actmat-button ${activeButton === 5 ? 'active' : ''} ${highlight1 === 5 ? 'highlight' : ''} ${highlight2 === 5 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(5)}>5</button>
-                        <button className={`actmat-button ${activeButton === 6 ? 'active' : ''} ${highlight1 === 6 ? 'highlight' : ''} ${highlight2 === 6 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(6)}>6</button>
-                        <button className={`actmat-button ${activeButton === 7 ? 'active' : ''} ${highlight1 === 7 ? 'highlight' : ''} ${highlight2 === 7 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(7)}>7</button>
+                        <button className={`actmat-button ${activeButton === 1 ? 'active' : ''} ${highlight1 === 1 ? 'highlight' : ''} ${highlight2 === 1 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(1)}>1</button>
+                        <button className={`actmat-button ${activeButton === 2 ? 'active' : ''} ${highlight1 === 2 ? 'highlight' : ''} ${highlight2 === 2 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(2)}>2</button>
+                        <button className={`actmat-button ${activeButton === 3 ? 'active' : ''} ${highlight1 === 3 ? 'highlight' : ''} ${highlight2 === 3 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(3)}>3</button>
+                        <button className={`actmat-button ${activeButton === 4 ? 'active' : ''} ${highlight1 === 4 ? 'highlight' : ''} ${highlight2 === 4 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(4)}>4</button>
+                        <button className={`actmat-button ${activeButton === 5 ? 'active' : ''} ${highlight1 === 5 ? 'highlight' : ''} ${highlight2 === 5 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(5)}>5</button>
+                        <button className={`actmat-button ${activeButton === 6 ? 'active' : ''} ${highlight1 === 6 ? 'highlight' : ''} ${highlight2 === 6 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(6)}>6</button>
+                        <button className={`actmat-button ${activeButton === 7 ? 'active' : ''} ${highlight1 === 7 ? 'highlight' : ''} ${highlight2 === 7 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(7)}>7</button>
                         <button className="actmat-label">{questions[currentIndex].text2}</button>
                     </div>
                     <button className={`actmat-bottom-right-button ${highlight1 === 0 ? 'highlight' : ''}`} disabled={!canGoNext} onClick={() => nextElement()}>

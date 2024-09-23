@@ -34,7 +34,9 @@ export default function Cmasr()
 
     const [isImageVisible, setIsImageVisible] = useState(true); // Controla la visibilidad de la imagen
     const [canGoNext, setCanGoNext] = useState(false); // Controla la visibilidad de la imagen
+    const [disableButtons, setDisableButtons] = useState(false); // Controla la visibilidad de la imagen
     const [isFinished, setIsFinished] = useState(false); // Controla la visibilidad de la imagen
+
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [startTime2, setStartTime2] = useState(null);
@@ -118,28 +120,45 @@ export default function Cmasr()
 
     useEffect(() =>
     {
-        if (audioRef.current && isImageVisible)
+        const audioElement = audioRef.current;
+    
+        const handlePlay = () => { setDisableButtons(true); };
+    
+        const handleEnded = () =>
         {
-            setIsImageVisible(true);
-            audioRef.current.onended = () =>
+            setInstructionIndex((prevIndex) =>
             {
-                setInstructionIndex((prevIndex) =>
+                if (prevIndex < instructionAudios.length - 1)
                 {
-                    if (prevIndex < instructionAudios.length - 1)
-                    {
-                        return prevIndex + 1;
-                    }
-                    else
-                    {
-                        setIsImageVisible(false);
-                        return prevIndex; // Mantén el índice actual
-                    }
-                });
-            };
+                    return prevIndex + 1;
+                }
+                else
+                {
+                    setIsImageVisible(false);
+                    return prevIndex; // Mantener el índice actual
+                }
+            });
+            setDisableButtons(false);
+            setStartTime(Date.now());
+        };
+    
+        if (audioElement)
+        {
+            audioElement.addEventListener('play', handlePlay);
+            audioElement.addEventListener('ended', handleEnded);
         }
+    
+        return () =>
+        {
+            if (audioElement)
+            {
+                audioElement.removeEventListener('play', handlePlay);
+                audioElement.removeEventListener('ended', handleEnded);
+            }
+        };
     }, [audioRef, instructionAudios.length, isImageVisible]);
 
-
+    
     useEffect(() =>
     {
         if(!isImageVisible)
@@ -149,7 +168,6 @@ export default function Cmasr()
             if (audioRef.current && currentAudio)
             {
                 audioRef.current.src = currentAudio;
-                console.log("Reproduciendo audio \"" + currentAudio + "\"");
                 audioRef.current.play().catch(error =>
                 {
                     console.error("Error al reproducir el audio \"" + currentAudio + "\":", error);
@@ -176,7 +194,7 @@ export default function Cmasr()
         let dateBegin;
         let dateUntil;
         get('moments').then(res => {
-            res.map(element => {
+            res.foreach(element => {
                 dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW");
                 dateUntil = new Date(element['until']).toLocaleDateString("zh-TW");
                 if (date >= dateBegin && date <= dateUntil) {
@@ -256,8 +274,8 @@ export default function Cmasr()
                         <div className="cmasr-central-text"> {questions[currentIndex]}</div>
                     )}
                     <div className="cmasr-button-container">
-                        <button className={`cmasr-round-button ${activeButton === 1 ? 'active' : ''} ${highlight === 1 ? 'highlight' : ''}`} disabled={canGoNext} onClick={() => clickAnswer(1)}>SÍ</button>
-                        <button className={`cmasr-round-button ${activeButton === 0 ? 'active' : ''} ${highlight === 2 ? 'highlight' : ''}`} disabled={canGoNext} onClick={() => clickAnswer(0)}>NO</button>
+                        <button className={`cmasr-round-button ${activeButton === 1 ? 'active' : ''} ${highlight === 1 ? 'highlight' : ''}`} disabled={canGoNext || disableButtons} onClick={() => clickAnswer(1)}>SÍ</button>
+                        <button className={`cmasr-round-button ${activeButton === 0 ? 'active' : ''} ${highlight === 2 ? 'highlight' : ''}`} disabled={canGoNext || disableButtons} onClick={() => clickAnswer(0)}>NO</button>
                     </div>
                     <button className={`cmasr-top-right-button  ${highlight === 3 ? 'highlight' : ''}`} disabled={!canGoNext} onClick={changeAnswer}>
                         <img src={XIcon} alt="X" />

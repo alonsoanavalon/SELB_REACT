@@ -652,7 +652,7 @@ template {
 #instruments-list-wrapper #instruments-list {
   position: fixed;
   width: 700px;
-  height: 400px;
+  height: 440px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
   background-color: #fff;
   margin: auto;
@@ -1795,8 +1795,8 @@ input[type=number] {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200px;
-    height: 200px;
+    width: 1%;
+    height: 100px;
     transform: translate(-50%, -45%);
     z-index: 1; /* Asegúrate de que la cruz esté delante del contenido */
 }
@@ -1807,17 +1807,15 @@ input[type=number] {
 }
 
 .stroopnum-horizontal {
-    width: 200px;
-    height: 5px;
+    width: 100%;
+    height: 3px;
     top: 50%;
-    left: 0;
     transform: translateY(-50%);
 }
 
 .stroopnum-vertical {
-    width: 5px;
-    height: 200px;
-    top: 0;
+    width: 3px;
+    height: 100%;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -1910,8 +1908,8 @@ input[type=number] {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     transform: translate(-50%, -45%);
     z-index: 1; /* Asegúrate de que la cruz esté delante del contenido */
 }
@@ -1922,17 +1920,15 @@ input[type=number] {
 }
 
 .stroopcol-horizontal {
-    width: 200px;
-    height: 5px;
+    width: 100%;
+    height: 3px;
     top: 50%;
-    left: 0;
     transform: translateY(-50%);
 }
 
 .stroopcol-vertical {
-    width: 5px;
-    height: 200px;
-    top: 0;
+    width: 3px;
+    height: 100%;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -2348,8 +2344,7 @@ input[type=number] {
     padding: 10px 20px;
     background-color: #ffffff; /* Fondo blanco para el rectángulo */
     font-family: "Times New Roman", Times, serif;
-    border-style: solid white;
-    border-width: 3px 1.5px;
+    border-width: 0px;
     text-align: center;
     text-decoration: none;
     font-size: 24px;
@@ -2430,4 +2425,209 @@ input[type=number] {
     font-size: 20px; /* Tamaño de la fuente */
     font-weight: bold; /* Negrita */
     pointer-events: none; /* Evita que el texto interfiera con el clic en el botón */
+}
+
+/* --------------------------------------- LISTENING SPAN --------------------------------------- */
+.listspan-black-section {
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Utiliza toda la altura de la ventana */
+    width: 100vw; /* Utiliza toda la anchura de la ventana */
+    background-color: black;
+    font-family: "Times New Roman", Times, serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: center; /* Centra horizontalmente el contenido */
+    overflow: hidden; /* Evita barras de desplazamiento */
+}
+
+/* Contenedor principal */
+.listspan-container {
+    text-align: center;
+    width: 100%; /* Ajustado al 100% para ocupar el espacio completo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.listspan-text-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* El contenedor ocupará toda la pantalla */
+    width: 100vw;  /* El ancho del contenedor será el 100% de la pantalla */
+    text-align: center;
+}
+
+.listspan-central-text {
+    color: rgb(255, 255, 255);
+    font-family: "Times New Roman", Times, serif;
+    font-size: 50px;
+    background-color: transparent;
+    text-align: center;
+}
+
+/* Ajustar el contenedor de la imagen para centrarlo correctamente */
+.listspan-image-container {
+    padding-top: 1rem; /* Ajusta el espacio superior */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ajustar el tamaño de la imagen */
+.listspan-center-image {
+    width: 100px;
+    height: auto;
+    max-width: 100%;
+}
+
+/* Botones debajo de la imagen */
+.listspan-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    width: 100%;
+}
+
+/* Estilos de los botones */
+.listspan-button {
+    padding: 10px 20px;
+    margin: 0 6%; /* Ajusta el espacio entre los botones */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 32px;
+    font-weight: bold;
+    width: 200px;
+    height: 75px;
+}
+
+/* Estilo para la grilla de botones */
+.listspan-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas para un total de 12 botones */
+    grid-gap: 20px 70px; /* Espacio entre los elementos de la grilla */
+}
+
+/* Estilo para cada ítem de la grilla */
+.listspan-grid-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.listspan-grid-button {
+    font-size: 20px;
+    width: 70px;
+    height: 36px;
+    font-weight: bold;
+}
+
+.listspan-grid-button:disabled {
+    background-color: white;
+    color: black;
+}
+
+.listspan-grid-text {
+    color: white;
+    font-size: 28px;
+}
+
+/* Texto debajo de la grilla */
+.listspan-info-text {
+    font-size: 28px;
+    font-weight: bold;
+    color: white; /* Ajusta el color según tu diseño */
+    margin: 40px;
+    height: 30px;
+}
+
+/* Botones adicionales debajo del texto */
+.listspan-additional-buttons {
+    display: flex;
+    gap: 60px; /* Espacio entre los botones */
+    margin-bottom: 60px;
+}
+
+.listspan-additional-button {
+    padding: 10px 20px;
+    font-size: 20px;
+    width: 120px;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+/* --------------------------------------- COUNTING SPAN --------------------------------------- */
+/* Contenedor principal */
+.countspan-centered-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Asegura que el contenedor ocupe toda la pantalla */
+}
+
+/* Contenedor de la imagen */
+.countspan-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 650px; /* Limita el ancho máximo de la imagen */
+    margin-bottom: 10px;
+}
+
+/* Imagen que se adapta a la pantalla */
+.countspan-image {
+    max-width: 100%; /* La imagen no excede el ancho del contenedor */
+    height: auto; /* Mantiene las proporciones de la imagen */
+    max-height: 80vh; /* Asegura que la imagen no sea demasiado alta */
+}
+
+/* Contenedor de los botones */
+.countspan-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Fila de botones */
+.countspan-button-row {
+    display: flex;
+    justify-content: center;
+}
+
+/* Botones numerados */
+.countspan-number-button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #fff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 26px;
+    font-family: 'Times New Roman';
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+}
+
+/* Estilo del botón activo (al presionar) */
+.countspan-number-button.active {
+    border: 2px solid blue; /* Color del borde cuando el botón está activo */
+    background-color: #eca649; /* Fondo ligeramente gris para indicar presión */
+    color: black;
+    font-weight: bold;
+}
+
+
+.countspan-number-button:disabled {
+    /* background-color: white; */
+    color: black;
 }

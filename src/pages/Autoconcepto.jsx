@@ -40,13 +40,14 @@ export default function Autoconcepto()
     const [studentName, setStudentName] = useState("");
     const [studentGender, setStudentGender] = useState("");
 
-    const [isImageVisible, setIsImageVisible] = useState(false); // Controla la visibilidad de la imagen
+    const [isImageVisible, setIsImageVisible] = useState(true); // Controla la visibilidad de la imagen
     const [canGoNext, setCanGoNext] = useState(false); // Controla la visibilidad de la imagen
     const [isFinished, setIsFinished] = useState(false); // Controla la visibilidad de la imagen
     const [isPartTwo, setIsPartTwo] = useState(false); // Controla la visibilidad de la imagen
+    const [disableButtons, setDisableButtons] = useState(false);
+
     const [activeButton, setActiveButton] = useState(null);
     const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
     const audioRef = useRef(null);
     
     const [currentIndex, setCurrentKeyIndex] = useState(0); // Clave actual en el diccionario
@@ -54,16 +55,32 @@ export default function Autoconcepto()
     const [instructionIndex, setInstructionIndex] = useState(0);
     const [highlight, setHighlight] = useState(0);
 
-    class AutoconAnswer
-    {
-        constructor(answer, time)
-        {
-            this.answer = answer;
-            this.time = time;
-        }
-    }
     
-    const answers = useMemo(() => [], []);
+    const answers = useMemo(() =>
+    {
+        class AutoconAnswer
+        {
+            constructor(answer, time)
+            {
+                this.answer = answer;
+                this.time = time;
+            }
+        }
+
+        return [
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0),
+            new AutoconAnswer(-1, 0)
+        ]
+    }, []);
 
     useEffect(() =>
     {
@@ -163,30 +180,47 @@ export default function Autoconcepto()
             default:    setHighlight(0);    break;
         }
     }, [instructionIndex])
-    
+
+
     useEffect(() =>
     {
-        if (audioRef.current)
+        const audioElement = audioRef.current;
+    
+        const handlePlay = () => { setDisableButtons(true); };
+    
+        const handleEnded = () =>
         {
-            setIsImageVisible(true);
-            audioRef.current.onended = () =>
+            setInstructionIndex((prevIndex) =>
             {
-                setInstructionIndex((prevIndex) =>
+                if (isImageVisible && prevIndex < Object.keys(instructionAudios[instructionListIndex]).length - 1)
                 {
-                    if (prevIndex < Object.keys(instructionAudios[instructionListIndex]).length - 1)
-                    {
-                        return prevIndex + 1;
-                    }
-                    else
-                    {
-                        setIsImageVisible(false);
-                        setStartTime(Date.now());
-                        return prevIndex; // Mantén el índice actual
-                    }
-                });
-            };
+                    return prevIndex + 1;
+                }
+                else
+                {
+                    setIsImageVisible(false);
+                    return prevIndex; // Mantener el índice actual
+                }
+            });
+            setDisableButtons(false);
+            setStartTime(Date.now());
+        };
+    
+        if (audioElement)
+        {
+            audioElement.addEventListener('play', handlePlay);
+            audioElement.addEventListener('ended', handleEnded);
         }
-    }, [audioRef, instructionAudios, instructionListIndex]);
+    
+        return () =>
+        {
+            if (audioElement)
+            {
+                audioElement.removeEventListener('play', handlePlay);
+                audioElement.removeEventListener('ended', handleEnded);
+            }
+        };
+    }, [instructionAudios, instructionListIndex, isImageVisible]);
 
 
     useEffect(() =>
@@ -217,7 +251,7 @@ export default function Autoconcepto()
         let dateBegin;
         let dateUntil;
         get('moments').then(res => {
-            res.map(element => {
+            res.foreach(element => {
                 dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW");
                 dateUntil = new Date(element['until']).toLocaleDateString("zh-TW");
                 if (date >= dateBegin && date <= dateUntil) {
@@ -252,8 +286,8 @@ export default function Autoconcepto()
         setActiveButton(answer);
         setCanGoNext(true);
         
-        setEndTime(Date.now());
-        answers[currentIndex] = new AutoconAnswer(answer, null, endTime - startTime);
+        answers[currentIndex].answer = answer;
+        answers[currentIndex].time = Date.now() - startTime;
     };
 
     
@@ -277,23 +311,23 @@ export default function Autoconcepto()
                         <div className="autocon-central-text"> {questions[currentIndex].text}</div>
                     )}
                     <div className="autocon-button-container">
-                        <button className={`autocon-round-button ${activeButton === 1 ? 'active' : ''} ${highlight === 1 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(1)}>
+                        <button className={`autocon-round-button ${activeButton === 1 ? 'active' : ''} ${highlight === 1 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(1)}>
                             <span className="text-bold">1</span>
                             <span className="text-normal">{!isPartTwo ? "Totalmente en desacuerdo" : "Nada importante"}</span>
                         </button>
-                        <button className={`autocon-round-button ${activeButton === 2 ? 'active' : ''} ${highlight === 2 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(2)}>
+                        <button className={`autocon-round-button ${activeButton === 2 ? 'active' : ''} ${highlight === 2 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(2)}>
                             <span className="text-bold">2</span>
                             <span className="text-normal">{!isPartTwo ? "En desacuerdo" : "Poco importante"}</span>
                         </button>
-                        <button className={`autocon-round-button ${activeButton === 3 ? 'active' : ''} ${highlight === 3 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(3)}>
+                        <button className={`autocon-round-button ${activeButton === 3 ? 'active' : ''} ${highlight === 3 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(3)}>
                             <span className="text-bold">3</span>
                             <span className="text-normal">{!isPartTwo ? "Mitad y mitad" : "Más o menos importante"}</span>
                         </button>
-                        <button className={`autocon-round-button ${activeButton === 4 ? 'active' : ''} ${highlight === 4 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(4)}>
+                        <button className={`autocon-round-button ${activeButton === 4 ? 'active' : ''} ${highlight === 4 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(4)}>
                             <span className="text-bold">4</span>
                             <span className="text-normal">{!isPartTwo ? "De acuerdo" : "Importante"}</span>
                         </button>
-                        <button className={`autocon-round-button ${activeButton === 5 ? 'active' : ''} ${highlight === 5 ? 'highlight' : ''}`} disabled={isImageVisible} onClick={() => clickAnswer(5)}>
+                        <button className={`autocon-round-button ${activeButton === 5 ? 'active' : ''} ${highlight === 5 ? 'highlight' : ''}`} disabled={isImageVisible || disableButtons} onClick={() => clickAnswer(5)}>
                             <span className="text-bold">5</span>
                             <span className="text-normal">{!isPartTwo ? "Totalmente de acuerdo" : "Totalmente importante"}</span>
                         </button>
