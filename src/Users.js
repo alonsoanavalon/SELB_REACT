@@ -8,7 +8,7 @@ export default function Users (props) {
 
     useEffect(() => {
 
-        let url = "https://selb.bond/test";
+        let url = `${process.env.REACT_APP_API_URL}/test`
 
         setTimeout(() => {
 
@@ -33,7 +33,7 @@ export default function Users (props) {
 
     function getDataAndPost (newUser) {
 
-        fetch("https://selb.bond/test", {
+        fetch(`${process.env.REACT_APP_API_URL}/test`, {
             method : 'POST',
             headers : {'Content-Type':'application/json'},
             body: JSON.stringify(newUser) 

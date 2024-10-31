@@ -27,7 +27,7 @@ export default function Charts(props) {
 
   useEffect(() => {
     if (studentRut) {
-      const url = `https://selb.bond/api/student/${studentRut}`
+      const url = `${process.env.REACT_APP_API_URL}/api/student/${studentRut}`
       axios(url)
       .then(res => {
         setData(res.data[0]);
@@ -40,7 +40,7 @@ export default function Charts(props) {
       
       if (selectedChart == 1) {
 
-        const url = `https://selb.bond/api/chart/student/${studentRut}`
+        const url = `${process.env.REACT_APP_API_URL}/api/chart/student/${studentRut}`
         axios(url)
         .then(res => {
         
@@ -51,7 +51,7 @@ export default function Charts(props) {
       } else if (selectedChart == 2) {
         //aca tamos getGroupExercisesBySessionAndActivity
         
-        const url = `https://selb.bond/api/session/student/${studentRut}/activity`;
+        const url = `${process.env.REACT_APP_API_URL}/api/session/student/${studentRut}/activity`
         axios(url)
         .then(res => {
           
@@ -60,7 +60,7 @@ export default function Charts(props) {
 
         })
       } else if (selectedChart == 3) {
-        const url = `https://selb.bond/api/session/student/${studentRut}/exercise`;
+        const url = `${process.env.REACT_APP_API_URL}/api/session/student/${studentRut}/exercise`
         axios(url)
         .then(res => {
           
@@ -69,7 +69,7 @@ export default function Charts(props) {
 
         })
       } else if (selectedChart == 4) {
-        const url = `https://selb.bond/api/session/student/${studentRut}/activity/skills`;
+        const url = `${process.env.REACT_APP_API_URL}/api/session/student/${studentRut}/activity/skills`
         axios(url)
         .then(res => {
           

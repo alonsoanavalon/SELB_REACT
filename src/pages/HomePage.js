@@ -596,8 +596,7 @@ export default function HomePage() {
                   
                     while (start < res.length) {
                       const currentBatch = res.slice(start, end);
-                  
-                      const response = await fetch('https://selb.bond/newevaluation', {
+                      const response = await fetch(`${process.env.REACT_APP_API_URL}/newevaluation`, {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json',

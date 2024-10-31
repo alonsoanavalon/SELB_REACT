@@ -64,14 +64,15 @@ function App() {
   const [isLogged, setIsLogged] = useState(false);
   const [userRole, setUserRole] = useState();
 
-
+  
   function getData(data) {
     let firstTime = true;
 
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url =  /*`http://localhost:3500/${data}` ||*/  `https://selb.bond/${data}`
+      let url = `${process.env.REACT_APP_API_URL}/${data}`  
+
       axios(url)
         .then(res => {
           set(data, res.data)
@@ -123,7 +124,7 @@ function App() {
 
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 1,
             user: userId
@@ -139,7 +140,7 @@ function App() {
           
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 2,
             user: userId
@@ -155,7 +156,7 @@ function App() {
 
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 3,
             user: userId
@@ -171,7 +172,7 @@ function App() {
 
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 4,
             user: userId
@@ -187,7 +188,7 @@ function App() {
 
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 5,
             user: userId
@@ -203,7 +204,7 @@ function App() {
           
           axios({
               method: 'get',
-              url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+              url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
               params: {
                   instrument: 6,
                   user: userId
@@ -217,7 +218,7 @@ function App() {
             )
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 7,
                     user: userId
@@ -234,7 +235,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 8,
                     user: userId
@@ -252,7 +253,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 9,
                     user: userId
@@ -268,7 +269,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 10,
                     user: userId
@@ -286,7 +287,7 @@ function App() {
 
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                 instrument: 11,
                 user: userId
@@ -301,7 +302,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                 instrument: 12,
                 user: userId
@@ -316,7 +317,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 13,
                     user: userId
@@ -331,7 +332,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 14,
                     user: userId
@@ -346,7 +347,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 15,
                     user: userId
@@ -361,7 +362,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 16,
                     user: userId
@@ -376,7 +377,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 17,
                     user: userId
@@ -391,7 +392,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 20,
                     user: userId
@@ -406,7 +407,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 21,
                     user: userId
@@ -421,7 +422,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 22,
                     user: userId
@@ -436,7 +437,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 23,
                     user: userId
@@ -451,7 +452,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 24,
                     user: userId
@@ -466,7 +467,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 25,
                     user: userId
@@ -481,7 +482,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 26,
                     user: userId
@@ -514,7 +515,8 @@ function App() {
     if (isLogged && userId) {
       if (navigator.onLine) {
         window.localStorage.setItem('school-assignation', JSON.stringify([]));
-        let url = /* `http://localhost:3500/api/school-assignation/${userId}` ||*/ `https://selb.bond/api/school-assignation/${userId}`
+        let url = `${process.env.REACT_APP_API_URL}/api/school-assignation/${userId}`
+
         axios(url)
           .then(res => {
             window.localStorage.setItem('school-assignation', JSON.stringify(res.data));

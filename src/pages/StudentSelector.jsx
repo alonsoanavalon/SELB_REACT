@@ -32,7 +32,7 @@ export default function StudentSelector() {
 
   useEffect(() => {
     if (courseId) {
-      const url = `https://selb.bond/api/student/course/${courseId}`
+      const url = `${process.env.REACT_APP_API_URL}/api/student/course/${courseId}`
       axios(url)
         .then(res => {
           setStudents(res.data);
@@ -50,7 +50,7 @@ export default function StudentSelector() {
 
   useEffect(() => {
     if (courseId) {
-      const url = `https://selb.bond/api/exercise/course/${courseId}`
+      const url = `${process.env.REACT_APP_API_URL}/api/exercise/course/${courseId}`
       axios(url)
         .then(res => {
           setCourseData(res.data);

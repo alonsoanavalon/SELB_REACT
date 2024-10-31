@@ -87,7 +87,7 @@ export default function Respaldo () {
             date: new Date()
         }
 
-        const url = 'https://selb.bond/api/error-log'
+        const url = `${process.env.REACT_APP_API_URL}/api/error-log`
 
         ;
         fetch(url, {

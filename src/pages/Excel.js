@@ -131,7 +131,7 @@ export default function Excel () {
             
             axios({
                 method: 'post',
-                url:  /*'http://localhost:3500/excel'||*/ 'https://selb.bond/excel',
+                url: `${process.env.REACT_APP_API_URL}/excel`,
                 data: dataObject
             })
             .then(
