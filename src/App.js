@@ -54,6 +54,7 @@ import RegEmocional from './pages/RegEmocional';
 import ActCiencias from './pages/ActCiencias';
 import AnsMat from './pages/AnsMat';
 import CountSpan from './pages/CountSpan';
+import useCheckSession from './hooks/useCheckSession';
 
 
 const cookies = new Cookies();
@@ -64,7 +65,8 @@ function App() {
   const [isLogged, setIsLogged] = useState(false);
   const [userRole, setUserRole] = useState();
 
-  
+  useCheckSession({isLogged, userId})
+
   function getData(data) {
     let firstTime = true;
 
