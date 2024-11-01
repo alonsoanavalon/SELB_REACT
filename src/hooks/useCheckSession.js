@@ -1,12 +1,24 @@
 import { useEffect } from "react"
+import axios from 'axios'
 
 function useCheckSession({isLogged, userId}) {
+    
+
     useEffect(() => {
-        if (isLogged && userId) {
-            console.log("Ingreso a la plataforma")
-            console.log(userId)
+        const createSessionLogged = async () => {
+            const url = `${process.env.REACT_APP_API_URL}/api/session-logged`
+            const body = {
+                user_id: userId,
+                session_type: "PLATFORM_LOGIN"
+            }
+    
+            await axios.post(url, body)
         }
-    }, [isLogged, userId])
+
+        if (isLogged && userId) {
+            createSessionLogged()
+        }
+    }, [userId, isLogged])
 
   return
 }
