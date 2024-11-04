@@ -55,6 +55,7 @@ import ActCiencias from './pages/ActCiencias';
 import AnsMat from './pages/AnsMat';
 import CountSpan from './pages/CountSpan';
 import useCheckSession from './hooks/useCheckSession';
+import SessionsLogged from './pages/SessionsLogged';
 
 
 const cookies = new Cookies();
@@ -557,6 +558,7 @@ function App() {
                   <Route path="/moments" element={<Moments />}></Route>
                   <Route path="/respaldo" element={<Respaldo />}></Route>
                   <Route path="/parents" element={<Parents />}></Route>
+                  <Route path="/sessions-logged" element={<SessionsLogged/>}/>
                   <Route path="/report-panel" element={<ReportPanel />}></Route>
                   <Route path="/school-selector" element={<SchoolSelector />}></Route>
                   <Route path="/desarrollo" element={<Desarrollo />}></Route>
