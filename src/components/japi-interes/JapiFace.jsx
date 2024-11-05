@@ -1,4 +1,6 @@
-function Face({ type, backgroundColor, borderColor }) {
+import React from "react";
+
+function JapiFace({ type, backgroundColor, borderColor }) {
   return (
     <div
       style={{
@@ -108,4 +110,4 @@ function Face({ type, backgroundColor, borderColor }) {
   );
 }
 
-export default Face;
+export default JapiFace;
