@@ -1,18 +1,19 @@
 import React from "react";
 
-function JapiFace({ type, backgroundColor, borderColor }) {
+function JapiFace({ type, backgroundColor, borderColor, handleClick }) {
   return (
     <div
       style={{
         backgroundColor: backgroundColor,
-        width: "8rem",
-        height: "8rem",
+        width: "9rem",
+        height: "9rem",
         borderRadius: "9999px",
         border: `5px solid ${borderColor}`,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
+      onClick={handleClick}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
         <div
