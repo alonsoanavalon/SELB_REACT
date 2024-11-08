@@ -117,12 +117,17 @@ function JapiInteres() {
         </div>
       )}
 
+      <div style={{ textAlign: "center", marginTop: "1rem" }}>
+        <span style={{ fontWeight: "bold" }}>Respuesta seleccionada: </span>
+        {answers[section - 1] ? answers[section - 1] : "Sin seleccionar"}
+      </div>
+
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          marginTop: "2rem",
+          marginTop: "1.5rem",
         }}
       >
         {(section === 1 || section === 3) && (
