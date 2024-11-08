@@ -36,7 +36,7 @@ const TEXTS = {
 };
 
 function JapiInteres() {
-  const [section, setSection] = useState(1);
+  const [section, setSection] = useState(0);
   const [answer, setAnswer] = useState(null);
   const [answers, setAnswers] = useState([null, null, null, null]);
 
@@ -77,7 +77,7 @@ function JapiInteres() {
 
     choicesArray.push(instrumentInfo);
 
-    answers.forEach((value, index) => {
+    answers.forEach(({ value }, index) => {
       choices[TEXTS[index + 1].value] = value;
     });
 
@@ -111,16 +111,28 @@ function JapiInteres() {
     <div
       style={{ maxWidth: "64rem", margin: "0 auto", padding: "2rem 1rem 1rem" }}
     >
-      {section !== 5 && (
-        <div className="instruction">
+      {section !== 0 && section !== 5 && (
+        <div
+          className="instruction"
+          style={{
+            fontSize: "1.25rem",
+            lineHeight: "1.75rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+          }}
+        >
+          <img src="/images/huron.png" width={120} height={120} alt="huron" />
           <span>{TEXTS[section].text}</span>
         </div>
       )}
 
-      <div style={{ textAlign: "center", marginTop: "1rem" }}>
-        <span style={{ fontWeight: "bold" }}>Respuesta seleccionada: </span>
-        {answers[section - 1] ? answers[section - 1] : "Sin seleccionar"}
-      </div>
+      {section !== 0 && section !== 5 && (
+        <div style={{ textAlign: "center", marginTop: "1rem" }}>
+          <span style={{ fontWeight: "bold" }}>Respuesta seleccionada: </span>
+          {answers[section - 1] ? answers[section - 1].item : "Sin seleccionar"}
+        </div>
+      )}
 
       <div
         style={{
@@ -137,7 +149,7 @@ function JapiInteres() {
           <JapiCircles setAnswer={setAnswer} />
         )}
 
-        {section === 5 && (
+        {(section === 0 || section === 5) && (
           <div
             style={{
               display: "flex",
@@ -146,22 +158,41 @@ function JapiInteres() {
               gap: "1rem",
             }}
           >
-            <div className="instruction">
-              {checkAnswers
+            <div
+              className="instruction"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+                fontSize: "1.5rem",
+                lineHeight: "2rem",
+              }}
+            >
+              <img
+                src="/images/huron.png"
+                width={120}
+                height={120}
+                alt="huron"
+              />
+              {section === 0
+                ? "Hola! A continuación, te haré algunas preguntas relacionadas con JAPI, el juego que estuviste realizando en tablet las últimas semanas. ¡Partamos!"
+                : checkAnswers
                 ? "Faltan preguntas por responder"
                 : "Súper, muchas gracias, lo hiciste muy bien!"}
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Button onClick={saveTest} disabled={checkAnswers}>
-                Guardar Test
-              </Button>
-            </div>
+            {section === 5 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Button onClick={saveTest} disabled={checkAnswers}>
+                  Guardar Test
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -170,33 +201,55 @@ function JapiInteres() {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-between",
           marginTop: "2rem",
           gap: "1rem",
         }}
       >
-        <Button
-          style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-          disabled={section === 1}
-          onClick={() => {
-            setAnswer(null);
-            setSection(section - 1);
-          }}
-        >
-          <FaAngleDoubleLeft style={{ width: "1.25rem", height: "1.25rem" }} />
-          Volver atrás
-        </Button>
-        <Button
-          style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-          disabled={section === 5}
-          onClick={() => {
-            setAnswer(null);
-            setSection(section + 1);
-          }}
-        >
-          <FaAngleDoubleRight style={{ width: "1.25rem", height: "1.25rem" }} />
-          Continuar
-        </Button>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <Button
+            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            disabled={section === 0}
+            onClick={() => {
+              setAnswer(null);
+              setSection(section - 1);
+            }}
+          >
+            <FaAngleDoubleLeft
+              style={{ width: "1.25rem", height: "1.25rem" }}
+            />
+            Volver atrás
+          </Button>
+          <Button
+            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            disabled={section === 5}
+            onClick={() => {
+              setAnswer(null);
+              setSection(section + 1);
+            }}
+          >
+            <FaAngleDoubleRight
+              style={{ width: "1.25rem", height: "1.25rem" }}
+            />
+            Continuar
+          </Button>
+        </div>
+
+        {section !== 0 && section !== 5 && (
+          <Button
+            variant="light"
+            onClick={() => {
+              const newAnswers = answers.map((value, index) =>
+                index === section - 1
+                  ? { value: 0, item: "Sin responder" }
+                  : value
+              );
+              setAnswers(newAnswers);
+            }}
+          >
+            Continuar sin responder
+          </Button>
+        )}
       </div>
     </div>
   );
