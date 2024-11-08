@@ -1,5 +1,5 @@
 //actualizar la version del cache cuando se realizan cambios en la app, para //service worker pueda actualizar el cache y no se quede con la version anterior 
-let cacheData = "app-v2.0.9";
+let cacheData = "app-v2.0.10";
 this.addEventListener("install", evt => {
     console.log("installing")
 
@@ -17,6 +17,7 @@ this.addEventListener("install", evt => {
     caches.delete("app-v2.0.6")
     caches.delete("app-v2.0.7")
     caches.delete("app-v2.0.8")
+    caches.delete("app-v2.0.9")
 
     //agregar los archivos al cache, si se agregan nuevos test o archivos a la app, se deben agregar aqui, sino no se podran cargar en modo offline
     evt.waitUntil(
@@ -297,7 +298,8 @@ this.addEventListener("install", evt => {
                 '/images/esc-20.png',
                 '/eml',
                 '/japi',
-                '/images/huron.png'
+                '/images/huron.png',
+                '/sessions-logged'
             ])
         })
     )
