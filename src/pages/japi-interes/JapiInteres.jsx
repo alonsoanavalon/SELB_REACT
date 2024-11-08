@@ -10,10 +10,10 @@ import useDisableBack from "../../hooks/useDisableBack";
 import { useNavigate } from "react-router-dom";
 
 /**Queries
- * INSERT INTO item (item_type_id, instrument_id, num, description, title) VALUES (1, 12, 1121, null, '¿Cómo te sientes cuando juegas con JAPI?');
- * INSERT INTO item (item_type_id, instrument_id, num, description, title) VALUES (1, 12, 1122, null, '¿Cuánto tiempo te gusta jugar con JAPI?');
- * INSERT INTO item (item_type_id, instrument_id, num, description, title) VALUES (1, 12, 1123, null, '¿Cómo te sientes cuando haces otra actividad en la sala distinta a JAPI, por ejemplo, cuando la tía les pide que canten o que pinten?');
- * INSERT INTO item (item_type_id, instrument_id, num, description, title) VALUES (1, 12, 1124, null, '¿Cuánto tiempo te gusta hacer otra actividad en sala distinta a JAPI?');
+ * INSERT INTO item (item_type_id, instrument_id, num, description, title) VALUES (1, 12, 1, null, '¿Cómo te sientes cuando juegas con JAPI?');
+ * INSERT INTO item (item_type_id, instrument_id, num, description, title) VALUES (1, 12, 2, null, '¿Cuánto tiempo te gusta jugar con JAPI?');
+ * INSERT INTO item (item_type_id, instrument_id, num, description, title) VALUES (1, 12, 3, null, '¿Cómo te sientes cuando haces otra actividad en la sala distinta a JAPI, por ejemplo, cuando la tía les pide que canten o que pinten?');
+ * INSERT INTO item (item_type_id, instrument_id, num, description, title) VALUES (1, 12, 4, null, '¿Cuánto tiempo te gusta hacer otra actividad en sala distinta a JAPI?');
  */
 
 const TEXTS = {
