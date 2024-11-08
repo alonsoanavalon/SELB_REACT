@@ -41,7 +41,6 @@ import AsideJapi from './components/AsideJapi';
 import StudentParentSelector from './pages/StudentParentSelector';
 
 import EML from './pages/EML';
-import Japi from './pages/Japi';
 import StroopNum from './pages/StroopNum';
 import StroopCol from './pages/StroopCol';
 import Autoconcepto from './pages/Autoconcepto';
@@ -56,7 +55,7 @@ import AnsMat from './pages/AnsMat';
 import CountSpan from './pages/CountSpan';
 import useCheckSession from './hooks/useCheckSession';
 import SessionsLogged from './pages/SessionsLogged';
-
+import JapiInteres from './pages/japi-interes/JapiInteres';
 
 const cookies = new Cookies();
 
@@ -573,7 +572,7 @@ function App() {
                   <Route path="/esc" element={<Esc />}></Route>
                   <Route path="/wally" element={<Wally />}></Route>
                   <Route path="/eml" element={<EML />}></Route>
-                  <Route path="/japi" element={<Japi />}></Route>
+                  <Route path="/japi" element={<JapiInteres />}></Route>
                   <Route path="/stroopnum" element={<StroopNum />}></Route>
                   <Route path="/stroopcol" element={<StroopCol />}></Route>
                   <Route path="/autoconcepto" element={<Autoconcepto />}></Route>
