@@ -15,10 +15,37 @@ import Question10 from "../../components/AAH/Question10";
 import QuestionWithScore from "../../components/AAH/QuestionWithScore";
 
 function AAH() {
-  const [question, setQuestion] = useState(30);
+  const [question, setQuestion] = useState(1);
   const [answers, setAnswers] = useState(
     Array.from({ length: 36 }, () => null)
   );
+
+  const checkAnswers = () => {
+    if (answers[5] == null) {
+      return false;
+    }
+
+    if (answers[5] === "Sí") {
+      return answers.every((value) => value != null);
+    }
+
+    if (answers[5] === "No") {
+      let check = true;
+
+      for (let i = 0; i < answers.length; i++) {
+        if (i === 6) {
+          continue;
+        }
+
+        if (answers[i] == null) {
+          check = false;
+          break;
+        }
+      }
+
+      return check;
+    }
+  };
 
   return (
     <div
@@ -335,7 +362,7 @@ function AAH() {
           >
             ¡Muchas gracias por su colaboración en este estudio!
             <div>
-              <Button>Guardar Test</Button>
+              <Button disabled={!checkAnswers()}>Guardar Test</Button>
             </div>
           </div>
         </div>
