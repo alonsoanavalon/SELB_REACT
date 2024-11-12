@@ -392,6 +392,17 @@ function App() {
                     set('cmasrLength', res.data[0]['COUNT(*)'])
                 }
             )
+
+            axios({
+              method: 'get',
+              url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+              params: {
+                instrument: 19,
+                user: userId
+              }
+            }).then((res) => {
+              set('aahLength', res.data[0]['COUNT(*)'])
+            })
             
             axios({
                 method: 'get',
