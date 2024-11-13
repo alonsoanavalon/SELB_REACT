@@ -150,8 +150,6 @@ function AAH() {
     <div
       style={{ maxWidth: "64rem", margin: "0 auto", padding: "2rem 1rem 1rem" }}
     >
-      {JSON.stringify(answers)}
-
       {question === 1 && (
         <Question1
           question={question}
