@@ -56,6 +56,7 @@ import CountSpan from './pages/CountSpan';
 import useCheckSession from './hooks/useCheckSession';
 import SessionsLogged from './pages/SessionsLogged';
 import JapiInteres from './pages/japi-interes/JapiInteres';
+import AAH from './pages/aah/AAH';
 
 const cookies = new Cookies();
 
@@ -391,6 +392,17 @@ function App() {
                     set('cmasrLength', res.data[0]['COUNT(*)'])
                 }
             )
+
+            axios({
+              method: 'get',
+              url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+              params: {
+                instrument: 19,
+                user: userId
+              }
+            }).then((res) => {
+              set('aahLength', res.data[0]['COUNT(*)'])
+            })
             
             axios({
                 method: 'get',
@@ -589,7 +601,7 @@ function App() {
                   <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse />} />
                   <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />
                   <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent />} />
-
+                  <Route path="/aah" element={<AAH/>} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 

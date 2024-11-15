@@ -32,6 +32,7 @@ export default function HomePage() {
   const [savedActCienciasTests, setSavedActCienciasTests] = useState([])
   const [savedAnsMatTests, setSavedAnsMatTests] = useState([])
   const [savedCountSpanTests, setSavedCountSpanTests] = useState([])
+  const [savedAAHTests, setSavedAAHTests] = useState([])
 
 
   const [savedTests, setSavedTests] = useState(false)
@@ -59,6 +60,7 @@ export default function HomePage() {
   const [actCienciasLength, setActCienciasLength] = useState(undefined)
   const [ansMatLength, setAnsMatLength] = useState(undefined)
   const [countSpanLength, setCountSpanLength] = useState(undefined)
+  const [aahLength, setAAHLength] = useState(undefined)
 
   const [completeName, setCompleteName] = useState("")
   const [lastTests, setLastTests] = useState([])
@@ -266,6 +268,7 @@ export default function HomePage() {
         let actCiencias = 0;
         let ansMat = 0;
         let countSpan = 0;
+        let aah = 0;
 
         res.forEach(element => {
           if (element[0]['instrument'] === 1) {
@@ -335,6 +338,10 @@ export default function HomePage() {
             cmasr++
             setSavedTests(true);
           }
+          if (element[0]['instrument'] === 19) {
+            aah++
+            setSavedTests(true);
+          }
           if (element[0]['instrument'] === 20) {
             clpt++
             setSavedTests(true);
@@ -389,6 +396,7 @@ export default function HomePage() {
         setSavedActCienciasTests(actCiencias);
         setSavedAnsMatTests(ansMat);
         setSavedCountSpanTests(countSpan);
+        setSavedAAHTests(aah)
       })
 
     setTimeout(() => {
@@ -512,12 +520,16 @@ export default function HomePage() {
         .then(res => {
             setAnsMatLength(res)
         })
-        
+
         get('countSpanLength')
         .then(res => {
             setCountSpanLength(res)
         })
-
+        
+        get('aahLength')
+        .then(res => {
+            setAAHLength(res)
+        })
 
     }, 1000)
 
@@ -797,6 +809,10 @@ export default function HomePage() {
                   <td>{savedCmasrTests && savedCmasrTests >= 0 ? savedCmasrTests : 0}</td>
                 </tr>
                 <tr>
+                  <th scope="row">AAH</th>
+                  <td>{savedAAHTests && savedAAHTests >= 0 ? savedAAHTests : 0}</td>
+                </tr>
+                <tr>
                   <th scope="row">Clpt</th>
                   <td>{savedClptTests && savedClptTests >= 0 ? savedClptTests : 0}</td>
                 </tr>
@@ -950,6 +966,11 @@ export default function HomePage() {
                   <th scope="row">Cmasr</th>
                   <td>{cmasrLength && cmasrLength >= 0 ? cmasrLength : 0}</td>
 
+                </tr>
+
+                <tr>
+                  <th scope="row">AAH</th>
+                  <td>{aahLength && aahLength >= 0 ? aahLength : 0}</td>
                 </tr>
 
                 <tr>
