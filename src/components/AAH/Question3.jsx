@@ -2,27 +2,27 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 const options = [
-  { value: "Sin escolarización", label: "Sin escolarización" },
+  { value: 1, label: "Sin escolarización" },
   {
-    value: "Educación básica incompleta",
+    value: 2,
     label: "Educación básica incompleta",
   },
-  { value: "Educación básica completa", label: "Educación básica completa" },
-  { value: "Educación media incompleta", label: "Educación media incompleta" },
-  { value: "Educación media completa", label: "Educación media completa" },
+  { value: 3, label: "Educación básica completa" },
+  { value: 4, label: "Educación media incompleta" },
+  { value: 5, label: "Educación media completa" },
   {
-    value: "Educación Superior incompleta",
+    value: 6,
     label: "Educación Superior incompleta",
   },
   {
-    value: "Educación Superior completa",
+    value: 7,
     label: "Educación Superior completa",
   },
   {
-    value: "Educación Técnica de nivel superior",
+    value: 8,
     label: "Educación Técnica de nivel superior",
   },
-  { value: "Estudios de postgrado", label: "Estudios de postgrado" },
+  { value: 9, label: "Estudios de postgrado" },
 ];
 
 function Question3({ question, answers, setAnswers }) {

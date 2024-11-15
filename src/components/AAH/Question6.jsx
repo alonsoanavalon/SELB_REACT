@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 const options = [
-  { value: "Sí", label: "Sí" },
-  { value: "No", label: "No" },
+  { value: 1, label: "Sí" },
+  { value: 0, label: "No" },
 ];
 
 function Question6({ question, answers, setAnswers }) {
@@ -42,7 +42,7 @@ function Question6({ question, answers, setAnswers }) {
             />
           ))}
 
-          {value === "Sí" && (
+          {value === 1 && (
             <Form.Group>
               <Form.Label>Si son 2 o más, indique cuáles son:</Form.Label>
               <Form.Control

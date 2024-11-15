@@ -25,7 +25,7 @@ function Question8({ question, answers, setAnswers }) {
                   index === question
                     ? e.target.value === ""
                       ? null
-                      : e.target.value
+                      : parseInt(e.target.value)
                     : value
                 );
                 setAnswers(newAnswers);

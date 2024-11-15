@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 
 const options = [
-  { value: "1", label: "1" },
-  { value: "2", label: "2" },
-  { value: "3 o más", label: "3 o más" },
+  { value: 1, label: "1" },
+  { value: 2, label: "2" },
+  { value: 3, label: "3 o más" },
 ];
 
 function Question4({ question, answers, setAnswers }) {

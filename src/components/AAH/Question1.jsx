@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 
 const options = [
-  { value: "Mamá", label: "Mamá" },
-  { value: "Papá", label: "Papá" },
-  { value: "Otro", label: "Otro" },
+  { value: 1, label: "Mamá" },
+  { value: 2, label: "Papá" },
+  { value: 3, label: "Otro" },
 ];
 
 function Question1({ question, answers, setAnswers }) {
@@ -17,16 +17,7 @@ function Question1({ question, answers, setAnswers }) {
     if (answer == null) {
       return;
     }
-
-    const check = options.some((option) => option.value === answer);
-
-    if (check) {
-      setValue(answer);
-    } else {
-      setValue("Otro");
-      setOther(answer);
-    }
-
+    setValue(answer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answers]);
 
@@ -49,11 +40,7 @@ function Question1({ question, answers, setAnswers }) {
 
                 const newAnswers = answers.map((value, index) =>
                   index + 1 === question
-                    ? option.value === "Otro"
-                      ? other === ""
-                        ? null
-                        : other
-                      : option.value
+                    ? option.value
                     : value
                 );
                 setAnswers(newAnswers);
@@ -61,7 +48,7 @@ function Question1({ question, answers, setAnswers }) {
             />
           ))}
 
-          {value === "Otro" && (
+          {value === 3 && (
             <Form.Group>
               <Form.Label>Si su respuesta es otro, especifique:</Form.Label>
               <Form.Control
@@ -69,15 +56,6 @@ function Question1({ question, answers, setAnswers }) {
                 value={other}
                 onChange={(e) => {
                   setOther(e.target.value);
-
-                  const newAnswers = answers.map((value, index) =>
-                    index + 1 === question
-                      ? e.target.value === ""
-                        ? null
-                        : e.target.value
-                      : value
-                  );
-                  setAnswers(newAnswers);
                 }}
               />
             </Form.Group>

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 const options = [
-  { value: "Sí", label: "Sí" },
-  { value: "No", label: "No" },
+  { value: 1, label: "Sí" },
+  { value: 0, label: "No" },
 ];
 
 function Question10({ question, answers, setAnswers }) {

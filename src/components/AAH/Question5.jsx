@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 const options = [
-  { value: "1 año", label: "1 año" },
-  { value: "2 años", label: "2 años" },
-  { value: "3 años", label: "3 años" },
-  { value: "4 años", label: "4 años" },
-  { value: "5 años", label: "5 años" },
-  { value: "Aún no lo hacemos", label: "Aún no lo hacemos" },
+  { value: 1, label: "1 año" },
+  { value: 2, label: "2 años" },
+  { value: 3, label: "3 años" },
+  { value: 4, label: "4 años" },
+  { value: 5, label: "5 años" },
+  { value: 0, label: "Aún no lo hacemos" },
 ];
 
 function Question5({ question, answers, setAnswers }) {

@@ -75,11 +75,11 @@ function AAH() {
       return false;
     }
 
-    if (answers[5] === "Sí") {
+    if (answers[5] === 1) {
       return answers.every((value) => value != null);
     }
 
-    if (answers[5] === "No") {
+    if (answers[5] === 0) {
       let check = true;
 
       for (let i = 0; i < answers.length; i++) {
@@ -225,7 +225,7 @@ function AAH() {
           question={question}
           answers={answers}
           setAnswers={setAnswers}
-          title="11. Enseñó letras a mi hijo(a) (por ej.: “esta es la P de Pedro”)."
+          title="11. Enseña letras a mi hijo(a) (por ej.: “esta es la P de Pedro”)."
           subtitle="1 = Nada frecuente ----------------------------------------- 6= Muy frecuente"
         />
       )}
@@ -234,7 +234,7 @@ function AAH() {
           question={question}
           answers={answers}
           setAnswers={setAnswers}
-          title="12. Enseño palabras a mi hijo(a) cuando leo (por ej.: “deslizar es cuando bajas por el tobogán”)."
+          title="12. Enseña palabras a mi hijo(a) cuando leo (por ej.: “deslizar es cuando bajas por el tobogán”)."
           subtitle="1 = Nada frecuente ----------------------------------------- 6= Muy frecuente"
         />
       )}
