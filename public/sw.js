@@ -329,7 +329,7 @@ this.addEventListener("activate", event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
-                cacheNames.forEach(cache => {
+                cacheNames.map(cache => {
                     if (cache !== currentCache) {
                         console.log(`Eliminando caché antiguo: ${cache}`);
                         return caches.delete(cache);
