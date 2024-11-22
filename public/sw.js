@@ -1,29 +1,12 @@
-//actualizar la version del cache cuando se realizan cambios en la app, para //service worker pueda actualizar el cache y no se quede con la version anterior 
-let cacheData = "app-v2.0.11";
-this.addEventListener("install", evt => {
-    console.log("installing")
+const cacheData = "app-v2.0.11";
 
-    //asegurarnos que las tablets/clientes no tengan la version anterior del cache 
-    caches.delete("app-v41")
-    caches.delete("app-v42")
-    caches.delete("app-v43")
-    caches.delete("app-v44")
-    caches.delete("app-v2.0")
-    caches.delete("app-v2.0.1")
-    caches.delete("app-v2.0.2")
-    caches.delete("app-v2.0.3")
-    caches.delete("app-v2.0.4")
-    caches.delete("app-v2.0.5")
-    caches.delete("app-v2.0.6")
-    caches.delete("app-v2.0.7")
-    caches.delete("app-v2.0.8")
-    caches.delete("app-v2.0.9")
-    caches.delete("app-v2.0.10")
+this.addEventListener("install", evt => {
+    console.log("Instalando el Service Worker...")
 
     //agregar los archivos al cache, si se agregan nuevos test o archivos a la app, se deben agregar aqui, sino no se podran cargar en modo offline
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
-            cache.addAll([
+            return cache.addAll([
                 '/logo192.png',
                 '/manifest.json',
                 '/static/js/bundle.js',
