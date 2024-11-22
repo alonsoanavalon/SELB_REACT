@@ -308,22 +308,20 @@ this.addEventListener("install", evt => {
 
 
 this.addEventListener("fetch", evt => {
-    evt.respondWith(
-        caches.match(evt.request).then(cachedResponse => {
-            // Si el recurso está en caché, retorna la versión en caché
-            if (cachedResponse) {
-                return cachedResponse;
-            }
 
-            // Si no está en caché y hay conexión, intenta obtenerlo de la red
-            return fetch(evt.request).catch(() => {
-                // Puedes retornar un recurso predeterminado (fallback) si falla la red
-                return caches.match('/index.html');
-            });
-        })
-    );
-});
+    if (!navigator.onLine) {
+        evt.respondWith(
+            caches.match(evt.request).then((res => {
+                if(res) {
+                    return res
+                }
+                let requestUrl = evt.request.clone();
+                return fetch(requestUrl)
+            }))
+        )
+    }
 
+})
 
 this.addEventListener("activate", event => {
     console.log("Activando el nuevo service worker...");
