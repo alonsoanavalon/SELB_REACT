@@ -1,5 +1,5 @@
 //actualizar la version del cache cuando se realizan cambios en la app, para //service worker pueda actualizar el cache y no se quede con la version anterior 
-let cacheData = "app-v2.0.10";
+let cacheData = "app-v2.0.11";
 this.addEventListener("install", evt => {
     console.log("installing")
 
@@ -18,6 +18,7 @@ this.addEventListener("install", evt => {
     caches.delete("app-v2.0.7")
     caches.delete("app-v2.0.8")
     caches.delete("app-v2.0.9")
+    caches.delete("app-v2.0.10")
 
     //agregar los archivos al cache, si se agregan nuevos test o archivos a la app, se deben agregar aqui, sino no se podran cargar en modo offline
     evt.waitUntil(
@@ -315,14 +316,27 @@ this.addEventListener("fetch", evt => {
                     return res
                 }
                 let requestUrl = evt.request.clone();
-                fetch(requestUrl)
+                return fetch(requestUrl)
             }))
         )
     }
 
 })
 
-this.addEventListener('activate', function(event) {
-    console.log('activando')
-  })
+this.addEventListener("activate", event => {
+    console.log("Activando el nuevo service worker...");
+    const currentCache = cacheData; // La versión actual del caché
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.forEach(cache => {
+                    if (cache !== currentCache) {
+                        console.log(`Eliminando caché antiguo: ${cache}`);
+                        return caches.delete(cache);
+                    }
+                })
+            );
+        })
+    );
+});
 

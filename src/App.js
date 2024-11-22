@@ -53,7 +53,6 @@ import RegEmocional from './pages/RegEmocional';
 import ActCiencias from './pages/ActCiencias';
 import AnsMat from './pages/AnsMat';
 import CountSpan from './pages/CountSpan';
-import useCheckSession from './hooks/useCheckSession';
 import SessionsLogged from './pages/SessionsLogged';
 import JapiInteres from './pages/japi-interes/JapiInteres';
 import AAH from './pages/aah/AAH';
@@ -65,8 +64,6 @@ function App() {
   const [userId, setUserId] = useState();
   const [isLogged, setIsLogged] = useState(false);
   const [userRole, setUserRole] = useState();
-
-  useCheckSession({isLogged, userId})
 
   function getData(data) {
     let firstTime = true;
@@ -124,6 +121,17 @@ function App() {
 
     if (navigator.onLine) {
       if (userId !== undefined) {
+        if (isLogged) {
+          axios({
+            method: "post",
+            url: `${process.env.REACT_APP_API_URL}/api/session-logged`,
+            data: {
+              user_id: userId,
+              session_type: "PLATFORM_LOGIN"
+            }
+          })
+        }
+
 
         axios({
           method: 'get',
