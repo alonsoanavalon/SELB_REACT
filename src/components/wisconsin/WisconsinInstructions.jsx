@@ -7,13 +7,9 @@ function WisconsinInstructions({
   specialMessage,
 }) {
   useEffect(() => {
-    if (section !== 1) {
-      return;
-    }
-
     const handleKeyDown = (e) => {
       if (e.key.toLowerCase() === "n") {
-        setSection(2);
+        setSection(section + 1);
       }
     };
 
@@ -23,7 +19,7 @@ function WisconsinInstructions({
       window.removeEventListener("keydown", handleKeyDown);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [section]);
+  }, []);
 
   return (
     <div

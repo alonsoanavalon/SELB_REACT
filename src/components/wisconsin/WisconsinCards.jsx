@@ -7,9 +7,9 @@ function WisconsinCards({
   top,
   left,
   right,
-  message,
-  errorMessage,
-  successMessage,
+  messages,
+  errorMessages,
+  successMessages,
   correctAnswer,
   tutorial,
   section,
@@ -83,11 +83,11 @@ function WisconsinCards({
     <div>
       <div className="instruction">
         <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
-          {successMessage && successAnswer
-            ? successMessage
-            : errorMessage && errorAnswer
-            ? errorMessage
-            : message}
+          {successMessages && successAnswer
+            ? successMessages.map((message) => <p>{message}</p>)
+            : errorMessages && errorAnswer
+            ? errorMessages.map((message) => <p>{message}</p>)
+            : messages.map((message) => <p>{message}</p>)}
         </p>
       </div>
 
@@ -142,10 +142,7 @@ function WisconsinCards({
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
-          top:
-            isOverlapping === "right" || isOverlapping === "left"
-              ? top
-              : 0,
+          top: isOverlapping === "right" || isOverlapping === "left" ? top : 0,
           left: isOverlapping === "left" ? left : null,
           right: isOverlapping === "right" ? right : null,
           transition: "top 1s ease",
