@@ -56,6 +56,7 @@ import CountSpan from './pages/CountSpan';
 import useCheckSession from './hooks/useCheckSession';
 import SessionsLogged from './pages/SessionsLogged';
 import JapiInteres from './pages/japi-interes/JapiInteres';
+import Wisconsin from './pages/wisconsin/Wisconsin';
 
 const cookies = new Cookies();
 
@@ -573,6 +574,7 @@ function App() {
                   <Route path="/wally" element={<Wally />}></Route>
                   <Route path="/eml" element={<EML />}></Route>
                   <Route path="/japi" element={<JapiInteres />}></Route>
+                  <Route path="/wisconsin" element={<Wisconsin/>}></Route>
                   <Route path="/stroopnum" element={<StroopNum />}></Route>
                   <Route path="/stroopcol" element={<StroopCol />}></Route>
                   <Route path="/autoconcepto" element={<Autoconcepto />}></Route>
