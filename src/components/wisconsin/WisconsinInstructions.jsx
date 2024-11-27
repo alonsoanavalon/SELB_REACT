@@ -24,7 +24,7 @@ function WisconsinInstructions({
   return (
     <div
       className="instruction"
-      style={{ fontSize: "1.25rem", lineHeight: "1.75rem" }}
+      style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}
     >
       {instructions.map((instruction) => (
         <p key={instruction}>{instruction}</p>

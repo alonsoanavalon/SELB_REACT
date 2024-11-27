@@ -45,6 +45,15 @@ function WisconsinCards({
           setIsOverlapping(null);
         }
       } else {
+        if (answer === "a") {
+          setIsOverlapping("left");
+        } else if (answer === "l") {
+          setIsOverlapping("right");
+        }
+
+        setTimeout(() => {
+          setSection(section + 1);
+        }, 3000);
       }
     };
 
@@ -81,15 +90,17 @@ function WisconsinCards({
 
   return (
     <div>
-      <div className="instruction">
-        <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
-          {successMessages && successAnswer
-            ? successMessages.map((message) => <p>{message}</p>)
-            : errorMessages && errorAnswer
-            ? errorMessages.map((message) => <p>{message}</p>)
-            : messages.map((message) => <p>{message}</p>)}
-        </p>
-      </div>
+      {messages.length > 0 && (
+        <div className="instruction">
+          <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
+            {successMessages && successAnswer
+              ? successMessages.map((message) => <p>{message}</p>)
+              : errorMessages && errorAnswer
+              ? errorMessages.map((message) => <p>{message}</p>)
+              : messages.map((message) => <p>{message}</p>)}
+          </p>
+        </div>
+      )}
 
       <div
         style={{
