@@ -55,9 +55,16 @@ export const wisconsinSections = [
     top: -286.52,
     left: -252.9,
     right: 0,
-    messages: [],
-    errorMessages: [],
-    successMessages: [],
+    messages: [
+      "Ahora vamos a jugar otro juego que se llama el juego de formas.",
+      "En este juego tiene que unir las cartas que tienen la misma forma,",
+    ],
+    errorMessages: [
+      "Lo siento, esa no fue la correcta. Recuerda, tienes que unir las cartas con la misma forma. Intentemos de nuevo.",
+    ],
+    successMessages: [
+      "Muy bien. La carta del tren azul va con la carta del tren rojo.",
+    ],
     correctAnswer: "a",
     tutorial: true,
   },
@@ -70,9 +77,13 @@ export const wisconsinSections = [
     top: -287.2,
     left: 0,
     right: -248,
-    messages: [],
-    errorMessages: [],
-    successMessages: [],
+    messages: ["Selecciona la carta que corresponde según su forma."],
+    errorMessages: [
+      "Lo siento, esa no fue la correcta. Recuerda, tienes que unir las cartas con la misma forma. Intentemos de nuevo.",
+    ],
+    successMessages: [
+      "Muy bien. La carta de la estrella roja va con la carta de la estrella azul.",
+    ],
     correctAnswer: "l",
     tutorial: true,
   },
@@ -280,9 +291,16 @@ export const wisconsinSections = [
     top: -286.52,
     left: -252.9,
     right: -248,
-    messages: [],
-    errorMessages: [],
-    successMessages: [],
+    messages: [
+      "Muy bien, ahora vamos a ordenar las cartas según su color",
+      "Selecciona la carta que corresponde según su color.",
+    ],
+    errorMessages: [
+      "Lo siento, esa no fue la correcta. Recuerda, tienes que unir las cartas con el mismo color. Intentemos de nuevo.",
+    ],
+    successMessages: [
+      "Muy bien, la carta de la estrella roja va con la carta del tren rojo.",
+    ],
     correctAnswer: "a",
     tutorial: true,
   },
@@ -295,9 +313,13 @@ export const wisconsinSections = [
     top: -286.52,
     left: -252.9,
     right: -248,
-    messages: [],
-    errorMessages: [],
-    successMessages: [],
+    messages: ["Selecciona la carta que corresponde según su color."],
+    errorMessages: [
+      "Lo siento, esa no fue la correcta. Recuerda, tienes que unir las cartas con el mismo color. Intentemos de nuevo.",
+    ],
+    successMessages: [
+      "Muy bien, la carta del tren azul va con la carta de la estrella azul.",
+    ],
     correctAnswer: "l",
     tutorial: true,
   },
