@@ -53,9 +53,19 @@ function WisconsinCards({
           setIsOverlapping("right");
         }
 
+        let audioURL = "";
+        if (answer === correctAnswer) {
+          audioURL = "/sounds/wisconsin-correct.wav";
+        } else {
+          audioURL = "/sounds/wisconsin-incorrect.wav";
+        }
+
+        const audio = new Audio(audioURL);
+        audio.play();
+
         setTimeout(() => {
           setSection(section + 1);
-        }, 3000);
+        }, 2000);
       }
     };
 

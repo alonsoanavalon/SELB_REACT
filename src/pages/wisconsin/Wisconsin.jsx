@@ -1,17 +1,7 @@
 import { useEffect, useState } from "react";
 import WisconsinInstructions from "../../components/wisconsin/WisconsinInstructions";
 import WisconsinCards from "../../components/wisconsin/WisconsinCards";
-import { wisconsinSections } from "./wisconsin";
 import { Button } from "react-bootstrap";
-
-// 30 "ensayos"
-/*
-  Las reglas se dicen al principio, antes de empezar el test: Ahora, usted tiene que ordenar las cartas por su color, forma o número de imagenes que aparecen. Sin embargo, no le vamos a decir la regla de ordenar, tiene que averiguar la regla por ensayo y error.
-
-  la regla se cambiará cada 10 cartas
-
-  guardar regla, tiempo y precisión (correcta o no) = 1 o 0
-*/
 
 const RANDOM_LENGTH = 10;
 const FORM_VALUES = [
@@ -30,7 +20,7 @@ const COLOR_VALUES = [
 ];
 
 function Wisconsin() {
-  const [section, setSection] = useState(21);
+  const [section, setSection] = useState(1);
   const [sections, setSections] = useState([]);
 
   const generateRandomArray = (values) => {
@@ -44,7 +34,7 @@ function Wisconsin() {
     return randomArray;
   };
 
-  const generateRandomSections = (values, baseIndex) => {
+  const generateRandomSections = (values, baseIndex, rule) => {
     const randomSections = generateRandomArray(values);
     const parserRandomSections = randomSections.map((randomSection, index) => {
       return {
@@ -62,6 +52,7 @@ function Wisconsin() {
         correctAnswer: randomSection.correctAnswer,
         tutorial: false,
         item_id: null,
+        rule: rule,
         answer: null,
         time: null,
       };
@@ -72,9 +63,9 @@ function Wisconsin() {
 
   useEffect(() => {
     // Generamos 10 casos aleatorios para forma
-    const formSections = generateRandomSections(FORM_VALUES, 1);
+    const formSections = generateRandomSections(FORM_VALUES, 1, "forma");
     // Generamos 10 casos aleatorios para color
-    const colorSections = generateRandomSections(COLOR_VALUES, 11);
+    const colorSections = generateRandomSections(COLOR_VALUES, 11, "color");
 
     const randomSections = [...formSections, ...colorSections];
 
