@@ -14,6 +14,8 @@ function WisconsinCards({
   tutorial,
   section,
   setSection,
+  sections,
+  setSections,
 }) {
   const [isOverlapping, setIsOverlapping] = useState(null);
   const [errorTutorial, setErrorTutorial] = useState(false);
