@@ -98,6 +98,7 @@ function Wisconsin() {
           index + 2 === section && (
             <WisconsinCards
               key={`section-${index}`}
+              id={wisconsinSection.id}
               cardOneSrc={wisconsinSection.cardOneSrc}
               cardTwoSrc={wisconsinSection.cardTwoSrc}
               cardThreeSrc={wisconsinSection.cardThreeSrc}

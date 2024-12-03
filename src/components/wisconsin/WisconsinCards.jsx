@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 function WisconsinCards({
+  id,
   cardOneSrc,
   cardTwoSrc,
   cardThreeSrc,
@@ -25,7 +26,11 @@ function WisconsinCards({
   const cardThreeRef = useRef(null);
 
   useEffect(() => {
+    const startTime = Date.now();
+
     const handleKeyDown = (e) => {
+      const elapsedTime = Date.now() - startTime;
+
       const answer = e.key.toLowerCase();
 
       if (tutorial) {
@@ -62,6 +67,18 @@ function WisconsinCards({
 
         const audio = new Audio(audioURL);
         audio.play();
+
+        const newSections = sections.map((card) =>
+          card.id === id
+            ? {
+                ...card,
+                answer: answer === correctAnswer ? 1 : 0,
+                time: elapsedTime,
+              }
+            : card
+        );
+
+        setSections(newSections);
 
         setTimeout(() => {
           setSection(section + 1);
