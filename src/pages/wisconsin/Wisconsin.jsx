@@ -77,10 +77,73 @@ function Wisconsin() {
     console.log(sections);
   };
 
+  const completedSections = sections.filter(
+    (section) => section.answer != null
+  ).length;
+  const progressPercentage = (completedSections / sections.length) * 100;
+
   return (
     <div
       style={{ maxWidth: "64rem", margin: "0 auto", padding: "2rem 1rem 1rem" }}
     >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          alignItems: "center",
+          gap: "1rem",
+          marginBottom: "0.25rem",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "0.875rem",
+            lineHeight: "1.25rem",
+            fontWeight: "600",
+          }}
+        >
+          Nivel 1
+        </span>
+        <span
+          style={{
+            fontSize: "0.875rem",
+            lineHeight: "1.25rem",
+            fontWeight: "600",
+          }}
+        >
+          Nivel 2
+        </span>
+        <span
+          style={{
+            fontSize: "0.875rem",
+            lineHeight: "1.25rem",
+            fontWeight: "600",
+          }}
+        >
+          Fin!
+        </span>
+      </div>
+
+      <div
+        style={{
+          marginBottom: "1rem",
+          width: "100%",
+          backgroundColor: "#e5e7eb",
+          borderRadius: "9999px",
+          height: "0.625rem",
+        }}
+      >
+        <div
+          style={{
+            height: "0.625rem",
+            backgroundColor: "#3AAFB9",
+            width: `${progressPercentage}%`,
+            borderRadius: "9999px",
+          }}
+        ></div>
+      </div>
+
       {section === 1 && (
         <WisconsinInstructions
           instructions={[
