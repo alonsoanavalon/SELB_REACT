@@ -19,6 +19,8 @@ function WisconsinCards({
   setFormaSections,
   colorSections,
   setColorSections,
+  cantidadSections,
+  setCantidadSections,
 }) {
   const [isOverlapping, setIsOverlapping] = useState(null);
   const [errorTutorial, setErrorTutorial] = useState(false);
@@ -96,6 +98,20 @@ function WisconsinCards({
           );
 
           setColorSections(newColorSections);
+        }
+
+        if (section >= 29 && section <= 38) {
+          const newCantidadSections = cantidadSections.map((card) =>
+            card.id === id
+              ? {
+                  ...card,
+                  answer: answer === correctAnswer ? 1 : 0,
+                  time: elapsedTime,
+                }
+              : card
+          );
+
+          setCantidadSections(newCantidadSections);
         }
 
         setTimeout(() => {
