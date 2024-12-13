@@ -21,7 +21,8 @@ const COLOR_VALUES = [
 
 function Wisconsin() {
   const [section, setSection] = useState(1);
-  const [sections, setSections] = useState([]);
+  const [formaSections, setFormaSections] = useState([]);
+  const [colorSections, setColorSections] = useState([]);
 
   const generateRandomArray = (values) => {
     const randomArray = [];
@@ -63,24 +64,29 @@ function Wisconsin() {
 
   useEffect(() => {
     // Generamos 10 casos aleatorios para forma
-    const formSections = generateRandomSections(FORM_VALUES, 1, "forma");
+    const randomFormaSections = generateRandomSections(FORM_VALUES, 1, "forma");
     // Generamos 10 casos aleatorios para color
-    const colorSections = generateRandomSections(COLOR_VALUES, 11, "color");
+    const randomColorSections = generateRandomSections(
+      COLOR_VALUES,
+      11,
+      "color"
+    );
 
-    const randomSections = [...formSections, ...colorSections];
-
-    setSections(randomSections);
+    setFormaSections(randomFormaSections);
+    setColorSections(randomColorSections);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const saveTest = () => {
-    console.log(sections);
+    console.log(formaSections);
+    console.log(colorSections);
   };
 
-  const completedSections = sections.filter(
+  const completedSections = [...formaSections, ...colorSections].filter(
     (section) => section.answer != null
   ).length;
-  const progressPercentage = (completedSections / sections.length) * 100;
+  const progressPercentage =
+    (completedSections / [...formaSections, ...colorSections].length) * 100;
 
   return (
     <div
@@ -156,11 +162,107 @@ function Wisconsin() {
           setSection={setSection}
         />
       )}
-      {sections.map(
+      {section === 2 && (
+        <WisconsinCards
+          cardOneSrc="/images/wisconsin_tren_rojo.png"
+          cardTwoSrc="/images/wisconsin_estrella_azul.png"
+          cardThreeSrc="/images/wisconsin_tren_azul.png"
+          top={-286.52}
+          right={-248}
+          left={-252.9}
+          messages={[
+            "Ahora vamos a explicar el juego de formas. Selecciona la carta que coincida según su forma.",
+          ]}
+          errorMessages={[
+            "Lo siento, esa no es la correcta. Recurda, debes ordenar la carta según su forma.",
+          ]}
+          successMessages={["Muy bien, seleccionaste la carta correcta."]}
+          correctAnswer="a"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+          formaSections={null}
+          setFormaSections={null}
+          colorSections={null}
+          setColorSections={null}
+        />
+      )}
+      {section === 3 && (
+        <WisconsinCards
+          cardOneSrc="/images/wisconsin_tren_rojo.png"
+          cardTwoSrc="/images/wisconsin_estrella_azul.png"
+          cardThreeSrc="/images/wisconsin_estrella_roja.png"
+          top={-286.52}
+          right={-248}
+          left={-252.9}
+          messages={["Selecciona la carta que coincida según su forma."]}
+          errorMessages={[
+            "Lo siento, esa no es la correcta. Recurda, debes ordenar la carta según su forma.",
+          ]}
+          successMessages={["Muy bien, seleccionaste la carta correcta."]}
+          correctAnswer="l"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+          formaSections={null}
+          setFormaSections={null}
+          colorSections={null}
+          setColorSections={null}
+        />
+      )}
+      {section === 14 && (
+        <WisconsinCards
+          cardOneSrc="/images/wisconsin_tren_rojo.png"
+          cardTwoSrc="/images/wisconsin_estrella_azul.png"
+          cardThreeSrc="/images/wisconsin_estrella_roja.png"
+          top={-286.52}
+          right={-248}
+          left={-252.9}
+          messages={[
+            "Ahora vamos a explicar el juego de colores. Selecciona la carta que coincida según su color.",
+          ]}
+          errorMessages={[
+            "Lo siento, esa no es la correcta. Recurda, debes ordenar la carta según su color.",
+          ]}
+          successMessages={["Muy bien, seleccionaste la carta correcta."]}
+          correctAnswer="a"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+          formaSections={null}
+          setFormaSections={null}
+          colorSections={null}
+          setColorSections={null}
+        />
+      )}
+      {section === 15 && (
+        <WisconsinCards
+          cardOneSrc="/images/wisconsin_tren_rojo.png"
+          cardTwoSrc="/images/wisconsin_estrella_azul.png"
+          cardThreeSrc="/images/wisconsin_tren_azul.png"
+          top={-286.52}
+          right={-248}
+          left={-252.9}
+          messages={["Selecciona la carta que coincida según su color."]}
+          errorMessages={[
+            "Lo siento, esa no es la correcta. Recurda, debes ordenar la carta según su color.",
+          ]}
+          successMessages={["Muy bien, seleccionaste la carta correcta."]}
+          correctAnswer="l"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+          formaSections={null}
+          setFormaSections={null}
+          colorSections={null}
+          setColorSections={null}
+        />
+      )}
+      {formaSections.map(
         (wisconsinSection, index) =>
-          index + 2 === section && (
+          index + 4 === section && (
             <WisconsinCards
-              key={`section-${index}`}
+              key={`forma-${index}`}
               id={wisconsinSection.id}
               cardOneSrc={wisconsinSection.cardOneSrc}
               cardTwoSrc={wisconsinSection.cardTwoSrc}
@@ -175,12 +277,40 @@ function Wisconsin() {
               tutorial={wisconsinSection.tutorial}
               section={section}
               setSection={setSection}
-              sections={sections}
-              setSections={setSections}
+              formaSections={formaSections}
+              setFormaSections={setFormaSections}
+              colorSections={colorSections}
+              setColorSections={setColorSections}
             />
           )
       )}
-      {section === sections.length + 2 && (
+      {colorSections.map(
+        (wisconsinSection, index) =>
+          index + 16 === section && (
+            <WisconsinCards
+              key={`color-${index}`}
+              id={wisconsinSection.id}
+              cardOneSrc={wisconsinSection.cardOneSrc}
+              cardTwoSrc={wisconsinSection.cardTwoSrc}
+              cardThreeSrc={wisconsinSection.cardThreeSrc}
+              top={wisconsinSection.top}
+              left={wisconsinSection.left}
+              right={wisconsinSection.right}
+              messages={wisconsinSection.messages}
+              errorMessages={wisconsinSection.errorMessages}
+              successMessages={wisconsinSection.successMessages}
+              correctAnswer={wisconsinSection.correctAnswer}
+              tutorial={wisconsinSection.tutorial}
+              section={section}
+              setSection={setSection}
+              formaSections={formaSections}
+              setFormaSections={setFormaSections}
+              colorSections={colorSections}
+              setColorSections={setColorSections}
+            />
+          )
+      )}
+      {section === 26 && (
         <div className="instruction">
           <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
             Súper, muchas gracias, lo hiciste muy bien!
