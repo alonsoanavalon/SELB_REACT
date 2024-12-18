@@ -2,6 +2,90 @@ import { useEffect, useState } from "react";
 import WisconsinInstructions from "../../components/wisconsin/WisconsinInstructions";
 import WisconsinCards from "../../components/wisconsin/WisconsinCards";
 import { Button } from "react-bootstrap";
+import { getMany, set, update, get } from "idb-keyval";
+import useDisableBack from "../../hooks/useDisableBack";
+import { useNavigate } from "react-router-dom";
+
+/* QUERIES
+
+  * INSERT INTO instrument (name, instrument_type_id) VALUES ('Wisconsin', 1); => 27
+
+    1161 - 1232
+  * INSERT INTO item (item_type_id, instrument_id, num, title, description) VALUES
+(1, 27, 1, null, 'respuesta_pregunta_1'),
+(1, 27, 1, null, 'tiempo_pregunta_1'),
+(1, 27, 2, null, 'respuesta_pregunta_2'),
+(1, 27, 2, null, 'tiempo_pregunta_2'),
+(1, 27, 3, null, 'respuesta_pregunta_3'),
+(1, 27, 3, null, 'tiempo_pregunta_3'),
+(1, 27, 4, null, 'respuesta_pregunta_4'),
+(1, 27, 4, null, 'tiempo_pregunta_4'),
+(1, 27, 5, null, 'respuesta_pregunta_5'),
+(1, 27, 5, null, 'tiempo_pregunta_5'),
+(1, 27, 6, null, 'respuesta_pregunta_6'),
+(1, 27, 6, null, 'tiempo_pregunta_6'),
+(1, 27, 7, null, 'respuesta_pregunta_7'),
+(1, 27, 7, null, 'tiempo_pregunta_7'),
+(1, 27, 8, null, 'respuesta_pregunta_8'),
+(1, 27, 8, null, 'tiempo_pregunta_8'),
+(1, 27, 9, null, 'respuesta_pregunta_9'),
+(1, 27, 9, null, 'tiempo_pregunta_9'),
+(1, 27, 10, null, 'respuesta_pregunta_10'),
+(1, 27, 10, null, 'tiempo_pregunta_10'),
+(1, 27, 11, null, 'respuesta_pregunta_11'),
+(1, 27, 11, null, 'tiempo_pregunta_11'),
+(1, 27, 12, null, 'respuesta_pregunta_12'),
+(1, 27, 12, null, 'tiempo_pregunta_12'),
+(1, 27, 13, null, 'respuesta_pregunta_13'),
+(1, 27, 13, null, 'tiempo_pregunta_13'),
+(1, 27, 14, null, 'respuesta_pregunta_14'),
+(1, 27, 14, null, 'tiempo_pregunta_14'),
+(1, 27, 15, null, 'respuesta_pregunta_15'),
+(1, 27, 15, null, 'tiempo_pregunta_15'),
+(1, 27, 16, null, 'respuesta_pregunta_16'),
+(1, 27, 16, null, 'tiempo_pregunta_16'),
+(1, 27, 17, null, 'respuesta_pregunta_17'),
+(1, 27, 17, null, 'tiempo_pregunta_17'),
+(1, 27, 18, null, 'respuesta_pregunta_18'),
+(1, 27, 18, null, 'tiempo_pregunta_18'),
+(1, 27, 19, null, 'respuesta_pregunta_19'),
+(1, 27, 19, null, 'tiempo_pregunta_19'),
+(1, 27, 20, null, 'respuesta_pregunta_20'),
+(1, 27, 20, null, 'tiempo_pregunta_20'),
+(1, 27, 21, null, 'respuesta_pregunta_21'),
+(1, 27, 21, null, 'tiempo_pregunta_21'),
+(1, 27, 22, null, 'respuesta_pregunta_22'),
+(1, 27, 22, null, 'tiempo_pregunta_22'),
+(1, 27, 23, null, 'respuesta_pregunta_23'),
+(1, 27, 23, null, 'tiempo_pregunta_23'),
+(1, 27, 24, null, 'respuesta_pregunta_24'),
+(1, 27, 24, null, 'tiempo_pregunta_24'),
+(1, 27, 25, null, 'respuesta_pregunta_25'),
+(1, 27, 25, null, 'tiempo_pregunta_25'),
+(1, 27, 26, null, 'respuesta_pregunta_26'),
+(1, 27, 26, null, 'tiempo_pregunta_26'),
+(1, 27, 27, null, 'respuesta_pregunta_27'),
+(1, 27, 27, null, 'tiempo_pregunta_27'),
+(1, 27, 28, null, 'respuesta_pregunta_28'),
+(1, 27, 28, null, 'tiempo_pregunta_28'),
+(1, 27, 29, null, 'respuesta_pregunta_29'),
+(1, 27, 29, null, 'tiempo_pregunta_29'),
+(1, 27, 30, null, 'respuesta_pregunta_30'),
+(1, 27, 30, null, 'tiempo_pregunta_30'),
+(1, 27, 31, null, 'respuesta_pregunta_31'),
+(1, 27, 31, null, 'tiempo_pregunta_31'),
+(1, 27, 32, null, 'respuesta_pregunta_32'),
+(1, 27, 32, null, 'tiempo_pregunta_32'),
+(1, 27, 33, null, 'respuesta_pregunta_33'),
+(1, 27, 33, null, 'tiempo_pregunta_33'),
+(1, 27, 34, null, 'respuesta_pregunta_34'),
+(1, 27, 34, null, 'tiempo_pregunta_34'),
+(1, 27, 35, null, 'respuesta_pregunta_35'),
+(1, 27, 35, null, 'tiempo_pregunta_35'),
+(1, 27, 36, null, 'respuesta_pregunta_36'),
+(1, 27, 36, null, 'tiempo_pregunta_36');
+
+*/
 
 const RANDOM_LENGTH = 12;
 const FORM_VALUES = [
@@ -26,6 +110,9 @@ function Wisconsin() {
   const [cantidadSections, setCantidadSections] = useState([]);
   const [cantidadColorSections, setCantidadColorSections] = useState([]);
   const [percentage, setPercentage] = useState(0);
+
+  useDisableBack();
+  const navigate = useNavigate();
 
   const generateRandomArray = (values) => {
     const randomArray = [];
@@ -343,7 +430,7 @@ function Wisconsin() {
       {
         cardOneSrc: "circle_green_1.png",
         cardTwoSrc: "star_red_3.png",
-        cardThreeSrc: "diamond_green_1.png",
+        cardThreeSrc: "diamond_red_1.png",
         correctAnswer: "l",
       },
       {
@@ -527,11 +614,95 @@ function Wisconsin() {
     }
   }, [section]);
 
-  const saveTest = () => {
-    console.log(formaSections);
-    console.log(colorSections);
-    console.log(cantidadSections);
-    console.log(cantidadColorSections);
+  const saveTest = async () => {
+    const choicesArray = [];
+    let instrumentInfo = {};
+    let choices = {};
+
+    const [selectedStudent, userData] = await getMany([
+      "selectedStudent",
+      "userData",
+    ]);
+
+    instrumentInfo["user_id"] = parseInt(userData["id"]);
+    instrumentInfo["student_id"] = parseInt(selectedStudent);
+    instrumentInfo["date"] = `${new Date().getFullYear()}/${
+      new Date().getMonth() + 1
+    }/${new Date().getDate()}`;
+    instrumentInfo["instrument"] = 27;
+
+    choicesArray.push(instrumentInfo);
+
+    let itemID = 1161;
+
+    for (let i = 0; i < formaSections.length; i++) {
+      const { answer, time } = formaSections[i];
+      choices[itemID] = answer;
+
+      itemID++;
+
+      choices[itemID] = time;
+
+      itemID++;
+    }
+
+    for (let i = 0; i < colorSections.length; i++) {
+      const { answer, time } = colorSections[i];
+      choices[itemID] = answer;
+
+      itemID++;
+
+      choices[itemID] = time;
+
+      itemID++;
+    }
+
+    for (let i = 0; i < cantidadSections.length; i++) {
+      const { answer, time } = cantidadSections[i];
+      choices[itemID] = answer;
+
+      itemID++;
+
+      choices[itemID] = time;
+
+      itemID++;
+    }
+
+    for (let i = 0; i < cantidadColorSections.length; i++) {
+      const { answer, time } = cantidadColorSections[i];
+      choices[itemID] = answer;
+
+      itemID++;
+
+      choices[itemID] = time;
+
+      itemID++;
+    }
+
+    choicesArray.push(choices);
+
+    const backupTest = await get("backupTest");
+    if (Array.isArray(backupTest) && backupTest.length > 0) {
+      const completedTests = await get("completedTests");
+
+      if (!Array.isArray(completedTests)) {
+        return;
+      }
+
+      if (backupTest.length >= completedTests.length) {
+        await update("backupTest", () => [...backupTest, choicesArray]);
+      }
+    }
+
+    const completedTests = await get("completedTests");
+
+    if (Array.isArray(completedTests)) {
+      await update("completedTests", () => [...completedTests, choicesArray]);
+    } else {
+      await set("completedTests", [choicesArray]);
+    }
+
+    navigate("/");
   };
 
   useEffect(() => {

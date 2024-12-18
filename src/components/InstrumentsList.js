@@ -26,7 +26,7 @@ export default function InstrumentsList (props) {
                     {(() => {
                         // Filtrar y ordenar los instrumentos
                         const instruments = props.instruments
-                            .filter(instrument => instrument['instrument_type_id'] === 1 && instrument['id'] <= 26)
+                            .filter(instrument => instrument['instrument_type_id'] === 1 || instrument['id'] <= 26)
                             .sort((a, b) => a.name.localeCompare(b.name));
                         
                         // Definir columnas

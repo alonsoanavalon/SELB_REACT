@@ -497,6 +497,21 @@ function App() {
                     set('countSpanLength', res.data[0]['COUNT(*)'])
                 }
             )
+
+            axios({
+              method: 'get',
+              url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+              params: {
+                  instrument: 27,
+                  user: userId
+              }
+            })
+            .then(
+                
+                res => {
+                    set('countWisconsinLength', res.data[0]['COUNT(*)'])
+                }
+            )
         }
     }
 

@@ -58,6 +58,8 @@ export default function ListedInstrument (props) {
             navigate('/ansMat')
         } else if ($selectedInstrument == 26) {
             navigate('/countSpan')
+        } else if ($selectedInstrument == 27) {
+            navigate("/wisconsin")
         }
         
 

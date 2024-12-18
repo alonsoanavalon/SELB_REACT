@@ -32,6 +32,7 @@ export default function HomePage() {
   const [savedActCienciasTests, setSavedActCienciasTests] = useState([])
   const [savedAnsMatTests, setSavedAnsMatTests] = useState([])
   const [savedCountSpanTests, setSavedCountSpanTests] = useState([])
+  const [savedWisconsinTests, setSavedWisconsinTests] = useState([])
 
 
   const [savedTests, setSavedTests] = useState(false)
@@ -59,6 +60,7 @@ export default function HomePage() {
   const [actCienciasLength, setActCienciasLength] = useState(undefined)
   const [ansMatLength, setAnsMatLength] = useState(undefined)
   const [countSpanLength, setCountSpanLength] = useState(undefined)
+  const [wisconsinLength, setWisconsinLength] = useState(undefined)
 
   const [completeName, setCompleteName] = useState("")
   const [lastTests, setLastTests] = useState([])
@@ -266,6 +268,7 @@ export default function HomePage() {
         let actCiencias = 0;
         let ansMat = 0;
         let countSpan = 0;
+        let countWisconsin = 0
 
         res.forEach(element => {
           if (element[0]['instrument'] === 1) {
@@ -363,6 +366,10 @@ export default function HomePage() {
             countSpan++
             setSavedTests(true);
           }
+          if (element[0]['instrument'] === 27) {
+            countWisconsin++
+            setSavedTests(true);
+          }
         })
 
         setSavedHnfTests(hnf)
@@ -389,6 +396,7 @@ export default function HomePage() {
         setSavedActCienciasTests(actCiencias);
         setSavedAnsMatTests(ansMat);
         setSavedCountSpanTests(countSpan);
+        setSavedWisconsinTests(countWisconsin)
       })
 
     setTimeout(() => {
@@ -516,6 +524,11 @@ export default function HomePage() {
         get('countSpanLength')
         .then(res => {
             setCountSpanLength(res)
+        })
+
+        get('countWisconsinLength')
+        .then(res => {
+            setWisconsinLength(res)
         })
 
 
@@ -824,6 +837,10 @@ export default function HomePage() {
                   <th scope="row">CountSpan</th>
                   <td>{savedCountSpanTests && savedCountSpanTests >= 0 ? savedCountSpanTests : 0}</td>
                 </tr>
+                <tr>
+                  <th scope="row">Wisconsin</th>
+                  <td>{savedWisconsinTests && savedWisconsinTests >= 0 ? savedWisconsinTests : 0}</td>
+                </tr>
               </tbody>
             </table>
 
@@ -994,7 +1011,11 @@ export default function HomePage() {
 
                 </tr>
 
+                <tr>
+                  <th scope="row">Wisconsin</th>
+                  <td>{wisconsinLength && wisconsinLength >= 0 ? wisconsinLength : 0}</td>
 
+                </tr>
               </tbody>
             </table>
           </div>
