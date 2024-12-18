@@ -72,7 +72,7 @@ function WisconsinCards({
         const audio = new Audio(audioURL);
         audio.play();
 
-        if (section >= 4 && section <= 13) {
+        if (section >= 4 && section <= 15) {
           const newFormaSections = formaSections.map((card) =>
             card.id === id
               ? {
@@ -86,7 +86,7 @@ function WisconsinCards({
           setFormaSections(newFormaSections);
         }
 
-        if (section >= 16 && section <= 25) {
+        if (section >= 18 && section <= 29) {
           const newColorSections = colorSections.map((card) =>
             card.id === id
               ? {
@@ -100,7 +100,7 @@ function WisconsinCards({
           setColorSections(newColorSections);
         }
 
-        if (section >= 29 && section <= 38) {
+        if (section >= 33 && section <= 45) {
           const newCantidadSections = cantidadSections.map((card) =>
             card.id === id
               ? {

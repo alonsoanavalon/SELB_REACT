@@ -3,7 +3,7 @@ import WisconsinInstructions from "../../components/wisconsin/WisconsinInstructi
 import WisconsinCards from "../../components/wisconsin/WisconsinCards";
 import { Button } from "react-bootstrap";
 
-const RANDOM_LENGTH = 10;
+const RANDOM_LENGTH = 12;
 const FORM_VALUES = [
   { cardThreeSrc: "/images/wisconsin_tren_azul.png", correctAnswer: "a" },
   {
@@ -99,7 +99,7 @@ function Wisconsin() {
       {
         cardOneSrc: "diamond_red_1.png",
         cardTwoSrc: "triangle_blue_2.png",
-        cardThreeSrc: "circle_green_4.png",
+        cardThreeSrc: "circle_green_1.png",
         correctAnswer: "a",
       },
       {
@@ -272,7 +272,7 @@ function Wisconsin() {
 
     const randomCantidesSections = cantidadesSections
       .sort(() => 0.5 - Math.random()) // Desordenar aleatoriamente
-      .slice(0, 10); // Tomar los primeros 10 elementos
+      .slice(0, RANDOM_LENGTH); // Tomar los primeros 10 elementos
 
     return randomCantidesSections;
   };
@@ -283,10 +283,10 @@ function Wisconsin() {
     // Generamos 10 casos aleatorios para color
     const randomColorSections = generateRandomSections(
       COLOR_VALUES,
-      11,
+      13,
       "color"
     );
-    const randomCantidadSections = cantidadesRandomSections(21);
+    const randomCantidadSections = cantidadesRandomSections(23);
 
     setFormaSections(randomFormaSections);
     setColorSections(randomColorSections);
@@ -295,13 +295,13 @@ function Wisconsin() {
   }, []);
 
   useEffect(() => {
-    if (section === 26) {
+    if (section === 30) {
       const handleKeyDown = (event) => {
         if (event.key.toLowerCase() === "p") {
           setSection(section + 1);
         } else if (event.key.toLowerCase() === "m") {
-          setPercentage(100)
-          setSection(39);
+          setPercentage(100);
+          setSection(45);
         }
       };
 
@@ -316,7 +316,7 @@ function Wisconsin() {
   const saveTest = () => {
     console.log(formaSections);
     console.log(colorSections);
-    console.log(cantidadSections)
+    console.log(cantidadSections);
   };
 
   useEffect(() => {
@@ -491,7 +491,7 @@ function Wisconsin() {
             />
           )
       )}
-      {section === 14 && (
+      {section === 16 && (
         <WisconsinCards
           cardOneSrc="/images/wisconsin_tren_rojo.png"
           cardTwoSrc="/images/wisconsin_estrella_azul.png"
@@ -516,7 +516,7 @@ function Wisconsin() {
           setColorSections={null}
         />
       )}
-      {section === 15 && (
+      {section === 17 && (
         <WisconsinCards
           cardOneSrc="/images/wisconsin_tren_rojo.png"
           cardTwoSrc="/images/wisconsin_estrella_azul.png"
@@ -541,7 +541,7 @@ function Wisconsin() {
       )}
       {colorSections.map(
         (wisconsinSection, index) =>
-          index + 16 === section && (
+          index + 18 === section && (
             <WisconsinCards
               key={`color-${index}`}
               id={wisconsinSection.id}
@@ -565,7 +565,7 @@ function Wisconsin() {
             />
           )
       )}
-      {section === 26 && (
+      {section === 30 && (
         <WisconsinInstructions
           instructions={[
             "Para continuar al nivel 3 presiona la tecla P.",
@@ -576,7 +576,7 @@ function Wisconsin() {
           setSection={setSection}
         />
       )}
-      {section === 27 && (
+      {section === 31 && (
         <WisconsinCards
           cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
           cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
@@ -601,7 +601,7 @@ function Wisconsin() {
           setColorSections={setColorSections}
         />
       )}
-      {section === 28 && (
+      {section === 32 && (
         <WisconsinCards
           cardOneSrc={`/images/wisconsin/triangle_yellow_2.png`}
           cardTwoSrc={`/images/wisconsin/diamond_red_4.png`}
@@ -626,7 +626,7 @@ function Wisconsin() {
       )}
       {cantidadSections.map(
         (wisconsinSection, index) =>
-          index + 29 === section && (
+          index + 33 === section && (
             <WisconsinCards
               key={`color-${index}`}
               id={wisconsinSection.id}
@@ -652,7 +652,7 @@ function Wisconsin() {
             />
           )
       )}
-      {section === 39 && (
+      {section === 45 && (
         <div className="instruction">
           <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
             Súper, muchas gracias, lo hiciste muy bien!
