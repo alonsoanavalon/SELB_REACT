@@ -24,6 +24,7 @@ function Wisconsin() {
   const [formaSections, setFormaSections] = useState([]);
   const [colorSections, setColorSections] = useState([]);
   const [cantidadSections, setCantidadSections] = useState([]);
+  const [cantidadColorSections, setCantidadColorSections] = useState([]);
   const [percentage, setPercentage] = useState(0);
 
   const generateRandomArray = (values) => {
@@ -65,7 +66,7 @@ function Wisconsin() {
   };
 
   const cantidadesRandomSections = (baseIndex) => {
-    const sections = [
+    const cantidadOptions = [
       {
         cardOneSrc: "circle_blue_1.png",
         cardTwoSrc: "triangle_red_3.png",
@@ -248,7 +249,190 @@ function Wisconsin() {
       },
     ];
 
-    const cantidadesSections = sections.map((cantidadSection, index) => {
+    const cantidadColorOptions = [
+      {
+        cardOneSrc: "circle_blue_1.png",
+        cardTwoSrc: "triangle_red_3.png",
+        cardThreeSrc: "diamond_blue_3.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "diamond_yellow_4.png",
+        cardTwoSrc: "circle_red_1.png",
+        cardThreeSrc: "star_yellow_1.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "star_green_3.png",
+        cardTwoSrc: "diamond_red_2.png",
+        cardThreeSrc: "triangle_green_2.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "triangle_red_2.png",
+        cardTwoSrc: "circle_blue_3.png",
+        cardThreeSrc: "diamond_red_3.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "circle_blue_2.png",
+        cardTwoSrc: "star_yellow_4.png",
+        cardThreeSrc: "triangle_blue_4.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "diamond_red_1.png",
+        cardTwoSrc: "triangle_blue_2.png",
+        cardThreeSrc: "circle_red_2.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "triangle_green_4.png",
+        cardTwoSrc: "circle_yellow_2.png",
+        cardThreeSrc: "star_green_2.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "circle_yellow_3.png",
+        cardTwoSrc: "triangle_blue_1.png",
+        cardThreeSrc: "star_yellow_1.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "triangle_red_3.png",
+        cardTwoSrc: "diamond_yellow_2.png",
+        cardThreeSrc: "circle_red_2.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "star_blue_1.png",
+        cardTwoSrc: "triangle_red_4.png",
+        cardThreeSrc: "diamond_blue_4.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "circle_yellow_4.png",
+        cardTwoSrc: "triangle_blue_3.png",
+        cardThreeSrc: "star_yellow_3.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "diamond_green_4.png",
+        cardTwoSrc: "star_yellow_1.png",
+        cardThreeSrc: "triangle_green_1.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "triangle_red_2.png",
+        cardTwoSrc: "circle_green_3.png",
+        cardThreeSrc: "diamond_red_3.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "star_yellow_3.png",
+        cardTwoSrc: "circle_red_1.png",
+        cardThreeSrc: "triangle_yellow_1.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "diamond_yellow_1.png",
+        cardTwoSrc: "triangle_green_3.png",
+        cardThreeSrc: "circle_yellow_3.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "circle_green_1.png",
+        cardTwoSrc: "star_red_3.png",
+        cardThreeSrc: "diamond_green_1.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "diamond_blue_2.png",
+        cardTwoSrc: "triangle_green_1.png",
+        cardThreeSrc: "circle_green_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "star_yellow_2.png",
+        cardTwoSrc: "circle_blue_4.png",
+        cardThreeSrc: "triangle_blue_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "triangle_yellow_2.png",
+        cardTwoSrc: "diamond_red_4.png",
+        cardThreeSrc: "circle_red_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "circle_red_2.png",
+        cardTwoSrc: "star_blue_4.png",
+        cardThreeSrc: "diamond_blue_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "diamond_red_3.png",
+        cardTwoSrc: "triangle_blue_4.png",
+        cardThreeSrc: "circle_blue_3.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "triangle_green_2.png",
+        cardTwoSrc: "circle_yellow_4.png",
+        cardThreeSrc: "star_yellow_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "circle_blue_3.png",
+        cardTwoSrc: "triangle_yellow_2.png",
+        cardThreeSrc: "star_yellow_3.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "triangle_red_1.png",
+        cardTwoSrc: "diamond_green_3.png",
+        cardThreeSrc: "circle_green_1.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "star_blue_1.png",
+        cardTwoSrc: "circle_red_3.png",
+        cardThreeSrc: "triangle_red_1.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "circle_yellow_2.png",
+        cardTwoSrc: "star_green_4.png",
+        cardThreeSrc: "diamond_green_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "diamond_green_4.png",
+        cardTwoSrc: "triangle_blue_2.png",
+        cardThreeSrc: "circle_blue_4.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "star_green_1.png",
+        cardTwoSrc: "circle_yellow_3.png",
+        cardThreeSrc: "triangle_yellow_1.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "circle_green_2.png",
+        cardTwoSrc: "diamond_red_1.png",
+        cardThreeSrc: "star_red_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "triangle_red_4.png",
+        cardTwoSrc: "circle_blue_1.png",
+        cardThreeSrc: "diamond_blue_4.png",
+        correctAnswer: "l",
+      },
+    ];
+
+    const cantidadesSections = cantidadOptions.map((cantidadSection, index) => {
       return {
         id: index + baseIndex,
         type: "cards",
@@ -270,11 +454,39 @@ function Wisconsin() {
       };
     });
 
+    const cantidadesColoresSections = cantidadColorOptions.map(
+      (cantidadSection, index) => {
+        return {
+          id: index + baseIndex,
+          type: "cards",
+          cardOneSrc: cantidadSection.cardOneSrc,
+          cardTwoSrc: cantidadSection.cardTwoSrc,
+          cardThreeSrc: cantidadSection.cardThreeSrc,
+          top: -363,
+          right: -252,
+          left: -252.9,
+          messages: [],
+          errorMessages: [],
+          successMessages: [],
+          correctAnswer: cantidadSection.correctAnswer,
+          tutorial: false,
+          item_id: null,
+          rule: "cantidades",
+          answer: null,
+          time: null,
+        };
+      }
+    );
+
     const randomCantidesSections = cantidadesSections
       .sort(() => 0.5 - Math.random()) // Desordenar aleatoriamente
-      .slice(0, RANDOM_LENGTH); // Tomar los primeros 10 elementos
+      .slice(0, RANDOM_LENGTH / 2); // Tomar los primeros 10 elementos
 
-    return randomCantidesSections;
+    const randomCantidadesColorSections = cantidadesColoresSections
+      .sort(() => 0.5 - Math.random())
+      .slice(0, RANDOM_LENGTH / 2);
+
+    return { randomCantidesSections, randomCantidadesColorSections };
   };
 
   useEffect(() => {
@@ -286,11 +498,13 @@ function Wisconsin() {
       13,
       "color"
     );
-    const randomCantidadSections = cantidadesRandomSections(23);
+    const { randomCantidadesColorSections, randomCantidesSections } =
+      cantidadesRandomSections(23);
 
     setFormaSections(randomFormaSections);
     setColorSections(randomColorSections);
-    setCantidadSections(randomCantidadSections);
+    setCantidadSections(randomCantidesSections);
+    setCantidadColorSections(randomCantidadesColorSections);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -301,7 +515,7 @@ function Wisconsin() {
           setSection(section + 1);
         } else if (event.key.toLowerCase() === "m") {
           setPercentage(100);
-          setSection(45);
+          setSection(47);
         }
       };
 
@@ -317,6 +531,7 @@ function Wisconsin() {
     console.log(formaSections);
     console.log(colorSections);
     console.log(cantidadSections);
+    console.log(cantidadColorSections);
   };
 
   useEffect(() => {
@@ -324,15 +539,21 @@ function Wisconsin() {
       ...formaSections,
       ...colorSections,
       ...cantidadSections,
+      ...cantidadColorSections,
     ].filter((section) => section.answer != null).length;
 
     const progressPercentage =
       (completedSections /
-        [...formaSections, ...colorSections, ...cantidadSections].length) *
+        [
+          ...formaSections,
+          ...colorSections,
+          ...cantidadSections,
+          ...cantidadColorSections,
+        ].length) *
       100;
 
     setPercentage(progressPercentage);
-  }, [formaSections, colorSections, cantidadSections]);
+  }, [formaSections, colorSections, cantidadSections, cantidadColorSections]);
 
   return (
     <div
@@ -652,7 +873,83 @@ function Wisconsin() {
             />
           )
       )}
-      {section === 45 && (
+      {section === 39 && (
+        <WisconsinCards
+          cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
+          cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
+          cardThreeSrc={`/images/wisconsin/circle_yellow_3.png`}
+          top={-363}
+          left={-252}
+          right={-252.9}
+          messages={["Ahora vamos a seleccionar las cartas según su color."]}
+          errorMessages={[
+            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el color.",
+          ]}
+          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
+          correctAnswer="a"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+          formaSections={formaSections}
+          setFormaSections={setFormaSections}
+          colorSections={colorSections}
+          setColorSections={setColorSections}
+        />
+      )}
+      {section === 40 && (
+        <WisconsinCards
+          cardOneSrc={`/images/wisconsin/triangle_yellow_2.png`}
+          cardTwoSrc={`/images/wisconsin/diamond_red_4.png`}
+          cardThreeSrc={`/images/wisconsin/circle_red_2.png`}
+          top={-363}
+          left={-252}
+          right={-252.9}
+          messages={["Selecciona la carta según el color."]}
+          errorMessages={[
+            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el color.",
+          ]}
+          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
+          correctAnswer="l"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+          formaSections={formaSections}
+          setFormaSections={setFormaSections}
+          colorSections={colorSections}
+          setColorSections={setColorSections}
+        />
+      )}
+      {cantidadColorSections.map(
+        (wisconsinSection, index) =>
+          index + 41 === section && (
+            <WisconsinCards
+              key={`color-${index}`}
+              id={wisconsinSection.id}
+              cardOneSrc={`/images/wisconsin/${wisconsinSection.cardOneSrc}`}
+              cardTwoSrc={`/images/wisconsin/${wisconsinSection.cardTwoSrc}`}
+              cardThreeSrc={`/images/wisconsin/${wisconsinSection.cardThreeSrc}`}
+              top={wisconsinSection.top}
+              left={wisconsinSection.left}
+              right={wisconsinSection.right}
+              messages={wisconsinSection.messages}
+              errorMessages={wisconsinSection.errorMessages}
+              successMessages={wisconsinSection.successMessages}
+              correctAnswer={wisconsinSection.correctAnswer}
+              tutorial={wisconsinSection.tutorial}
+              section={section}
+              setSection={setSection}
+              formaSections={formaSections}
+              setFormaSections={setFormaSections}
+              colorSections={colorSections}
+              setColorSections={setColorSections}
+              cantidadSections={cantidadSections}
+              setCantidadSections={setCantidadSections}
+              cantidadColorSections={cantidadColorSections}
+              setCantidadColorSections={setCantidadColorSections}
+            />
+          )
+      )}
+      {section === 47 && (
         <div className="instruction">
           <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
             Súper, muchas gracias, lo hiciste muy bien!
