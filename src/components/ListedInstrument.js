@@ -44,6 +44,8 @@ export default function ListedInstrument (props) {
             navigate('/actMat')
         } else if ($selectedInstrument == 17) {
             navigate('/cmasr')
+        } else if (Number($selectedInstrument) === 19) {
+            navigate("/aah")
         } else if ($selectedInstrument == 20) {
             navigate('/clpt')
         } else if ($selectedInstrument == 21) {

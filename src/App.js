@@ -53,10 +53,10 @@ import RegEmocional from './pages/RegEmocional';
 import ActCiencias from './pages/ActCiencias';
 import AnsMat from './pages/AnsMat';
 import CountSpan from './pages/CountSpan';
-import useCheckSession from './hooks/useCheckSession';
 import SessionsLogged from './pages/SessionsLogged';
 import JapiInteres from './pages/japi-interes/JapiInteres';
 import Wisconsin from './pages/wisconsin/Wisconsin';
+import AAH from './pages/aah/AAH';
 
 const cookies = new Cookies();
 
@@ -65,8 +65,6 @@ function App() {
   const [userId, setUserId] = useState();
   const [isLogged, setIsLogged] = useState(false);
   const [userRole, setUserRole] = useState();
-
-  useCheckSession({isLogged, userId})
 
   function getData(data) {
     let firstTime = true;
@@ -124,6 +122,17 @@ function App() {
 
     if (navigator.onLine) {
       if (userId !== undefined) {
+        if (isLogged) {
+          axios({
+            method: "post",
+            url: `${process.env.REACT_APP_API_URL}/api/session-logged`,
+            data: {
+              user_id: userId,
+              session_type: "PLATFORM_LOGIN"
+            }
+          })
+        }
+
 
         axios({
           method: 'get',
@@ -392,6 +401,17 @@ function App() {
                     set('cmasrLength', res.data[0]['COUNT(*)'])
                 }
             )
+
+            axios({
+              method: 'get',
+              url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+              params: {
+                instrument: 19,
+                user: userId
+              }
+            }).then((res) => {
+              set('aahLength', res.data[0]['COUNT(*)'])
+            })
             
             axios({
                 method: 'get',
@@ -606,7 +626,7 @@ function App() {
                   <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse />} />
                   <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />
                   <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent />} />
-
+                  <Route path="/aah" element={<AAH/>} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 

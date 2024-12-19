@@ -3,6 +3,8 @@ import {get, getMany, set} from 'idb-keyval'
 import { CSVLink } from "react-csv";
 import { useAlert } from 'react-alert'
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+
 export default function Respaldo () {
 
 
@@ -10,6 +12,8 @@ export default function Respaldo () {
     const [userData, setUserData] = useState("")
     const alert = useAlert()
     const [jsonData, setJsonData] = useState([])
+
+    const navigate = useNavigate()
     
     useEffect(() => {
 
@@ -192,14 +196,10 @@ export default function Respaldo () {
         setCsvDataRespaldo(testArray)
     } */
 
-    const igualarRespaldoALocal = () => {
-        get('completedTests')
-        .then(completed => {
-            alert.show('El respaldo se ha reinicializado. RECUERDA: Sale y vuelve de esta pantalla para descargar el respaldo con los NUEVOS datos', {
-                type:'success'
-            })
-                set('backupTest', completed)
-        })
+    const igualarRespaldoALocal = async () => {
+        await set("completedTests", [])
+        await set("backupTest", [])
+        navigate("/")
     }
 
 

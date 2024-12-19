@@ -19,19 +19,33 @@ import { useNavigate } from "react-router-dom";
 const TEXTS = {
   1: {
     value: 1121,
-    text: "Selecciona la cara que representa ¿cómo te sientes cuando juegas con JAPI?. La cara roja significa que no te gusta, la cara naranja significa te gusta poco, la amarilla que te gusta un poco más, la verde que te gusta, y la azul que te gusta mucho. Presiona la cara que representa cómo te sientes cuando juegas con JAPI.",
+    firstText: "Selecciona la cara que representa ",
+    secondText: "¿cómo te sientes cuando juegas con JAPI?",
+    thirdText:
+      ". La cara roja significa que no te gusta, la cara naranja significa te gusta poco, la amarilla que te gusta un poco más, la verde que te gusta, y la azul que te gusta mucho. Presiona la cara que representa cómo te sientes cuando juegas con JAPI.",
   },
   2: {
     value: 1122,
-    text: "Bien, ahora selecciona el círculo que representa ¿cuánto tiempo te gusta jugar con JAPI?. El círculo más pequeño significa que te gusta jugar nada o casi nada de tiempo, el siguiente circulo que te gusta jugar un poco, el siguiente que te gusta jugar más que un poco, el siguiente que te gusta jugar un buen rato, y por último, el círculo más grande, que te gusta jugar mucho tiempo.",
+    firstText: "Bien, ahora selecciona el círculo que representa",
+    secondText: "¿cuánto tiempo te gusta jugar con JAPI?",
+    thirdText:
+      ". El círculo más pequeño significa que te gusta jugar nada o casi nada de tiempo, el siguiente circulo que te gusta jugar un poco, el siguiente que te gusta jugar más que un poco, el siguiente que te gusta jugar un buen rato, y por último, el círculo más grande, que te gusta jugar mucho tiempo.",
   },
   3: {
     value: 1123,
-    text: "Ahora selecciona la cara que representa ¿cómo te sientes cuando haces otra actividad en la sala distinta a JAPI, por ejemplo, cuando la tía les pide que canten o que pinten?. La cara roja significa que te sientes mal, la cara naranja significa te sientes un poco incomodo, la amarilla que te sientes normal, la verde que te sientes bien, y la azul que te sientes muy bien. Presiona la cara que representa cómo te sientes cuando haces otro tipo de actividad en la sala distinta a JAPI.",
+    firstText: "Ahora selecciona la cara que representa",
+    secondText:
+      "¿cómo te sientes cuando haces otra actividad en la sala distinta a JAPI, por ejemplo, cuando la tía les pide que canten o que pinten?",
+    thirdText:
+      ". La cara roja significa que te sientes mal, la cara naranja significa te sientes un poco incomodo, la amarilla que te sientes normal, la verde que te sientes bien, y la azul que te sientes muy bien. Presiona la cara que representa cómo te sientes cuando haces otro tipo de actividad en la sala distinta a JAPI.",
   },
   4: {
     value: 1124,
-    text: "Por último, selecciona el círculo que representa ¿cuánto tiempo te gusta hacer otra actividad en sala distinta a JAPI?. El círculo más pequeño significa que te gusta jugar nada o casi nada de tiempo, el siguiente circulo que te gusta jugar un poco, el siguiente que te gusta jugar más que un poco, el siguiente que te gusta jugar un buen rato, y por último, el círculo más grande, que te gusta jugar mucho tiempo. Presiona el círculo que representa cuánto tiempo te gusta hacer otra actividad en sala distinta a JAPI.",
+    firstText: "Por último, selecciona el círculo que representa",
+    secondText:
+      "¿cuánto tiempo te gusta hacer otra actividad en sala distinta a JAPI?",
+    thirdText:
+      ". El círculo más pequeño significa que te gusta jugar nada o casi nada de tiempo, el siguiente circulo que te gusta jugar un poco, el siguiente que te gusta jugar más que un poco, el siguiente que te gusta jugar un buen rato, y por último, el círculo más grande, que te gusta jugar mucho tiempo. Presiona el círculo que representa cuánto tiempo te gusta hacer otra actividad en sala distinta a JAPI.",
   },
 };
 
@@ -123,7 +137,11 @@ function JapiInteres() {
           }}
         >
           <img src="/images/huron.png" width={120} height={120} alt="huron" />
-          <span>{TEXTS[section].text}</span>
+          <div>
+            <span>{TEXTS[section].firstText}</span>{" "}
+            <span style={{ color: "#000" }}>{TEXTS[section].secondText}</span>{" "}
+            <span>{TEXTS[section].thirdText}</span>
+          </div>
         </div>
       )}
 
