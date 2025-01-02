@@ -852,7 +852,7 @@ export default function HomePage() {
                   <td>{savedCountSpanTests && savedCountSpanTests >= 0 ? savedCountSpanTests : 0}</td>
                 </tr>
                 <tr>
-                  <th scope="row">Wisconsin</th>
+                  <th scope="row">Tarea de cartas</th>
                   <td>{savedWisconsinTests && savedWisconsinTests >= 0 ? savedWisconsinTests : 0}</td>
                 </tr>
               </tbody>
@@ -1031,7 +1031,7 @@ export default function HomePage() {
                 </tr>
 
                 <tr>
-                  <th scope="row">Wisconsin</th>
+                  <th scope="row">Tarea de cartas</th>
                   <td>{wisconsinLength && wisconsinLength >= 0 ? wisconsinLength : 0}</td>
 
                 </tr>

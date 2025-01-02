@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 /* QUERIES
 
-  * INSERT INTO instrument (name, instrument_type_id) VALUES ('Wisconsin', 1); => 27
+  * INSERT INTO instrument (name, instrument_type_id) VALUES ('Tarea de cartas', 1); => 27
 
     1161 - 1232
   * INSERT INTO item (item_type_id, instrument_id, num, title, description) VALUES
@@ -596,13 +596,27 @@ function Wisconsin() {
   }, []);
 
   useEffect(() => {
-    if (section === 30) {
+    if (section === 4) {
+      const handleKeyDown = (event) => {
+        if (event.key.toLowerCase() === "n") {
+          setSection(section + 1);
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+
+    if (section === 32) {
       const handleKeyDown = (event) => {
         if (event.key.toLowerCase() === "p") {
           setSection(section + 1);
         } else if (event.key.toLowerCase() === "m") {
           setPercentage(100);
-          setSection(47);
+          setSection(51);
         }
       };
 
@@ -818,7 +832,7 @@ function Wisconsin() {
           right={-248}
           left={-252.9}
           messages={[
-            "Ahora vamos a explicar el juego de formas. Selecciona la carta que coincida según su forma.",
+            "Ahora vamos a jugar el juego de formas. Queremos ordenar la carta de abajo según su forma.",
           ]}
           errorMessages={[
             "Lo siento, esa no es la correcta. Recurda, debes ordenar la carta según su forma.",
@@ -857,9 +871,17 @@ function Wisconsin() {
           setColorSections={null}
         />
       )}
+      {section === 4 && (
+        <WisconsinInstructions
+          instructions={[]}
+          specialMessage="Cuándo el participante esté listo, toca la 'N' para continuar."
+          section={section}
+          setSection={setSection}
+        />
+      )}
       {formaSections.map(
         (wisconsinSection, index) =>
-          index + 4 === section && (
+          index + 5 === section && (
             <WisconsinCards
               key={`forma-${index}`}
               id={wisconsinSection.id}
@@ -883,7 +905,7 @@ function Wisconsin() {
             />
           )
       )}
-      {section === 16 && (
+      {section === 17 && (
         <WisconsinCards
           cardOneSrc="/images/wisconsin_tren_rojo.png"
           cardTwoSrc="/images/wisconsin_estrella_azul.png"
@@ -892,7 +914,7 @@ function Wisconsin() {
           right={-248}
           left={-252.9}
           messages={[
-            "Ahora vamos a explicar el juego de colores. Selecciona la carta que coincida según su color.",
+            "Ahora vamos a jugar el juego de colores. Queremos ordenar la carta de abajo según su color.",
           ]}
           errorMessages={[
             "Lo siento, esa no es la correcta. Recurda, debes ordenar la carta según su color.",
@@ -908,7 +930,7 @@ function Wisconsin() {
           setColorSections={null}
         />
       )}
-      {section === 17 && (
+      {section === 18 && (
         <WisconsinCards
           cardOneSrc="/images/wisconsin_tren_rojo.png"
           cardTwoSrc="/images/wisconsin_estrella_azul.png"
@@ -931,9 +953,17 @@ function Wisconsin() {
           setColorSections={null}
         />
       )}
+      {section === 19 && (
+        <WisconsinInstructions
+          instructions={[]}
+          specialMessage="Cuándo el participante esté listo, toca la 'N' para continuar."
+          section={section}
+          setSection={setSection}
+        />
+      )}
       {colorSections.map(
         (wisconsinSection, index) =>
-          index + 18 === section && (
+          index + 20 === section && (
             <WisconsinCards
               key={`color-${index}`}
               id={wisconsinSection.id}
@@ -957,7 +987,7 @@ function Wisconsin() {
             />
           )
       )}
-      {section === 30 && (
+      {section === 32 && (
         <WisconsinInstructions
           instructions={[
             "Para continuar al nivel 3 presiona la tecla P.",
@@ -968,7 +998,7 @@ function Wisconsin() {
           setSection={setSection}
         />
       )}
-      {section === 31 && (
+      {section === 33 && (
         <WisconsinCards
           cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
           cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
@@ -977,7 +1007,7 @@ function Wisconsin() {
           left={-252}
           right={-252.9}
           messages={[
-            "Ahora vamos a jugar el juego por cantidades. Selecciona la carta según el número de figuras.",
+            "Ahora vamos a jugar el juego por cantidades. Queremos seleccionar la carta de abajo según el número de figuras.",
           ]}
           errorMessages={[
             "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el número de figuras.",
@@ -993,7 +1023,7 @@ function Wisconsin() {
           setColorSections={setColorSections}
         />
       )}
-      {section === 32 && (
+      {section === 34 && (
         <WisconsinCards
           cardOneSrc={`/images/wisconsin/triangle_yellow_2.png`}
           cardTwoSrc={`/images/wisconsin/diamond_red_4.png`}
@@ -1016,9 +1046,17 @@ function Wisconsin() {
           setColorSections={setColorSections}
         />
       )}
+      {section === 35 && (
+        <WisconsinInstructions
+          instructions={[]}
+          specialMessage="Cuándo el participante esté listo, toca la 'N' para continuar."
+          section={section}
+          setSection={setSection}
+        />
+      )}
       {cantidadSections.map(
         (wisconsinSection, index) =>
-          index + 33 === section && (
+          index + 36 === section && (
             <WisconsinCards
               key={`color-${index}`}
               id={wisconsinSection.id}
@@ -1044,7 +1082,7 @@ function Wisconsin() {
             />
           )
       )}
-      {section === 39 && (
+      {section === 42 && (
         <WisconsinCards
           cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
           cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
@@ -1052,7 +1090,9 @@ function Wisconsin() {
           top={-363}
           left={-252}
           right={-252.9}
-          messages={["Ahora vamos a seleccionar las cartas según su color."]}
+          messages={[
+            "Ahora vamos a jugar el juego de colores. Queremos ordenar la carta de abajo según su color.",
+          ]}
           errorMessages={[
             "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el color.",
           ]}
@@ -1067,7 +1107,7 @@ function Wisconsin() {
           setColorSections={setColorSections}
         />
       )}
-      {section === 40 && (
+      {section === 43 && (
         <WisconsinCards
           cardOneSrc={`/images/wisconsin/triangle_yellow_2.png`}
           cardTwoSrc={`/images/wisconsin/diamond_red_4.png`}
@@ -1090,9 +1130,17 @@ function Wisconsin() {
           setColorSections={setColorSections}
         />
       )}
+      {section === 44 && (
+        <WisconsinInstructions
+          instructions={[]}
+          specialMessage="Cuándo el participante esté listo, toca la 'N' para continuar."
+          section={section}
+          setSection={setSection}
+        />
+      )}
       {cantidadColorSections.map(
         (wisconsinSection, index) =>
-          index + 41 === section && (
+          index + 45 === section && (
             <WisconsinCards
               key={`color-${index}`}
               id={wisconsinSection.id}
@@ -1120,7 +1168,7 @@ function Wisconsin() {
             />
           )
       )}
-      {section === 47 && (
+      {section === 51 && (
         <div className="instruction">
           <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
             Súper, muchas gracias, lo hiciste muy bien!
