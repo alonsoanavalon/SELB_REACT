@@ -84,6 +84,18 @@ import { useNavigate } from "react-router-dom";
 (1, 27, 35, null, 'tiempo_pregunta_35'),
 (1, 27, 36, null, 'respuesta_pregunta_36'),
 (1, 27, 36, null, 'tiempo_pregunta_36');
+(1, 27, 36, null, 'respuesta_pregunta_37'),
+(1, 27, 36, null, 'tiempo_pregunta_37');
+(1, 27, 36, null, 'respuesta_pregunta_38'),
+(1, 27, 36, null, 'tiempo_pregunta_38');
+(1, 27, 36, null, 'respuesta_pregunta_39'),
+(1, 27, 36, null, 'tiempo_pregunta_39');
+(1, 27, 36, null, 'respuesta_pregunta_40'),
+(1, 27, 36, null, 'tiempo_pregunta_40');
+(1, 27, 36, null, 'respuesta_pregunta_41'),
+(1, 27, 36, null, 'tiempo_pregunta_41');
+(1, 27, 36, null, 'respuesta_pregunta_42'),
+(1, 27, 36, null, 'tiempo_pregunta_42');
 
 */
 
@@ -109,7 +121,13 @@ function Wisconsin() {
   const [colorSections, setColorSections] = useState([]);
   const [cantidadSections, setCantidadSections] = useState([]);
   const [cantidadColorSections, setCantidadColorSections] = useState([]);
+  const [cantidadFormaSections, setCantidadFormaSections] = useState([]);
   const [percentage, setPercentage] = useState(0);
+  const [checkboxs, setCheckboxs] = useState({
+    cantidad: true,
+    color: true,
+    forma: true
+  });
 
   useDisableBack();
   const navigate = useNavigate();
@@ -519,6 +537,129 @@ function Wisconsin() {
       },
     ];
 
+    const formaOptions = [
+      {
+        cardOneSrc: "circle_blue_1.png",
+        cardTwoSrc: "triangle_red_3.png",
+        cardThreeSrc: "circle_green_2.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "triangle_yellow_2.png",
+        cardTwoSrc: "star_red_1.png",
+        cardThreeSrc: "triangle_blue_3.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "diamond_green_4.png",
+        cardTwoSrc: "circle_red_2.png",
+        cardThreeSrc: "diamond_yellow_1.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "star_blue_3.png",
+        cardTwoSrc: "diamond_red_2.png",
+        cardThreeSrc: "star_green_1.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "circle_yellow_2.png",
+        cardTwoSrc: "triangle_blue_3.png",
+        cardThreeSrc: "circle_green_1.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "triangle_red_1.png",
+        cardTwoSrc: "star_blue_4.png",
+        cardThreeSrc: "triangle_green_2.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "diamond_blue_3.png",
+        cardTwoSrc: "circle_yellow_2.png",
+        cardThreeSrc: "diamond_red_1.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "star_green_2.png",
+        cardTwoSrc: "triangle_yellow_4.png",
+        cardThreeSrc: "star_red_3.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "circle_red_4.png",
+        cardTwoSrc: "diamond_green_1.png",
+        cardThreeSrc: "circle_blue_3.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "triangle_blue_3.png",
+        cardTwoSrc: "star_yellow_2.png",
+        cardThreeSrc: "triangle_green_1.png",
+        correctAnswer: "a",
+      },
+      {
+        cardOneSrc: "star_red_2.png",
+        cardTwoSrc: "diamond_blue_1.png",
+        cardThreeSrc: "diamond_yellow_3.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "circle_green_3.png",
+        cardTwoSrc: "triangle_blue_4.png",
+        cardThreeSrc: "triangle_yellow_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "triangle_yellow_1.png",
+        cardTwoSrc: "circle_blue_3.png",
+        cardThreeSrc: "circle_red_4.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "diamond_red_4.png",
+        cardTwoSrc: "star_blue_2.png",
+        cardThreeSrc: "star_green_3.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "star_green_3.png",
+        cardTwoSrc: "triangle_red_2.png",
+        cardThreeSrc: "triangle_yellow_4.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "triangle_blue_2.png",
+        cardTwoSrc: "diamond_red_3.png",
+        cardThreeSrc: "diamond_green_1.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "circle_yellow_4.png",
+        cardTwoSrc: "star_red_1.png",
+        cardThreeSrc: "star_blue_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "diamond_green_3.png",
+        cardTwoSrc: "circle_blue_4.png",
+        cardThreeSrc: "circle_red_1.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "star_blue_1.png",
+        cardTwoSrc: "triangle_green_3.png",
+        cardThreeSrc: "triangle_red_2.png",
+        correctAnswer: "l",
+      },
+      {
+        cardOneSrc: "triangle_red_3.png",
+        cardTwoSrc: "circle_green_1.png",
+        cardThreeSrc: "circle_yellow_2.png",
+        correctAnswer: "l",
+      },
+    ];
+
     const cantidadesSections = cantidadOptions.map((cantidadSection, index) => {
       return {
         id: index + baseIndex,
@@ -565,6 +706,28 @@ function Wisconsin() {
       }
     );
 
+    const cantidadesFormasSections = formaOptions.map((formaSection, index) => {
+      return {
+        id: index + baseIndex,
+        type: "cards",
+        cardOneSrc: formaSection.cardOneSrc,
+        cardTwoSrc: formaSection.cardTwoSrc,
+        cardThreeSrc: formaSection.cardThreeSrc,
+        top: -363,
+        right: -252,
+        left: -252.9,
+        messages: [],
+        errorMessages: [],
+        successMessages: [],
+        correctAnswer: formaSection.correctAnswer,
+        tutorial: false,
+        item_id: null,
+        rule: "cantidades",
+        answer: null,
+        time: null,
+      };
+    });
+
     const randomCantidesSections = cantidadesSections
       .sort(() => 0.5 - Math.random()) // Desordenar aleatoriamente
       .slice(0, RANDOM_LENGTH / 2); // Tomar los primeros 10 elementos
@@ -573,7 +736,15 @@ function Wisconsin() {
       .sort(() => 0.5 - Math.random())
       .slice(0, RANDOM_LENGTH / 2);
 
-    return { randomCantidesSections, randomCantidadesColorSections };
+    const randomCantidadesFormaSections = cantidadesFormasSections
+      .sort(() => 0.5 - Math.random())
+      .slice(0, RANDOM_LENGTH / 2);
+
+    return {
+      randomCantidesSections,
+      randomCantidadesColorSections,
+      randomCantidadesFormaSections,
+    };
   };
 
   useEffect(() => {
@@ -585,13 +756,17 @@ function Wisconsin() {
       13,
       "color"
     );
-    const { randomCantidadesColorSections, randomCantidesSections } =
-      cantidadesRandomSections(23);
+    const {
+      randomCantidadesColorSections,
+      randomCantidesSections,
+      randomCantidadesFormaSections,
+    } = cantidadesRandomSections(23);
 
     setFormaSections(randomFormaSections);
     setColorSections(randomColorSections);
     setCantidadSections(randomCantidesSections);
     setCantidadColorSections(randomCantidadesColorSections);
+    setCantidadFormaSections(randomCantidadesFormaSections);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -613,7 +788,11 @@ function Wisconsin() {
     if (section === 32) {
       const handleKeyDown = (event) => {
         if (event.key.toLowerCase() === "p") {
-          setSection(section + 1);
+          if (checkboxs.cantidad === true) {
+            setSection(section + 1);
+          } else {
+            setSection(35);
+          }
         } else if (event.key.toLowerCase() === "m") {
           setPercentage(100);
           setSection(51);
@@ -626,7 +805,23 @@ function Wisconsin() {
         window.removeEventListener("keydown", handleKeyDown);
       };
     }
-  }, [section]);
+
+    if (section === 42) {
+      if (checkboxs.color === true) {
+        setSection(section + 1);
+      } else {
+        setSection(44);
+      }
+    }
+
+    if (section === 51) {
+      if (checkboxs.forma === true) {
+        setSection(section + 1);
+      } else {
+        setSection(53);
+      }
+    }
+  }, [section, checkboxs]);
 
   const saveTest = async () => {
     const choicesArray = [];
@@ -693,6 +888,17 @@ function Wisconsin() {
       itemID++;
     }
 
+    for (let i = 0; i < cantidadFormaSections.length; i++) {
+      const { answer, time } = cantidadFormaSections[i];
+      choices[itemID] = answer;
+
+      itemID++;
+
+      choices[itemID] = time;
+
+      itemID++;
+    }
+
     choicesArray.push(choices);
 
     const backupTest = await get("backupTest");
@@ -725,6 +931,7 @@ function Wisconsin() {
       ...colorSections,
       ...cantidadSections,
       ...cantidadColorSections,
+      ...cantidadFormaSections,
     ].filter((section) => section.answer != null).length;
 
     const progressPercentage =
@@ -734,11 +941,18 @@ function Wisconsin() {
           ...colorSections,
           ...cantidadSections,
           ...cantidadColorSections,
+          ...cantidadFormaSections,
         ].length) *
       100;
 
     setPercentage(progressPercentage);
-  }, [formaSections, colorSections, cantidadSections, cantidadColorSections]);
+  }, [
+    formaSections,
+    colorSections,
+    cantidadSections,
+    cantidadColorSections,
+    cantidadFormaSections,
+  ]);
 
   return (
     <div
@@ -996,6 +1210,8 @@ function Wisconsin() {
           specialMessage=""
           section={section}
           setSection={setSection}
+          checkboxs={checkboxs}
+          setCheckboxs={setCheckboxs}
         />
       )}
       {section === 33 && (
@@ -1006,9 +1222,7 @@ function Wisconsin() {
           top={-363}
           left={-252}
           right={-252.9}
-          messages={[
-            "Ahora vamos a jugar el juego por cantidades. Queremos seleccionar la carta de abajo según el número de figuras.",
-          ]}
+          messages={["Ahora, vamos a ordenar las cartas según la cantidad."]}
           errorMessages={[
             "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el número de figuras.",
           ]}
@@ -1090,9 +1304,7 @@ function Wisconsin() {
           top={-363}
           left={-252}
           right={-252.9}
-          messages={[
-            "Ahora vamos a jugar el juego de colores. Queremos ordenar la carta de abajo según su color.",
-          ]}
+          messages={["Ahora, vamos a ordenar las cartas según el color."]}
           errorMessages={[
             "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el color.",
           ]}
@@ -1169,6 +1381,84 @@ function Wisconsin() {
           )
       )}
       {section === 51 && (
+        <WisconsinCards
+          cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
+          cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
+          cardThreeSrc={`/images/wisconsin/diamond_red_3.png`}
+          top={-363}
+          left={-252}
+          right={-252.9}
+          messages={["Ahora, vamos a ordenar las cartas según la forma."]}
+          errorMessages={[
+            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según la forma.",
+          ]}
+          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
+          correctAnswer="a"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+        />
+      )}
+      {section === 52 && (
+        <WisconsinCards
+          cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
+          cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
+          cardThreeSrc={`/images/wisconsin/triangle_blue_1.png`}
+          top={-363}
+          left={-252}
+          right={-252.9}
+          messages={["Ahora, vamos a ordenar las cartas según la forma."]}
+          errorMessages={[
+            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según la forma.",
+          ]}
+          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
+          correctAnswer="l"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+        />
+      )}
+      {section === 53 && (
+        <WisconsinInstructions
+          instructions={[]}
+          specialMessage="Cuándo el participante esté listo, toca la 'N' para continuar."
+          section={section}
+          setSection={setSection}
+        />
+      )}
+      {cantidadFormaSections.map(
+        (wisconsinSection, index) =>
+          index + 54 === section && (
+            <WisconsinCards
+              key={`color-${index}`}
+              id={wisconsinSection.id}
+              cardOneSrc={`/images/wisconsin/${wisconsinSection.cardOneSrc}`}
+              cardTwoSrc={`/images/wisconsin/${wisconsinSection.cardTwoSrc}`}
+              cardThreeSrc={`/images/wisconsin/${wisconsinSection.cardThreeSrc}`}
+              top={wisconsinSection.top}
+              left={wisconsinSection.left}
+              right={wisconsinSection.right}
+              messages={wisconsinSection.messages}
+              errorMessages={wisconsinSection.errorMessages}
+              successMessages={wisconsinSection.successMessages}
+              correctAnswer={wisconsinSection.correctAnswer}
+              tutorial={wisconsinSection.tutorial}
+              section={section}
+              setSection={setSection}
+              formaSections={formaSections}
+              setFormaSections={setFormaSections}
+              colorSections={colorSections}
+              setColorSections={setColorSections}
+              cantidadSections={cantidadSections}
+              setCantidadSections={setCantidadSections}
+              cantidadColorSections={cantidadColorSections}
+              setCantidadColorSections={setCantidadColorSections}
+              cantidadFormaSections={cantidadFormaSections}
+              setCantidadFormaSections={setCantidadFormaSections}
+            />
+          )
+      )}
+      {section === 60 && (
         <div className="instruction">
           <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
             Súper, muchas gracias, lo hiciste muy bien!

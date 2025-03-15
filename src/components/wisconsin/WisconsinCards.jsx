@@ -23,6 +23,8 @@ function WisconsinCards({
   setCantidadSections,
   cantidadColorSections,
   setCantidadColorSections,
+  cantidadFormaSections,
+  setCantidadFormaSections
 }) {
   const [isOverlapping, setIsOverlapping] = useState(null);
   const [errorTutorial, setErrorTutorial] = useState(false);
@@ -114,6 +116,20 @@ function WisconsinCards({
           );
 
           setCantidadSections(newCantidadSections);
+        }
+
+        if (section >= 54 && section <= 59) {
+          const newCantidadFormSections = cantidadFormaSections.map((card) =>
+            card.id === id
+              ? {
+                  ...card,
+                  answer: answer === correctAnswer ? 1 : 0,
+                  time: elapsedTime,
+                }
+              : card
+          );
+
+          setCantidadFormaSections(newCantidadFormSections);
         }
 
         if (section >= 45 && section <= 50) {

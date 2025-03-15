@@ -1,10 +1,13 @@
 import { useEffect } from "react";
+import { Form } from "react-bootstrap";
 
 function WisconsinInstructions({
   section,
   setSection,
   instructions,
   specialMessage,
+  checkboxs,
+  setCheckboxs
 }) {
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -34,6 +37,50 @@ function WisconsinInstructions({
         <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
           {specialMessage}
         </span>
+      )}
+
+      {section === 32 && (
+        <Form>
+          <div className="mb-3">
+            <Form.Check
+              type="checkbox"
+              inline
+              label="Cantidad"
+              className="custom-checkbox"
+              checked={checkboxs.cantidad}
+              onChange={(e) => setCheckboxs({
+                ...checkboxs,
+                cantidad: e.target.checked
+              })}
+            />
+            <Form.Check
+              type="checkbox"
+              inline
+              label="Color"
+              className="custom-checkbox"
+              checked={checkboxs.color}
+              onChange={(e) => {
+                setCheckboxs({
+                  ...checkboxs,
+                  color: e.target.checked
+                })
+              }}
+            />
+            <Form.Check
+              type="checkbox"
+              inline
+              label="Forma"
+              className="custom-checkbox"
+              checked={checkboxs.forma}
+              onChange={(e) => {
+                setCheckboxs({
+                  ...checkboxs,
+                  forma: e.target.checked
+                })
+              }}
+            />
+          </div>
+        </Form>
       )}
     </div>
   );
