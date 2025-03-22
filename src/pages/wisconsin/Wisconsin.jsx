@@ -119,15 +119,8 @@ function Wisconsin() {
   const [section, setSection] = useState(1);
   const [formaSections, setFormaSections] = useState([]);
   const [colorSections, setColorSections] = useState([]);
-  const [cantidadSections, setCantidadSections] = useState([]);
-  const [cantidadColorSections, setCantidadColorSections] = useState([]);
-  const [cantidadFormaSections, setCantidadFormaSections] = useState([]);
   const [percentage, setPercentage] = useState(0);
-  const [checkboxs, setCheckboxs] = useState({
-    cantidad: true,
-    color: true,
-    forma: true
-  });
+  const [randomSections, setRandomSections] = useState([]);
 
   useDisableBack();
   const navigate = useNavigate();
@@ -699,7 +692,7 @@ function Wisconsin() {
           correctAnswer: cantidadSection.correctAnswer,
           tutorial: false,
           item_id: null,
-          rule: "cantidades",
+          rule: "color",
           answer: null,
           time: null,
         };
@@ -722,7 +715,7 @@ function Wisconsin() {
         correctAnswer: formaSection.correctAnswer,
         tutorial: false,
         item_id: null,
-        rule: "cantidades",
+        rule: "forma",
         answer: null,
         time: null,
       };
@@ -762,11 +755,25 @@ function Wisconsin() {
       randomCantidadesFormaSections,
     } = cantidadesRandomSections(23);
 
+    const combinado = [
+      ...randomCantidadesColorSections,
+      ...randomCantidesSections,
+      ...randomCantidadesFormaSections,
+    ];
+
+    const shuffleArray = (array) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
+
+    const arregloAleatorio = shuffleArray(combinado);
+
     setFormaSections(randomFormaSections);
     setColorSections(randomColorSections);
-    setCantidadSections(randomCantidesSections);
-    setCantidadColorSections(randomCantidadesColorSections);
-    setCantidadFormaSections(randomCantidadesFormaSections);
+    setRandomSections(arregloAleatorio);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -788,11 +795,7 @@ function Wisconsin() {
     if (section === 32) {
       const handleKeyDown = (event) => {
         if (event.key.toLowerCase() === "p") {
-          if (checkboxs.cantidad === true) {
-            setSection(section + 1);
-          } else {
-            setSection(35);
-          }
+          setSection(33);
         } else if (event.key.toLowerCase() === "m") {
           setPercentage(100);
           setSection(51);
@@ -805,23 +808,7 @@ function Wisconsin() {
         window.removeEventListener("keydown", handleKeyDown);
       };
     }
-
-    if (section === 42) {
-      if (checkboxs.color === true) {
-        setSection(section + 1);
-      } else {
-        setSection(44);
-      }
-    }
-
-    if (section === 51) {
-      if (checkboxs.forma === true) {
-        setSection(section + 1);
-      } else {
-        setSection(53);
-      }
-    }
-  }, [section, checkboxs]);
+  }, [section]);
 
   const saveTest = async () => {
     const choicesArray = [];
@@ -866,30 +853,8 @@ function Wisconsin() {
       itemID++;
     }
 
-    for (let i = 0; i < cantidadSections.length; i++) {
-      const { answer, time } = cantidadSections[i];
-      choices[itemID] = answer;
-
-      itemID++;
-
-      choices[itemID] = time;
-
-      itemID++;
-    }
-
-    for (let i = 0; i < cantidadColorSections.length; i++) {
-      const { answer, time } = cantidadColorSections[i];
-      choices[itemID] = answer;
-
-      itemID++;
-
-      choices[itemID] = time;
-
-      itemID++;
-    }
-
-    for (let i = 0; i < cantidadFormaSections.length; i++) {
-      const { answer, time } = cantidadFormaSections[i];
+    for (let i = 0; i < randomSections.length; i++) {
+      const { answer, time } = randomSections[i];
       choices[itemID] = answer;
 
       itemID++;
@@ -929,30 +894,16 @@ function Wisconsin() {
     const completedSections = [
       ...formaSections,
       ...colorSections,
-      ...cantidadSections,
-      ...cantidadColorSections,
-      ...cantidadFormaSections,
+      ...randomSections,
     ].filter((section) => section.answer != null).length;
 
     const progressPercentage =
       (completedSections /
-        [
-          ...formaSections,
-          ...colorSections,
-          ...cantidadSections,
-          ...cantidadColorSections,
-          ...cantidadFormaSections,
-        ].length) *
+        [...formaSections, ...colorSections, ...randomSections].length) *
       100;
 
     setPercentage(progressPercentage);
-  }, [
-    formaSections,
-    colorSections,
-    cantidadSections,
-    cantidadColorSections,
-    cantidadFormaSections,
-  ]);
+  }, [formaSections, colorSections, randomSections]);
 
   return (
     <div
@@ -1210,67 +1161,11 @@ function Wisconsin() {
           specialMessage=""
           section={section}
           setSection={setSection}
-          checkboxs={checkboxs}
-          setCheckboxs={setCheckboxs}
         />
       )}
-      {section === 33 && (
-        <WisconsinCards
-          cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
-          cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
-          cardThreeSrc={`/images/wisconsin/circle_blue_1.png`}
-          top={-363}
-          left={-252}
-          right={-252.9}
-          messages={["Ahora, vamos a ordenar las cartas según la cantidad."]}
-          errorMessages={[
-            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el número de figuras.",
-          ]}
-          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
-          correctAnswer="a"
-          tutorial={true}
-          section={section}
-          setSection={setSection}
-          formaSections={formaSections}
-          setFormaSections={setFormaSections}
-          colorSections={colorSections}
-          setColorSections={setColorSections}
-        />
-      )}
-      {section === 34 && (
-        <WisconsinCards
-          cardOneSrc={`/images/wisconsin/triangle_yellow_2.png`}
-          cardTwoSrc={`/images/wisconsin/diamond_red_4.png`}
-          cardThreeSrc={`/images/wisconsin/circle_green_4.png`}
-          top={-363}
-          left={-252}
-          right={-252.9}
-          messages={["Selecciona la carta según el número de figuras."]}
-          errorMessages={[
-            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el número de figuras.",
-          ]}
-          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
-          correctAnswer="l"
-          tutorial={true}
-          section={section}
-          setSection={setSection}
-          formaSections={formaSections}
-          setFormaSections={setFormaSections}
-          colorSections={colorSections}
-          setColorSections={setColorSections}
-        />
-      )}
-      {section === 35 && (
-        <WisconsinInstructions
-          instructions={[]}
-          specialMessage="Cuándo el participante esté listo, toca la 'N' para continuar."
-          section={section}
-          setSection={setSection}
-        />
-      )}
-      {cantidadSections.map(
+      {randomSections.map(
         (wisconsinSection, index) =>
-          index + 36 === section && (
+          index + 33 === section && (
             <WisconsinCards
               key={`color-${index}`}
               id={wisconsinSection.id}
@@ -1291,174 +1186,13 @@ function Wisconsin() {
               setFormaSections={setFormaSections}
               colorSections={colorSections}
               setColorSections={setColorSections}
-              cantidadSections={cantidadSections}
-              setCantidadSections={setCantidadSections}
-            />
-          )
-      )}
-      {section === 42 && (
-        <WisconsinCards
-          cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
-          cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
-          cardThreeSrc={`/images/wisconsin/circle_yellow_3.png`}
-          top={-363}
-          left={-252}
-          right={-252.9}
-          messages={["Ahora, vamos a ordenar las cartas según el color."]}
-          errorMessages={[
-            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el color.",
-          ]}
-          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
-          correctAnswer="a"
-          tutorial={true}
-          section={section}
-          setSection={setSection}
-          formaSections={formaSections}
-          setFormaSections={setFormaSections}
-          colorSections={colorSections}
-          setColorSections={setColorSections}
-        />
-      )}
-      {section === 43 && (
-        <WisconsinCards
-          cardOneSrc={`/images/wisconsin/triangle_yellow_2.png`}
-          cardTwoSrc={`/images/wisconsin/diamond_red_4.png`}
-          cardThreeSrc={`/images/wisconsin/circle_red_2.png`}
-          top={-363}
-          left={-252}
-          right={-252.9}
-          messages={["Selecciona la carta según el color."]}
-          errorMessages={[
-            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según el color.",
-          ]}
-          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
-          correctAnswer="l"
-          tutorial={true}
-          section={section}
-          setSection={setSection}
-          formaSections={formaSections}
-          setFormaSections={setFormaSections}
-          colorSections={colorSections}
-          setColorSections={setColorSections}
-        />
-      )}
-      {section === 44 && (
-        <WisconsinInstructions
-          instructions={[]}
-          specialMessage="Cuándo el participante esté listo, toca la 'N' para continuar."
-          section={section}
-          setSection={setSection}
-        />
-      )}
-      {cantidadColorSections.map(
-        (wisconsinSection, index) =>
-          index + 45 === section && (
-            <WisconsinCards
-              key={`color-${index}`}
-              id={wisconsinSection.id}
-              cardOneSrc={`/images/wisconsin/${wisconsinSection.cardOneSrc}`}
-              cardTwoSrc={`/images/wisconsin/${wisconsinSection.cardTwoSrc}`}
-              cardThreeSrc={`/images/wisconsin/${wisconsinSection.cardThreeSrc}`}
-              top={wisconsinSection.top}
-              left={wisconsinSection.left}
-              right={wisconsinSection.right}
-              messages={wisconsinSection.messages}
-              errorMessages={wisconsinSection.errorMessages}
-              successMessages={wisconsinSection.successMessages}
-              correctAnswer={wisconsinSection.correctAnswer}
-              tutorial={wisconsinSection.tutorial}
-              section={section}
-              setSection={setSection}
-              formaSections={formaSections}
-              setFormaSections={setFormaSections}
-              colorSections={colorSections}
-              setColorSections={setColorSections}
-              cantidadSections={cantidadSections}
-              setCantidadSections={setCantidadSections}
-              cantidadColorSections={cantidadColorSections}
-              setCantidadColorSections={setCantidadColorSections}
+              randomSections={randomSections}
+              setRandomSections={setRandomSections}
+              rule={wisconsinSection.rule}
             />
           )
       )}
       {section === 51 && (
-        <WisconsinCards
-          cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
-          cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
-          cardThreeSrc={`/images/wisconsin/diamond_red_3.png`}
-          top={-363}
-          left={-252}
-          right={-252.9}
-          messages={["Ahora, vamos a ordenar las cartas según la forma."]}
-          errorMessages={[
-            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según la forma.",
-          ]}
-          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
-          correctAnswer="a"
-          tutorial={true}
-          section={section}
-          setSection={setSection}
-        />
-      )}
-      {section === 52 && (
-        <WisconsinCards
-          cardOneSrc={`/images/wisconsin/diamond_yellow_1.png`}
-          cardTwoSrc={`/images/wisconsin/triangle_green_3.png`}
-          cardThreeSrc={`/images/wisconsin/triangle_blue_1.png`}
-          top={-363}
-          left={-252}
-          right={-252.9}
-          messages={["Ahora, vamos a ordenar las cartas según la forma."]}
-          errorMessages={[
-            "Lo siento, esa no es la respuesta correcta. Recuerda seleccionar según la forma.",
-          ]}
-          successMessages={["Muy bien. Seleccionaste la carta correcta."]}
-          correctAnswer="l"
-          tutorial={true}
-          section={section}
-          setSection={setSection}
-        />
-      )}
-      {section === 53 && (
-        <WisconsinInstructions
-          instructions={[]}
-          specialMessage="Cuándo el participante esté listo, toca la 'N' para continuar."
-          section={section}
-          setSection={setSection}
-        />
-      )}
-      {cantidadFormaSections.map(
-        (wisconsinSection, index) =>
-          index + 54 === section && (
-            <WisconsinCards
-              key={`color-${index}`}
-              id={wisconsinSection.id}
-              cardOneSrc={`/images/wisconsin/${wisconsinSection.cardOneSrc}`}
-              cardTwoSrc={`/images/wisconsin/${wisconsinSection.cardTwoSrc}`}
-              cardThreeSrc={`/images/wisconsin/${wisconsinSection.cardThreeSrc}`}
-              top={wisconsinSection.top}
-              left={wisconsinSection.left}
-              right={wisconsinSection.right}
-              messages={wisconsinSection.messages}
-              errorMessages={wisconsinSection.errorMessages}
-              successMessages={wisconsinSection.successMessages}
-              correctAnswer={wisconsinSection.correctAnswer}
-              tutorial={wisconsinSection.tutorial}
-              section={section}
-              setSection={setSection}
-              formaSections={formaSections}
-              setFormaSections={setFormaSections}
-              colorSections={colorSections}
-              setColorSections={setColorSections}
-              cantidadSections={cantidadSections}
-              setCantidadSections={setCantidadSections}
-              cantidadColorSections={cantidadColorSections}
-              setCantidadColorSections={setCantidadColorSections}
-              cantidadFormaSections={cantidadFormaSections}
-              setCantidadFormaSections={setCantidadFormaSections}
-            />
-          )
-      )}
-      {section === 60 && (
         <div className="instruction">
           <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
             Súper, muchas gracias, lo hiciste muy bien!

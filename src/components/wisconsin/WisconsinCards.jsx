@@ -19,12 +19,9 @@ function WisconsinCards({
   setFormaSections,
   colorSections,
   setColorSections,
-  cantidadSections,
-  setCantidadSections,
-  cantidadColorSections,
-  setCantidadColorSections,
-  cantidadFormaSections,
-  setCantidadFormaSections
+  randomSections,
+  setRandomSections,
+  rule,
 }) {
   const [isOverlapping, setIsOverlapping] = useState(null);
   const [errorTutorial, setErrorTutorial] = useState(false);
@@ -95,7 +92,14 @@ function WisconsinCards({
             card.id === id
               ? {
                   ...card,
-                  answer: answer === correctAnswer ? 1 : 0,
+                  answer:
+                    answer === correctAnswer
+                      ? card.rule === "cantidades"
+                        ? 2
+                        : card.rule === "color"
+                        ? 3
+                        : 4
+                      : 0,
                   time: elapsedTime,
                 }
               : card
@@ -104,8 +108,8 @@ function WisconsinCards({
           setColorSections(newColorSections);
         }
 
-        if (section >= 36 && section <= 41) {
-          const newCantidadSections = cantidadSections.map((card) =>
+        if (section >= 33 && section <= 50) {
+          const newRandomSections = randomSections.map((card) =>
             card.id === id
               ? {
                   ...card,
@@ -115,35 +119,7 @@ function WisconsinCards({
               : card
           );
 
-          setCantidadSections(newCantidadSections);
-        }
-
-        if (section >= 54 && section <= 59) {
-          const newCantidadFormSections = cantidadFormaSections.map((card) =>
-            card.id === id
-              ? {
-                  ...card,
-                  answer: answer === correctAnswer ? 1 : 0,
-                  time: elapsedTime,
-                }
-              : card
-          );
-
-          setCantidadFormaSections(newCantidadFormSections);
-        }
-
-        if (section >= 45 && section <= 50) {
-          const newCantidadColorSections = cantidadColorSections.map((card) =>
-            card.id === id
-              ? {
-                  ...card,
-                  answer: answer === correctAnswer ? 1 : 0,
-                  time: elapsedTime,
-                }
-              : card
-          );
-
-          setCantidadColorSections(newCantidadColorSections);
+          setRandomSections(newRandomSections);
         }
 
         setTimeout(() => {
@@ -193,6 +169,20 @@ function WisconsinCards({
               : errorMessages && errorAnswer
               ? errorMessages.map((message) => <p>{message}</p>)
               : messages.map((message) => <p>{message}</p>)}
+          </p>
+        </div>
+      )}
+
+      {section >= 33 && section <= 50 && (
+        <div
+          className="instruction"
+          style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}
+        >
+          <p>
+            Ahora, vamos a ordenar las cartas según la regla{" "}
+            {rule === "forma" && "forma"}
+            {rule === "color" && "color"}
+            {rule === "cantidades" && "cantidad"}
           </p>
         </div>
       )}
