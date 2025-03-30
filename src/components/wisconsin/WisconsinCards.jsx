@@ -22,6 +22,7 @@ function WisconsinCards({
   randomSections,
   setRandomSections,
   rule,
+  checkboxs,
 }) {
   const [isOverlapping, setIsOverlapping] = useState(null);
   const [errorTutorial, setErrorTutorial] = useState(false);
@@ -108,7 +109,7 @@ function WisconsinCards({
           setColorSections(newColorSections);
         }
 
-        if (section >= 33 && section <= 50) {
+        if (section >= 37 && section <= 54) {
           const newRandomSections = randomSections.map((card) =>
             card.id === id
               ? {
@@ -173,19 +174,23 @@ function WisconsinCards({
         </div>
       )}
 
-      {section >= 33 && section <= 50 && (
-        <div
-          className="instruction"
-          style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}
-        >
-          <p>
-            Ahora, vamos a ordenar las cartas según la regla{" "}
-            {rule === "forma" && "forma"}
-            {rule === "color" && "color"}
-            {rule === "cantidades" && "cantidad"}
-          </p>
-        </div>
-      )}
+      {section >= 37 &&
+        section <= 54 &&
+        ((rule === "forma" && checkboxs.forma) ||
+          (rule === "color" && checkboxs.color) ||
+          (rule === "cantidad" && checkboxs.cantidad)) && (
+          <div
+            className="instruction"
+            style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}
+          >
+            <p>
+              Ahora, vamos a ordenar las cartas según la regla{" "}
+              {rule === "forma" && "forma"}
+              {rule === "color" && "color"}
+              {rule === "cantidades" && "cantidad"}
+            </p>
+          </div>
+        )}
 
       <div
         style={{

@@ -121,6 +121,11 @@ function Wisconsin() {
   const [colorSections, setColorSections] = useState([]);
   const [percentage, setPercentage] = useState(0);
   const [randomSections, setRandomSections] = useState([]);
+  const [checkboxs, setCheckboxs] = useState({
+    cantidad: true,
+    color: true,
+    forma: true,
+  });
 
   useDisableBack();
   const navigate = useNavigate();
@@ -798,7 +803,7 @@ function Wisconsin() {
           setSection(33);
         } else if (event.key.toLowerCase() === "m") {
           setPercentage(100);
-          setSection(51);
+          setSection(55);
         }
       };
 
@@ -1161,11 +1166,84 @@ function Wisconsin() {
           specialMessage=""
           section={section}
           setSection={setSection}
+          checkboxs={checkboxs}
+          setCheckboxs={setCheckboxs}
+        />
+      )}
+      {section === 33 && (
+        <WisconsinCards
+          cardOneSrc="/images/wisconsin/triangle_yellow_2.png"
+          cardTwoSrc="/images/wisconsin/diamond_yellow_2.png"
+          cardThreeSrc="/images/wisconsin/triangle_blue_4.png"
+          top={-363}
+          right={252}
+          left={-252.9}
+          messages={[
+            "Ahora vamos a jugar el juego de formas. Queremos ordenar la carta de abajo según su forma.",
+          ]}
+          errorMessages={[
+            "Lo siento, esa no es la correcta. Recuerda, debes ordenar la carta según su forma.",
+          ]}
+          successMessages={["Muy bien, seleccionaste la carta correcta."]}
+          correctAnswer="a"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+        />
+      )}
+      {section === 34 && (
+        <WisconsinCards
+          cardOneSrc="/images/wisconsin/circle_blue_1.png"
+          cardTwoSrc="/images/wisconsin/triangle_red_3.png"
+          cardThreeSrc="/images/wisconsin/star_blue_4.png"
+          top={-363}
+          right={252}
+          left={-252.9}
+          messages={[
+            "Ahora vamos a jugar el juego de colores. Queremos ordenar la carta de abajo según su color.",
+          ]}
+          errorMessages={[
+            "Lo siento, esa no es la correcta. Recuerda, debes ordenar la carta según su forma.",
+          ]}
+          successMessages={["Muy bien, seleccionaste la carta correcta."]}
+          correctAnswer="a"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+        />
+      )}
+      {section === 35 && (
+        <WisconsinCards
+          cardOneSrc="/images/wisconsin/circle_red_3.png"
+          cardTwoSrc="/images/wisconsin/triangle_green_2.png"
+          cardThreeSrc="/images/wisconsin/star_blue_2.png"
+          top={-363}
+          right={-252}
+          left={252.9}
+          messages={[
+            "Ahora vamos a jugar el juego de colores. Queremos ordenar la carta de abajo según su color.",
+          ]}
+          errorMessages={[
+            "Lo siento, esa no es la correcta. Recuerda, debes ordenar la carta según su forma.",
+          ]}
+          successMessages={["Muy bien, seleccionaste la carta correcta."]}
+          correctAnswer="l"
+          tutorial={true}
+          section={section}
+          setSection={setSection}
+        />
+      )}
+      {section === 36 && (
+        <WisconsinInstructions
+          instructions={[]}
+          specialMessage="Cuándo el participante esté listo, toca la 'N' para continuar."
+          section={section}
+          setSection={setSection}
         />
       )}
       {randomSections.map(
         (wisconsinSection, index) =>
-          index + 33 === section && (
+          index + 37 === section && (
             <WisconsinCards
               key={`color-${index}`}
               id={wisconsinSection.id}
@@ -1189,10 +1267,11 @@ function Wisconsin() {
               randomSections={randomSections}
               setRandomSections={setRandomSections}
               rule={wisconsinSection.rule}
+              checkboxs={checkboxs}
             />
           )
       )}
-      {section === 51 && (
+      {section === 55 && (
         <div className="instruction">
           <p style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}>
             Súper, muchas gracias, lo hiciste muy bien!
