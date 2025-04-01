@@ -176,19 +176,37 @@ function WisconsinCards({
 
       {section >= 37 &&
         section <= 54 &&
-        ((rule === "forma" && checkboxs.forma) ||
-          (rule === "color" && checkboxs.color) ||
-          (rule === "cantidad" && checkboxs.cantidad)) && (
+        rule === "forma" &&
+        checkboxs.forma && (
           <div
             className="instruction"
             style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}
           >
-            <p>
-              Ahora, vamos a ordenar las cartas según la regla{" "}
-              {rule === "forma" && "forma"}
-              {rule === "color" && "color"}
-              {rule === "cantidades" && "cantidad"}
-            </p>
+            <p>Ahora, vamos a ordenar las cartas según la regla forma</p>
+          </div>
+        )}
+
+      {section >= 37 &&
+        section <= 54 &&
+        rule === "color" &&
+        checkboxs.color && (
+          <div
+            className="instruction"
+            style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}
+          >
+            <p>Ahora, vamos a ordenar las cartas según la regla color</p>
+          </div>
+        )}
+
+      {section >= 37 &&
+        section <= 54 &&
+        rule === "cantidades" &&
+        checkboxs.cantidad && (
+          <div
+            className="instruction"
+            style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}
+          >
+            <p>Ahora, vamos a ordenar las cartas según la regla cantidad</p>
           </div>
         )}
 

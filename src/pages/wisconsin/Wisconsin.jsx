@@ -1203,7 +1203,7 @@ function Wisconsin() {
             "Ahora vamos a jugar el juego de colores. Queremos ordenar la carta de abajo según su color.",
           ]}
           errorMessages={[
-            "Lo siento, esa no es la correcta. Recuerda, debes ordenar la carta según su forma.",
+            "Lo siento, esa no es la correcta. Recuerda, debes ordenar la carta según su color.",
           ]}
           successMessages={["Muy bien, seleccionaste la carta correcta."]}
           correctAnswer="a"
@@ -1221,10 +1221,10 @@ function Wisconsin() {
           right={-252}
           left={252.9}
           messages={[
-            "Ahora vamos a jugar el juego de colores. Queremos ordenar la carta de abajo según su color.",
+            "Ahora vamos a jugar el juego de cantidades. Queremos ordenar la carta de abajo según su la cantidad de figuras.",
           ]}
           errorMessages={[
-            "Lo siento, esa no es la correcta. Recuerda, debes ordenar la carta según su forma.",
+            "Lo siento, esa no es la correcta. Recuerda, debes ordenar la carta según la cantidad de figuras.",
           ]}
           successMessages={["Muy bien, seleccionaste la carta correcta."]}
           correctAnswer="l"
