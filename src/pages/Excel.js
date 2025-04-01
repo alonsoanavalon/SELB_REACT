@@ -18,7 +18,11 @@ export default function Excel () {
     const [fileName, setFileName] = useState()
     const [filteredMoments, setFilteredMoments] = useState([])
     const [studyId, setStudyId] = useState()
-
+    const [courses, setCourses] = useState([])
+    const [courseOptions, setCourseOptions] = useState([])
+    const [selectedCourses, setSelectedCourses] = useState([])
+    const [yearOptions, setYearOptions] = useState([]);
+    const [selectedYears, setSelectedYears] = useState([]);
 
     useEffect(() => {
 
@@ -39,7 +43,47 @@ export default function Excel () {
         get('moments')
         .then(res => setMoments(res));
 
+        get('courses')
+        .then(res => {
+            let courses = []
+            res.forEach(course => {
+                let obj = {}
+                obj['label'] = course.courseName
+                obj['value'] = course.course
+                obj['school'] = course.school
+                courses.push(obj)
+            })
+            setCourses(courses)
+        })
+
     }, [])
+
+
+        useEffect(() => {
+            if (selected.length > 0 && courses.length > 0) {
+                let schoolIds = selected.map(s => s.value);
+                let filteredCourses = courses.filter(course => schoolIds.includes(course.school));
+                setCourseOptions(filteredCourses);
+    
+                let yearsSet = new Set();
+                filteredCourses.forEach(course => {
+                    let courseName = course.label;
+                    if (courseName && courseName.length >= 4) {
+                        let year = courseName.slice(-4);
+                        yearsSet.add(year);
+                    }
+                });
+                let yearsOptionsArr = Array.from(yearsSet).map(year => ({ label: year, value: year }));
+                yearsOptionsArr.sort((a, b) => a.value.localeCompare(b.value));
+                setYearOptions(yearsOptionsArr);
+                if (selectedYears.length === 0) {
+                    setSelectedYears(yearsOptionsArr);
+                }
+            } else {
+                setYearOptions([]);
+                setSelectedYears([]);
+            }
+        }, [selected, courses]);
 
     const setMomentsFiltered = (e) => {
         setStudyId(e.target.value)
@@ -60,6 +104,9 @@ export default function Excel () {
             schoolArray.push(school.value)
         })
         setSelectedSchool(schoolArray)    
+        const schoolIds = schoolArray.map(school => school.value)
+        let filteredCourses = courses.filter(course => schoolIds.includes(course.school))
+        setCourseOptions(filteredCourses)
         return schoolArray
     }
 
@@ -95,11 +142,6 @@ export default function Excel () {
         }
     }
 
-
-    function getStudyId () {
-
-    }
-
     const getCsv = () => {
         const schools = getSelectedSchool()
         const moment = getMoment()
@@ -125,7 +167,9 @@ export default function Excel () {
             dataObject['moment'] = moment
             dataObject['instrument'] = instrument
             dataObject['studyId'] = studyId
-            ;
+            dataObject['years'] = (selectedYears.length > 0 ? selectedYears : yearOptions).map(item => item.value);
+
+
             getFileName(instrument)
 
             
@@ -180,13 +224,31 @@ export default function Excel () {
 
             </div>
 
+
+                <div style={{ marginTop: "1rem" }}>
+                    <MultiSelect
+                        options={yearOptions}
+                        value={selectedYears}
+                        onChange={setSelectedYears}
+                        labelledBy="Select Años"
+                        overrideStrings={{
+                            selectAll:"Todos",
+                            selectSomeItems:"Años",
+                            search:"Buscar",
+                            clearSearch: "Limpiar Búsqueda",
+                            allItemsAreSelected: "Todos han sido seleccionados"
+                        }}
+                    />
+                </div>
+
+
             <select  className="form-select" placeholder='Instrumentos' id="instrumentSelect" defaultValue="empty">
                 <option value="empty" disabled>Instrumentos</option>
                 <optgroup label="Principales">
                 {renderInstruments()}
                 </optgroup>
-                <optgroup label="Otros">
-                <option key={100} value={100}>Corsi (sin contar ejemplos) </option> 
+                    <optgroup label="Otros">
+                    <option key={100} value={100}>Corsi (sin contar ejemplos) </option> 
 
                 </optgroup>
 
