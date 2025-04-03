@@ -233,6 +233,16 @@ function WisconsinCards({
             justifyContent: "center",
             alignItems: "center",
           }}
+          onClick={() => {
+            const event = new KeyboardEvent("keydown", {
+              key: "a",
+              code: "KeyA",
+              keyCode: 65,
+              which: 65,
+              bubbles: true,
+            });
+            document.dispatchEvent(event);
+          }}
         >
           <img src={cardOneSrc} alt="Card One" />
         </div>
@@ -248,6 +258,16 @@ function WisconsinCards({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+          }}
+          onClick={() => {
+            const event = new KeyboardEvent("keydown", {
+              key: "l",
+              code: "KeyL",
+              keyCode: 76,
+              which: 76,
+              bubbles: true,
+            });
+            document.dispatchEvent(event);
           }}
         >
           <img src={cardTwoSrc} alt="Card Two" />
