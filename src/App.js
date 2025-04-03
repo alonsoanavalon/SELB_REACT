@@ -23,7 +23,6 @@ import ParentsForm from './pages/ParentsForm';
 import Aces from './pages/Aces';
 import Fonologico from './pages/Fonologico';
 import Wally from './pages/Wally';
-import EML from './pages/EML';
 import Corsi from './pages/Corsi'
 import Moments from './pages/Moments'
 import Desarrollo from './components/Desarrollo';
@@ -41,6 +40,23 @@ import { ROLES } from './components/constants';
 import AsideJapi from './components/AsideJapi';
 import StudentParentSelector from './pages/StudentParentSelector';
 
+import EML from './pages/EML';
+import StroopNum from './pages/StroopNum';
+import StroopCol from './pages/StroopCol';
+import Autoconcepto from './pages/Autoconcepto';
+import ActMat from './pages/ActMat';
+import Cmasr from './pages/Cmasr';
+import Clpt from './pages/Clpt';
+import ListeningSpan from './pages/ListeningSpan';
+import DigitSpan from './pages/DigitSpan';
+import RegEmocional from './pages/RegEmocional';
+import ActCiencias from './pages/ActCiencias';
+import AnsMat from './pages/AnsMat';
+import CountSpan from './pages/CountSpan';
+import SessionsLogged from './pages/SessionsLogged';
+import JapiInteres from './pages/japi-interes/JapiInteres';
+import Wisconsin from './pages/wisconsin/Wisconsin';
+import AAH from './pages/aah/AAH';
 
 const cookies = new Cookies();
 
@@ -50,14 +66,14 @@ function App() {
   const [isLogged, setIsLogged] = useState(false);
   const [userRole, setUserRole] = useState();
 
-
   function getData(data) {
     let firstTime = true;
 
     if (navigator.onLine && firstTime) {
       firstTime = false;
       del(data)
-      let url =  /*`http://localhost:3500/${data}` ||*/  `https://selb.bond/${data}`
+      let url = `${process.env.REACT_APP_API_URL}/${data}`  
+
       axios(url)
         .then(res => {
           set(data, res.data)
@@ -106,10 +122,21 @@ function App() {
 
     if (navigator.onLine) {
       if (userId !== undefined) {
+        if (isLogged) {
+          axios({
+            method: "post",
+            url: `${process.env.REACT_APP_API_URL}/api/session-logged`,
+            data: {
+              user_id: userId,
+              session_type: "PLATFORM_LOGIN"
+            }
+          })
+        }
+
 
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 1,
             user: userId
@@ -125,7 +152,7 @@ function App() {
           
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 2,
             user: userId
@@ -141,7 +168,7 @@ function App() {
 
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 3,
             user: userId
@@ -157,7 +184,7 @@ function App() {
 
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 4,
             user: userId
@@ -173,7 +200,7 @@ function App() {
 
         axios({
           method: 'get',
-          url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+          url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
           params: {
             instrument: 5,
             user: userId
@@ -189,7 +216,7 @@ function App() {
           
           axios({
               method: 'get',
-              url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+              url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
               params: {
                   instrument: 6,
                   user: userId
@@ -203,7 +230,7 @@ function App() {
             )
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 7,
                     user: userId
@@ -213,14 +240,14 @@ function App() {
             .then(
                 
                 res => {
-                    set('corsiLength', res.data[0]['COUNT(*)'])
+                    set('hnfLength', res.data[0]['COUNT(*)'])
                 }
             )
             
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 8,
                     user: userId
@@ -238,7 +265,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 9,
                     user: userId
@@ -254,7 +281,7 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                     instrument: 10,
                     user: userId
@@ -268,9 +295,11 @@ function App() {
             )
             
             
+
+
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
                 instrument: 11,
                 user: userId
@@ -285,16 +314,222 @@ function App() {
             
             axios({
                 method: 'get',
-                url:/* `http://localhost:3500/instrumentlist` || */ `https://selb.bond/instrumentlist`,
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
                 params: {
-                    instrument: 7,
+                instrument: 12,
+                user: userId
+                }
+            })
+                .then(
+    
+                res => {
+                    set('japiLength', res.data[0]['COUNT(*)'])
+                }
+                )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 13,
                     user: userId
                 }
             })
             .then(
                 
                 res => {
-                    set('hnfLength', res.data[0]['COUNT(*)'])
+                    set('stroopnumLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 14,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('stroopcolLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 15,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('autoconceptoLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 16,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('actMatLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 17,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('cmasrLength', res.data[0]['COUNT(*)'])
+                }
+            )
+
+            axios({
+              method: 'get',
+              url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+              params: {
+                instrument: 19,
+                user: userId
+              }
+            }).then((res) => {
+              set('aahLength', res.data[0]['COUNT(*)'])
+            })
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 20,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('clptLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 21,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('listeningSpanLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 22,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('digitSpanLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 23,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('regEmocionalLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 24,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('actCienciasLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 25,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('ansMatLength', res.data[0]['COUNT(*)'])
+                }
+            )
+            
+            axios({
+                method: 'get',
+                url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+                params: {
+                    instrument: 26,
+                    user: userId
+                }
+            })
+            .then(
+                
+                res => {
+                    set('countSpanLength', res.data[0]['COUNT(*)'])
+                }
+            )
+
+            axios({
+              method: 'get',
+              url: `${process.env.REACT_APP_API_URL}/instrumentlist`,
+              params: {
+                  instrument: 27,
+                  user: userId
+              }
+            })
+            .then(
+                
+                res => {
+                    set('countWisconsinLength', res.data[0]['COUNT(*)'])
                 }
             )
         }
@@ -318,7 +553,8 @@ function App() {
     if (isLogged && userId) {
       if (navigator.onLine) {
         window.localStorage.setItem('school-assignation', JSON.stringify([]));
-        let url = /* `http://localhost:3500/api/school-assignation/${userId}` ||*/ `https://selb.bond/api/school-assignation/${userId}`
+        let url = `${process.env.REACT_APP_API_URL}/api/school-assignation/${userId}`
+
         axios(url)
           .then(res => {
             window.localStorage.setItem('school-assignation', JSON.stringify(res.data));
@@ -357,6 +593,7 @@ function App() {
                   <Route path="/moments" element={<Moments />}></Route>
                   <Route path="/respaldo" element={<Respaldo />}></Route>
                   <Route path="/parents" element={<Parents />}></Route>
+                  <Route path="/sessions-logged" element={<SessionsLogged/>}/>
                   <Route path="/report-panel" element={<ReportPanel />}></Route>
                   <Route path="/school-selector" element={<SchoolSelector />}></Route>
                   <Route path="/desarrollo" element={<Desarrollo />}></Route>
@@ -371,11 +608,25 @@ function App() {
                   <Route path="/esc" element={<Esc />}></Route>
                   <Route path="/wally" element={<Wally />}></Route>
                   <Route path="/eml" element={<EML />}></Route>
+                  <Route path="/japi" element={<JapiInteres />}></Route>
+                  <Route path="/wisconsin" element={<Wisconsin/>}></Route>
+                  <Route path="/stroopnum" element={<StroopNum />}></Route>
+                  <Route path="/stroopcol" element={<StroopCol />}></Route>
+                  <Route path="/autoconcepto" element={<Autoconcepto />}></Route>
+                  <Route path="/actMat" element={<ActMat />}></Route>
+                  <Route path="/cmasr" element={<Cmasr />}></Route>
+                  <Route path="/clpt" element={<Clpt />}></Route>
+                  <Route path="/listeningSpan" element={<ListeningSpan />}></Route>
+                  <Route path="/digitSpan" element={<DigitSpan />}></Route>
+                  <Route path="/regEmocional" element={<RegEmocional />}></Route>
+                  <Route path="/actCiencias" element={<ActCiencias />}></Route>
+                  <Route path="/ansMat" element={<AnsMat />}></Route>
+                  <Route path="/countSpan" element={<CountSpan />}></Route>
                   <Route path="/sessions/course/:id" element={<SessionsByCourse />} />
                   <Route path="/session/:sessionId/course/:courseId/activities" element={<ActivitiesBySessionAndCourse />} />
                   <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />
                   <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent />} />
-
+                  <Route path="/aah" element={<AAH/>} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 

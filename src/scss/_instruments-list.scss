@@ -8,7 +8,7 @@
     
     #instruments-list {
         position:fixed;
-        width:350px;
+        width:700px;
         height:500px;
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
         background-color: #fff;
@@ -18,45 +18,31 @@
         right:0;
         bottom:0;
         border-radius:.8rem ;
-        -webkit-border-radius:.8rem ;
-        -moz-border-radius:.8rem ;
-        -ms-border-radius:.8rem ;
-        -o-border-radius:.8rem ;
         padding:1.2rem;
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
         gap:1rem;
-        display:flex;
-        flex-direction: column;
-        align-items: center;
+        align-items: start;
         align-content: flex-start;
-
         z-index:20; 
     
         
         h4{
             width:100%;
             text-align: center;
-            border-radius:inherit    ;
-            -webkit-border-radius:inherit    ;
-            -moz-border-radius:inherit    ;
-            -ms-border-radius:inherit    ;
-            -o-border-radius:inherit    ;
+            border-radius:inherit;
             padding:inherit;
             color:#3aafb9;
             font-weight: bold;
-            padding:0;
             margin:0;
             font-family: 'Kanit', sans-serif;
             letter-spacing: 1px;
         }
     
         .listed-instrument {
-            cursor: pointer;
             width:100%;
+            cursor: pointer;
             border-radius: .4rem;
-            -webkit-border-radius: .4rem;
-            -moz-border-radius: .4rem;
-            -ms-border-radius: .4rem;
-            -o-border-radius: .4rem;
             font-weight: bold;
             color:#555;
             padding:0;

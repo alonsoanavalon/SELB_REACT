@@ -13,7 +13,7 @@ export default function Excel () {
     
             if (navigator.onLine && firstTime) {
               del(data)
-              let url = /* `http://localhost:3500/${data}` || */ `https://selb.bond/${data}`
+              let url = `${process.env.REACT_APP_API_URL}/${data}`
               axios(url)
               .then(res => {
                 set(data, res.data)
@@ -50,7 +50,7 @@ export default function Excel () {
             if (result.isConfirmed) {
                  axios({
                     method: 'post',
-                    url:  /* 'http://localhost:3500/admin/moments' || */ 'https://selb.bond/admin/moments',
+                    url: `${process.env.REACT_APP_API_URL}/admin/moments`,
                     data: {
                         "moments":moments
                     }

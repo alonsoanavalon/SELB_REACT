@@ -15,7 +15,7 @@ export default function ExercisesByStudentActivity() {
   useEffect(() => {
     if (sessionId && courseId && activityId) {  
       ;
-      const url = `https://selb.bond/api/session/course/${courseId}/session/${sessionId}/activity/${activityId}/student/${studentId}`;
+      const url = `${process.env.REACT_APP_API_URL}/api/session/course/${courseId}/session/${sessionId}/activity/${activityId}/student/${studentId}`
       axios(url)
         .then(res => {
           ;

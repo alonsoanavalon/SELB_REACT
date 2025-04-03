@@ -651,8 +651,8 @@ template {
 }
 #instruments-list-wrapper #instruments-list {
   position: fixed;
-  width: 350px;
-  height: 500px;
+  width: 700px;
+  height: 480px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
   background-color: #fff;
   margin: auto;
@@ -661,15 +661,11 @@ template {
   right: 0;
   bottom: 0;
   border-radius: 0.8rem;
-  -webkit-border-radius: 0.8rem;
-  -moz-border-radius: 0.8rem;
-  -ms-border-radius: 0.8rem;
-  -o-border-radius: 0.8rem;
   padding: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: start;
   align-content: flex-start;
   z-index: 20;
 }
@@ -690,13 +686,9 @@ template {
   letter-spacing: 1px;
 }
 #instruments-list-wrapper #instruments-list .listed-instrument {
-  cursor: pointer;
   width: 100%;
+  cursor: pointer;
   border-radius: 0.4rem;
-  -webkit-border-radius: 0.4rem;
-  -moz-border-radius: 0.4rem;
-  -ms-border-radius: 0.4rem;
-  -o-border-radius: 0.4rem;
   font-weight: bold;
   color: #555;
   padding: 0;
@@ -1231,68 +1223,68 @@ template {
 }
 
 .hnf-container {
-  display: flex;
-  flex-direction: column;
-}
-.hnf-container .hnf-option-container {
-  display: flex;
-  border: 1px solid #ccc;
-  justify-content: space-between;
-  border-radius: 0.5rem;
-  margin: 2rem;
-  position: relative !important;
-}
-.hnf-container .hnf-box {
-  width: 50%;
-  height: 200px;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  z-index: 2;
-}
-.hnf-container .hnf-button-container {
-  display: flex;
-  justify-content: space-around;
-  border-radius: 0.5rem;
-}
-.hnf-container .hnf-button-container .hnf-button {
-  width: 400px;
-  height: 250px;
-  border-radius: 0.5rem;
-  border: none;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
-  background-color: #f3f3f7;
-}
-.hnf-container .hnf-button-container .hnf-button:active {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-.hnf-heart {
-  background-image: url("/public/images/corazon.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.hnf-flower {
-  background-image: url("/public/images/flower.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 10px;
-}
-
-.hnf-instructions-1 {
-  position: absolute;
-  width: 100%;
-  height: 600px;
-  z-index: 10;
-  background-color: #fff;
-}
-.hnf-instructions-1 div h4 {
-  width: 80%;
-  margin: 2rem auto;
-  text-align: center;
-}
+    display: flex;
+    flex-direction: column;
+  }
+  .hnf-container .hnf-option-container {
+    display: flex;
+    border: 1px solid #ccc;
+    justify-content: space-between;
+    border-radius: 0.5rem;
+    margin: 2rem;
+    position: relative !important;
+  }
+  .hnf-container .hnf-box {
+    width: 50%;
+    height: 200px;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    z-index: 2;
+  }
+  .hnf-container .hnf-button-container {
+    display: flex;
+    justify-content: space-around;
+    border-radius: 0.5rem;
+  }
+  .hnf-container .hnf-button-container .hnf-button {
+    width: 400px;
+    height: 250px;
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
+    background-color: #f3f3f7;
+  }
+  .hnf-container .hnf-button-container .hnf-button:active {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+  
+  .hnf-heart {
+    background-image: url("/public/images/corazon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  .hnf-flower {
+    background-image: url("/public/images/flower.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 10px;
+  }
+  
+  .hnf-instructions-1 {
+    position: absolute;
+    width: 100%;
+    height: 600px;
+    z-index: 10;
+    background-color: #fff;
+  }
+  .hnf-instructions-1 div h4 {
+    width: 80%;
+    margin: 2rem auto;
+    text-align: center;
+  }
 
 .plusOverlay {
   background-color: #fff;
@@ -1783,3 +1775,859 @@ input[type=number] {
 }
 
 /*# sourceMappingURL=styles.css.map */
+
+
+  
+/* --------------------------------------- STROOP NUMÉRICO --------------------------------------- */
+.stroopnum-black-section {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    font-family: "Times New Roman", Times, serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stroopnum-cross-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1%;
+    height: 100px;
+    transform: translate(-50%, -45%);
+    z-index: 1; /* Asegúrate de que la cruz esté delante del contenido */
+}
+
+.stroopnum-cross {
+    position: absolute;
+    background-color: white;
+}
+
+.stroopnum-horizontal {
+    width: 100%;
+    height: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.stroopnum-vertical {
+    width: 3px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenedor principal */
+.stroopnum-container {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Texto central */
+.stroopnum-central-text {
+    color: white;
+    font-size: 50px;
+    margin-bottom: 100px;
+}
+
+/* Estilos generales para los botones */
+.stroopnum-button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales */
+    grid-template-rows: repeat(2, 1fr); /* 2 filas iguales */
+    gap: 10px; /* Espacio entre los botones */
+    width: 300px; /* Ancho fijo para las grillas */
+    height: 300px; /* Alto fijo para las grillas */
+}
+
+/* Grilla inferior izquierda */
+.stroopnum-button-grid-left {
+    position: absolute;
+    bottom: 20px; /* Ajusta según sea necesario */
+    left: 100px; /* Ajusta según sea necesario */
+}
+
+/* Grilla inferior derecha */
+.stroopnum-button-grid-right {
+    position: absolute;
+    bottom: 20px; /* Ajusta según sea necesario */
+    right: 60px; /* Ajusta según sea necesario */
+}
+
+/* Botones redondos */
+.stroopnum-no-button {
+    background-color: black;
+    color: black;
+    border: none;
+    width: 100px;
+    height: 100px;
+}
+
+/* Botones redondos */
+.stroopnum-round-button {
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    font-size: 36px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stroopnum-round-button.highlight{
+    border-color: blue;
+    background-color: #fffc61;
+}
+
+/* --------------------------------------- STROOP COLOR --------------------------------------- */
+.stroopcol-black-section {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    font-family: "Times New Roman", Times, serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stroopcol-cross-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -45%);
+    z-index: 1; /* Asegúrate de que la cruz esté delante del contenido */
+}
+
+.stroopcol-cross {
+    position: absolute;
+    background-color: white;
+}
+
+.stroopcol-horizontal {
+    width: 100%;
+    height: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.stroopcol-vertical {
+    width: 3px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Contenedor principal */
+.stroopcol-container {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Texto central */
+.stroopcol-central-text {
+    color: white;
+    font-size: 50px;
+    margin-bottom: 100px;
+}
+
+/* Estilos generales para los botones */
+.stroopcol-button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales */
+    grid-template-rows: repeat(2, 1fr); /* 2 filas iguales */
+    gap: 10px; /* Espacio entre los botones */
+    width: 300px; /* Ancho fijo para las grillas */
+    height: 300px; /* Alto fijo para las grillas */
+}
+
+/* Grilla inferior izquierda */
+.stroopcol-button-grid-left {
+    position: absolute;
+    bottom: 30px; /* Ajusta según sea necesario */
+    left: 100px; /* Ajusta según sea necesario */
+}
+
+/* Grilla inferior derecha */
+.stroopcol-button-grid-right {
+    position: absolute;
+    bottom: 30px; /* Ajusta según sea necesario */
+    right: 70px; /* Ajusta según sea necesario */
+}
+
+/* Botones redondos */
+.stroopcol-no-button {
+    background-color: black;
+    color: black;
+    border: none;
+    width: 100px;
+    height: 100px;
+}
+
+/* Botones redondos */
+.stroopcol-round-button {
+    background-color: white;
+    color: black;
+    border: 8px solid;
+    border-color: black;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stroopcol-round-button.highlight{
+    border-color: white;
+}
+
+/* --------------------------------------- CMASR --------------------------------------- */
+
+/* Contenedor principal */
+.cmasr-container {
+    display: flex;
+    flex-direction: column; /* Organiza los elementos verticalmente */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+/* Contenedor de botones */
+.cmasr-button-container {
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 140px;
+}
+
+/* Contenedor de la imagen */
+.cmasr-image-container {
+    position: center;
+    transform: translate(0%, -40%); /* Centra la imagen */
+}
+
+/* Imagen centrada */
+.cmasr-center-image {
+    width: 350px; /* Ajusta el tamaño de la imagen según sea necesario */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+/* Texto central en un rectángulo redondeado */
+.cmasr-central-text {
+    color: rgb(0, 0, 0);
+    font-family: "Times New Roman", Times, serif;
+    font-size: 28px;
+    margin-bottom: 150px;
+    background-color: #ffffff; /* Fondo blanco para el rectángulo */
+    padding-top: 40px; /* Espaciado interno para crear el rectángulo alrededor del texto */
+    padding-bottom: 40px; /* Espaciado interno para crear el rectángulo alrededor del texto */
+    padding-left: 100px;
+    padding-right: 100px;
+    border-radius: 12px; /* Grado de redondeo de las esquinas */
+    border: 2.25px solid #000000; /* Borde negro de 2px */
+    text-align: center; /* Centra el texto dentro del rectángulo */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto de elevación */
+}
+
+
+/* Botones redondeados */
+.cmasr-round-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffffff; /* Fondo blanco para el rectángulo */
+    font-family: "Times New Roman", Times, serif;
+    border-style: solid;
+    border-width: 2.25px;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 28px;
+    cursor: pointer;
+    width: 150px; /* Ancho fijo del botón */
+    height: 100px; /* Alto fijo del botón */
+    border-color: #000000; /* Color de borde predeterminado */
+    transition: border-color 0.3s ease; /* Transición suave para el cambio de color */
+    color: #000; /* Color del texto predeterminado */
+}
+
+/* Estilo del botón activo (al presionar) */
+.cmasr-round-button.active {
+    border-color: blue; /* Color del borde cuando el botón está activo */
+    background-color: #ffffff; /* Fondo ligeramente gris para indicar presión */
+}
+
+.cmasr-round-button.highlight {
+    border-color: blue; /* Color del borde cuando el botón está activo */
+    background-color: #fffc61; /* Fondo ligeramente gris para indicar presión */
+}
+
+
+/* Botón redondo con imagen */
+.cmasr-top-right-button {
+    position: absolute;
+    top: 90px;
+    right: 30px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%; /* Redondear el botón */
+    background-color: #bfbfbf; /* Color de fondo del botón */
+    border-width: 4px;
+    border-color: #bfbfbf;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.cmasr-top-right-button.highlight {
+    border-color: blue; /* Color del borde cuando el botón está activo */
+    background-color: #fffc61; /* Fondo ligeramente gris para indicar presión */
+}
+
+.cmasr-top-right-button img {
+    width: 40px; /* Ajusta el tamaño de la imagen */
+    height: 40px;
+}
+
+.cmasr-bottom-right-button {
+    display: inline; /* Utiliza flexbox para alinear imagen y texto */
+    align-items: center; /* Centra verticalmente la imagen y el texto */
+    padding: 10px 0px; /* Espaciado interno del botón */
+    border-radius: 20px; /* Bordes redondeados */
+    border-style: solid;
+    border-width: 3px;
+    border-color: #ffffff; /* Bordes redondeados */
+    background-color: #ffffff; /* Color de fondo */
+    cursor: pointer; /* Cursor en forma de mano al pasar sobre el botón */
+    position: absolute;
+    bottom: 15px;
+    right: 0px;
+}
+
+.cmasr-bottom-right-button.highlight {
+    border-color: blue;
+    background-color: #fffc61;
+}
+
+.cmasr-arrow {
+    width: 70%;
+    height: auto;
+    object-fit: cover;
+}
+
+.cmasr-button-text {
+    position: absolute; /* Posiciona el texto en relación al botón */
+    top: 50%; /* Centra verticalmente el texto */
+    left: 60%; /* Centra horizontalmente el texto */
+    transform: translate(-80%, -50%); /* Ajusta la posición para centrar completamente */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-size: 20px; /* Tamaño de la fuente */
+    font-weight: bold; /* Negrita */
+    pointer-events: none; /* Evita que el texto interfiera con el clic en el botón */
+}
+
+/* --------------------------------------- AUTOCONCEPTO --------------------------------------- */
+
+/* Contenedor principal */
+.autocon-container {
+    display: flex;
+    flex-direction: column; /* Organiza los elementos verticalmente */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+/* Contenedor de botones */
+.autocon-button-container {
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 200px;
+}
+
+/* Contenedor de la imagen */
+.autocon-image-container {
+    position: center;
+    transform: translate(0%, -40%); /* Centra la imagen */
+}
+
+/* Imagen centrada */
+.autocon-center-image {
+    width: 350px; /* Ajusta el tamaño de la imagen según sea necesario */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+/* Texto central en un rectángulo redondeado */
+.autocon-central-text {
+    color: rgb(0, 0, 0);
+    font-family: "Times New Roman", Times, serif;
+    font-size: 28px;
+    margin-bottom: 230px;
+    background-color: #ffffff; /* Fondo blanco para el rectángulo */
+    padding-top: 40px; /* Espaciado interno para crear el rectángulo alrededor del texto */
+    padding-bottom: 40px; /* Espaciado interno para crear el rectángulo alrededor del texto */
+    padding-left: 100px;
+    padding-right: 100px;
+    border-radius: 12px; /* Grado de redondeo de las esquinas */
+    border: 2.25px solid #000000; /* Borde negro de 2px */
+    text-align: center; /* Centra el texto dentro del rectángulo */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto de elevación */
+}
+
+
+/* Botones redondeados */
+.autocon-round-button {
+    display: flex; /* Cambiado de inline-block a flex */
+    flex-direction: column; /* Asegura que el contenido esté en columna */
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: center; /* Centra horizontalmente el contenido */
+    padding: 10px 20px;
+    background-color: #ffffff; /* Fondo blanco para el rectángulo */
+    font-family: "Times New Roman", Times, serif;
+    border-style: solid;
+    border-width: 2.25px;
+    border-radius: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 28px;
+    cursor: pointer;
+    width: 170px; /* Ancho fijo del botón */
+    height: 100px; /* Alto fijo del botón */
+    border-color: #000000; /* Color de borde predeterminado */
+    transition: border-color 0.3s ease; /* Transición suave para el cambio de color */
+    color: #000; /* Color del texto predeterminado */
+}
+
+/* Estilo del texto en negrita */
+.autocon-round-button .text-bold {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+/* Estilo del texto normal */
+.autocon-round-button .text-normal {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.autocon-round-button.highlight {
+    border-color: blue;
+    background-color: #fffc61;
+}
+
+/* Estilo del botón activo (al presionar) */
+.autocon-round-button.active {
+    border-color: blue; /* Color del borde cuando el botón está activo */
+    background-color: #ffffff; /* Fondo ligeramente gris para indicar presión */
+}
+
+.autocon-bottom-right-button {
+    display: inline; /* Utiliza flexbox para alinear imagen y texto */
+    align-items: center; /* Centra verticalmente la imagen y el texto */
+    padding: 10px 0px; /* Espaciado interno del botón */
+    border-radius: 20px; /* Bordes redondeados */
+    border-style: solid;
+    border-width: 3px;
+    border-color: #ffffff; /* Bordes redondeados */
+    background-color: #ffffff; /* Color de fondo */
+    cursor: pointer; /* Cursor en forma de mano al pasar sobre el botón */
+    position: absolute;
+    bottom: 15px;
+    right: 0px;
+}
+
+.autocon-bottom-right-button.highlight {
+    border-color: blue;
+    background-color: #fffc61;
+}
+
+.autocon-arrow {
+    width: 70%;
+    height: auto;
+    object-fit: cover;
+}
+
+.autocon-button-text {
+    position: absolute; /* Posiciona el texto en relación al botón */
+    top: 50%; /* Centra verticalmente el texto */
+    left: 60%; /* Centra horizontalmente el texto */
+    transform: translate(-80%, -50%); /* Ajusta la posición para centrar completamente */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-size: 20px; /* Tamaño de la fuente */
+    font-weight: bold; /* Negrita */
+    pointer-events: none; /* Evita que el texto interfiera con el clic en el botón */
+}
+
+/* --------------------------------------- ACT.MAT --------------------------------------- */
+
+/* Contenedor principal */
+.actmat-container {
+    display: flex;
+    flex-direction: column; /* Organiza los elementos verticalmente */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+/* Contenedor de botones */
+.actmat-button-container {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 200px;
+}
+
+/* Contenedor de la imagen */
+.actmat-image-container {
+    position: center;
+    transform: translate(0%, -40%); /* Centra la imagen */
+}
+
+/* Imagen centrada */
+.actmat-center-image {
+    width: 350px; /* Ajusta el tamaño de la imagen según sea necesario */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+/* Texto central en un rectángulo redondeado */
+.actmat-central-text {
+    color: rgb(0, 0, 0);
+    font-family: "Times New Roman", Times, serif;
+    font-size: 40px;
+    margin-bottom: 230px;
+    background-color: #ffffff; /* Fondo blanco para el rectángulo */
+    padding-top: 40px; /* Espaciado interno para crear el rectángulo alrededor del texto */
+    padding-bottom: 40px; /* Espaciado interno para crear el rectángulo alrededor del texto */
+    padding-left: 100px;
+    padding-right: 100px;
+    text-align: center; /* Centra el texto dentro del rectángulo */
+}
+
+.actmat-label {
+    display: flex; /* Cambiado de inline-block a flex */
+    flex-direction: column; /* Asegura que el contenido esté en columna */
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: center; /* Centra horizontalmente el contenido */
+    padding: 10px 20px;
+    background-color: #ffffff; /* Fondo blanco para el rectángulo */
+    font-family: "Times New Roman", Times, serif;
+    border-width: 0px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    width: auto; /* Ancho fijo del botón */
+    height: auto; /* Alto fijo del botón */
+    border-color: #000000; /* Color de borde predeterminado */
+    transition: border-color 0.3s ease; /* Transición suave para el cambio de color */
+    color: #000; /* Color del texto predeterminado */
+}
+
+/* Botones */
+.actmat-button {
+    display: flex; /* Cambiado de inline-block a flex */
+    flex-direction: column; /* Asegura que el contenido esté en columna */
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: center; /* Centra horizontalmente el contenido */
+    padding: 0px 40px;
+    background-color: #ffffff; /* Fondo blanco para el rectángulo */
+    font-family: "Times New Roman", Times, serif;
+    border-style: solid;
+    border-width: 3px 1.5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 28px;
+    cursor: pointer;
+    width: auto; /* Ancho fijo del botón */
+    height: auto; /* Alto fijo del botón */
+    border-color: #000000; /* Color de borde predeterminado */
+    transition: border-color 0.3s ease; /* Transición suave para el cambio de color */
+    color: #000; /* Color del texto predeterminado */
+}
+
+.actmat-button.highlight {
+    border-color: blue;
+    background-color: #fffc61;
+}
+
+/* Estilo del botón activo (al presionar) */
+.actmat-button.active {
+    border-color: blue; /* Color del borde cuando el botón está activo */
+    background-color: #ffffff; /* Fondo ligeramente gris para indicar presión */
+}
+
+.actmat-bottom-right-button {
+    display: inline; /* Utiliza flexbox para alinear imagen y texto */
+    align-items: center; /* Centra verticalmente la imagen y el texto */
+    padding: 10px 0px; /* Espaciado interno del botón */
+    border-radius: 20px; /* Bordes redondeados */
+    border-style: solid;
+    border-width: 3px;
+    border-color: #ffffff; /* Bordes redondeados */
+    background-color: #ffffff; /* Color de fondo */
+    cursor: pointer; /* Cursor en forma de mano al pasar sobre el botón */
+    position: absolute;
+    bottom: 15px;
+    right: 0px;
+}
+
+.actmat-bottom-right-button.highlight {
+    border-color: blue;
+    background-color: #fffc61;
+}
+
+.actmat-arrow {
+    width: 70%;
+    height: auto;
+    object-fit: cover;
+}
+
+.actmat-button-text {
+    position: absolute; /* Posiciona el texto en relación al botón */
+    top: 50%; /* Centra verticalmente el texto */
+    left: 60%; /* Centra horizontalmente el texto */
+    transform: translate(-80%, -50%); /* Ajusta la posición para centrar completamente */
+    color: rgb(0, 0, 0); /* Color del texto */
+    font-size: 20px; /* Tamaño de la fuente */
+    font-weight: bold; /* Negrita */
+    pointer-events: none; /* Evita que el texto interfiera con el clic en el botón */
+}
+
+/* --------------------------------------- LISTENING SPAN --------------------------------------- */
+.listspan-black-section {
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Utiliza toda la altura de la ventana */
+    width: 100vw; /* Utiliza toda la anchura de la ventana */
+    background-color: black;
+    font-family: "Times New Roman", Times, serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: center; /* Centra horizontalmente el contenido */
+    overflow: hidden; /* Evita barras de desplazamiento */
+}
+
+/* Contenedor principal */
+.listspan-container {
+    text-align: center;
+    width: 100%; /* Ajustado al 100% para ocupar el espacio completo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.listspan-text-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* El contenedor ocupará toda la pantalla */
+    width: 100vw;  /* El ancho del contenedor será el 100% de la pantalla */
+    text-align: center;
+}
+
+.listspan-central-text {
+    color: rgb(255, 255, 255);
+    font-family: "Times New Roman", Times, serif;
+    font-size: 50px;
+    background-color: transparent;
+    text-align: center;
+}
+
+/* Ajustar el contenedor de la imagen para centrarlo correctamente */
+.listspan-image-container {
+    padding-top: 1rem; /* Ajusta el espacio superior */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ajustar el tamaño de la imagen */
+.listspan-center-image {
+    width: 100px;
+    height: auto;
+    max-width: 100%;
+}
+
+/* Botones debajo de la imagen */
+.listspan-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    width: 100%;
+}
+
+/* Estilos de los botones */
+.listspan-button {
+    padding: 10px 20px;
+    margin: 0 6%; /* Ajusta el espacio entre los botones */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 32px;
+    font-weight: bold;
+    width: 200px;
+    height: 75px;
+}
+
+/* Estilo para la grilla de botones */
+.listspan-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas para un total de 12 botones */
+    grid-gap: 20px 70px; /* Espacio entre los elementos de la grilla */
+}
+
+/* Estilo para cada ítem de la grilla */
+.listspan-grid-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.listspan-grid-button {
+    font-size: 20px;
+    width: 70px;
+    height: 36px;
+    font-weight: bold;
+}
+
+.listspan-grid-button:disabled {
+    background-color: white;
+    color: black;
+}
+
+.listspan-grid-text {
+    color: white;
+    font-size: 28px;
+}
+
+/* Texto debajo de la grilla */
+.listspan-info-text {
+    font-size: 28px;
+    font-weight: bold;
+    color: white; /* Ajusta el color según tu diseño */
+    margin: 40px;
+    height: 30px;
+}
+
+/* Botones adicionales debajo del texto */
+.listspan-additional-buttons {
+    display: flex;
+    gap: 60px; /* Espacio entre los botones */
+    margin-bottom: 60px;
+}
+
+.listspan-additional-button {
+    padding: 10px 20px;
+    font-size: 20px;
+    width: 120px;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+/* --------------------------------------- COUNTING SPAN --------------------------------------- */
+/* Contenedor principal */
+.countspan-centered-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Asegura que el contenedor ocupe toda la pantalla */
+}
+
+/* Contenedor de la imagen */
+.countspan-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 650px; /* Limita el ancho máximo de la imagen */
+    margin-bottom: 10px;
+}
+
+/* Imagen que se adapta a la pantalla */
+.countspan-image {
+    max-width: 100%; /* La imagen no excede el ancho del contenedor */
+    height: auto; /* Mantiene las proporciones de la imagen */
+    max-height: 80vh; /* Asegura que la imagen no sea demasiado alta */
+}
+
+/* Contenedor de los botones */
+.countspan-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Fila de botones */
+.countspan-button-row {
+    display: flex;
+    justify-content: center;
+}
+
+/* Botones numerados */
+.countspan-number-button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #fff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 26px;
+    font-family: 'Times New Roman';
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+}
+
+/* Estilo del botón activo (al presionar) */
+.countspan-number-button.active {
+    border: 2px solid blue; /* Color del borde cuando el botón está activo */
+    background-color: #eca649; /* Fondo ligeramente gris para indicar presión */
+    color: black;
+    font-weight: bold;
+}
+
+
+.countspan-number-button:disabled {
+    /* background-color: white; */
+    color: black;
+}

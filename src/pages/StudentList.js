@@ -3,6 +3,7 @@ import { get } from 'idb-keyval';
 import Select from 'react-select';
 import Students from '../components/Students';
 import InstrumentsList from '../components/InstrumentsList';
+import ListedInstrument from '../components/ListedInstrument'
 
 export default function StudentList() {
 
@@ -61,7 +62,7 @@ export default function StudentList() {
                     return localInstruments.filter(instrument => instrument['instrument_type_id'] === 1);
                 }
             } else {
-                return data.filter(instrument => instrument['instrument_type_id'] === 1 && instrument['id'] < 12);
+                return data;
             }
         })
         .then(filteredInstruments => setInstruments(filteredInstruments));

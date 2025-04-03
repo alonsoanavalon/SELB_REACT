@@ -12,7 +12,7 @@ export default function SessionsByCourse() {
 
   useEffect(() => {
     if (id) {
-      const url = `https://selb.bond/api/session/course/${id}`
+      const url = `${process.env.REACT_APP_API_URL}/api/session/course/${id}`
       axios(url)
         .then(res => {
           setExercisesBySession(res.data);

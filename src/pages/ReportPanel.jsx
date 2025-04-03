@@ -61,7 +61,7 @@ export default function ReportPanel () {
       if (navigator.onLine && firstTime) {
         firstTime = false;
         del(data)
-        let url =  /*`http://localhost:3500/${data}` ||*/  `https://selb.bond/${data}`
+        let url = `${process.env.REACT_APP_API_URL}/${data}`
         axios(url)
           .then(res => {
             set(data, res.data)
@@ -75,7 +75,7 @@ export default function ReportPanel () {
         if (navigator.onLine && firstTime) {
           firstTime = false;
           del(data)
-          let url =  /*`http://localhost:3500/${data}` ||*/  `https://selb.bond/${data}`
+          let url = `${process.env.REACT_APP_API_URL}/${data}`
           axios(url)
             .then(res => {
                 ;

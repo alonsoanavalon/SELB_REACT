@@ -1,27 +1,12 @@
-//actualizar la version del cache cuando se realizan cambios en la app, para //service worker pueda actualizar el cache y no se quede con la version anterior 
-let cacheData = "app-v2.0.6";
+const cacheData = "app-v2.0.12";
+
 this.addEventListener("install", evt => {
-    console.log("installing")
-
-    //asegurarnos que las tablets/clientes no tengan la version anterior del cache 
-    caches.delete("app-v41")
-    caches.delete("app-v42")
-    caches.delete("app-v43")
-    caches.delete("app-v44")
-    caches.delete("app-v2.0")
-    caches.delete("app-v2.0.1")
-    caches.delete("app-v2.0.2")
-    caches.delete("app-v2.0.3")
-    caches.delete("app-v2.0.4")
-    caches.delete("app-v2.0.5")
-
-    
-    
+    console.log("Instalando el Service Worker...")
 
     //agregar los archivos al cache, si se agregan nuevos test o archivos a la app, se deben agregar aqui, sino no se podran cargar en modo offline
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
-            cache.addAll([
+            return cache.addAll([
                 '/logo192.png',
                 '/manifest.json',
                 '/static/js/bundle.js',
@@ -295,6 +280,80 @@ this.addEventListener("install", evt => {
                 '/images/esc-18.png',
                 '/images/esc-19.png',
                 '/images/esc-20.png',
+                '/eml',
+                '/japi',
+                '/images/huron.png',
+                '/sessions-logged',
+                '/wisconsin',
+                '/images/wisconsin_estrella_azul.png',
+                '/images/wisconsin_estrella_roja.png',
+                '/images/wisconsin_tren_azul.png',
+                '/images/wisconsin_tren_rojo.png',
+                '/images/wisconsin/circle_blue_1.jpg',
+                '/images/wisconsin/circle_blue_2.jpg',
+                '/images/wisconsin/circle_blue_3.jpg',
+                '/images/wisconsin/circle_blue_4.jpg',
+                '/images/wisconsin/circle_yellow_1.jpg',
+                '/images/wisconsin/circle_yellow_2.jpg',
+                '/images/wisconsin/circle_yellow_3.jpg',
+                '/images/wisconsin/circle_yellow_4.jpg',
+                '/images/wisconsin/circle_red_1.jpg',
+                '/images/wisconsin/circle_red_2.jpg',
+                '/images/wisconsin/circle_red_3.jpg',
+                '/images/wisconsin/circle_red_4.jpg',
+                '/images/wisconsin/circle_green_1.jpg',
+                '/images/wisconsin/circle_green_2.jpg',
+                '/images/wisconsin/circle_green_3.jpg',
+                '/images/wisconsin/circle_green_4.jpg',
+                '/images/wisconsin/diamond_blue_1.jpg',
+                '/images/wisconsin/diamond_blue_2.jpg',
+                '/images/wisconsin/diamond_blue_3.jpg',
+                '/images/wisconsin/diamond_blue_4.jpg',
+                '/images/wisconsin/diamond_yellow_1.jpg',
+                '/images/wisconsin/diamond_yellow_2.jpg',
+                '/images/wisconsin/diamond_yellow_3.jpg',
+                '/images/wisconsin/diamond_yellow_4.jpg',
+                '/images/wisconsin/diamond_red_1.jpg',
+                '/images/wisconsin/diamond_red_2.jpg',
+                '/images/wisconsin/diamond_red_3.jpg',
+                '/images/wisconsin/diamond_red_4.jpg',
+                '/images/wisconsin/diamond_green_1.jpg',
+                '/images/wisconsin/diamond_green_2.jpg',
+                '/images/wisconsin/diamond_green_3.jpg',
+                '/images/wisconsin/diamond_green_4.jpg',
+                '/images/wisconsin/star_blue_1.jpg',
+                '/images/wisconsin/star_blue_2.jpg',
+                '/images/wisconsin/star_blue_3.jpg',
+                '/images/wisconsin/star_blue_4.jpg',
+                '/images/wisconsin/star_yellow_1.jpg',
+                '/images/wisconsin/star_yellow_2.jpg',
+                '/images/wisconsin/star_yellow_3.jpg',
+                '/images/wisconsin/star_yellow_4.jpg',
+                '/images/wisconsin/star_red_1.jpg',
+                '/images/wisconsin/star_red_2.jpg',
+                '/images/wisconsin/star_red_3.jpg',
+                '/images/wisconsin/star_red_4.jpg',
+                '/images/wisconsin/star_green_1.jpg',
+                '/images/wisconsin/star_green_2.jpg',
+                '/images/wisconsin/star_green_3.jpg',
+                '/images/wisconsin/star_green_4.jpg',
+                '/images/wisconsin/triangle_blue_1.jpg',
+                '/images/wisconsin/triangle_blue_2.jpg',
+                '/images/wisconsin/triangle_blue_3.jpg',
+                '/images/wisconsin/triangle_blue_4.jpg',
+                '/images/wisconsin/triangle_yellow_1.jpg',
+                '/images/wisconsin/triangle_yellow_2.jpg',
+                '/images/wisconsin/triangle_yellow_3.jpg',
+                '/images/wisconsin/triangle_yellow_4.jpg',
+                '/images/wisconsin/triangle_red_1.jpg',
+                '/images/wisconsin/triangle_red_2.jpg',
+                '/images/wisconsin/triangle_red_3.jpg',
+                '/images/wisconsin/triangle_red_4.jpg',
+                '/images/wisconsin/triangle_green_1.jpg',
+                '/images/wisconsin/triangle_green_2.jpg',
+                '/images/wisconsin/triangle_green_3.jpg',
+                '/images/wisconsin/triangle_green_4.jpg',
+
             ])
         })
     )
@@ -309,15 +368,29 @@ this.addEventListener("fetch", evt => {
                 if(res) {
                     return res
                 }
-                let requestUrl = evt.request.clone();
-                fetch(requestUrl)
+                const requestUrl = evt.request.clone();
+                return fetch(requestUrl)
             }))
         )
     }
 
 })
 
-this.addEventListener('activate', function(event) {
-    console.log('activando')
-  })
+
+this.addEventListener("activate", event => {
+    console.log("Activando el nuevo service worker...");
+    const currentCache = cacheData; // La versión actual del caché
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cache => {
+                    if (cache !== currentCache) {
+                        console.log(`Eliminando caché antiguo: ${cache}`);
+                        return caches.delete(cache);
+                    }
+                })
+            );
+        })
+    );
+});
 

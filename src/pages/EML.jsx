@@ -32,15 +32,15 @@ export default function EML () {
             setEmlItems([
                 {
                     itemId: 1101,
-                    num: 1, title: "1. Mis amigos creen que yo soy:",
+                    num: 1, title: "1. Respecto de la lectura, mis amigos creen que yo soy:",
                     value1:"4", answer1: "un muy buen lector",
                     value2:"3", answer2: "un buen lector",
                     value3:"2", answer3: "un lector medio",
-                    value4:"1", answer4: "un mal lector"
+                    value4:"1", answer4: "no lector"
                 },
                 {
                     itemId: 1102,
-                    num: 2, title: "2. Leer un libro es algo que a mí me gusta hacer:",
+                    num: 2, title: "2. Leer un libro/cuento/historia es algo que a mí (colocar el nombre del niño) me gusta hacer:",
                     value1:"1", answer1: "nunca",
                     value2:"2", answer2: "no muy seguido",
                     value3:"3", answer3: "a veces",
@@ -72,7 +72,7 @@ export default function EML () {
                 },
                 {
                     itemId: 1106,
-                    num: 6, title: "6. Yo le cuento a mis amigos sobre los buenos libros para leer.",
+                    num: 6, title: "6. Yo le cuento a mis amigos sobre los buenos libros/cuentos/historias para leer.",
                     value1:"1", answer1: "nunca lo hago",
                     value2:"2", answer2: "casi nunca lo hago",
                     value3:"3", answer3: "lo hago algunas veces",
@@ -80,7 +80,7 @@ export default function EML () {
                 },
                 {
                     itemId: 1107,
-                    num: 7, title: "7. Cuando leo solo, comprendo :",
+                    num: 7, title: "7. Cuando leo o me leen una historia/cuento, comprendo:",
                     value1:"4", answer1: "casi todo lo que leo",
                     value2:"3", answer2: "algo de lo que leo",
                     value3:"2", answer3: "casi nada de lo que leo",
@@ -97,7 +97,7 @@ export default function EML () {
                 {
                     itemId: 1109,
                     num: 9, title: "9. Yo soy:",
-                    value1:"1", answer1: "un mal lector",
+                    value1:"1", answer1: "no lector",
                     value2:"2", answer2: "un lector aceptable",
                     value3:"3", answer3: "un buen lector",
                     value4:"4", answer4: "un muy buen lector"
@@ -105,18 +105,18 @@ export default function EML () {
                 {
                     itemId: 1110,
                     num: 10, title: "10. Yo creo que las bibliotecas son:",
-                    value1:"4", answer1: "un gran lugar para pasar el tiempo",
+                    value1:"4", answer1: "un lugar muy entretenido para pasar el tiempo",
                     value2:"3", answer2: "un lugar interesante para pasar el tiempo",
-                    value3:"2", answer3: "un lugar aceptable para pasar el tiempo",
+                    value3:"2", answer3: "un lugar aceptable (pasable) para pasar el tiempo",
                     value4:"1", answer4: "un lugar aburrido para pasar el tiempo"
                 },
                 {
                     itemId: 1111,
                     num: 11, title: "11. Me preocupa lo que los otros niños piensen de mi lectura:",
-                    value1:"4", answer1: "Todos los días",
-                    value2:"3", answer2: "Casi todos los días",
-                    value3:"2", answer3: "De vez en cuando",
-                    value4:"1", answer4: "Nunca"
+                    value1:"4", answer1: "mucho (todos los días)",
+                    value2:"3", answer2: "un poco (casi todos los días)",
+                    value3:"2", answer3: "casi nada (de vez en cuando)",
+                    value4:"1", answer4: "nada (nunca)"
                 },
                 {
                     itemId: 1112,
@@ -128,7 +128,7 @@ export default function EML () {
                 },
                 {
                     itemId: 1113,
-                    num: 13, title: "13. Cuando el profesor me pregunta sobre lo que yo he leído:",
+                    num: 13, title: "13. Cuando el profesor me pregunta sobre lo que yo he leído (o sobre lo que me han leído):",
                     value1:"1", answer1: "No se me ocurre qué responder",
                     value2:"2", answer2: "Me cuesta pensar lo que voy a responder",
                     value3:"3", answer3: "A veces pienso en una respuesta",
@@ -138,9 +138,9 @@ export default function EML () {
                     itemId: 1114,
                     num: 14, title: "14. Creo que leer es:",
                     value1:"1", answer1: "una forma aburrida de pasar el tiempo",
-                    value2:"2", answer2: "una forma aceptable de pasar el tiempo",
-                    value3:"3", answer3: "una forma interesante de pasar el tiempo",
-                    value4:"4", answer4: "una forma grandiosa de pasar el tiempo"
+                    value2:"2", answer2: "una forma aceptable (pasable) de pasar el tiempo",
+                    value3:"3", answer3: "una forma interesante (entretenida) de pasar el tiempo",
+                    value4:"4", answer4: "una forma grandiosa (muy entretenida) de pasar el tiempo"
                 },
                 {
                     itemId: 1115,
@@ -176,7 +176,7 @@ export default function EML () {
                 },
                 {
                     itemId: 1119,
-                    num: 19, title: "19. Cuando yo leo en voz alta, leo:",
+                    num: 19, title: "19. Cuando yo leo (por ej. letras, palabras, oraciones) en voz alta, leo:",
                     value1:"1", answer1: "muy mal",
                     value2:"2", answer2: "más o menos",
                     value3:"3", answer3: "bien",
@@ -186,9 +186,9 @@ export default function EML () {
                     itemId: 1120,
                     num: 20, title: "20. Cuando me regalan un libro, me siento:",
                     value1:"4", answer1: "muy feliz",
-                    value2:"3", answer2: "contento",
-                    value3:"2", answer3: "no me siento muy contento",
-                    value4:"1", answer4: "no me siento feliz"
+                    value2:"3", answer2: "feliz",
+                    value3:"2", answer3: "no muy feliz",
+                    value4:"1", answer4: "nada feliz"
                 },
              ])
             }
@@ -196,10 +196,12 @@ export default function EML () {
 
     }, [])
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         window.history.pushState(null, null, window.location.href);
-        window.onpopstate = function () {
-        window.history.go(1);
+        window.onpopstate = function ()
+        {
+            window.history.go(1);
         }
     }, [])
 
@@ -220,7 +222,10 @@ export default function EML () {
                 allowTouchMove={false}
             >
             <SwiperSlide>
-                <Instruction instruction="Ahora te voy a hacer una serie de preguntas. ¿Comencemos?"/>
+                <Instruction instruction="Te quiero invitar a conversar sobre la lectura. Cuéntame, ¿tú lees? (esperar respuesta. Si dice “no”, seguir).
+                OK, pero…  ¿estás aprendiendo las vocales, las letras, ¿cierto? Y cuéntame, ¿A ti, te gusta que te lean cuentos o historias? Ah!, eso
+                también vale como lectura, porque cuando otra persona te lee la historia, tú la escuchas ¿cierto? Ahora, te voy a hacer varias preguntas
+                sobre la lectura. ¡Comencemos!"/>
             </SwiperSlide>
 
             {
