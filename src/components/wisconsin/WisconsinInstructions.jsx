@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
 function WisconsinInstructions({
   section,
@@ -25,65 +25,87 @@ function WisconsinInstructions({
   }, []);
 
   return (
-    <div
-      className="instruction"
-      style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}
-    >
-      {instructions.map((instruction) => (
-        <p key={instruction}>{instruction}</p>
-      ))}
-
-      {specialMessage && (
-        <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
-          {specialMessage}
-        </span>
+    <div>
+      {(section === 1 || section === 4 || section === 19 || section === 36) && (
+        <div>
+          <Button variant="primary" onClick={() => setSection(section + 1)}>
+            Continuar
+          </Button>
+        </div>
       )}
 
       {section === 32 && (
-        <Form>
-          <div className="mb-3">
-            <Form.Check
-              type="checkbox"
-              inline
-              label="Cantidad"
-              className="custom-checkbox"
-              checked={checkboxs.cantidad}
-              onChange={(e) =>
-                setCheckboxs({
-                  ...checkboxs,
-                  cantidad: e.target.checked,
-                })
-              }
-            />
-            <Form.Check
-              type="checkbox"
-              inline
-              label="Color"
-              className="custom-checkbox"
-              checked={checkboxs.color}
-              onChange={(e) => {
-                setCheckboxs({
-                  ...checkboxs,
-                  color: e.target.checked,
-                });
-              }}
-            />
-            <Form.Check
-              type="checkbox"
-              inline
-              label="Forma"
-              className="custom-checkbox"
-              checked={checkboxs.forma}
-              onChange={(e) => {
-                setCheckboxs({
-                  ...checkboxs,
-                  forma: e.target.checked,
-                });
-              }}
-            />
-          </div>
-        </Form>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <Button color="primary" onClick={() => setSection(section + 1)}>
+            Continuar al nivel 3
+          </Button>
+
+          <Button variant="success" onClick={() => setSection(55)}>
+            Finalizar test
+          </Button>
+        </div>
       )}
+
+      <div
+        className="instruction"
+        style={{ fontSize: "1.5rem", lineHeight: "1.75rem" }}
+      >
+        {instructions.map((instruction) => (
+          <p key={instruction}>{instruction}</p>
+        ))}
+
+        {specialMessage && (
+          <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
+            {specialMessage}
+          </span>
+        )}
+
+        {section === 32 && (
+          <Form>
+            <div className="mb-3">
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Cantidad"
+                className="custom-checkbox"
+                checked={checkboxs.cantidad}
+                onChange={(e) =>
+                  setCheckboxs({
+                    ...checkboxs,
+                    cantidad: e.target.checked,
+                  })
+                }
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Color"
+                className="custom-checkbox"
+                checked={checkboxs.color}
+                onChange={(e) => {
+                  setCheckboxs({
+                    ...checkboxs,
+                    color: e.target.checked,
+                  });
+                }}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Forma"
+                className="custom-checkbox"
+                checked={checkboxs.forma}
+                onChange={(e) => {
+                  setCheckboxs({
+                    ...checkboxs,
+                    forma: e.target.checked,
+                  });
+                }}
+              />
+            </div>
+          </Form>
+        )}
+      </div>
     </div>
   );
 }
