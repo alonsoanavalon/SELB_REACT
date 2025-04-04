@@ -27,7 +27,7 @@ function WisconsinInstructions({
   return (
     <div>
       {(section === 1 || section === 4 || section === 19 || section === 36) && (
-        <div>
+        <div style={{ marginBottom: "0.5rem" }}>
           <Button variant="primary" onClick={() => setSection(section + 1)}>
             Continuar
           </Button>
@@ -35,7 +35,14 @@ function WisconsinInstructions({
       )}
 
       {section === 32 && (
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+            marginBottom: "0.5rem",
+          }}
+        >
           <Button color="primary" onClick={() => setSection(section + 1)}>
             Continuar al nivel 3
           </Button>
