@@ -864,7 +864,7 @@ function Wisconsin() {
 
       itemID++;
 
-      choices[itemID] = time;
+      choices[itemID] = time == null ? 0 : time;
 
       itemID++;
     }
