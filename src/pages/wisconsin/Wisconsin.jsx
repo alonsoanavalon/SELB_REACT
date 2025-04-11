@@ -860,7 +860,7 @@ function Wisconsin() {
 
     for (let i = 0; i < randomSections.length; i++) {
       const { answer, time } = randomSections[i];
-      choices[itemID] = answer;
+      choices[itemID] = answer == null ? 0 : answer;
 
       itemID++;
 
