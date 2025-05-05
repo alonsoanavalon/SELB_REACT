@@ -1,4 +1,4 @@
-const cacheData = "app-v2.0.12";
+const cacheData = "app-v2.0.13";
 
 this.addEventListener("install", evt => {
     console.log("Instalando el Service Worker...")
