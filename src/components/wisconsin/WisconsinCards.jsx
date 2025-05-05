@@ -93,14 +93,7 @@ function WisconsinCards({
             card.id === id
               ? {
                   ...card,
-                  answer:
-                    answer === correctAnswer
-                      ? card.rule === "cantidades"
-                        ? 2
-                        : card.rule === "color"
-                        ? 3
-                        : 4
-                      : 0,
+                  answer: answer === correctAnswer ? 1 : 0,
                   time: elapsedTime,
                 }
               : card
