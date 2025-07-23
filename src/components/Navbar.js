@@ -99,7 +99,7 @@ export default function NavBar() {
         const textInfo = `
         Version: 1.3 ||
         Ultima Actualización: 02/09/2024 ||
-        Cache: v2.0
+        Cache: v2.0.20
         `
         alert.show(textInfo, {
             type:'success'
