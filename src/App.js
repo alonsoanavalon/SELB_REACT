@@ -4,6 +4,10 @@ import axios from 'axios'
 import { get, set } from 'idb-keyval';
 import Cookies from 'universal-cookie';
 import { refreshCatalog } from './services/catalogCache.mjs';
+import {
+  DASHBOARD_SUMMARY_KEY,
+  refreshDashboardSummary,
+} from './services/dashboardSummary';
 /* Styles */
 import './App.css';
 import './css/styles.css';
@@ -128,6 +132,23 @@ function App() {
           })
         }
 
+        refreshDashboardSummary({
+          load: () => axios({
+            method: 'get',
+            url: `${process.env.REACT_APP_API_URL}/instrumentlist/summary`,
+            params: { user: userId },
+          }).then((response) => response.data),
+          persistSummary: (summary) => set(DASHBOARD_SUMMARY_KEY, summary),
+          persistLegacy: (key, value) => set(key, value),
+        }).then((summary) => {
+          window.dispatchEvent(new CustomEvent('selb:dashboard-summary', {
+            detail: summary,
+          }))
+        }).catch(() => {
+          // Preserve the last valid summary when connectivity or the API fails.
+        })
+
+        if (process.env.REACT_APP_LEGACY_DASHBOARD_COUNTS === 'true') {
 
         axios({
           method: 'get',
@@ -527,6 +548,7 @@ function App() {
                     set('countWisconsinLength', res.data[0]['COUNT(*)'])
                 }
             )
+        }
         }
     }
 

@@ -1,4 +1,4 @@
-const cacheData = "app-v2.0.23";
+const cacheData = "app-v2.0.24";
 const cachePrefix = "app-v";
 const appShell = "/index.html";
 const coreResources = [

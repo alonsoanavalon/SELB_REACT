@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const LEGACY_BUNDLE_PATH = '/static/js/bundle.js';
-const EXPECTED_CACHE_NAME = 'app-v2.0.23';
+const EXPECTED_CACHE_NAME = 'app-v2.0.24';
 
 function fail(message) {
   throw new Error(message);
