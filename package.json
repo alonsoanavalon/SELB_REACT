@@ -46,6 +46,7 @@
     "build:release": "react-scripts build && node ops/build/prepare-static-release.js build && node ops/build/verify-static-release.js build",
     "check:release": "node ops/build/verify-static-release.js build",
     "test:release-tools": "node ops/build/test-release-tools.js",
+    "test:pwa-offline": "node ops/pwa/test-offline-runtime.js",
     "test:deploy-tools": "bash ops/deploy/test-deploy-tools.sh",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

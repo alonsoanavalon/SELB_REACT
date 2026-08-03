@@ -1,8 +1,9 @@
 import { useState, useEffect, Fragment } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import axios from 'axios'
-import { del, get, set } from 'idb-keyval';
+import { get, set } from 'idb-keyval';
 import Cookies from 'universal-cookie';
+import { refreshCatalog } from './services/catalogCache.mjs';
 /* Styles */
 import './App.css';
 import './css/styles.css';
@@ -67,18 +68,12 @@ function App() {
   const [userRole, setUserRole] = useState();
 
   function getData(data) {
-    let firstTime = true;
-
-    if (navigator.onLine && firstTime) {
-      firstTime = false;
-      del(data)
-      let url = `${process.env.REACT_APP_API_URL}/${data}`  
-
-      axios(url)
-        .then(res => {
-          set(data, res.data)
-        })
-    }
+    const url = `${process.env.REACT_APP_API_URL}/${data}`
+    return refreshCatalog({
+      online: navigator.onLine,
+      load: () => axios(url).then(res => res.data),
+      persist: value => set(data, value),
+    })
   }
 
   useEffect(async () => {

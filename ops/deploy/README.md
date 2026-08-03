@@ -4,9 +4,14 @@ Estos archivos preparan releases estáticos por SHA. No se instalan ni ejecutan 
 producción sin aprobar la spec y la ventana de OPS-004.
 
 `npm run build:release` crea el build CRA, agrega el alias legado
-`/static/js/bundle.js` exigido por el service worker `app-v2.0.21` y verifica que
+`/static/js/bundle.js` exigido por el service worker `app-v2.0.22` y verifica que
 el SW copiado al build sea byte a byte el versionado. No modifica `sw.js`,
 IndexedDB, localStorage, `completedTests` ni `backupTest`.
+
+PWA-001 cambia la estrategia del worker de forma versionada: navegación usa red
+con fallback al app shell, otros GET usan cache-first y métodos no GET quedan fuera
+del caché. No usa `skipWaiting`; `app-v2.0.21` se retira únicamente después de que
+`app-v2.0.22` terminó de instalar y puede activarse fuera de una evaluación.
 
 El runner productivo requiere el runtime fijado en `.node-version` y
 `.npm-version`, una cache Git

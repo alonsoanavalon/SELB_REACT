@@ -1,4 +1,6 @@
-const cacheData = "app-v2.0.21";
+const cacheData = "app-v2.0.22";
+const cachePrefix = "app-v";
+const appShell = "/index.html";
 
 this.addEventListener("install", evt => {
     console.log("Instalando el Service Worker...")
@@ -366,19 +368,27 @@ this.addEventListener("install", evt => {
 
 
 this.addEventListener("fetch", evt => {
+    const request = evt.request;
 
-    if (!navigator.onLine) {
-        evt.respondWith(
-            caches.match(evt.request).then((res => {
-                if(res) {
-                    return res
-                }
-                const requestUrl = evt.request.clone();
-                return fetch(requestUrl)
-            }))
-        )
+    if (request.method !== "GET") {
+        return;
     }
 
+    if (request.mode === "navigate") {
+        evt.respondWith(
+            fetch(request).catch(() => caches.match(appShell).then(response => {
+                if (response) {
+                    return response;
+                }
+                return caches.match("/");
+            }))
+        );
+        return;
+    }
+
+    evt.respondWith(
+        caches.match(request).then(response => response || fetch(request))
+    );
 })
 
 
@@ -389,7 +399,7 @@ this.addEventListener("activate", event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cache => {
-                    if (cache !== currentCache) {
+                    if (cache.startsWith(cachePrefix) && cache !== currentCache) {
                         console.log(`Eliminando caché antiguo: ${cache}`);
                         return caches.delete(cache);
                     }
@@ -398,4 +408,3 @@ this.addEventListener("activate", event => {
         })
     );
 });
-
