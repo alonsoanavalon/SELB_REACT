@@ -2,8 +2,8 @@
 
 set -Eeuo pipefail
 
-readonly CURRENT_LINK=${SELB_FRONTEND_CURRENT_LINK:-/opt/selb/current/frontend}
-readonly PREVIOUS_LINK=${SELB_FRONTEND_PREVIOUS_LINK:-/opt/selb/previous/frontend}
+readonly CURRENT_LINK=${SELB_FRONTEND_CURRENT_LINK:-/var/www/selb/current}
+readonly PREVIOUS_LINK=${SELB_FRONTEND_PREVIOUS_LINK:-/var/www/selb/previous}
 readonly LOCK_FILE=${SELB_FRONTEND_LOCK_FILE:-/opt/selb-deploy/locks/frontend.lock}
 exec 9>"$LOCK_FILE"
 flock -n 9 || { echo 'rollback_status=failed code=DEPLOY_LOCKED' >&2; exit 1; }

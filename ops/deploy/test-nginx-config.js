@@ -24,6 +24,6 @@ for (const contract of contracts) {
   assert(fixture.includes(contract), `FIXTURE_NGINX_CONTRACT_MISSING:${contract}`);
 }
 
-assert(production.includes('root /opt/selb/current/frontend;'));
+assert(production.includes('root /var/www/selb/current;'));
 assert(fixture.includes('root /usr/share/nginx/html;'));
 process.stdout.write(`nginx_config_test_status=success contracts=${contracts.length}\n`);

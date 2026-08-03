@@ -25,6 +25,10 @@ construye el release y crea `current` sin recargar Nginx ni crear `previous`.
 Después de activar Nginx, el rollback inicial sigue siendo restaurar el proxy PM2;
 el rollback por symlink queda disponible desde el siguiente release.
 
+Los assets públicos viven bajo `/var/www/selb`; cache Git, locks y ejecutables
+permanecen privados bajo `/opt/selb-deploy`. Esta separación evita conceder al
+worker Nginx acceso de traversing al árbol privado de releases backend.
+
 El ensayo local usa `test/nginx.conf` con una imagen Nginx aislada. El runner fue
 probado contra un remoto Git y layout temporales en Node 17.6.0/npm 8.5.1:
 activación, no-op, rollback, reuso de release inmutable y rollback automático ante
