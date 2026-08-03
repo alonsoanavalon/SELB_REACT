@@ -17,7 +17,8 @@ function loadWorker(overrides = {}) {
   const listeners = {};
   const state = {
     openedCache: null,
-    precacheEntries: null,
+    addAllBatches: [],
+    optionalEntries: [],
     deletedCaches: [],
     matchInputs: [],
     fetchInputs: [],
@@ -28,8 +29,24 @@ function loadWorker(overrides = {}) {
       state.openedCache = name;
       return {
         addAll: async entries => {
-          state.precacheEntries = entries;
-          if (overrides.addAll) return overrides.addAll(entries);
+          state.addAllBatches.push(entries);
+          if (overrides.addAll) return overrides.addAll(entries, state.addAllBatches.length);
+        },
+        add: async entry => {
+          state.optionalEntries.push(entry);
+          if (overrides.add) return overrides.add(entry);
+        },
+        match: async input => {
+          if (overrides.cacheMatch) return overrides.cacheMatch(input);
+          if (input === '/index.html') {
+            return {
+              clone() { return this; },
+              async text() {
+                return '<link href="/static/css/main.test.css"><script src="/static/js/main.test.js"></script>';
+              },
+            };
+          }
+          return undefined;
         },
       };
     },
@@ -81,9 +98,13 @@ async function main() {
   {
     const worker = loadWorker();
     await dispatchWaitable(worker.listeners.install);
-    assert.strictEqual(worker.state.openedCache, 'app-v2.0.22');
-    assert(worker.state.precacheEntries.includes('/index.html'));
-    assert(worker.state.precacheEntries.includes('/static/js/bundle.js'));
+    assert.strictEqual(worker.state.openedCache, 'app-v2.0.23');
+    assert(worker.state.addAllBatches[0].includes('/index.html'));
+    assert(worker.state.addAllBatches[0].includes('/static/js/bundle.js'));
+    assert(worker.state.addAllBatches[0].includes('/logo.png'));
+    assert(worker.state.addAllBatches[1].includes('/static/css/main.test.css'));
+    assert(worker.state.addAllBatches[1].includes('/static/js/main.test.js'));
+    assert(worker.state.optionalEntries.length > 100);
   }
 
   {
@@ -95,12 +116,22 @@ async function main() {
       waitUntil(value) { installation = Promise.resolve(value); },
     });
     await assert.rejects(installation, /precache incomplete/);
-    assert.strictEqual(worker.state.openedCache, 'app-v2.0.22');
+    assert.strictEqual(worker.state.openedCache, 'app-v2.0.23');
+  }
+
+  {
+    const worker = loadWorker({
+      add: async () => { throw new Error('optional unavailable'); },
+    });
+    await dispatchWaitable(worker.listeners.install);
+    assert(worker.state.optionalEntries.length > 100);
   }
 
   {
     const cached = {source: 'cache'};
-    const request = {method: 'GET', mode: 'same-origin', url: '/static/js/bundle.js'};
+    const request = {
+      method: 'GET', mode: 'same-origin', destination: 'script', url: '/static/js/bundle.js',
+    };
     const worker = loadWorker({match: input => input === request ? cached : undefined});
     const result = await dispatchFetch(worker.listeners.fetch, request);
     assert.strictEqual(result.handled, true);
@@ -122,10 +153,20 @@ async function main() {
 
   {
     const network = {source: 'network'};
-    const request = {method: 'GET', mode: 'cors', url: 'https://example.test/data'};
+    const request = {
+      method: 'GET', mode: 'cors', destination: 'image', url: 'https://example.test/image.png',
+    };
     const worker = loadWorker({fetch: async () => network});
     const result = await dispatchFetch(worker.listeners.fetch, request);
     assert.strictEqual(result.value, network);
+  }
+
+  {
+    const worker = loadWorker();
+    const result = await dispatchFetch(worker.listeners.fetch, {
+      method: 'GET', mode: 'cors', destination: '', url: 'https://example.test/data',
+    });
+    assert.strictEqual(result.handled, false);
   }
 
   {
@@ -138,10 +179,15 @@ async function main() {
 
   {
     const worker = loadWorker({
-      cacheNames: ['app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'unrelated-cache'],
+      cacheNames: [
+        'app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'app-v2.0.23', 'unrelated-cache',
+      ],
     });
     await dispatchWaitable(worker.listeners.activate);
-    assert.deepStrictEqual(worker.state.deletedCaches.sort(), ['app-v2.0.20', 'app-v2.0.21']);
+    assert.deepStrictEqual(
+      worker.state.deletedCaches.sort(),
+      ['app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22'],
+    );
   }
 
   {
@@ -184,10 +230,10 @@ async function main() {
   assert(!appSource.includes('del(data)'));
   assert(appSource.includes('refreshCatalog'));
 
-  process.stdout.write('pwa_offline_test_status=success scenarios=11\n');
+  process.stdout.write('pwa_offline_test_status=success scenarios=13\n');
 }
 
 main().catch(error => {
-  process.stderr.write(`pwa_offline_test_status=failed code=${error.message}\n`);
+  process.stderr.write(`pwa_offline_test_status=failed code=${error.stack || error.message}\n`);
   process.exit(1);
 });

@@ -1,6 +1,27 @@
-const cacheData = "app-v2.0.22";
+const cacheData = "app-v2.0.23";
 const cachePrefix = "app-v";
 const appShell = "/index.html";
+const coreResources = [
+    "/",
+    appShell,
+    "/static/js/bundle.js",
+    "/favicon.ico",
+    "/logo.png",
+    "/logo192.png",
+    "/manifest.json"
+];
+
+function buildAssetsFromIndex(indexHtml) {
+    const assets = [];
+    const expression = /(?:src|href)=["'](\/static\/[^"']+)["']/g;
+    let match;
+    while ((match = expression.exec(indexHtml)) !== null) {
+        if (assets.indexOf(match[1]) === -1) {
+            assets.push(match[1]);
+        }
+    }
+    return assets;
+}
 
 this.addEventListener("install", evt => {
     console.log("Instalando el Service Worker...")
@@ -8,7 +29,7 @@ this.addEventListener("install", evt => {
     //agregar los archivos al cache, si se agregan nuevos test o archivos a la app, se deben agregar aqui, sino no se podran cargar en modo offline
     evt.waitUntil(
         caches.open(cacheData).then((cache) => {
-            return cache.addAll([
+            const optionalResources = [
                 '/logo192.png',
                 '/manifest.json',
                 '/static/js/bundle.js',
@@ -361,7 +382,22 @@ this.addEventListener("install", evt => {
             '/images/wisconsin/triangle_yellow_4.png',
 
 
-            ])
+            ];
+
+            return cache.addAll(coreResources)
+                .then(() => cache.match(appShell))
+                .then(response => {
+                    if (!response) {
+                        throw new Error("App shell ausente después del precache");
+                    }
+                    return response.clone().text();
+                })
+                .then(indexHtml => cache.addAll(buildAssetsFromIndex(indexHtml)))
+                .then(() => Promise.all(
+                    optionalResources
+                        .filter(resource => coreResources.indexOf(resource) === -1)
+                        .map(resource => cache.add(resource).catch(() => undefined))
+                ));
         })
     )
 })
@@ -383,6 +419,10 @@ this.addEventListener("fetch", evt => {
                 return caches.match("/");
             }))
         );
+        return;
+    }
+
+    if (!request.destination) {
         return;
     }
 
