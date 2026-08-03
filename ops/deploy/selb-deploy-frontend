@@ -39,8 +39,15 @@ reload_nginx() {
   nginx -t >/dev/null 2>&1 && systemctl reload nginx >/dev/null 2>&1
 }
 
-[[ $# -eq 1 ]] || die USAGE_SHA_REQUIRED
-requested_sha=$1
+initialize_only=false
+if [[ $# -eq 2 && $1 == --initialize ]]; then
+  initialize_only=true
+  requested_sha=$2
+elif [[ $# -eq 1 ]]; then
+  requested_sha=$1
+else
+  die USAGE_SHA_REQUIRED
+fi
 valid_sha "$requested_sha" || die SHA_INVALID
 [[ -d $CACHE_DIR && -d $RELEASES_ROOT ]] || die LAYOUT_MISSING
 [[ -r $BUILD_ENV ]] || die BUILD_ENV_MISSING
@@ -53,13 +60,21 @@ remote_sha=$(git --git-dir="$CACHE_DIR" ls-remote origin refs/heads/master | awk
 git --git-dir="$CACHE_DIR" fetch --quiet --prune origin '+refs/heads/master:refs/remotes/origin/master'
 [[ $(git --git-dir="$CACHE_DIR" rev-parse "$MASTER_REF") == "$requested_sha" ]] || die FETCHED_SHA_MISMATCH
 
-current_release=$(link_target "$CURRENT_LINK") || die CURRENT_RELEASE_MISSING
-[[ -f $current_release/.selb-release-sha ]] || die CURRENT_RELEASE_INVALID
-current_sha=$(<"$current_release/.selb-release-sha")
-valid_sha "$current_sha" || die CURRENT_RELEASE_INVALID
-if [[ $current_sha == "$requested_sha" ]]; then
-  event "deploy_status=success mode=noop effective_sha=${requested_sha}"
-  exit 0
+if [[ $initialize_only == true ]]; then
+  [[ ! -e $CURRENT_LINK && ! -L $CURRENT_LINK ]] || die INITIAL_CURRENT_EXISTS
+  nginx_config=$(nginx -T 2>&1) || die NGINX_CONFIG_UNREADABLE
+  [[ $nginx_config != *"root ${CURRENT_LINK};"* ]] || die INITIAL_STATIC_CONFIG_ACTIVE
+  current_release=''
+  current_sha=''
+else
+  current_release=$(link_target "$CURRENT_LINK") || die CURRENT_RELEASE_MISSING
+  [[ -f $current_release/.selb-release-sha ]] || die CURRENT_RELEASE_INVALID
+  current_sha=$(<"$current_release/.selb-release-sha")
+  valid_sha "$current_sha" || die CURRENT_RELEASE_INVALID
+  if [[ $current_sha == "$requested_sha" ]]; then
+    event "deploy_status=success mode=noop effective_sha=${requested_sha}"
+    exit 0
+  fi
 fi
 
 release=${RELEASES_ROOT}/${requested_sha}
@@ -111,6 +126,12 @@ fi
 
 activation_remote_sha=$(git --git-dir="$CACHE_DIR" ls-remote origin refs/heads/master | awk 'NR == 1 {print $1}')
 [[ $activation_remote_sha == "$requested_sha" ]] || die REMOTE_HEAD_CHANGED_BEFORE_ACTIVATION
+
+if [[ $initialize_only == true ]]; then
+  atomic_link "$release" "$CURRENT_LINK"
+  event "deploy_status=success mode=initialized effective_sha=${requested_sha}"
+  exit 0
+fi
 
 previous_before=$(link_target "$PREVIOUS_LINK" || true)
 atomic_link "$current_release" "$PREVIOUS_LINK"

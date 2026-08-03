@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+if [[ ${1:-} == -T ]]; then
+  if [[ ${STATIC_ROOT_CONFIGURED:-0} == 1 ]]; then
+    printf 'root %s;\n' "$SELB_FRONTEND_CURRENT_LINK"
+  fi
+  exit 0
+fi
+
 if [[ -n ${FAIL_NGINX_ONCE:-} && ! -e $FAIL_NGINX_ONCE ]]; then
   touch "$FAIL_NGINX_ONCE"
   exit 1

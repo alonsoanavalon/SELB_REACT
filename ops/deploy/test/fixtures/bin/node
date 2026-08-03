@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -eu
+
+if [[ ${1:-} == --version ]]; then
+  printf 'v17.6.0\n'
+elif [[ ${2:-} == --version ]]; then
+  printf '8.5.1\n'
+elif [[ ${2:-} == ci ]]; then
+  exit 0
+elif [[ ${2:-} == run && ${3:-} == build:release ]]; then
+  mkdir -p build/static/js
+  printf '<!doctype html><title>fixture</title>\n' >build/index.html
+  printf 'const cache = "app-v2.0.21";\n' >build/sw.js
+  printf 'fixture\n' >build/static/js/main.fixture.js
+  cp build/static/js/main.fixture.js build/static/js/bundle.js
+else
+  printf 'unexpected fake node invocation: %s\n' "$*" >&2
+  exit 2
+fi

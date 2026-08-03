@@ -16,8 +16,14 @@ construye antes de activar y cambia el symlink que lee Nginx. El rollback sólo
 cambia el symlink; no borra cachés, datos locales ni releases.
 
 La primera transición desde PM2 requiere el rollout documentado: sembrar el
-release vigente, instalar el bloque Nginx revisado, validar una tablet piloto y
+release aprobado, instalar el bloque Nginx revisado, validar una tablet piloto y
 recién entonces retirar de la lista PM2 únicamente el proceso frontend histórico.
+Para preparar el primer release, antes de que Nginx use el layout estático, el
+operador ejecuta `selb-deploy-frontend --initialize <full-sha>`. Este modo exige
+que `current` no exista, rechaza una configuración Nginx que ya apunte al layout,
+construye el release y crea `current` sin recargar Nginx ni crear `previous`.
+Después de activar Nginx, el rollback inicial sigue siendo restaurar el proxy PM2;
+el rollback por symlink queda disponible desde el siguiente release.
 
 El ensayo local usa `test/nginx.conf` con una imagen Nginx aislada. El runner fue
 probado contra un remoto Git y layout temporales en Node 17.6.0/npm 8.5.1:
