@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+readonly DEPLOY_ROOT=${SELB_FRONTEND_DEPLOY_ROOT:-/opt/selb-deploy}
+readonly CACHE_DIR=${SELB_FRONTEND_CACHE_DIR:-${DEPLOY_ROOT}/frontend.git}
+readonly RELEASES_ROOT=${SELB_FRONTEND_RELEASES_ROOT:-/opt/selb/releases/frontend}
+readonly CURRENT_LINK=${SELB_FRONTEND_CURRENT_LINK:-/opt/selb/current/frontend}
+readonly PREVIOUS_LINK=${SELB_FRONTEND_PREVIOUS_LINK:-/opt/selb/previous/frontend}
+readonly BUILD_ENV=${SELB_FRONTEND_BUILD_ENV:-/etc/selb/frontend-build.env}
+readonly LOCK_FILE=${SELB_FRONTEND_LOCK_FILE:-${DEPLOY_ROOT}/locks/frontend.lock}
+readonly MASTER_REF=refs/remotes/origin/master
+
+event() { printf '%s\n' "$*"; }
+die() { event "deploy_status=failed code=$1" >&2; exit 1; }
+valid_sha() { [[ $1 =~ ^[0-9a-f]{40}$ ]]; }
+link_target() { readlink -e -- "$1"; }
+valid_release() {
+  local release=$1 expected_sha=$2 main_script main_script_count
+  [[ -d $release && ! -L $release ]] || return 1
+  [[ -z $(find "$release" -type l -print -quit) ]] || return 1
+  [[ -f $release/.selb-release-sha ]] || return 1
+  [[ $(<"$release/.selb-release-sha") == "$expected_sha" ]] || return 1
+  [[ -f $release/index.html && -f $release/sw.js && -f $release/static/js/bundle.js ]] || return 1
+  main_script_count=$(find "$release/static/js" -maxdepth 1 -type f -name 'main.*.js' ! -name '*.map' ! -name '*.LICENSE.txt' | wc -l)
+  [[ $main_script_count -eq 1 ]] || return 1
+  main_script=$(find "$release/static/js" -maxdepth 1 -type f -name 'main.*.js' ! -name '*.map' ! -name '*.LICENSE.txt' -print -quit)
+  cmp -s -- "$release/static/js/bundle.js" "$main_script" || return 1
+  [[ -z $(find "$release" -perm /022 -print -quit) ]] || return 1
+}
+atomic_link() {
+  local target=$1 link=$2 temporary="${2}.new"
+  ln -sfn -- "$target" "$temporary"
+  mv -Tf -- "$temporary" "$link"
+}
+reload_nginx() {
+  nginx -t >/dev/null 2>&1 && systemctl reload nginx >/dev/null 2>&1
+}
+
+[[ $# -eq 1 ]] || die USAGE_SHA_REQUIRED
+requested_sha=$1
+valid_sha "$requested_sha" || die SHA_INVALID
+[[ -d $CACHE_DIR && -d $RELEASES_ROOT ]] || die LAYOUT_MISSING
+[[ -r $BUILD_ENV ]] || die BUILD_ENV_MISSING
+[[ $(stat -c '%a' "$BUILD_ENV") =~ ^(400|600)$ ]] || die BUILD_ENV_PERMISSIONS
+exec 9>"$LOCK_FILE"
+flock -n 9 || die DEPLOY_LOCKED
+
+remote_sha=$(git --git-dir="$CACHE_DIR" ls-remote origin refs/heads/master | awk 'NR == 1 {print $1}')
+[[ $requested_sha == "$remote_sha" ]] || die SHA_NOT_REMOTE_HEAD
+git --git-dir="$CACHE_DIR" fetch --quiet --prune origin '+refs/heads/master:refs/remotes/origin/master'
+[[ $(git --git-dir="$CACHE_DIR" rev-parse "$MASTER_REF") == "$requested_sha" ]] || die FETCHED_SHA_MISMATCH
+
+current_release=$(link_target "$CURRENT_LINK") || die CURRENT_RELEASE_MISSING
+[[ -f $current_release/.selb-release-sha ]] || die CURRENT_RELEASE_INVALID
+current_sha=$(<"$current_release/.selb-release-sha")
+valid_sha "$current_sha" || die CURRENT_RELEASE_INVALID
+if [[ $current_sha == "$requested_sha" ]]; then
+  event "deploy_status=success mode=noop effective_sha=${requested_sha}"
+  exit 0
+fi
+
+release=${RELEASES_ROOT}/${requested_sha}
+reuse_release=false
+if valid_release "$release" "$requested_sha"; then
+  reuse_release=true
+elif [[ -e $release ]]; then
+  die RELEASE_PATH_CONFLICT
+fi
+
+stage=''
+cleanup() {
+  if [[ -n ${stage:-} && -d $stage ]]; then
+    chmod -R u+w -- "$stage" || true
+    rm -rf -- "$stage"
+  fi
+}
+trap cleanup EXIT
+if [[ $reuse_release == false ]]; then
+  stage=$(mktemp -d "${RELEASES_ROOT}/.stage-${requested_sha}-XXXXXX")
+  chmod 0700 "$stage"
+  git --git-dir="$CACHE_DIR" archive "$requested_sha" | tar -x -C "$stage"
+
+  expected_node=$(<"$stage/.node-version")
+  [[ $(node --version) == "v${expected_node}" ]] || die NODE_VERSION_MISMATCH
+  [[ $(grep -c '^REACT_APP_API_URL=' "$BUILD_ENV") -eq 1 ]] || die BUILD_ENV_INVALID
+  api_url=$(sed -n 's/^REACT_APP_API_URL=//p' "$BUILD_ENV")
+  [[ $api_url =~ ^https://[^[:space:]]+$ ]] || die API_URL_INVALID
+
+  (cd "$stage" && npm ci --no-audit --no-fund >/dev/null)
+  (cd "$stage" && REACT_APP_API_URL="$api_url" npm run build:release >/dev/null)
+  rm -rf -- "$stage/node_modules"
+  [[ $(git --git-dir="$CACHE_DIR" ls-remote origin refs/heads/master | awk 'NR == 1 {print $1}') == "$requested_sha" ]] || die REMOTE_HEAD_CHANGED
+  printf '%s\n' "$requested_sha" >"$stage/build/.selb-release-sha"
+  chmod 0444 "$stage/build/.selb-release-sha"
+  mv -T "$stage/build" "$release"
+  rm -rf -- "$stage"
+  stage=''
+  find "$release" -type d -exec chmod 0555 {} +
+  find "$release" -type f -exec chmod 0444 {} +
+fi
+
+activation_remote_sha=$(git --git-dir="$CACHE_DIR" ls-remote origin refs/heads/master | awk 'NR == 1 {print $1}')
+[[ $activation_remote_sha == "$requested_sha" ]] || die REMOTE_HEAD_CHANGED_BEFORE_ACTIVATION
+
+previous_before=$(link_target "$PREVIOUS_LINK" || true)
+atomic_link "$current_release" "$PREVIOUS_LINK"
+atomic_link "$release" "$CURRENT_LINK"
+if ! reload_nginx; then
+  atomic_link "$current_release" "$CURRENT_LINK"
+  if [[ -n $previous_before ]]; then atomic_link "$previous_before" "$PREVIOUS_LINK"; fi
+  reload_nginx || die ACTIVATION_AND_ROLLBACK_FAILED
+  die ACTIVATION_FAILED_ROLLED_BACK
+fi
+
+event "deploy_status=success mode=activated effective_sha=${requested_sha} previous_sha=${current_sha}"

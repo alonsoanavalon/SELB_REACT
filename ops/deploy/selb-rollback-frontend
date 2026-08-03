@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+readonly CURRENT_LINK=${SELB_FRONTEND_CURRENT_LINK:-/opt/selb/current/frontend}
+readonly PREVIOUS_LINK=${SELB_FRONTEND_PREVIOUS_LINK:-/opt/selb/previous/frontend}
+readonly LOCK_FILE=${SELB_FRONTEND_LOCK_FILE:-/opt/selb-deploy/locks/frontend.lock}
+exec 9>"$LOCK_FILE"
+flock -n 9 || { echo 'rollback_status=failed code=DEPLOY_LOCKED' >&2; exit 1; }
+current=$(readlink -e -- "$CURRENT_LINK") || { echo 'rollback_status=failed code=CURRENT_MISSING' >&2; exit 1; }
+previous=$(readlink -e -- "$PREVIOUS_LINK") || { echo 'rollback_status=failed code=PREVIOUS_MISSING' >&2; exit 1; }
+ln -sfn -- "$previous" "${CURRENT_LINK}.new"
+mv -Tf -- "${CURRENT_LINK}.new" "$CURRENT_LINK"
+if ! nginx -t >/dev/null 2>&1 || ! systemctl reload nginx >/dev/null 2>&1; then
+  ln -sfn -- "$current" "${CURRENT_LINK}.new"
+  mv -Tf -- "${CURRENT_LINK}.new" "$CURRENT_LINK"
+  nginx -t >/dev/null 2>&1 && systemctl reload nginx >/dev/null 2>&1 || true
+  echo 'rollback_status=failed code=NGINX_RELOAD_FAILED' >&2
+  exit 1
+fi
+ln -sfn -- "$current" "${PREVIOUS_LINK}.new"
+mv -Tf -- "${PREVIOUS_LINK}.new" "$PREVIOUS_LINK"
+echo 'rollback_status=success'

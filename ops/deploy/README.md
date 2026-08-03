@@ -1,0 +1,24 @@
+# OPS-004 — artefactos de build y despliegue frontend
+
+Estos archivos preparan releases estáticos por SHA. No se instalan ni ejecutan en
+producción sin aprobar la spec y la ventana de OPS-004.
+
+`npm run build:release` crea el build CRA, agrega el alias legado
+`/static/js/bundle.js` exigido por el service worker `app-v2.0.21` y verifica que
+el SW copiado al build sea byte a byte el versionado. No modifica `sw.js`,
+IndexedDB, localStorage, `completedTests` ni `backupTest`.
+
+El runner productivo requiere el runtime fijado en `.node-version`, una cache Git
+bare de sólo lectura y un archivo privado `0600` con una única línea
+`REACT_APP_API_URL=https://...`. Exporta el SHA sin `.git`, ejecuta `npm ci`,
+construye antes de activar y cambia el symlink que lee Nginx. El rollback sólo
+cambia el symlink; no borra cachés, datos locales ni releases.
+
+La primera transición desde PM2 requiere el rollout documentado: sembrar el
+release vigente, instalar el bloque Nginx revisado, validar una tablet piloto y
+recién entonces retirar de la lista PM2 únicamente el proceso frontend histórico.
+
+El ensayo local usa `test/nginx.conf` con una imagen Nginx aislada. El runner fue
+probado contra un remoto Git y layout temporales en Node 17.6.0/npm 8.5.1:
+activación, no-op, rollback, reuso de release inmutable y rollback automático ante
+fallo de recarga. `test-deploy-tools.sh` cubre además inputs, lock y fallo sintético.

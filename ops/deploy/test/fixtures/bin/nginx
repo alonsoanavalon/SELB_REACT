@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [[ -n ${FAIL_NGINX_ONCE:-} && ! -e $FAIL_NGINX_ONCE ]]; then
+  touch "$FAIL_NGINX_ONCE"
+  exit 1
+fi
+
+[[ ${FAIL_NGINX:-0} != 1 ]]
