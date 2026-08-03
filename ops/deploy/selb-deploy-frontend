@@ -9,6 +9,8 @@ readonly CURRENT_LINK=${SELB_FRONTEND_CURRENT_LINK:-/opt/selb/current/frontend}
 readonly PREVIOUS_LINK=${SELB_FRONTEND_PREVIOUS_LINK:-/opt/selb/previous/frontend}
 readonly BUILD_ENV=${SELB_FRONTEND_BUILD_ENV:-/etc/selb/frontend-build.env}
 readonly LOCK_FILE=${SELB_FRONTEND_LOCK_FILE:-${DEPLOY_ROOT}/locks/frontend.lock}
+readonly CONFIGURED_NODE_BIN=${SELB_FRONTEND_NODE_BIN:-}
+readonly CONFIGURED_NPM_CLI=${SELB_FRONTEND_NPM_CLI:-}
 readonly MASTER_REF=refs/remotes/origin/master
 
 event() { printf '%s\n' "$*"; }
@@ -81,14 +83,21 @@ if [[ $reuse_release == false ]]; then
   chmod 0700 "$stage"
   git --git-dir="$CACHE_DIR" archive "$requested_sha" | tar -x -C "$stage"
 
+  node_bin=${CONFIGURED_NODE_BIN:-$(command -v node)}
+  [[ -x $node_bin ]] || die NODE_RUNTIME_MISSING
+  runtime_bin=$(dirname "$node_bin")
+  npm_cli=${CONFIGURED_NPM_CLI:-${runtime_bin}/npm}
+  [[ -e $npm_cli ]] || die NPM_RUNTIME_MISSING
   expected_node=$(<"$stage/.node-version")
-  [[ $(node --version) == "v${expected_node}" ]] || die NODE_VERSION_MISMATCH
+  expected_npm=$(<"$stage/.npm-version")
+  [[ $("$node_bin" --version) == "v${expected_node}" ]] || die NODE_VERSION_MISMATCH
+  [[ $("$node_bin" "$npm_cli" --version) == "$expected_npm" ]] || die NPM_VERSION_MISMATCH
   [[ $(grep -c '^REACT_APP_API_URL=' "$BUILD_ENV") -eq 1 ]] || die BUILD_ENV_INVALID
   api_url=$(sed -n 's/^REACT_APP_API_URL=//p' "$BUILD_ENV")
   [[ $api_url =~ ^https://[^[:space:]]+$ ]] || die API_URL_INVALID
 
-  (cd "$stage" && npm ci --no-audit --no-fund >/dev/null)
-  (cd "$stage" && REACT_APP_API_URL="$api_url" npm run build:release >/dev/null)
+  (cd "$stage" && PATH="$runtime_bin:$PATH" "$node_bin" "$npm_cli" ci --no-audit --no-fund >/dev/null)
+  (cd "$stage" && PATH="$runtime_bin:$PATH" REACT_APP_API_URL="$api_url" "$node_bin" "$npm_cli" run build:release >/dev/null)
   rm -rf -- "$stage/node_modules"
   [[ $(git --git-dir="$CACHE_DIR" ls-remote origin refs/heads/master | awk 'NR == 1 {print $1}') == "$requested_sha" ]] || die REMOTE_HEAD_CHANGED
   printf '%s\n' "$requested_sha" >"$stage/build/.selb-release-sha"

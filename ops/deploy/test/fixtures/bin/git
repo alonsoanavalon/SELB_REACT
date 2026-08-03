@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -eu
+
+case " $* " in
+  *" ls-remote "*)
+    printf '%s\trefs/heads/master\n' "$FAKE_REMOTE_SHA"
+    ;;
+  *" fetch "*)
+    ;;
+  *" rev-parse "*)
+    printf '%s\n' "$FAKE_REMOTE_SHA"
+    ;;
+  *" archive "*)
+    tar -C "$FAKE_ARCHIVE_SOURCE" -cf - .
+    ;;
+  *)
+    printf 'unexpected fake git invocation: %s\n' "$*" >&2
+    exit 2
+    ;;
+esac

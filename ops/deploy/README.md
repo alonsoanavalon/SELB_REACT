@@ -8,7 +8,8 @@ producción sin aprobar la spec y la ventana de OPS-004.
 el SW copiado al build sea byte a byte el versionado. No modifica `sw.js`,
 IndexedDB, localStorage, `completedTests` ni `backupTest`.
 
-El runner productivo requiere el runtime fijado en `.node-version`, una cache Git
+El runner productivo requiere el runtime fijado en `.node-version` y
+`.npm-version`, una cache Git
 bare de sólo lectura y un archivo privado `0600` con una única línea
 `REACT_APP_API_URL=https://...`. Exporta el SHA sin `.git`, ejecuta `npm ci`,
 construye antes de activar y cambia el symlink que lee Nginx. El rollback sólo
@@ -22,3 +23,8 @@ El ensayo local usa `test/nginx.conf` con una imagen Nginx aislada. El runner fu
 probado contra un remoto Git y layout temporales en Node 17.6.0/npm 8.5.1:
 activación, no-op, rollback, reuso de release inmutable y rollback automático ante
 fallo de recarga. `test-deploy-tools.sh` cubre además inputs, lock y fallo sintético.
+
+En producción el shell SSH puede resolver otro Node distinto del que usa PM2. La
+instalación debe fijar `SELB_FRONTEND_NODE_BIN` al ejecutable Node 17.6.0 existente
+y, sólo si `npm` no está junto a él, `SELB_FRONTEND_NPM_CLI`. El runner ejecuta npm
+mediante ese Node y rechaza versiones distintas antes de instalar dependencias.
