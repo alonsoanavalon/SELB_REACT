@@ -209,7 +209,7 @@ export default function StudentList() {
                 <div>
                     <p className="student-selection__eyebrow">Nueva evaluación</p>
                     <h1>Seleccionar estudiante</h1>
-                    <p>Elige el curso y luego toca un alumno para ver sus instrumentos.</p>
+                    <p>Elige el curso y luego selecciona un alumno para ver sus instrumentos.</p>
                 </div>
                 <span className={`student-selection__connection ${online ? 'is-online' : 'is-offline'}`}>
                     {online ? 'En línea' : 'Sin conexión'}
