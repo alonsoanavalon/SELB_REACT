@@ -1,391 +1,110 @@
-import React, { Fragment, useState } from 'react';
-import {get, update, getMany, set} from 'idb-keyval'
-import { useAlert } from 'react-alert'
+import React, { Fragment } from 'react';
+import { getMany, set } from 'idb-keyval'
 import { useNavigate  } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 export default function Instruction (props) {
 
     const navigate = useNavigate()
-    const alert = useAlert()
-
-    const [isArray, setIsArray] = useState(false)
-
-    function getMomentByDate(date) {
-        let dateBegin;
-        let dateUntil;
-        get('moments')
-        .then(res => {
-            res.map(element => {
-                dateBegin = new Date(element['begin']).toLocaleDateString("zh-TW")
-                dateUntil = new Date(element['until']).toLocaleDateString("zh-TW")
-                if (date >= dateBegin && date <= dateUntil ) {
-                    return element['id']
-                } 
-                
-                
-            })
-        })
+    const isSameTest = (test, instrumentInfo) => {
+        const metadata = Array.isArray(test) ? test[0] : null
+        return metadata &&
+            metadata.student_id === instrumentInfo.student_id &&
+            metadata.user_id === instrumentInfo.user_id &&
+            metadata.instrument === instrumentInfo.instrument
     }
 
-    function saveInstrumentOnline() {
+    const collectChoices = instruments => {
+        const choices = {}
 
-        Swal.fire({
-            title: '¿Deseas finalizar y guardar el test?',
+        instruments.forEach(instrument => {
+            const keyInput = instrument.elements.key
+            if (!keyInput) return
+
+            const fieldNames = [
+                'Precalculo',
+                'Precalculo-selected',
+                'Precalculo-counted',
+                'Precalculo-cardinal',
+                'TejasLee',
+                'SDQ',
+                'Aces',
+                'Wally',
+                'EML',
+                'Stroop numérico'
+            ]
+            const answerField = fieldNames
+                .map(fieldName => instrument.elements.namedItem(fieldName))
+                .find(Boolean)
+
+            if (answerField) {
+                choices[keyInput.value] = answerField.value
+            }
+        })
+
+        return choices
+    }
+
+    async function saveInstrument({ partial }) {
+        const confirmation = await Swal.fire({
+            title: partial
+                ? 'Recuerda que faltan items por terminar antes de salir'
+                : '¿Deseas finalizar y guardar el test?',
+            html: partial ? '¿Deseas guardar el test hasta este punto?' : undefined,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             cancelButtonText: 'Cancelar',
             confirmButtonText: 'Si, guardar y salir'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                let choices = {}
-                let instrumentInfo = {}
-                let choicesArray = []
-        
-                let testDataArray = ['selectedStudent', 'userData']
-        
-                getMany(testDataArray).then(([firstVal, secondVal]) =>  {
-                    instrumentInfo['user_id'] = parseInt(secondVal['id'])
-                    instrumentInfo['student_id'] = parseInt(firstVal)
-                    instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
-                }
-                );
-        
-                choicesArray.push(instrumentInfo)
-        
-                let allInstruments = document.querySelectorAll('.instrument-form')
-                allInstruments.forEach(instrument => {
-                    let key;
-                    let value;
-                    if (instrument['Precalculo']) {
-                        key = instrument['key'].value
-                        value= instrument['Precalculo'].value
-                        choices[key] =  value
-                    } else if (instrument['Precalculo-selected']) {
-                        key = instrument['key'].value
-                        value= instrument['Precalculo-selected'].value
-                        choices[key] =  value
-                    } else if (instrument['Precalculo-counted']) {
-                        key = instrument['key'].value
-                        value= instrument['Precalculo-counted'].value
-                        choices[key] =  value
-                    } else if (instrument['Precalculo-cardinal']) {
-                        key = instrument['key'].value
-                        value= instrument['Precalculo-cardinal'].value
-                        choices[key] =  value
-                    }
-        
-                    if (instrument['TejasLee']) {
-                        let key = instrument['key'].value
-                        let value = instrument['TejasLee'].value
-                        choices[key] =  value
-                    }
-        
-                    if (instrument['SDQ']) {
-                        let key = instrument['key'].value
-                        let value = instrument['SDQ'].value
-                        choices[key] = value
-                    }
-        
-                    if (instrument['Aces']) {
-                        let key = instrument['key'].value
-                        let value = instrument['Aces'].value
-                        choices[key] = value
-                    }
-        
-                    if (instrument['Wally']) {
-                        let key = instrument['key'].value
-                        let value = instrument['Wally'].value
-                        choices[key] = value
-                    }
-        
-                    if (instrument['EML']) {
-                        let key = instrument['key'].value
-                        let value = instrument['EML'].value
-                        choices[key] = value
-                    }
-        
-                    if (instrument['Stroop numérico']) {
-                        let key = instrument['key'].value
-                        let value = instrument['Stroop numérico'].value
-                        choices[key] = value
-                    }
-        
-                    
-                })
-        
-                instrumentInfo['instrument'] = parseInt(allInstruments[0]['instrument'].value)
-        
-                choicesArray.push(choices)
-        
-                get('backupTest')
-                .then(response => {
-                    let backupLength = response.length
-                    if (Array.isArray(response) && response.length > 0) {
-                        get('completedTests')
-                        .then(res => {
-                            if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
-                                console.log(response, "Actualizando Backup")
-                                let arrayCounter = 0;
-                                response.forEach(array => {
-                                    let responseMoment;
-                                    let instrumentMoment;
-                                    if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
-        
-                                        responseMoment = getMomentByDate(array[0]['date'])
-                                        instrumentMoment = getMomentByDate(instrumentInfo['date'])
-        
-                                        if (responseMoment === instrumentMoment) {
-                                            response.splice(arrayCounter, 1)
-                                        } 
-                                    }
-                                    arrayCounter+= 1
-            
-                                })
-            
-                                update('backupTest', val => [...response, choicesArray])
-                            }
-                        })
-                    }
-                })
-        
-        
-                get('completedTests')
-                .then(response => {
-        
-                    if (!isArray) {
-                        if (response.length === undefined) {
-                            update('completedTests', (val) => 
-                            [response , choicesArray])         
-                            setIsArray(true)
-                        } else if (response.length === 0) {
-        
-                            set('completedTests', [choicesArray])
-                        } else {
-                            console.log(response, "Actualizando1")
-                            let arrayCounter = 0;
-                            response.forEach(array => {
-                                
-                                let responseMoment;
-                                let instrumentMoment;
-                                if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
-        
-                                    responseMoment = getMomentByDate(array[0]['date'])
-                                    instrumentMoment = getMomentByDate(instrumentInfo['date'])
-        
-                                    if (responseMoment === instrumentMoment) {
-                                        response.splice(arrayCounter, 1)
-                                    } 
-                                }
-                                arrayCounter+= 1
-        
-                            })
-        
-                            update('completedTests', val => [...response, choicesArray])
-        
-                                    
-                    alert.show('Test guardado con éxito', {
-                        type:'success'
-                    })
-        
-                    setTimeout(() => {
-                        navigate('/')
-                    }, 3000)
-                        }
-                    } else {
-                        console.log(response, "Actualizando2")
-                        update('completedTests', val => [...response, choicesArray])
-                
-                        alert.show('Test guardado con éxito', {
-                            type:'success'
-                        })
-            
-                        setTimeout(() => {
-                            navigate('/')
-                        }, 3000)
-                    }
+        })
 
-        
-                })   
-            }
-          })
+        if (!confirmation.isConfirmed) return
 
-       
-    }
+        const instruments = Array.from(document.querySelectorAll('.instrument-form'))
+        const instrumentId = instruments[0] && instruments[0].elements.instrument
 
-    function saveInstrumentOnlinePrecalculo () {
-        
-        Swal.fire({
-            title: 'Recuerda que faltan items por terminar antes de salir',
-            html: '¿Deseas guardar el test hasta este punto?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: 'Si, Guardar y salir'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                let choices = {}
-                let instrumentInfo = {}
-                let choicesArray = []
-        
-                let testDataArray = ['selectedStudent', 'userData']
-        
-                getMany(testDataArray).then(([firstVal, secondVal]) =>  {
-                    instrumentInfo['user_id'] = parseInt(secondVal['id'])
-                    instrumentInfo['student_id'] = parseInt(firstVal)
-                    instrumentInfo['date'] = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
-                }
-                );
-        
-                choicesArray.push(instrumentInfo)
-        
-                let allInstruments = document.querySelectorAll('.instrument-form')
-                allInstruments.forEach(instrument => {
-                    let key;
-                    let value;
-                    if (instrument['Precalculo']) {
-                        key = instrument['key'].value
-                        value= instrument['Precalculo'].value
-                        choices[key] =  value
-                    } else if (instrument['Precalculo-selected']) {
-                        key = instrument['key'].value
-                        value= instrument['Precalculo-selected'].value
-                        choices[key] =  value
-                    } else if (instrument['Precalculo-counted']) {
-                        key = instrument['key'].value
-                        value= instrument['Precalculo-counted'].value
-                        choices[key] =  value
-                    } else if (instrument['Precalculo-cardinal']) {
-                        key = instrument['key'].value
-                        value= instrument['Precalculo-cardinal'].value
-                        choices[key] =  value
-                    }
-        
-                    if (instrument['TejasLee']) {
-                        let key = instrument['key'].value
-                        let value = instrument['TejasLee'].value
-                        choices[key] =  value
-                    }
-        
-                    if (instrument['SDQ']) {
-                        let key = instrument['key'].value
-                        let value = instrument['SDQ'].value
-                        choices[key] = value
-                    }
-        
-                    if (instrument['Aces']) {
-                        let key = instrument['key'].value
-                        let value = instrument['Aces'].value
-                        choices[key] = value
-                    }
-        
-                    if (instrument['Wally']) {
-                        let key = instrument['key'].value
-                        let value = instrument['Wally'].value
-                        choices[key] = value
-                    }
-        
-                    
-                })
-        
-                instrumentInfo['instrument'] = parseInt(allInstruments[0]['instrument'].value)
-        
-                choicesArray.push(choices)
-        
-                get('backupTest')
-                .then(response => {
-                    let backupLength = response.length
-                    if (Array.isArray(response) && response.length > 0) {
-                        get('completedTests')
-                        .then(res => {
-                            if (backupLength >= res.length) { // Aca ya sabemos que es mas el backup
-                                console.log(response, "Actualizando Backup")
-                                let arrayCounter = 0;
-                                response.forEach(array => { //buscamos si hay uno igual a este
-                                    let responseMoment;
-                                    let instrumentMoment;
-                                    if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
-        
-                                        responseMoment = getMomentByDate(array[0]['date'])
-                                        instrumentMoment = getMomentByDate(instrumentInfo['date'])
-        
-                                        if (responseMoment === instrumentMoment) {
-                                            response.splice(arrayCounter, 1)
-                                        } 
-                                    }
-                                    arrayCounter+= 1
-            
-                                })
-            
-                                update('backupTest', val => [...response, choicesArray])
-                            }
-                        })
-                    }
-                })
-        
-        
-                get('completedTests')
-                .then(response => {
-        
-                    if (!isArray) {
-                        if (response.length === undefined) {
-                            update('completedTests', (val) => 
-                            [response , choicesArray])         
-                            setIsArray(true)
-                        } else if (response.length === 0) {
-        
-                            set('completedTests', [choicesArray])
-                        } else {
-                            console.log(response, "Actualizando1")
-                            let arrayCounter = 0;
-                            response.forEach(array => {
-                                
-                                let responseMoment;
-                                let instrumentMoment;
-                                if (array[0]['student_id'] === instrumentInfo['student_id'] && array[0]['instrument'] == instrumentInfo['instrument'] && array[0]['user_id'] == instrumentInfo['user_id']) {
-        
-                                    responseMoment = getMomentByDate(array[0]['date'])
-                                    instrumentMoment = getMomentByDate(instrumentInfo['date'])
-        
-                                    if (responseMoment === instrumentMoment) {
-                                        response.splice(arrayCounter, 1)
-                                    } 
-                                }
-                                arrayCounter+= 1
-        
-                            })
-        
-                            update('completedTests', val => [...response, choicesArray])
-                            alert.show('Test guardado con éxito', {
-                                type:'success'
-                            })
-                
-                            setTimeout(() => {
-                                navigate('/')
-                            }, 3000)
-                            
-                        }
-                    } else {
-                        console.log(response, "Actualizando2")
-                        update('completedTests', val => [...response, choicesArray])
-                        alert.show('Test guardado con éxito', {
-                            type:'success'
-                        })
-            
-                        setTimeout(() => {
-                            navigate('/')
-                        }, 3000)
-                    }
-        
+        if (!instrumentId) {
+            await Swal.fire('No fue posible guardar el test', 'No se encontraron respuestas para guardar.', 'error')
+            return
+        }
 
-        
-                })   
-            }
-          })
+        const [selectedStudent, userData, completedTests, backupTest] = await getMany([
+            'selectedStudent',
+            'userData',
+            'completedTests',
+            'backupTest'
+        ])
+
+        if (!selectedStudent || !userData || !userData.id) {
+            await Swal.fire('No fue posible guardar el test', 'Falta el alumno o el usuario seleccionado.', 'error')
+            return
+        }
+
+        const instrumentInfo = {
+            user_id: Number(userData.id),
+            student_id: Number(selectedStudent),
+            instrument: Number(instrumentId.value),
+            date: `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
+        }
+        const choicesArray = [instrumentInfo, collectChoices(instruments)]
+        const currentCompletedTests = Array.isArray(completedTests) ? completedTests : []
+        const updatedCompletedTests = [
+            ...currentCompletedTests.filter(test => !isSameTest(test, instrumentInfo)),
+            choicesArray
+        ]
+
+        await set('completedTests', updatedCompletedTests)
+
+        if (Array.isArray(backupTest) && backupTest.length > 0) {
+            const updatedBackupTest = [
+                ...backupTest.filter(test => !isSameTest(test, instrumentInfo)),
+                choicesArray
+            ]
+            await set('backupTest', updatedBackupTest)
+        }
+
+        navigate('/')
     }
 
     return (
@@ -411,7 +130,7 @@ export default function Instruction (props) {
                     <button
                     
                         className='button btn text-success'
-                        onClick={saveInstrumentOnline}
+                        onClick={() => saveInstrument({ partial: false })}
                     > Guardar test</button>
                 }
 
@@ -419,7 +138,7 @@ export default function Instruction (props) {
                         props.checkPrecalculo === true && 
                         <button
                         className='button btn text-success'
-                        onClick={saveInstrumentOnlinePrecalculo}
+                        onClick={() => saveInstrument({ partial: true })}
                     > Guardar test</button>
                 }
 
