@@ -74,6 +74,13 @@ export const createStudent = async payload => {
   return response.data
 }
 
+export const transferStudent = async (studentId, payload) => {
+  const response = await axios.patch(`${getBaseUrl()}/students/${studentId}/transfer`, payload, {
+    withCredentials: true,
+  })
+  return response.data
+}
+
 export const listUsers = async params => {
   const response = await axios.get(`${getBaseUrl()}/users`, withParams(params))
   return response.data
