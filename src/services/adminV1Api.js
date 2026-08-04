@@ -19,6 +19,13 @@ export const createStudy = async payload => {
   return response.data
 }
 
+export const updateStudy = async (studyId, payload) => {
+  const response = await axios.put(`${getBaseUrl()}/studies/${studyId}`, payload, {
+    withCredentials: true,
+  })
+  return response.data
+}
+
 export const listStudyMoments = async (studyId, params) => {
   const response = await axios.get(
     `${getBaseUrl()}/studies/${studyId}/moments`,
@@ -38,6 +45,13 @@ export const createStudyMoment = async (studyId, payload) => {
   return response.data
 }
 
+export const updateMoment = async (momentId, payload) => {
+  const response = await axios.put(`${getBaseUrl()}/moments/${momentId}`, payload, {
+    withCredentials: true,
+  })
+  return response.data
+}
+
 export const listSchools = async params => {
   const response = await axios.get(`${getBaseUrl()}/schools`, withParams(params))
   return response.data
@@ -45,6 +59,13 @@ export const listSchools = async params => {
 
 export const createSchool = async payload => {
   const response = await axios.post(`${getBaseUrl()}/schools`, payload, {
+    withCredentials: true,
+  })
+  return response.data
+}
+
+export const updateSchool = async (schoolId, payload) => {
+  const response = await axios.put(`${getBaseUrl()}/schools/${schoolId}`, payload, {
     withCredentials: true,
   })
   return response.data
@@ -62,6 +83,13 @@ export const createCourse = async payload => {
   return response.data
 }
 
+export const updateCourse = async (courseId, payload) => {
+  const response = await axios.put(`${getBaseUrl()}/courses/${courseId}`, payload, {
+    withCredentials: true,
+  })
+  return response.data
+}
+
 export const listStudents = async params => {
   const response = await axios.get(`${getBaseUrl()}/students`, withParams(params))
   return response.data
@@ -69,6 +97,13 @@ export const listStudents = async params => {
 
 export const createStudent = async payload => {
   const response = await axios.post(`${getBaseUrl()}/students`, payload, {
+    withCredentials: true,
+  })
+  return response.data
+}
+
+export const updateStudent = async (studentId, payload) => {
+  const response = await axios.put(`${getBaseUrl()}/students/${studentId}`, payload, {
     withCredentials: true,
   })
   return response.data
@@ -88,6 +123,13 @@ export const listUsers = async params => {
 
 export const createUser = async payload => {
   const response = await axios.post(`${getBaseUrl()}/users`, payload, {
+    withCredentials: true,
+  })
+  return response.data
+}
+
+export const updateUser = async (userId, payload) => {
+  const response = await axios.put(`${getBaseUrl()}/users/${userId}`, payload, {
     withCredentials: true,
   })
   return response.data
