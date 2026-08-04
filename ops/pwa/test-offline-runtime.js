@@ -98,7 +98,7 @@ async function main() {
   {
     const worker = loadWorker();
     await dispatchWaitable(worker.listeners.install);
-    assert.strictEqual(worker.state.openedCache, 'app-v2.0.24');
+    assert.strictEqual(worker.state.openedCache, 'app-v2.0.25');
     assert(worker.state.addAllBatches[0].includes('/index.html'));
     assert(worker.state.addAllBatches[0].includes('/static/js/bundle.js'));
     assert(worker.state.addAllBatches[0].includes('/logo.png'));
@@ -116,7 +116,7 @@ async function main() {
       waitUntil(value) { installation = Promise.resolve(value); },
     });
     await assert.rejects(installation, /precache incomplete/);
-    assert.strictEqual(worker.state.openedCache, 'app-v2.0.24');
+    assert.strictEqual(worker.state.openedCache, 'app-v2.0.25');
   }
 
   {
@@ -180,13 +180,13 @@ async function main() {
   {
     const worker = loadWorker({
       cacheNames: [
-        'app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'app-v2.0.23', 'app-v2.0.24', 'unrelated-cache',
+        'app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'app-v2.0.23', 'app-v2.0.24', 'app-v2.0.25', 'unrelated-cache',
       ],
     });
     await dispatchWaitable(worker.listeners.activate);
     assert.deepStrictEqual(
       worker.state.deletedCaches.sort(),
-      ['app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'app-v2.0.23'],
+      ['app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'app-v2.0.23', 'app-v2.0.24'],
     );
   }
 

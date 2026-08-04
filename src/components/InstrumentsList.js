@@ -1,73 +1,76 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import ListedInstrument from '../components/ListedInstrument'
 
-export default function InstrumentsList (props) {
-
+export default function InstrumentsList ({ instruments = [], open, selectedStudent, onClose, onSelect, error }) {
+    const closeButton = useRef(null);
 
     useEffect(() => {
+        if (!open) return undefined;
 
-        document.addEventListener("click", e => {
-            if (e.target.matches('#instruments-list-wrapper')) {
-                const $instrumentsList = document.querySelector("#instruments-list-wrapper")
-                $instrumentsList.setAttribute("class", 'hidden')
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        closeButton.current?.focus();
+
+        const closeOnEscape = (event) => {
+            if (event.key === 'Escape') {
+                onClose();
             }
-        })
+        };
 
-    }, [])
+        document.addEventListener('keydown', closeOnEscape);
+        return () => {
+            document.removeEventListener('keydown', closeOnEscape);
+            document.body.style.overflow = previousOverflow;
+        };
+    }, [onClose, open]);
 
+    const visibleInstruments = useMemo(() => instruments
+        .filter((instrument) => instrument.instrument_type_id === 1 || Number(instrument.id) <= 26)
+        .sort((a, b) => String(a.name).localeCompare(String(b.name), 'es', { sensitivity: 'base' })),
+    [instruments]);
+
+    if (!open) return null;
 
     return (
-        <Fragment>
-            <div id="instruments-list-wrapper" className='hidden'>
-                <div id="instruments-list">
-                    <h4> </h4>
-                    <h4>TESTS</h4>
-                    <h4> </h4>
-                    {(() => {
-                        // Filtrar y ordenar los instrumentos
-                        const instruments = props.instruments
-                            .filter(instrument => instrument['instrument_type_id'] === 1 || instrument['id'] <= 26)
-                            .sort((a, b) => a.name.localeCompare(b.name));
-                        
-                        // Definir columnas
-                        const columnA = [];
-                        const columnB = [];
-                        const columnC = [];
-                        const columns = [];
+        <div
+            className="instrument-picker"
+            onMouseDown={(event) => {
+                if (event.target === event.currentTarget) onClose();
+            }}
+        >
+            <section
+                className="instrument-picker__dialog"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="instrument-picker-title"
+            >
+                <header className="instrument-picker__header">
+                    <div>
+                        <p className="instrument-picker__eyebrow">Estudiante seleccionado</p>
+                        <h2 id="instrument-picker-title">{selectedStudent?.displayName}</h2>
+                        <p>Elige el instrumento que deseas aplicar.</p>
+                    </div>
+                    <button ref={closeButton} type="button" className="instrument-picker__close" onClick={onClose} aria-label="Cerrar instrumentos">
+                        ×
+                    </button>
+                </header>
 
-                        let height1 = Math.ceil(instruments.length / 3);
-                        let height2 = instruments.length % 3 === 2 ? height1 : Math.floor(instruments.length / 3);
-                        
-                        // Distribuir elementos en columnas
-                        instruments.forEach((item, index) =>
-                        {
-                            if (index + 1 <= height1)
-                                columnA.push(item);
-                            else if (index + 1 <= height1 + height2)
-                                columnB.push(item);
-                            else
-                                columnC.push(item);
-                        });
-                        
-                        // Mezclar columnas
-                        const maxLength = Math.max(columnA.length, columnB.length, columnC.length);
-                        for (let i = 0; i < maxLength; i++)
-                        {
-                            if (i < columnA.length) columns.push(columnA[i]);
-                            if (i < columnB.length) columns.push(columnB[i]);
-                            if (i < columnC.length) columns.push(columnC[i]);
-                        }
-                        
-                        // Renderizar los instrumentos
-                        return columns.map((data, index) =>
-                        (
-                            <ListedInstrument key={data.id || index} instrument={data} />
-                        ));
-                    })()}
-                </div>
-            </div>
-        </Fragment>
-    )
-    
+                {error && <p className="instrument-picker__error" role="alert">{error}</p>}
 
+                {visibleInstruments.length > 0 ? (
+                    <div className="instrument-picker__grid">
+                        {visibleInstruments.map((instrument) => (
+                            <ListedInstrument
+                                key={instrument.id}
+                                instrument={instrument}
+                                onSelect={onSelect}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <p className="instrument-picker__empty">No hay instrumentos disponibles.</p>
+                )}
+            </section>
+        </div>
+    );
 }

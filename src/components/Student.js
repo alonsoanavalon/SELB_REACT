@@ -1,27 +1,35 @@
-import { set } from 'idb-keyval';
-import React, { Fragment } from 'react';
+import React from 'react';
 
-export default function Student (props) {
+export default function Student ({ student, onSelect }) {
+    const studentName = `${student.name || ''} ${student.surname || ''}`.trim();
 
-    function selectStudent (evt) {
-
-        set('selectedStudent', evt.target.parentNode.dataset.id)
-        set('selectedStudentName', evt.target.parentElement.children[1].innerHTML)
-        set('selectedStudentGender', props.genre)
-
-        const $instrumentsList = document.querySelector("#instruments-list-wrapper")
-        $instrumentsList.setAttribute("class", 'active')
-    
+    function handleKeyDown(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onSelect(student);
+        }
     }
 
     return (
-        <Fragment>
-            <tr key={props.id} data-id={props.id}onClick={selectStudent} className='listed-student'>
-                <th className="genre"scope="row">{props.genre == "M" ? <img src='/images/son.png' alt='boy' className='kid-icon'></img> : <img src='/images/daughter.png' alt='boy' className='kid-icon'></img>}</th>
-                <td>{props.name + " " + props.surname}</td>
-                <td>{props.rut}</td>
-                <td>{props.level + " " +props.letter}</td>
-            </tr>
-        </Fragment>
+        <tr
+            data-id={student.studentId}
+            onClick={() => onSelect(student)}
+            onKeyDown={handleKeyDown}
+            className="listed-student"
+            tabIndex="0"
+            aria-label={`Seleccionar a ${studentName}`}
+        >
+            <td className="genre">
+                <img
+                    src={student.gender === 'M' ? '/images/son.png' : '/images/daughter.png'}
+                    alt=""
+                    className="kid-icon"
+                    data-testid={`student-icon-${student.studentId}`}
+                />
+            </td>
+            <th scope="row">{studentName}</th>
+            <td>{student.rut}</td>
+            <td>{`${student.level || ''} ${student.letter || ''}`.trim()}</td>
+        </tr>
     )
 }

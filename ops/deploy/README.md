@@ -4,7 +4,7 @@ Estos archivos preparan releases estáticos por SHA. No se instalan ni ejecutan 
 producción sin aprobar la spec y la ventana de OPS-004.
 
 `npm run build:release` crea el build CRA, agrega el alias legado
-`/static/js/bundle.js` exigido por el service worker `app-v2.0.24` y verifica que
+`/static/js/bundle.js` exigido por el service worker `app-v2.0.25` y verifica que
 el SW copiado al build sea byte a byte el versionado. No modifica `sw.js`,
 IndexedDB, localStorage, `completedTests` ni `backupTest`.
 
@@ -17,6 +17,10 @@ del caché. No usa `skipWaiting`; `app-v2.0.21` se retira únicamente después d
 FE-002 versiona después la misma estrategia como `app-v2.0.24` para instalar el
 nuevo dashboard y sus assets de forma atómica. Mantiene activación diferida, no
 altera IndexedDB/localStorage y retira `app-v2.0.23` sólo al activar.
+
+FE-003 versiona esa estrategia como `app-v2.0.25` para distribuir el selector de
+estudiantes responsive. Conserva la activación diferida y no cambia ni migra los
+catálogos locales, la selección del estudiante, el outbox o el respaldo.
 
 El runner productivo requiere el runtime fijado en `.node-version` y
 `.npm-version`, una cache Git
