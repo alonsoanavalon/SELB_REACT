@@ -6,6 +6,7 @@ import {
   createStudy,
   createStudyMoment,
   createStudent,
+  transferStudent,
   createUser,
   deleteAssignation,
   listAssignations,
@@ -56,6 +57,11 @@ const initialStudentForm = {
   birthday: '',
 }
 
+const initialStudentTransferForm = {
+  student_id: '',
+  course_id: '',
+}
+
 const initialUserForm = {
   email: '',
   password: '',
@@ -98,6 +104,7 @@ function AdminV1Panel() {
   const [schoolForm, setSchoolForm] = useState(initialSchoolForm)
   const [courseForm, setCourseForm] = useState(initialCourseForm)
   const [studentForm, setStudentForm] = useState(initialStudentForm)
+  const [studentTransferForm, setStudentTransferForm] = useState(initialStudentTransferForm)
   const [userForm, setUserForm] = useState(initialUserForm)
   const [assignationForm, setAssignationForm] = useState(initialAssignationForm)
   const [isLoadingStudies, setIsLoadingStudies] = useState(false)
@@ -158,6 +165,9 @@ function AdminV1Panel() {
       if (!studentForm.course_id && rows.length > 0) {
         setStudentForm(current => ({ ...current, course_id: String(rows[0].id) }))
       }
+      if (!studentTransferForm.course_id && rows.length > 0) {
+        setStudentTransferForm(current => ({ ...current, course_id: String(rows[0].id) }))
+      }
     } catch (error) {
       setFeedback({
         type: 'danger',
@@ -172,7 +182,11 @@ function AdminV1Panel() {
     setIsLoadingStudents(true)
     try {
       const response = await listStudents({ page: 1, pageSize: 100 })
-      setStudents(Array.isArray(response.data) ? response.data : [])
+      const rows = Array.isArray(response.data) ? response.data : []
+      setStudents(rows)
+      if (!studentTransferForm.student_id && rows.length > 0) {
+        setStudentTransferForm(current => ({ ...current, student_id: String(rows[0].id) }))
+      }
     } catch (error) {
       setFeedback({
         type: 'danger',
@@ -407,6 +421,36 @@ function AdminV1Panel() {
       setFeedback({
         type: 'danger',
         message: extractErrorMessage(error, 'No fue posible crear el usuario.'),
+      })
+    }
+  }
+
+  const handleTransferStudent = async event => {
+    event.preventDefault()
+    setFeedback({ type: null, message: '' })
+
+    if (!studentTransferForm.student_id || !studentTransferForm.course_id) {
+      setFeedback({
+        type: 'warning',
+        message: 'Selecciona alumno y curso destino para transferir.',
+      })
+      return
+    }
+
+    try {
+      await transferStudent(studentTransferForm.student_id, {
+        course_id: Number(studentTransferForm.course_id),
+      })
+      setFeedback({
+        type: 'success',
+        message: 'Alumno transferido de curso en admin v1.',
+      })
+      await loadStudents()
+      await loadAssignations()
+    } catch (error) {
+      setFeedback({
+        type: 'danger',
+        message: extractErrorMessage(error, 'No fue posible transferir el alumno de curso.'),
       })
     }
   }
@@ -977,6 +1021,46 @@ function AdminV1Panel() {
               <div className="col-6 col-md-1">
                 <button className="btn btn-primary w-100" type="submit">
                   Crear
+                </button>
+              </div>
+            </form>
+
+            <form className="row g-2 mb-3" onSubmit={handleTransferStudent}>
+              <div className="col-12 col-md-5">
+                <select
+                  className="form-select"
+                  value={studentTransferForm.student_id}
+                  onChange={event =>
+                    setStudentTransferForm(current => ({ ...current, student_id: event.target.value }))
+                  }
+                >
+                  <option value="">Alumno a transferir</option>
+                  {students.map(student => (
+                    <option key={student.id} value={student.id}>
+                      {`${student.name} ${student.surname} (${student.rut})`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-12 col-md-5">
+                <select
+                  className="form-select"
+                  value={studentTransferForm.course_id}
+                  onChange={event =>
+                    setStudentTransferForm(current => ({ ...current, course_id: event.target.value }))
+                  }
+                >
+                  <option value="">Curso destino</option>
+                  {courses.map(course => (
+                    <option key={course.id} value={course.id}>
+                      {`${course.level} ${course.letter || ''} - ${course.school_name}`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-12 col-md-2">
+                <button className="btn btn-outline-primary w-100" type="submit">
+                  Transferir
                 </button>
               </div>
             </form>
