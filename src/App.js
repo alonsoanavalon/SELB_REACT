@@ -62,6 +62,7 @@ import SessionsLogged from './pages/SessionsLogged';
 import JapiInteres from './pages/japi-interes/JapiInteres';
 import Wisconsin from './pages/wisconsin/Wisconsin';
 import AAH from './pages/aah/AAH';
+import AdminV1Panel from './pages/AdminV1Panel';
 
 const cookies = new Cookies();
 
@@ -644,6 +645,7 @@ function App() {
                   <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />
                   <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent />} />
                   <Route path="/aah" element={<AAH/>} />
+                  <Route path="/admin-v1" element={<AdminV1Panel />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 
