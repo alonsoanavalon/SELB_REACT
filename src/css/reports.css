@@ -1,0 +1,34 @@
+.reports-page {
+  --reports-blue: #1769c2;
+  --reports-ink: #253247;
+  --reports-muted: #657186;
+  --reports-border: #dbe3ed;
+  --reports-surface: #f5f8fc;
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.5rem 0 3rem;
+  color: var(--reports-ink);
+}
+.reports-header, .reports-panel__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.reports-header { margin-bottom: 1.25rem; }
+.reports-header h1 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.5rem); }
+.reports-header p { margin: .35rem 0 0; color: var(--reports-muted); }
+.reports-eyebrow { margin: 0 0 .3rem; color: var(--reports-blue); font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.reports-connection { min-width: 7rem; padding: .55rem .8rem; border-radius: 999px; font-size: .9rem; font-weight: 700; text-align: center; }
+.reports-connection.is-online { color: #12623a; background: #dff5e8; }
+.reports-connection.is-offline { color: #874b00; background: #fff0d5; }
+.reports-panel { padding: 1.1rem; border: 1px solid var(--reports-border); border-radius: .85rem; background: #fff; box-shadow: 0 5px 18px rgba(35, 55, 80, .07); }
+.reports-panel__header { margin-bottom: 1rem; }
+.reports-panel__header h2 { margin: 0; font-size: 1.2rem; }
+.reports-panel__header p { margin: .25rem 0 0; color: var(--reports-muted); font-size: .88rem; }
+.reports-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: end; }
+.reports-field { min-width: 0; }
+.reports-field--wide { grid-column: span 2; }
+.reports-field label { display: block; margin-bottom: .35rem; font-size: .86rem; font-weight: 700; }
+.reports-field .dropdown-container { min-height: 38px; border-color: #ced4da; border-radius: .375rem; }
+.reports-action { display: flex; min-height: 38px; align-items: end; }
+.reports-action .btn { width: 100%; min-height: 42px; }
+.reports-empty, .reports-preview { margin: 0; padding: 1.25rem; border: 1px dashed var(--reports-border); border-radius: .6rem; color: var(--reports-muted); background: var(--reports-surface); text-align: center; }
+.reports-result { margin-top: 1rem; }
+@media (max-width: 900px) { .reports-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } .reports-field--wide { grid-column: span 1; } }
+@media (max-width: 600px) { .reports-page { width: min(100% - 1rem, 1180px); padding-top: .75rem; } .reports-header, .reports-panel__header { flex-direction: column; } .reports-connection { align-self: flex-start; } .reports-panel { padding: .8rem; } .reports-filters { grid-template-columns: 1fr; gap: .8rem; } }

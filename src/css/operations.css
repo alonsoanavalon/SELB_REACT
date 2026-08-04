@@ -1,0 +1,63 @@
+.operations-page {
+  --operations-blue: #1769c2;
+  --operations-ink: #253247;
+  --operations-muted: #657186;
+  --operations-border: #dbe3ed;
+  --operations-surface: #f5f8fc;
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.5rem 0 3rem;
+  color: var(--operations-ink);
+}
+
+.operations-header,
+.operations-panel__header,
+.operations-pagination,
+.operations-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.operations-header,
+.operations-panel__header,
+.operations-pagination {
+  justify-content: space-between;
+}
+
+.operations-header { margin-bottom: 1.25rem; }
+.operations-header h1 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.5rem); }
+.operations-header p, .operations-panel__header p { margin: .35rem 0 0; color: var(--operations-muted); }
+.operations-eyebrow { margin: 0 0 .3rem; color: var(--operations-blue); font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.operations-chip { min-width: 7rem; padding: .55rem .8rem; border-radius: 999px; color: #12623a; background: #dff5e8; font-size: .9rem; font-weight: 700; text-align: center; }
+.operations-chip--local { color: #174f87; background: #ddecfb; }
+
+.operations-panel { margin-bottom: 1rem; padding: 1.1rem; border: 1px solid var(--operations-border); border-radius: .85rem; background: #fff; box-shadow: 0 5px 18px rgba(35, 55, 80, .07); }
+.operations-panel--warning { border-left: .35rem solid #df9222; }
+.operations-panel__header { margin-bottom: 1rem; }
+.operations-panel__header h2 { margin: 0; font-size: 1.2rem; }
+.operations-status, .operations-guidance { margin: 0; padding: 1rem; border: 1px dashed var(--operations-border); border-radius: .6rem; color: var(--operations-muted); background: var(--operations-surface); }
+.operations-status--error { border-color: #d98a8a; color: #8a2525; background: #fff1f1; }
+
+.operations-table { margin: 0; border: 1px solid var(--operations-border); border-radius: .6rem; overflow: hidden; }
+.operations-table > :not(caption) > * > * { padding: .78rem .8rem; border-color: var(--operations-border); vertical-align: middle; }
+.operations-table thead th { background: var(--operations-surface); color: var(--operations-muted); font-size: .82rem; font-weight: 700; }
+.operations-table tbody td:first-child { color: var(--operations-muted); font-size: .85rem; font-variant-numeric: tabular-nums; }
+.operations-table tbody td:last-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.operations-pagination { align-items: center; margin-top: 1rem; color: var(--operations-muted); font-size: .9rem; }
+.operations-pagination .btn { display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2.75rem; border-color: var(--operations-border); }
+
+.operations-actions { flex-wrap: wrap; align-items: center; }
+.operations-actions .btn { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.75rem; }
+.operations-guidance { max-width: 52rem; }
+.operations-guidance p { margin: 0; }
+.operations-reset { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.75rem; margin-top: 1rem; }
+
+@media (max-width: 600px) {
+  .operations-page { width: min(100% - 1rem, 1180px); padding-top: .75rem; }
+  .operations-header, .operations-panel__header, .operations-pagination { flex-direction: column; }
+  .operations-chip { align-self: flex-start; }
+  .operations-panel { padding: .8rem; }
+  .operations-actions { align-items: stretch; }
+  .operations-actions .btn { justify-content: center; }
+}

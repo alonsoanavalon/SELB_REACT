@@ -4,6 +4,8 @@ import { CSVLink } from "react-csv";
 import { useAlert } from 'react-alert'
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { FaDownload, FaFileCode, FaFileCsv, FaRotateLeft } from 'react-icons/fa6';
+import '../css/operations.css';
 
 export default function Respaldo () {
 
@@ -141,19 +143,12 @@ export default function Respaldo () {
           link.download = "respaldo-administrador.json";
           link.href = url;
           link.click();
+                    URL.revokeObjectURL(url);
        
         } catch (error) {
           sendErrorLog(error);  
           console.log(error);
         }
-
-        const fileData = JSON.stringify(testArray);
-        const blob = new Blob([fileData], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.download = "respaldo-administrador.json";
-        link.href = url;
-        link.click();
       }
 
 
@@ -225,43 +220,56 @@ export default function Respaldo () {
             {/* <CsvReader />  Este nos servirá cuando queramos meter datos, ya que lee CSV*/}
 
             
-            <div className='excel-container'>
+                        <main className='operations-page'>
+                            <header className="operations-header">
+                                <div>
+                                    <p className="operations-eyebrow">Este dispositivo</p>
+                                    <h1>Respaldo local</h1>
+                                    <p>Prepara una copia de las evaluaciones almacenadas en esta tablet.</p>
+                                </div>
+                                <span className="operations-chip operations-chip--local">Datos locales</span>
+                            </header>
 
-            <h2 style={{margin: 0, padding: 0}}>Respaldo de datos Local</h2>
+                            <section className="operations-panel" aria-labelledby="backup-export-title">
+                                <div className="operations-panel__header">
+                                    <div>
+                                        <h2 id="backup-export-title">Descargar respaldo</h2>
+                                        <p>Primero prepara el respaldo y luego elige el formato de descarga.</p>
+                                    </div>
+                                </div>
+                                <div className="operations-actions">
+                                    <button id="btn-excel" className='btn btn-primary' onClick={getCsvRespaldo2}>
+                                        <FaDownload aria-hidden="true" /> Preparar respaldo
+                                    </button>
+                                    {csvDataRespaldo !== undefined && (
+                                        <Fragment>
+                                            <CSVLink className="btn btn-success" filename="respaldo-test" data={csvDataRespaldo}>
+                                                <FaFileCsv aria-hidden="true" /> Descargar respaldo evaluador
+                                            </CSVLink>
+                                            <button onClick={() => downloadJson(jsonData)} className="btn btn-outline-primary">
+                                                <FaFileCode aria-hidden="true" /> Descargar respaldo administrador
+                                            </button>
+                                        </Fragment>
+                                    )}
+                                </div>
+                            </section>
 
-            <div style={{border:"1px solid #ccc", display: "flex", flexDirection:"column", gap: ".6rem", minHeight:"100px"}}>
-            {
-                            <button id="btn-excel"className='btn btn-primary' onClick={getCsvRespaldo2}>Obtener respaldo</button>
-                        }
-
-                        {
-                            (csvDataRespaldo !== undefined) && 
-                            <Fragment>
-    
-                                <CSVLink className="btn btn-success "filename="respaldo-test" data={csvDataRespaldo}>Descargar respaldo evaluador</CSVLink>
-                                 </Fragment>
-
-
-                        }
-                        {
-                            (csvDataRespaldo !== undefined && jsonData !== undefined) && <button onClick={(e) => downloadJson(jsonData)} className="btn btn-primary">Descargar respaldo administrador</button>
-
-                        }
-
-
-            </div>
-            <h2 style={{margin: 0, padding: 0}}>Reinicializar respaldo</h2>
-            <h3 style={{margin: 0, padding: 0}}>¡Precaución!</h3>
-            <h6>Recuerda que al reinicializar el respaldo, este quedará igualado a los test "Por Enviar"</h6>
-            <h3>Esto es útil cuando: </h3>
-            <ul>
-                <li><h6>Cuando existan inconsistencias o diferencias en los datos respaldados y "Por Enviar"</h6><p>Es decir cuando los datos que descargues no sean los que ves en tu panel de datos por enviar</p></li>
-                <li><h6>Cuando se pase a un nuevo momento de evaluaciones, para que no existan datos duplicados</h6></li>
-            </ul>
-
- <button style= {{marginTop:"1rem"}} className="btn btn-warning" onClick={igualarRespaldoALocal}>Reinicializar respaldo</button>
-
-  </div>
+                            <section className="operations-panel operations-panel--warning" aria-labelledby="backup-reset-title">
+                                <div className="operations-panel__header">
+                                    <div>
+                                        <p className="operations-eyebrow">Acción de recuperación</p>
+                                        <h2 id="backup-reset-title">Reinicializar respaldo</h2>
+                                        <p>El respaldo quedará igualado a los tests “Por enviar” de este dispositivo.</p>
+                                    </div>
+                                </div>
+                                <div className="operations-guidance">
+                                    <p>Úsalo sólo cuando el respaldo descargado no coincide con el panel “Por enviar”, o al iniciar un nuevo momento para evitar duplicados.</p>
+                                </div>
+                                <button className="btn btn-warning operations-reset" onClick={igualarRespaldoALocal}>
+                                    <FaRotateLeft aria-hidden="true" /> Reinicializar respaldo
+                                </button>
+                            </section>
+                        </main>
   </Fragment>
 
 

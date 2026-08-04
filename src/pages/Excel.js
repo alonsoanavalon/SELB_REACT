@@ -1,277 +1,220 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import { MultiSelect } from "react-multi-select-component";
-import {get} from 'idb-keyval'
-import { useAlert } from 'react-alert'
+import React, { useEffect, useMemo, useState } from 'react';
+import { MultiSelect } from 'react-multi-select-component';
+import { get } from 'idb-keyval';
+import { useAlert } from 'react-alert';
 import axios from 'axios';
-import { CSVLink } from "react-csv";
+import * as XLSX from 'xlsx';
+import '../css/reports.css';
 
-export default function Excel () {
+const FILE_NAMES = { 1: 'TejasLee', 2: 'Precalculo', 3: 'SDQ' };
+const multiSelectStrings = {
+  selectAll: 'Todos',
+  selectSomeItems: 'Seleccionar',
+  search: 'Buscar',
+  clearSearch: 'Limpiar busqueda',
+  allItemsAreSelected: 'Todos seleccionados',
+};
 
-    const alert = useAlert()
-    const [selected, setSelected] = useState([]);
-    const [selectedSchool, setSelectedSchool] = useState([])
-    const [studies, setStudies] = useState([])
-    const [instruments, setInstruments] = useState([])
-    const [moments, setMoments] = useState([])
-    const [schoolOptions, setSchoolOptions] = useState([])
-    const [csvData, setCsvData] = useState()
-    const [fileName, setFileName] = useState()
-    const [filteredMoments, setFilteredMoments] = useState([])
-    const [studyId, setStudyId] = useState()
-    const [courses, setCourses] = useState([])
-    const [courseOptions, setCourseOptions] = useState([])
-    const [selectedCourses, setSelectedCourses] = useState([])
-    const [yearOptions, setYearOptions] = useState([]);
-    const [selectedYears, setSelectedYears] = useState([]);
+const toOption = (label, value, extra = {}) => ({ label, value, ...extra });
 
-    useEffect(() => {
+export default function Excel() {
+  const alert = useAlert();
+  const [studies, setStudies] = useState([]);
+  const [instruments, setInstruments] = useState([]);
+  const [moments, setMoments] = useState([]);
+  const [schoolOptions, setSchoolOptions] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [selectedStudyId, setSelectedStudyId] = useState('');
+  const [selectedMomentId, setSelectedMomentId] = useState('');
+  const [selectedInstrumentId, setSelectedInstrumentId] = useState('');
+  const [selectedSchools, setSelectedSchools] = useState([]);
+  const [selectedYears, setSelectedYears] = useState([]);
+  const [reportRows, setReportRows] = useState(null);
+  const [fileName, setFileName] = useState('instrument');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [online, setOnline] = useState(navigator.onLine);
 
-        get('studies')
-        .then(res => setStudies(res))
+  useEffect(() => {
+    let active = true;
 
-        get('instruments')
-        .then(res => setInstruments(res))
+    async function loadCatalogs() {
+      const [studyData, instrumentData, schoolData, momentData, courseData] = await Promise.all([
+        get('studies'),
+        get('instruments'),
+        get('schools'),
+        get('moments'),
+        get('courses'),
+      ]);
 
-        get('schools')
-        .then(res => res.map(school => {
-            let obj = {}
-            obj['label'] = school.name
-            obj['value'] = school.id
-            setSchoolOptions(prevVal => [...prevVal, obj])
-        }))
-        
-        get('moments')
-        .then(res => setMoments(res));
+      if (!active) return;
 
-        get('courses')
-        .then(res => {
-            let courses = []
-            res.forEach(course => {
-                let obj = {}
-                obj['label'] = course.courseName
-                obj['value'] = course.course
-                obj['school'] = course.school
-                courses.push(obj)
-            })
-            setCourses(courses)
-        })
-
-    }, [])
-
-
-        useEffect(() => {
-            if (selected.length > 0 && courses.length > 0) {
-                let schoolIds = selected.map(s => s.value);
-                let filteredCourses = courses.filter(course => schoolIds.includes(course.school));
-                setCourseOptions(filteredCourses);
-    
-                let yearsSet = new Set();
-                filteredCourses.forEach(course => {
-                    let courseName = course.label;
-                    if (courseName && courseName.length >= 4) {
-                        let year = courseName.slice(-4);
-                        yearsSet.add(year);
-                    }
-                });
-                let yearsOptionsArr = Array.from(yearsSet).map(year => ({ label: year, value: year }));
-                yearsOptionsArr.sort((a, b) => a.value.localeCompare(b.value));
-                setYearOptions(yearsOptionsArr);
-                if (selectedYears.length === 0) {
-                    setSelectedYears(yearsOptionsArr);
-                }
-            } else {
-                setYearOptions([]);
-                setSelectedYears([]);
-            }
-        }, [selected, courses]);
-
-    const setMomentsFiltered = (e) => {
-        setStudyId(e.target.value)
-        setFilteredMoments(moments.filter(moment => moment.study_id == e.target.value))
+      setStudies(Array.isArray(studyData) ? studyData : []);
+      setInstruments(Array.isArray(instrumentData) ? instrumentData : []);
+      setMoments(Array.isArray(momentData) ? momentData : []);
+      setSchoolOptions((Array.isArray(schoolData) ? schoolData : []).map((school) => toOption(school.name, school.id)));
+      setCourses((Array.isArray(courseData) ? courseData : []).map((course) => toOption(course.courseName, course.course, { school: course.school })));
+      setIsLoading(false);
     }
 
-    const renderStudies = ()  => {
-        return studies.map(study => <option key={study.id}value={study.id}> {study.name}</option>)
+    loadCatalogs().catch(() => {
+      if (active) setIsLoading(false);
+    });
+
+    const updateConnection = () => setOnline(navigator.onLine);
+    window.addEventListener('online', updateConnection);
+    window.addEventListener('offline', updateConnection);
+    return () => {
+      active = false;
+      window.removeEventListener('online', updateConnection);
+      window.removeEventListener('offline', updateConnection);
+    };
+  }, []);
+
+  const filteredMoments = useMemo(
+    () => moments.filter((moment) => String(moment.study_id) === selectedStudyId),
+    [moments, selectedStudyId]
+  );
+  const courseOptions = useMemo(() => {
+    const selectedSchoolIds = new Set(selectedSchools.map((school) => String(school.value)));
+    return courses.filter((course) => selectedSchoolIds.has(String(course.school)));
+  }, [courses, selectedSchools]);
+  const yearOptions = useMemo(() => {
+    const years = new Set();
+    courseOptions.forEach((course) => {
+      const year = String(course.label || '').slice(-4);
+      if (/^\d{4}$/.test(year)) years.add(year);
+    });
+    return Array.from(years).sort().map((year) => toOption(year, year));
+  }, [courseOptions]);
+
+  useEffect(() => {
+    setSelectedYears(yearOptions);
+  }, [yearOptions]);
+
+  const generateReport = async () => {
+    const schools = selectedSchools.map((school) => school.value);
+    let instrument = selectedInstrumentId;
+
+    if (!selectedMomentId || !instrument || schools.length === 0) {
+      alert.show('Debes seleccionar estudio, momento, instrumento y al menos un colegio.', { type: 'error' });
+      return;
     }
 
-    const renderInstruments = () => {
-        return instruments.map(instrument =><option key={instrument.id}value={instrument.id}> {instrument.name}</option> )
+    const data = {
+      schools,
+      moment: selectedMomentId,
+      instrument,
+      studyId: selectedStudyId,
+      years: (selectedYears.length > 0 ? selectedYears : yearOptions).map((year) => year.value),
+    };
+
+    if (instrument === '100') {
+      instrument = '6';
+      data.instrument = instrument;
+      data.countExamples = false;
     }
 
-    const getSelectedSchool = () => {
-        let schoolArray = []
-        selected.forEach(school => {
-            schoolArray.push(school.value)
-        })
-        setSelectedSchool(schoolArray)    
-        const schoolIds = schoolArray.map(school => school.value)
-        let filteredCourses = courses.filter(course => schoolIds.includes(course.school))
-        setCourseOptions(filteredCourses)
-        return schoolArray
+    setIsGenerating(true);
+    setReportRows(null);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/excel`, data);
+      if (!Array.isArray(response.data) || response.data.length === 0) {
+        alert.show('No se encontraron datos para los filtros seleccionados.', { type: 'info' });
+        return;
+      }
+      setReportRows(response.data);
+    } catch (_error) {
+      alert.show('No fue posible generar el reporte. Intenta nuevamente.', { type: 'error' });
+    } finally {
+      setIsGenerating(false);
     }
+  };
 
+  const downloadXlsx = () => {
+    if (!Array.isArray(reportRows) || reportRows.length === 0) return;
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.aoa_to_sheet(reportRows);
+    worksheet['!freeze'] = { xSplit: 0, ySplit: 1 };
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte');
+    XLSX.writeFile(workbook, `${fileName}.xlsx`);
+  };
 
-    const getMoment = () => {
-        let studies = document.getElementById("momentSelect")
-        let selectedMoment = studies.value
-        return selectedMoment
-    }
+  const reportCount = reportRows ? Math.max(reportRows.length - 1, 0) : 0;
 
+  return (
+    <main className="reports-page">
+      <header className="reports-header">
+        <div>
+          <p className="reports-eyebrow">Reporteria</p>
+          <h1>Exportar evaluaciones</h1>
+          <p>Filtra el reporte y descarga los resultados en formato Excel.</p>
+        </div>
+        <span className={`reports-connection ${online ? 'is-online' : 'is-offline'}`}>
+          {online ? 'En linea' : 'Sin conexion'}
+        </span>
+      </header>
 
-    const getInstrument = () => {
-        let studies = document.getElementById("instrumentSelect")
-        let selectedInstrument = studies.value
-        return selectedInstrument
-    }
-
-    const getFileName = (instrumentId) => {
-
-        switch(instrumentId) {
-            case "1": 
-                setFileName("TejasLee");
-                break;
-            case "2": 
-                setFileName("Precálculo");
-                break;
-            case "3": 
-                setFileName("SDQ");
-                break;
-            default:
-                setFileName("instrument");
-                break;
-        }
-    }
-
-    const getCsv = () => {
-        const schools = getSelectedSchool()
-        const moment = getMoment()
-        let instrument = getInstrument()
-
-        const dataObject = {}
-
-        if (instrument == 100) {
-            instrument = 6;
-            dataObject['countExamples'] = false;
-        }
-
-        setCsvData(undefined)
-
-        if (moment === 'empty' || instrument === 'empty' || schools.length < 1) {
-           
-            alert.show('Debe elegir cada una de las opciones', {
-                type:'error'
-            })
-        } else {
-            
-            dataObject['schools'] = schools
-            dataObject['moment'] = moment
-            dataObject['instrument'] = instrument
-            dataObject['studyId'] = studyId
-            dataObject['years'] = (selectedYears.length > 0 ? selectedYears : yearOptions).map(item => item.value);
-
-
-            getFileName(instrument)
-
-            
-            axios({
-                method: 'post',
-                url: `${process.env.REACT_APP_API_URL}/excel`,
-                data: dataObject
-            })
-            .then(
-                res => {
-                    setCsvData(res.data)
-                }
-            )
-
-        }
-    }
-
-   
-    
-    return (
-        <Fragment>
-            {/* <CsvReader />  Este nos servirá cuando queramos meter datos, ya que lee CSV*/}
-            <div className='excel-container'>
-            <h2>Reportes en formato CSV</h2>
-            <select  className="form-select" onChange={setMomentsFiltered}placeholder='Estudios' id="studySelect" defaultValue="empty">
-                <option value="empty" disabled>Estudios</option>
-                {renderStudies()}
-            </select>   
-
-            <select  className="form-select" placeholder='Momentos' id="momentSelect" defaultValue="empty">
-                <option value="empty">Momentos</option>
-                {
-                    filteredMoments.length > 0 && 
-                        filteredMoments.map(moment => <option key={moment.id}value={moment.id}> {moment.begin.slice(0, 10)} - {moment.until.slice(0,10)}</option>)
-                }
-            </select>   
-
-            <div>
-            <MultiSelect
-                options={schoolOptions}
-                value={selected}
-                onChange={setSelected}
-                labelledBy="Select"
-                overrideStrings={
-                    {   selectAll:"Todos",
-                        selectSomeItems:"Colegios",
-                        search:"Buscar",
-                        clearSearch: "Limpiar Búsqueda",
-                        allItemsAreSelected: "Todos han sido seleccionados"
-                    }}
-            />
-
+      <section className="reports-panel" aria-label="Filtros de reporte">
+        <div className="reports-panel__header">
+          <div>
+            <h2>Seleccion de datos</h2>
+            <p>Los filtros se aplican al mismo reporte historico existente.</p>
+          </div>
+        </div>
+        {isLoading ? <p className="reports-empty">Cargando catalogos disponibles...</p> : (
+          <div className="reports-filters">
+            <div className="reports-field">
+              <label htmlFor="report-study">Estudio</label>
+              <select id="report-study" className="form-select" value={selectedStudyId} onChange={(event) => { setSelectedStudyId(event.target.value); setSelectedMomentId(''); setReportRows(null); }}>
+                <option value="">Seleccionar estudio</option>
+                {studies.map((study) => <option key={study.id} value={study.id}>{study.name}</option>)}
+              </select>
             </div>
+            <div className="reports-field">
+              <label htmlFor="report-moment">Momento</label>
+              <select id="report-moment" className="form-select" value={selectedMomentId} onChange={(event) => setSelectedMomentId(event.target.value)} disabled={!selectedStudyId || filteredMoments.length === 0}>
+                <option value="">Seleccionar momento</option>
+                {filteredMoments.map((moment) => <option key={moment.id} value={moment.id}>{String(moment.begin).slice(0, 10)} - {String(moment.until).slice(0, 10)}</option>)}
+              </select>
+            </div>
+            <div className="reports-field">
+              <label htmlFor="report-instrument">Instrumento</label>
+              <select id="report-instrument" className="form-select" value={selectedInstrumentId} onChange={(event) => { setSelectedInstrumentId(event.target.value); setFileName(FILE_NAMES[event.target.value] || 'instrument'); setReportRows(null); }}>
+                <option value="">Seleccionar instrumento</option>
+                {instruments.map((instrument) => <option key={instrument.id} value={instrument.id}>{instrument.name}</option>)}
+                <option value="100">Corsi (sin contar ejemplos)</option>
+              </select>
+            </div>
+            <div className="reports-field reports-field--wide">
+              <label>Colegios</label>
+              <MultiSelect options={schoolOptions} value={selectedSchools} onChange={(schools) => { setSelectedSchools(schools); setReportRows(null); }} labelledBy="Colegios" overrideStrings={{ ...multiSelectStrings, selectSomeItems: 'Seleccionar colegios' }} />
+            </div>
+            <div className="reports-field">
+              <label>Anios</label>
+              <MultiSelect options={yearOptions} value={selectedYears} onChange={setSelectedYears} labelledBy="Anios" disabled={yearOptions.length === 0} overrideStrings={{ ...multiSelectStrings, selectSomeItems: 'Seleccionar anios' }} />
+            </div>
+            <div className="reports-action">
+              <button type="button" className="btn btn-primary" onClick={generateReport} disabled={isGenerating || !online}>
+                {isGenerating ? 'Generando reporte...' : 'Generar reporte'}
+              </button>
+            </div>
+          </div>
+        )}
+      </section>
 
-
-                <div style={{ marginTop: "1rem" }}>
-                    <MultiSelect
-                        options={yearOptions}
-                        value={selectedYears}
-                        onChange={setSelectedYears}
-                        labelledBy="Select Años"
-                        overrideStrings={{
-                            selectAll:"Todos",
-                            selectSomeItems:"Años",
-                            search:"Buscar",
-                            clearSearch: "Limpiar Búsqueda",
-                            allItemsAreSelected: "Todos han sido seleccionados"
-                        }}
-                    />
-                </div>
-
-
-            <select  className="form-select" placeholder='Instrumentos' id="instrumentSelect" defaultValue="empty">
-                <option value="empty" disabled>Instrumentos</option>
-                <optgroup label="Principales">
-                {renderInstruments()}
-                </optgroup>
-                    <optgroup label="Otros">
-                    <option key={100} value={100}>Corsi (sin contar ejemplos) </option> 
-
-                </optgroup>
-
-                
-
-            </select>   
-            
-            <button id="btn-excel"className='btn btn-primary' onClick={getCsv}>Obtener datos</button>
-
-            {
-                 csvData !== undefined && 
-                 <Fragment>
-                     <CSVLink className="btn btn-success "filename={fileName}data={csvData}>Descargar</CSVLink>
-                 </Fragment>
-            }
-
-
-
-  </div>
-  </Fragment>
-
-
-
-
-    )
+      {reportRows && (
+        <section className="reports-panel reports-result" aria-live="polite">
+          <div className="reports-panel__header">
+            <div>
+              <h2>Reporte listo</h2>
+              <p>{reportCount === 1 ? '1 registro encontrado.' : `${reportCount} registros encontrados.`}</p>
+            </div>
+            <button type="button" className="btn btn-success" onClick={downloadXlsx}>Descargar XLSX</button>
+          </div>
+          <div className="reports-preview">El archivo incluye encabezados y todos los datos del reporte generado.</div>
+        </section>
+      )}
+    </main>
+  );
 }
