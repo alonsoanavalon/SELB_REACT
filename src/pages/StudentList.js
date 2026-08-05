@@ -228,6 +228,8 @@ export default function StudentList() {
                     isClearable
                     isDisabled={catalogState !== 'ready' || schools.length === 0}
                     noOptionsMessage={() => 'Sin colegios'}
+                    menuPortalTarget={document.body}
+                    styles={{ menuPortal: base => ({ ...base, zIndex: 100 }) }}
                 />
                 </div>
                 <div className="student-selection__field">
@@ -241,6 +243,8 @@ export default function StudentList() {
                     isClearable
                     isDisabled={!selectedSchool || courseOptions.length === 0}
                     noOptionsMessage={() => 'Sin cursos'}
+                    menuPortalTarget={document.body}
+                    styles={{ menuPortal: base => ({ ...base, zIndex: 100 }) }}
                 />
                 </div>
                 <div className="student-selection__field">
