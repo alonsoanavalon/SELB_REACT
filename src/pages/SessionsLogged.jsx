@@ -23,12 +23,18 @@ function SessionsLogged() {
         const newestFirst = [...sessions].sort((first, second) => {
           const firstTime = new Date(first.sessionDate).getTime();
           const secondTime = new Date(second.sessionDate).getTime();
+          const firstNaN = Number.isNaN(firstTime);
+          const secondNaN = Number.isNaN(secondTime);
 
-          if (Number.isNaN(firstTime) || Number.isNaN(secondTime)) {
+          if (firstNaN && secondNaN) {
             return Number(second.id) - Number(first.id);
           }
-
-          return secondTime - firstTime;
+          if (firstNaN) return 1;
+          if (secondNaN) return -1;
+          if (secondTime !== firstTime) {
+            return secondTime - firstTime;
+          }
+          return Number(second.id) - Number(first.id);
         });
 
         setSessionLogged(newestFirst);
