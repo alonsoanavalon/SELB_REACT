@@ -27,6 +27,8 @@ export const DASHBOARD_INSTRUMENTS = [
   { id: 25, name: 'AnsMat', legacyKey: 'ansMatLength' },
   { id: 26, name: 'CountSpan', legacyKey: 'countSpanLength' },
   { id: 27, name: 'Tarea de cartas', legacyKey: 'countWisconsinLength' },
+  { id: 28, name: 'Wally Niños', legacyKey: 'wallyNinosLength' },
+  { id: 29, name: 'Wally Niñas', legacyKey: 'wallyNinasLength' },
 ];
 
 export function normalizeDashboardSummary(payload, updatedAt) {

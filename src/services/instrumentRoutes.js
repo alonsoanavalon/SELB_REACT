@@ -24,6 +24,8 @@ export const INSTRUMENT_ROUTES = Object.freeze({
   25: '/ansMat',
   26: '/countSpan',
   27: '/wisconsin',
+  28: '/wallyNinos',
+  29: '/wallyNinas',
 });
 
 export function getInstrumentRoute(instrumentId) {

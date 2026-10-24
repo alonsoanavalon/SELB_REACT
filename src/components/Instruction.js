@@ -87,7 +87,8 @@ export default function Instruction (props) {
             instrument: Number(instrumentId.value),
             date: `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`
         }
-        const choicesArray = [instrumentInfo, collectChoices(instruments)]
+        const collectAnswers = props.collectAnswers || collectChoices
+        const choicesArray = [instrumentInfo, collectAnswers(instruments)]
         const currentCompletedTests = Array.isArray(completedTests) ? completedTests : []
         const updatedCompletedTests = [
             ...currentCompletedTests.filter(test => !isSameTest(test, instrumentInfo)),

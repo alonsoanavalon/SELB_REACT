@@ -1,7 +1,7 @@
 import { getInstrumentRoute, INSTRUMENT_ROUTES } from './instrumentRoutes';
 
 test('preserves every existing instrument route', () => {
-  expect(Object.keys(INSTRUMENT_ROUTES)).toHaveLength(25);
+  expect(Object.keys(INSTRUMENT_ROUTES)).toHaveLength(27);
   expect(getInstrumentRoute('1')).toBe('/tejaslee');
   expect(getInstrumentRoute(2)).toBe('/calculo');
   expect(getInstrumentRoute(6)).toBe('/corsi');
