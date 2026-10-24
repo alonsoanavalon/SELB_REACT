@@ -98,13 +98,23 @@ async function main() {
   {
     const worker = loadWorker();
     await dispatchWaitable(worker.listeners.install);
-    assert.strictEqual(worker.state.openedCache, 'app-v2.0.25');
+    assert.strictEqual(worker.state.openedCache, 'app-v2.0.27');
     assert(worker.state.addAllBatches[0].includes('/index.html'));
     assert(worker.state.addAllBatches[0].includes('/static/js/bundle.js'));
     assert(worker.state.addAllBatches[0].includes('/logo.png'));
     assert(worker.state.addAllBatches[1].includes('/static/css/main.test.css'));
     assert(worker.state.addAllBatches[1].includes('/static/js/main.test.js'));
     assert(worker.state.optionalEntries.length > 100);
+    // INSTR-002: Wally Niños/Niñas routes and their 30 stimulus images work offline.
+    for (const route of ['/wallyNinos', '/wallyNinas']) {
+      assert(worker.state.optionalEntries.includes(route), route);
+    }
+    for (const folder of ['ninos', 'ninas']) {
+      for (let num = 1; num <= 15; num++) {
+        const image = `/instruments/wallyOriginal/${folder}/${num}.jpg`;
+        assert(worker.state.optionalEntries.includes(image), image);
+      }
+    }
   }
 
   {
@@ -116,7 +126,7 @@ async function main() {
       waitUntil(value) { installation = Promise.resolve(value); },
     });
     await assert.rejects(installation, /precache incomplete/);
-    assert.strictEqual(worker.state.openedCache, 'app-v2.0.25');
+    assert.strictEqual(worker.state.openedCache, 'app-v2.0.27');
   }
 
   {
@@ -180,13 +190,14 @@ async function main() {
   {
     const worker = loadWorker({
       cacheNames: [
-        'app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'app-v2.0.23', 'app-v2.0.24', 'app-v2.0.25', 'unrelated-cache',
+        'app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'app-v2.0.23', 'app-v2.0.24', 'app-v2.0.25', 'app-v2.0.26',
+        'app-v2.0.27', 'unrelated-cache',
       ],
     });
     await dispatchWaitable(worker.listeners.activate);
     assert.deepStrictEqual(
       worker.state.deletedCaches.sort(),
-      ['app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'app-v2.0.23', 'app-v2.0.24'],
+      ['app-v2.0.20', 'app-v2.0.21', 'app-v2.0.22', 'app-v2.0.23', 'app-v2.0.24', 'app-v2.0.25', 'app-v2.0.26'],
     );
   }
 
