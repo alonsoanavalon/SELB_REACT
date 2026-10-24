@@ -29,6 +29,7 @@ import Aces from './pages/Aces';
 import Fonologico from './pages/Fonologico';
 import Wally from './pages/Wally';
 import WallyOriginal from './pages/WallyOriginal';
+import WallyCoding from './pages/WallyCoding';
 import Corsi from './pages/Corsi'
 import Moments from './pages/Moments'
 import Desarrollo from './components/Desarrollo';
@@ -630,6 +631,7 @@ function App() {
                   <Route path="/wally" element={<Wally />}></Route>
                   <Route path="/wallyNinos" element={<WallyOriginal variant="ninos" />}></Route>
                   <Route path="/wallyNinas" element={<WallyOriginal variant="ninas" />}></Route>
+                  <Route path="/codificacion" element={<WallyCoding />}></Route>
                   <Route path="/eml" element={<EML />}></Route>
                   <Route path="/japi" element={<JapiInteres />}></Route>
                   <Route path="/wisconsin" element={<Wisconsin/>}></Route>

@@ -171,3 +171,30 @@ export const deleteAssignation = async assignationId => {
   })
   return response.data
 }
+
+// INSTR-002 Fase B — codificación de Wally Niños/Niñas.
+const wallyCodingUrl = () => `${getBaseUrl()}/coding/wally-original`
+
+export const getWallyCodingCatalog = async () => {
+  const response = await axios.get(`${wallyCodingUrl()}/catalog`, { withCredentials: true })
+  return response.data
+}
+
+export const listWallyCodingEvaluations = async params => {
+  const response = await axios.get(`${wallyCodingUrl()}/evaluations`, withParams(params))
+  return response.data
+}
+
+export const getWallyCodingEvaluation = async instrumentListId => {
+  const response = await axios.get(`${wallyCodingUrl()}/evaluations/${instrumentListId}`, {
+    withCredentials: true,
+  })
+  return response.data
+}
+
+export const saveWallyCodingEvaluation = async (instrumentListId, payload) => {
+  const response = await axios.put(`${wallyCodingUrl()}/evaluations/${instrumentListId}`, payload, {
+    withCredentials: true,
+  })
+  return response.data
+}
