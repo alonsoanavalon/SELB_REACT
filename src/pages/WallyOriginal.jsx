@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { get } from 'idb-keyval';
+import axios from 'axios';
+import { get, set } from 'idb-keyval';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation, A11y } from 'swiper';
@@ -31,6 +32,24 @@ const styles = {
     warning: { color: '#b45309', marginTop: '0.25rem' },
     coding: { textAlign: 'start', maxHeight: '45vh', overflowY: 'auto' },
 };
+
+const isCatalog = (value) => Boolean(value && Array.isArray(value.categories));
+
+// El catálogo se precarga al abrir SELB (App.js). Si no está en la tablet y hay
+// conexión, se descarga aquí para no depender de un reinicio de la app.
+async function loadCatalog() {
+    const cached = await get(CATALOG_KEY);
+    if (isCatalog(cached)) return cached;
+    if (!navigator.onLine) return null;
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/${CATALOG_KEY}`);
+        if (!isCatalog(response.data)) return null;
+        await set(CATALOG_KEY, response.data);
+        return response.data;
+    } catch (_error) {
+        return null;
+    }
+}
 
 const pictureOf = (item, folder) => item.picture || `/instruments/wallyOriginal/${folder}/${item.num}.jpg`;
 
@@ -152,7 +171,7 @@ export default function WallyOriginal({ variant }) {
 
     useEffect(() => {
         get('selectedStudentName').then((name) => setStudentName(name || ''));
-        get(CATALOG_KEY).then((value) => setCatalog(value && Array.isArray(value.categories) ? value : null));
+        loadCatalog().then(setCatalog);
     }, []);
 
     useEffect(() => {

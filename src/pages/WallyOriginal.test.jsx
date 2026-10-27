@@ -2,7 +2,10 @@ import { fireEvent, render, screen, waitFor, within } from '@testing-library/rea
 import { MemoryRouter } from 'react-router-dom';
 import { get, getMany, set } from 'idb-keyval';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import WallyOriginal from './WallyOriginal';
+
+jest.mock('axios', () => ({ get: jest.fn() }));
 
 jest.mock('idb-keyval', () => ({
   get: jest.fn(),
@@ -33,7 +36,8 @@ const catalog = {
   maxCategoriesPerItem: 6,
 };
 
-function renderPage(variant = 'ninos', { withCatalog = true } = {}) {
+function renderPage(variant = 'ninos', { withCatalog = true, online = false } = {}) {
+  jest.spyOn(navigator, 'onLine', 'get').mockReturnValue(online);
   get.mockImplementation((key) => Promise.resolve({
     selectedStudentName: 'Alumno sintético',
     'instrument/28': items,
@@ -136,8 +140,18 @@ test('the coding slide shows the typed answer and saves classification and categ
   expect(answers[501]).toEqual({ text: '', time: null, classification: null, categories: [] });
 });
 
+test('downloads the catalog when it is missing and the tablet is online', async () => {
+  axios.get.mockResolvedValue({ data: catalog });
+  renderPage('ninos', { withCatalog: false, online: true });
+  await screen.findAllByText('Situación sintética uno');
+  const codingSlide = screen.getByRole('group', { name: 'Codificación ítem 1' });
+  expect(await within(codingSlide).findByRole('radio', { name: 'Positivo' })).toBeInTheDocument();
+  expect(axios.get).toHaveBeenCalledWith(expect.stringMatching(/\/coding\/wally-original\/catalog$/));
+  expect(set).toHaveBeenCalledWith('coding/wally-original/catalog', catalog);
+});
+
 test('without a downloaded catalog the take can still be saved and explains how to code later', async () => {
-  renderPage('ninos', { withCatalog: false });
+  renderPage('ninos', { withCatalog: false, online: false });
   await screen.findAllByText('Situación sintética uno');
   const codingSlide = screen.getByRole('group', { name: 'Codificación ítem 1' });
   expect(within(codingSlide).getByText(/catálogo de codificación no está disponible/)).toBeInTheDocument();
