@@ -5,6 +5,7 @@ import 'swiper/css/navigation';
 import { Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Instruction from '../components/Instruction';
+import CodingFields from '../components/WallyOriginal/CodingFields';
 import {
     WALLY_ORIGINAL_VARIANTS,
     collectOpenAnswers,
@@ -12,20 +13,28 @@ import {
     toSeconds,
 } from '../services/wallyOriginal';
 
-// INSTR-002 — Toma de Wally Niños / Wally Niñas: por ítem, imagen, situación,
-// cronómetro y respuesta abierta. El evaluador no clasifica ni codifica.
+// INSTR-002 — Toma de Wally Niños / Wally Niñas. Cada ítem tiene dos slides:
+// 1) imagen, situación, cronómetro y respuesta abierta;
+// 2) imagen, situación, la respuesta registrada y su codificación (Fase C).
+
+const CATALOG_KEY = 'coding/wally-original/catalog';
+const EMPTY_CODING = { classification: null, categories: [] };
 
 const styles = {
-    item: { maxWidth: '900px', margin: '0 auto', padding: '0 1rem' },
+    item: { maxWidth: '900px', margin: '0 auto', padding: '0 1rem', border: 0 },
     image: { display: 'block', maxWidth: '100%', maxHeight: '38vh', margin: '0.5rem auto', objectFit: 'contain' },
+    codingImage: { display: 'block', maxWidth: '100%', maxHeight: '22vh', margin: '0.25rem auto', objectFit: 'contain' },
     stopwatch: { display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', margin: '0.5rem 0' },
     seconds: { fontVariantNumeric: 'tabular-nums', fontSize: '1.4rem', minWidth: '5rem', textAlign: 'center' },
     answer: { width: '100%', fontSize: '1.1rem' },
+    recorded: { background: '#f8f9fa', borderRadius: '6px', padding: '0.5rem 0.75rem', whiteSpace: 'pre-wrap', textAlign: 'start' },
     warning: { color: '#b45309', marginTop: '0.25rem' },
+    coding: { textAlign: 'start', maxHeight: '45vh', overflowY: 'auto' },
 };
 
-function OpenAnswerItem({ item, instrumentId, folder }) {
-    const [answer, setAnswer] = useState('');
+const pictureOf = (item, folder) => item.picture || `/instruments/wallyOriginal/${folder}/${item.num}.jpg`;
+
+function OpenAnswerItem({ item, instrumentId, folder, answer, onAnswerChange }) {
     const [removedCharacters, setRemovedCharacters] = useState(false);
     const [elapsed, setElapsed] = useState(0);
     const [startedAt, setStartedAt] = useState(null);
@@ -55,20 +64,19 @@ function OpenAnswerItem({ item, instrumentId, folder }) {
     };
 
     // Como en la aplicación antigua, empezar a escribir detiene el cronómetro.
-    const onAnswerChange = (event) => {
+    const onChange = (event) => {
         stop();
         const { text, removed } = sanitizeAnswerText(event.target.value);
-        setAnswer(text);
+        onAnswerChange(text);
         setRemovedCharacters(removed);
     };
 
-    const picture = item.picture || `/instruments/wallyOriginal/${folder}/${item.num}.jpg`;
     const answerId = `wally-original-answer-${item.itemId}`;
 
     return (
-        <div className="page-item" style={styles.item}>
+        <fieldset className="page-item" style={styles.item} aria-label={`Respuesta ítem ${item.num}`}>
             <h3 className="main-description">{item.title}</h3>
-            <img src={picture} alt={`Situación ${item.num}`} style={styles.image} />
+            <img src={pictureOf(item, folder)} alt={`Situación ${item.num}`} style={styles.image} />
             <form className="instrument-form" onSubmit={(event) => event.preventDefault()}>
                 <input type="hidden" name="instrument" value={instrumentId} />
                 <input type="hidden" name="key" value={item.itemId} />
@@ -88,24 +96,63 @@ function OpenAnswerItem({ item, instrumentId, folder }) {
                     rows={3}
                     maxLength={600}
                     value={answer}
-                    onChange={onAnswerChange}
+                    onChange={onChange}
                     style={styles.answer}
                 />
                 {removedCharacters && (
                     <p role="alert" style={styles.warning}>Se quitaron caracteres no admitidos (por ejemplo, emojis).</p>
                 )}
             </form>
-        </div>
+        </fieldset>
+    );
+}
+
+function CodingSlide({ item, folder, answer, coding, catalog, onCodingChange }) {
+    return (
+        <fieldset className="page-item" style={styles.item} aria-label={`Codificación ítem ${item.num}`}>
+            <h3 className="main-description">{item.title}</h3>
+            <img src={pictureOf(item, folder)} alt={`Situación ${item.num} (codificación)`} style={styles.codingImage} />
+            <div style={styles.recorded}>
+                <strong>Respuesta registrada: </strong>
+                {answer ? <span>{answer}</span> : <em>Sin respuesta registrada</em>}
+            </div>
+            <form className="instrument-form" onSubmit={(event) => event.preventDefault()}>
+                <input type="hidden" name="codingKey" value={item.itemId} />
+                <input type="hidden" name="classification" value={coding.classification || ''} />
+                <input type="hidden" name="categories" value={JSON.stringify(coding.categories)} />
+            </form>
+            <div style={styles.coding}>
+                {catalog ? (
+                    <CodingFields
+                        itemId={item.itemId}
+                        num={item.num}
+                        coding={coding}
+                        categories={catalog.categories}
+                        maxCategories={catalog.maxCategoriesPerItem}
+                        onChange={onCodingChange}
+                    />
+                ) : (
+                    <p style={styles.warning}>
+                        El catálogo de codificación no está disponible en esta tablet. Puedes seguir con la toma;
+                        la codificación se podrá hacer después desde Codificación, o conéctate a internet y vuelve a abrir SELB para descargarlo.
+                    </p>
+                )}
+            </div>
+        </fieldset>
     );
 }
 
 export default function WallyOriginal({ variant }) {
     const config = WALLY_ORIGINAL_VARIANTS[variant];
     const [items, setItems] = useState(null);
+    const [catalog, setCatalog] = useState(null);
+    const [answers, setAnswers] = useState({});
+    const [codings, setCodings] = useState({});
     const [studentName, setStudentName] = useState('');
 
     useEffect(() => {
         get('selectedStudentName').then((name) => setStudentName(name || ''));
+        get(CATALOG_KEY).then((value) => setCatalog(value && Array.isArray(value.categories) ? value : null));
     }, []);
 
     useEffect(() => {
@@ -133,6 +180,33 @@ export default function WallyOriginal({ variant }) {
         );
     }
 
+    const slides = [];
+    items.forEach((item) => {
+        slides.push(
+            <SwiperSlide key={`${item.itemId}-answer`}>
+                <OpenAnswerItem
+                    item={item}
+                    instrumentId={config.instrumentId}
+                    folder={config.folder}
+                    answer={answers[item.itemId] || ''}
+                    onAnswerChange={(text) => setAnswers((state) => ({ ...state, [item.itemId]: text }))}
+                />
+            </SwiperSlide>
+        );
+        slides.push(
+            <SwiperSlide key={`${item.itemId}-coding`}>
+                <CodingSlide
+                    item={item}
+                    folder={config.folder}
+                    answer={answers[item.itemId] || ''}
+                    coding={codings[item.itemId] || EMPTY_CODING}
+                    catalog={catalog}
+                    onCodingChange={(value) => setCodings((state) => ({ ...state, [item.itemId]: value }))}
+                />
+            </SwiperSlide>
+        );
+    });
+
     return (
         <div style={{ overflow: 'hidden', height: '100%', paddingTop: '1.5rem' }}>
             <div className="aces-test">
@@ -150,11 +224,7 @@ export default function WallyOriginal({ variant }) {
                         <Instruction instruction={config.instruction} />
                     </SwiperSlide>
 
-                    {items.map((item) => (
-                        <SwiperSlide key={item.itemId}>
-                            <OpenAnswerItem item={item} instrumentId={config.instrumentId} folder={config.folder} />
-                        </SwiperSlide>
-                    ))}
+                    {slides}
 
                     <SwiperSlide>
                         <Instruction

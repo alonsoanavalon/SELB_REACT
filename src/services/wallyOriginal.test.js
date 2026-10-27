@@ -40,15 +40,24 @@ describe('Wally Niños / Wally Niñas (INSTR-002)', () => {
     ]));
   });
 
-  test('collects open answer and time per item, keyed by item id', () => {
+  test('collects answer, time and the coding from the second slide, keyed by item id', () => {
     const forms = [
       buildForm({ instrument: '28', key: '501', answer: "le dije 'para'", time: '7' }),
+      buildForm({ codingKey: '501', classification: 'positivo', categories: '[2,45]' }),
       buildForm({ instrument: '28', key: '502', answer: '', time: '' }),
+      buildForm({ codingKey: '502', classification: '', categories: '[]' }),
       buildForm({ instrument: '28' }),
     ];
     expect(collectOpenAnswers(forms)).toEqual({
-      501: { text: "le dije 'para'", time: 7 },
-      502: { text: '', time: null },
+      501: { text: "le dije 'para'", time: 7, classification: 'positivo', categories: [2, 45] },
+      502: { text: '', time: null, classification: null, categories: [] },
+    });
+  });
+
+  test('an item without a coding slide is sent without classification', () => {
+    const forms = [buildForm({ instrument: '28', key: '501', answer: 'hola', time: '3' })];
+    expect(collectOpenAnswers(forms)).toEqual({
+      501: { text: 'hola', time: 3, classification: null, categories: [] },
     });
   });
 

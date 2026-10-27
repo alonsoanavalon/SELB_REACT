@@ -46,11 +46,31 @@ export function toSeconds(milliseconds) {
   return Math.round(Number(milliseconds) / 1000);
 }
 
-// Recolector para Instruction: { [itemId]: { text, time } } desde los formularios
-// `.instrument-form` de la página (campos key, answer y time).
+const parseCategories = (value) => {
+  try {
+    const parsed = JSON.parse(value || '[]');
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_error) {
+    return [];
+  }
+};
+
+// Recolector para Instruction: { [itemId]: { text, time, classification, categories } }.
+// Cada ítem tiene dos formularios `.instrument-form`: el slide de respuesta (key,
+// answer, time) y el slide de codificación (codingKey, classification, categories).
 export function collectOpenAnswers(forms) {
   const answers = {};
+  const codings = {};
   forms.forEach((form) => {
+    const codingKey = form.elements.codingKey;
+    if (codingKey) {
+      const classification = form.elements.classification ? form.elements.classification.value : '';
+      codings[codingKey.value] = {
+        classification: classification || null,
+        categories: classification ? parseCategories(form.elements.categories && form.elements.categories.value) : [],
+      };
+      return;
+    }
     const keyInput = form.elements.key;
     if (!keyInput) return;
     const answer = form.elements.answer;
@@ -60,6 +80,9 @@ export function collectOpenAnswers(forms) {
       text: answer ? answer.value : '',
       time: Number.isFinite(seconds) ? seconds : null,
     };
+  });
+  Object.keys(answers).forEach((key) => {
+    answers[key] = { ...answers[key], ...(codings[key] || { classification: null, categories: [] }) };
   });
   return answers;
 }

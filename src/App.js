@@ -116,6 +116,7 @@ function App() {
     getData('instrument/5')
     getData('instrument/28')
     getData('instrument/29')
+    getData('coding/wally-original/catalog')
     getData('studies')
     getData('courses')
     getData('sdq')

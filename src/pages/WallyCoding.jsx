@@ -8,17 +8,13 @@ import {
     saveWallyCodingEvaluation,
 } from '../services/adminV1Api';
 import { WALLY_ORIGINAL_VARIANTS } from '../services/wallyOriginal';
+import CodingFields from '../components/WallyOriginal/CodingFields';
 
-// INSTR-002 Fase B — Codificación posterior de Wally Niños/Niñas (sólo Admin).
-// La respuesta y el tiempo registrados en la toma son de solo lectura; aquí se
-// asigna una clasificación y hasta 6 categorías de esa clasificación por ítem.
+// INSTR-002 Fase B — Revisión y corrección de la codificación de Wally Niños/Niñas
+// (sólo Admin). La respuesta y el tiempo registrados en la toma son de solo
+// lectura; aquí se ajusta la clasificación y hasta 6 categorías por ítem.
 
 const INSTRUMENTS = [WALLY_ORIGINAL_VARIANTS.ninos, WALLY_ORIGINAL_VARIANTS.ninas];
-const CLASSIFICATIONS = [
-    { value: 'positivo', label: 'Positivo' },
-    { value: 'negativo', label: 'Negativo' },
-    { value: 'neutro', label: 'Neutro' },
-];
 const STATUS_LABELS = { sin_codificar: 'Sin codificar', parcial: 'Parcial', codificada: 'Codificada' };
 
 const styles = {
@@ -30,7 +26,6 @@ const styles = {
     itemHeader: { display: 'flex', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap' },
     image: { maxWidth: '180px', maxHeight: '140px', objectFit: 'contain' },
     answer: { background: '#f8f9fa', borderRadius: '6px', padding: '0.5rem 0.75rem', whiteSpace: 'pre-wrap' },
-    categories: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '0.25rem 1rem' },
     actions: { display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap', position: 'sticky', bottom: 0, background: '#fff', padding: '0.75rem 0' },
 };
 
@@ -54,16 +49,6 @@ const errorMessage = (error) => {
 };
 
 function CodingItem({ item, coding, categories, maxCategories, onChange }) {
-    const available = categories.filter((category) => category.classification === coding.classification);
-    const selected = coding.categories;
-    const full = selected.length >= maxCategories;
-
-    const setClassification = (classification) => onChange({ classification, categories: [] });
-    const toggleCategory = (id) => onChange({
-        ...coding,
-        categories: selected.includes(id) ? selected.filter((value) => value !== id) : [...selected, id],
-    });
-
     return (
         <fieldset style={styles.item} aria-label={`Ítem ${item.num}`}>
             <div style={styles.itemHeader}>
@@ -75,44 +60,14 @@ function CodingItem({ item, coding, categories, maxCategories, onChange }) {
                 </div>
             </div>
 
-            <div style={{ margin: '0.75rem 0' }} role="radiogroup" aria-label={`Clasificación ítem ${item.num}`}>
-                {CLASSIFICATIONS.map(({ value, label }) => (
-                    <label key={value} style={{ marginRight: '1rem' }}>
-                        <input
-                            type="radio"
-                            name={`classification-${item.itemId}`}
-                            checked={coding.classification === value}
-                            onChange={() => setClassification(value)}
-                        />{' '}{label}
-                    </label>
-                ))}
-                <label>
-                    <input
-                        type="radio"
-                        name={`classification-${item.itemId}`}
-                        checked={coding.classification === null}
-                        onChange={() => setClassification(null)}
-                    />{' '}Sin clasificar
-                </label>
-            </div>
-
-            {coding.classification && (
-                <>
-                    <p style={{ marginBottom: '0.25rem' }}>{selected.length} de {maxCategories} categorías</p>
-                    <div style={styles.categories}>
-                        {available.map((category) => (
-                            <label key={category.id}>
-                                <input
-                                    type="checkbox"
-                                    checked={selected.includes(category.id)}
-                                    disabled={full && !selected.includes(category.id)}
-                                    onChange={() => toggleCategory(category.id)}
-                                />{' '}{category.name}
-                            </label>
-                        ))}
-                    </div>
-                </>
-            )}
+            <CodingFields
+                itemId={item.itemId}
+                num={item.num}
+                coding={coding}
+                categories={categories}
+                maxCategories={maxCategories}
+                onChange={onChange}
+            />
         </fieldset>
     );
 }
