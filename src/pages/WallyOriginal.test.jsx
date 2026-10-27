@@ -84,17 +84,28 @@ test('Wally Niñas uses the feminine instruction', async () => {
   expect(await screen.findByText(/qué tan buena eres como detective/)).toBeInTheDocument();
 });
 
-test('each item has an answer slide followed by a coding slide with the same image and question', async () => {
+test('slide 1 shows only the statement and image; slide 2 adds stopwatch, answer and coding', async () => {
   renderPage('ninos');
   await screen.findAllByText('Situación sintética uno');
-  const answerSlide = screen.getByRole('group', { name: 'Respuesta ítem 1' });
-  const codingSlide = screen.getByRole('group', { name: 'Codificación ítem 1' });
-  expect(answerSlide.compareDocumentPosition(codingSlide) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-  expect(within(codingSlide).getByText('Situación sintética uno')).toBeInTheDocument();
-  expect(within(codingSlide).getByAltText('Situación 1 (codificación)')).toHaveAttribute('src', '/instruments/wallyOriginal/ninos/1.jpg');
-  // The coding slide is the next one of the same item, before item 2.
-  const nextAnswer = screen.getByRole('group', { name: 'Respuesta ítem 2' });
-  expect(codingSlide.compareDocumentPosition(nextAnswer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  const situationSlide = screen.getByRole('group', { name: 'Situación ítem 1' });
+  const responseSlide = screen.getByRole('group', { name: 'Respuesta ítem 1' });
+  expect(situationSlide.compareDocumentPosition(responseSlide) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+
+  expect(within(situationSlide).getByText('Situación sintética uno')).toBeInTheDocument();
+  expect(within(situationSlide).getByAltText('Situación 1')).toBeInTheDocument();
+  expect(within(situationSlide).queryByRole('button')).not.toBeInTheDocument();
+  expect(within(situationSlide).queryByRole('textbox')).not.toBeInTheDocument();
+  expect(within(situationSlide).queryByRole('radio')).not.toBeInTheDocument();
+
+  expect(within(responseSlide).getByText('Situación sintética uno')).toBeInTheDocument();
+  expect(within(responseSlide).getByAltText('Situación 1 (respuesta)')).toHaveAttribute('src', '/instruments/wallyOriginal/ninos/1.jpg');
+  expect(within(responseSlide).getByRole('button', { name: 'Iniciar' })).toBeInTheDocument();
+  expect(within(responseSlide).getByLabelText('Respuesta del niño o niña')).toBeInTheDocument();
+  expect(within(responseSlide).getByRole('radio', { name: 'Positivo' })).toBeInTheDocument();
+
+  // Item 2 starts after both slides of item 1.
+  const nextSituation = screen.getByRole('group', { name: 'Situación ítem 2' });
+  expect(responseSlide.compareDocumentPosition(nextSituation) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 });
 
 test('typing stops the stopwatch and one save stores text and seconds per item', async () => {
@@ -122,14 +133,11 @@ test('typing stops the stopwatch and one save stores text and seconds per item',
   });
 });
 
-test('the coding slide shows the typed answer and saves classification and categories with the take', async () => {
+test('the response slide saves answer, classification and categories with the take', async () => {
   renderPage('ninos');
   await screen.findAllByText('Situación sintética uno');
-  const [firstAnswer] = screen.getAllByLabelText('Respuesta del niño o niña');
-  fireEvent.change(firstAnswer, { target: { value: 'le pido perdón' } });
-
-  const codingSlide = screen.getByRole('group', { name: 'Codificación ítem 1' });
-  expect(within(codingSlide).getByText('le pido perdón')).toBeInTheDocument();
+  const codingSlide = screen.getByRole('group', { name: 'Respuesta ítem 1' });
+  fireEvent.change(within(codingSlide).getByLabelText('Respuesta del niño o niña'), { target: { value: 'le pido perdón' } });
   fireEvent.click(within(codingSlide).getByRole('radio', { name: 'Positivo' }));
   expect(within(codingSlide).queryByRole('checkbox', { name: 'Ignorar' })).not.toBeInTheDocument();
   fireEvent.click(within(codingSlide).getByRole('checkbox', { name: 'Pedir disculpas' }));
@@ -144,7 +152,7 @@ test('downloads the catalog when it is missing and the tablet is online', async 
   axios.get.mockResolvedValue({ data: catalog });
   renderPage('ninos', { withCatalog: false, online: true });
   await screen.findAllByText('Situación sintética uno');
-  const codingSlide = screen.getByRole('group', { name: 'Codificación ítem 1' });
+  const codingSlide = screen.getByRole('group', { name: 'Respuesta ítem 1' });
   expect(await within(codingSlide).findByRole('radio', { name: 'Positivo' })).toBeInTheDocument();
   expect(axios.get).toHaveBeenCalledWith(expect.stringMatching(/\/coding\/wally-original\/catalog$/));
   expect(set).toHaveBeenCalledWith('coding/wally-original/catalog', catalog);
@@ -153,7 +161,7 @@ test('downloads the catalog when it is missing and the tablet is online', async 
 test('without a downloaded catalog the take can still be saved and explains how to code later', async () => {
   renderPage('ninos', { withCatalog: false, online: false });
   await screen.findAllByText('Situación sintética uno');
-  const codingSlide = screen.getByRole('group', { name: 'Codificación ítem 1' });
+  const codingSlide = screen.getByRole('group', { name: 'Respuesta ítem 1' });
   expect(within(codingSlide).getByText(/catálogo de codificación no está disponible/)).toBeInTheDocument();
   expect(within(codingSlide).queryByRole('radio')).not.toBeInTheDocument();
 

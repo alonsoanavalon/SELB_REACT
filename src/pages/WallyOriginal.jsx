@@ -15,8 +15,8 @@ import {
 } from '../services/wallyOriginal';
 
 // INSTR-002 — Toma de Wally Niños / Wally Niñas. Cada ítem tiene dos slides:
-// 1) imagen, situación, cronómetro y respuesta abierta;
-// 2) imagen, situación, la respuesta registrada y su codificación (Fase C).
+// 1) solo el enunciado y la imagen;
+// 2) enunciado e imagen + cronómetro, respuesta abierta y codificación (Fase C).
 
 const CATALOG_KEY = 'coding/wally-original/catalog';
 const EMPTY_CODING = { classification: null, categories: [] };
@@ -24,13 +24,12 @@ const EMPTY_CODING = { classification: null, categories: [] };
 const styles = {
     item: { maxWidth: '900px', margin: '0 auto', padding: '0 1rem', border: 0 },
     image: { display: 'block', maxWidth: '100%', maxHeight: '38vh', margin: '0.5rem auto', objectFit: 'contain' },
-    codingImage: { display: 'block', maxWidth: '100%', maxHeight: '22vh', margin: '0.25rem auto', objectFit: 'contain' },
+    responseImage: { display: 'block', maxWidth: '100%', maxHeight: '20vh', margin: '0.25rem auto', objectFit: 'contain' },
     stopwatch: { display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', margin: '0.5rem 0' },
     seconds: { fontVariantNumeric: 'tabular-nums', fontSize: '1.4rem', minWidth: '5rem', textAlign: 'center' },
     answer: { width: '100%', fontSize: '1.1rem' },
-    recorded: { background: '#f8f9fa', borderRadius: '6px', padding: '0.5rem 0.75rem', whiteSpace: 'pre-wrap', textAlign: 'start' },
     warning: { color: '#b45309', marginTop: '0.25rem' },
-    coding: { textAlign: 'start', maxHeight: '45vh', overflowY: 'auto' },
+    coding: { textAlign: 'start', maxHeight: '32vh', overflowY: 'auto', marginTop: '0.5rem' },
 };
 
 const isCatalog = (value) => Boolean(value && Array.isArray(value.categories));
@@ -53,7 +52,16 @@ async function loadCatalog() {
 
 const pictureOf = (item, folder) => item.picture || `/instruments/wallyOriginal/${folder}/${item.num}.jpg`;
 
-function OpenAnswerItem({ item, instrumentId, folder, answer, onAnswerChange }) {
+function SituationSlide({ item, folder }) {
+    return (
+        <fieldset className="page-item" style={styles.item} aria-label={`Situación ítem ${item.num}`}>
+            <h3 className="main-description">{item.title}</h3>
+            <img src={pictureOf(item, folder)} alt={`Situación ${item.num}`} style={styles.image} />
+        </fieldset>
+    );
+}
+
+function ResponseSlide({ item, instrumentId, folder, answer, onAnswerChange, coding, catalog, onCodingChange }) {
     const [removedCharacters, setRemovedCharacters] = useState(false);
     const [elapsed, setElapsed] = useState(0);
     const [startedAt, setStartedAt] = useState(null);
@@ -95,7 +103,7 @@ function OpenAnswerItem({ item, instrumentId, folder, answer, onAnswerChange }) 
     return (
         <fieldset className="page-item" style={styles.item} aria-label={`Respuesta ítem ${item.num}`}>
             <h3 className="main-description">{item.title}</h3>
-            <img src={pictureOf(item, folder)} alt={`Situación ${item.num}`} style={styles.image} />
+            <img src={pictureOf(item, folder)} alt={`Situación ${item.num} (respuesta)`} style={styles.responseImage} />
             <form className="instrument-form" onSubmit={(event) => event.preventDefault()}>
                 <input type="hidden" name="instrument" value={instrumentId} />
                 <input type="hidden" name="key" value={item.itemId} />
@@ -122,19 +130,6 @@ function OpenAnswerItem({ item, instrumentId, folder, answer, onAnswerChange }) 
                     <p role="alert" style={styles.warning}>Se quitaron caracteres no admitidos (por ejemplo, emojis).</p>
                 )}
             </form>
-        </fieldset>
-    );
-}
-
-function CodingSlide({ item, folder, answer, coding, catalog, onCodingChange }) {
-    return (
-        <fieldset className="page-item" style={styles.item} aria-label={`Codificación ítem ${item.num}`}>
-            <h3 className="main-description">{item.title}</h3>
-            <img src={pictureOf(item, folder)} alt={`Situación ${item.num} (codificación)`} style={styles.codingImage} />
-            <div style={styles.recorded}>
-                <strong>Respuesta registrada: </strong>
-                {answer ? <span>{answer}</span> : <em>Sin respuesta registrada</em>}
-            </div>
             <form className="instrument-form" onSubmit={(event) => event.preventDefault()}>
                 <input type="hidden" name="codingKey" value={item.itemId} />
                 <input type="hidden" name="classification" value={coding.classification || ''} />
@@ -202,22 +197,18 @@ export default function WallyOriginal({ variant }) {
     const slides = [];
     items.forEach((item) => {
         slides.push(
-            <SwiperSlide key={`${item.itemId}-answer`}>
-                <OpenAnswerItem
+            <SwiperSlide key={`${item.itemId}-situation`}>
+                <SituationSlide item={item} folder={config.folder} />
+            </SwiperSlide>
+        );
+        slides.push(
+            <SwiperSlide key={`${item.itemId}-response`}>
+                <ResponseSlide
                     item={item}
                     instrumentId={config.instrumentId}
                     folder={config.folder}
                     answer={answers[item.itemId] || ''}
                     onAnswerChange={(text) => setAnswers((state) => ({ ...state, [item.itemId]: text }))}
-                />
-            </SwiperSlide>
-        );
-        slides.push(
-            <SwiperSlide key={`${item.itemId}-coding`}>
-                <CodingSlide
-                    item={item}
-                    folder={config.folder}
-                    answer={answers[item.itemId] || ''}
                     coding={codings[item.itemId] || EMPTY_CODING}
                     catalog={catalog}
                     onCodingChange={(value) => setCodings((state) => ({ ...state, [item.itemId]: value }))}
