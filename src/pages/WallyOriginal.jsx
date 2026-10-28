@@ -29,14 +29,18 @@ const FIRST_ITEM_SLIDE = 2; // después del asentimiento y la instrucción
 const styles = {
     item: { maxWidth: '900px', margin: '0 auto', padding: '0 1rem', border: 0 },
     image: { display: 'block', maxWidth: '100%', maxHeight: '38vh', margin: '0.5rem auto', objectFit: 'contain' },
-    responseImage: { display: 'block', maxWidth: '100%', maxHeight: '20vh', margin: '0.25rem auto', objectFit: 'contain' },
-    stopwatch: { display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', margin: '0.5rem 0' },
-    seconds: { fontVariantNumeric: 'tabular-nums', fontSize: '1.4rem', minWidth: '5rem', textAlign: 'center' },
-    time: { margin: '0.25rem 0' },
-    answer: { width: '100%', fontSize: '1.1rem' },
+    responseImage: { display: 'block', maxWidth: '100%', maxHeight: '16vh', margin: '0.25rem auto', objectFit: 'contain' },
+    // Controles para tablet: botones grandes (btn-lg) y campos de 48 px o más.
+    stopwatch: { display: 'flex', gap: '0.75rem', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', margin: '0.5rem 0' },
+    seconds: { fontVariantNumeric: 'tabular-nums', fontSize: '1.6rem', minWidth: '5.5rem', textAlign: 'center' },
+    time: { margin: '0.25rem 0', fontSize: '1.1rem' },
+    answerForm: { width: '100%', maxWidth: '560px', alignItems: 'stretch' },
+    // Sin el resaltado al pasar el dedo de .instrument-form label (no es una opción).
+    answerLabel: { padding: '0.25rem 0', fontSize: '1.1rem', backgroundColor: 'transparent', color: 'inherit', cursor: 'default' },
+    answer: { fontSize: '1.1rem', minHeight: '6rem' },
     warning: { color: '#b45309', marginTop: '0.25rem' },
     missing: { color: '#b42318', fontWeight: 600, marginTop: '0.5rem' },
-    coding: { textAlign: 'start', maxHeight: '32vh', overflowY: 'auto', marginTop: '0.5rem' },
+    coding: { width: '100%', marginTop: '0.25rem' },
 };
 
 const isCatalog = (value) => Boolean(value && Array.isArray(value.categories));
@@ -81,9 +85,9 @@ function Stopwatch({ watch, onChange }) {
     return (
         <div style={styles.stopwatch}>
             <span style={styles.seconds} aria-live="polite">{toSeconds(elapsedMs(watch)).toFixed(1)} s</span>
-            <button type="button" className="btn btn-success" onClick={() => onChange({ ...watch, startedAt: Date.now() })} disabled={running}>Iniciar</button>
-            <button type="button" className="btn btn-danger" onClick={() => onChange(stopWatch(watch))} disabled={!running}>Detener</button>
-            <button type="button" className="btn btn-secondary" onClick={() => onChange(EMPTY_STOPWATCH)} disabled={!isMeasured(watch)}>Reiniciar</button>
+            <button type="button" className="btn btn-lg btn-success" onClick={() => onChange({ ...watch, startedAt: Date.now() })} disabled={running}>Iniciar</button>
+            <button type="button" className="btn btn-lg btn-danger" onClick={() => onChange(stopWatch(watch))} disabled={!running}>Detener</button>
+            <button type="button" className="btn btn-lg btn-secondary" onClick={() => onChange(EMPTY_STOPWATCH)} disabled={!isMeasured(watch)}>Reiniciar</button>
         </div>
     );
 }
@@ -114,17 +118,18 @@ function ResponseSlide({ item, instrumentId, folder, seconds, answer, onAnswerCh
         <fieldset className="page-item" style={styles.item} aria-label={`Respuesta ítem ${item.num}`}>
             <h3 className="main-description">{item.title}</h3>
             <img src={pictureOf(item, folder)} alt={`Situación ${item.num} (respuesta)`} style={styles.responseImage} />
-            <form className="instrument-form" onSubmit={(event) => event.preventDefault()}>
+            <form className="instrument-form" style={styles.answerForm} onSubmit={(event) => event.preventDefault()}>
                 <input type="hidden" name="instrument" value={instrumentId} />
                 <input type="hidden" name="key" value={item.itemId} />
                 <input type="hidden" name="time" value={seconds === null ? '' : seconds} />
 
                 <p style={styles.time}>{seconds === null ? 'Tiempo: sin medir' : `Tiempo: ${seconds.toFixed(1)} s`}</p>
 
-                <label htmlFor={answerId}>Respuesta del niño o niña</label>
+                <label htmlFor={answerId} style={styles.answerLabel}>Respuesta del niño o niña</label>
                 <textarea
                     id={answerId}
                     name="answer"
+                    className="form-control"
                     rows={3}
                     maxLength={600}
                     value={answer}
