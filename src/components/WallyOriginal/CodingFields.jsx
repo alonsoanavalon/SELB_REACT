@@ -1,7 +1,8 @@
 import React from 'react';
 
 // INSTR-002 — Controles de codificación de un ítem de Wally Niños/Niñas:
-// clasificación y hasta `maxCategories` categorías de esa clasificación.
+// clasificación y una sola categoría, elegida en una lista desplegable que se
+// carga según la clasificación (positivo, negativo o neutro).
 // Los usan la toma (Fase C) y la pantalla /codificacion (Fase B).
 
 export const CLASSIFICATIONS = [
@@ -12,19 +13,18 @@ export const CLASSIFICATIONS = [
 
 const styles = {
     radios: { margin: '0.75rem 0' },
-    categories: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '0.25rem 1rem' },
+    select: { width: '100%', maxWidth: '480px', fontSize: '1.05rem', padding: '0.3rem' },
 };
 
-export default function CodingFields({ itemId, num, coding, categories, maxCategories, onChange }) {
+export default function CodingFields({ itemId, num, coding, categories, onChange }) {
     const available = categories.filter((category) => category.classification === coding.classification);
-    const selected = coding.categories;
-    const full = selected.length >= maxCategories;
+    const selectId = `coding-category-${itemId}`;
 
     const setClassification = (classification) => onChange({ classification, categories: [] });
-    const toggleCategory = (id) => onChange({
-        ...coding,
-        categories: selected.includes(id) ? selected.filter((value) => value !== id) : [...selected, id],
-    });
+    const setCategory = (event) => {
+        const id = Number(event.target.value);
+        onChange({ ...coding, categories: id ? [id] : [] });
+    };
 
     return (
         <>
@@ -50,21 +50,17 @@ export default function CodingFields({ itemId, num, coding, categories, maxCateg
             </div>
 
             {coding.classification && (
-                <>
-                    <p style={{ marginBottom: '0.25rem' }}>{selected.length} de {maxCategories} categorías</p>
-                    <div style={styles.categories}>
+                <div>
+                    <label htmlFor={selectId} style={{ display: 'block', marginBottom: '0.25rem' }}>
+                        Categoría ítem {num}
+                    </label>
+                    <select id={selectId} value={coding.categories[0] || ''} onChange={setCategory} style={styles.select}>
+                        <option value="">Elige una categoría</option>
                         {available.map((category) => (
-                            <label key={category.id}>
-                                <input
-                                    type="checkbox"
-                                    checked={selected.includes(category.id)}
-                                    disabled={full && !selected.includes(category.id)}
-                                    onChange={() => toggleCategory(category.id)}
-                                />{' '}{category.name}
-                            </label>
+                            <option key={category.id} value={category.id}>{category.name}</option>
                         ))}
-                    </div>
-                </>
+                    </select>
+                </div>
             )}
         </>
     );

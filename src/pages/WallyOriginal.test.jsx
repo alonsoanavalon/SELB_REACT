@@ -33,7 +33,7 @@ const catalog = {
     { id: 36, name: 'Respuesta fisica negativa para la persona', classification: 'negativo' },
     { id: 30, name: 'Ignorar', classification: 'neutro' },
   ],
-  maxCategoriesPerItem: 6,
+  maxCategoriesPerItem: 1,
 };
 
 function renderPage(variant = 'ninos', { withCatalog = true, online = false } = {}) {
@@ -133,18 +133,18 @@ test('typing stops the stopwatch and one save stores text and seconds per item',
   });
 });
 
-test('the response slide saves answer, classification and categories with the take', async () => {
+test('the response slide saves answer, classification and one category with the take', async () => {
   renderPage('ninos');
   await screen.findAllByText('Situación sintética uno');
   const codingSlide = screen.getByRole('group', { name: 'Respuesta ítem 1' });
   fireEvent.change(within(codingSlide).getByLabelText('Respuesta del niño o niña'), { target: { value: 'le pido perdón' } });
   fireEvent.click(within(codingSlide).getByRole('radio', { name: 'Positivo' }));
-  expect(within(codingSlide).queryByRole('checkbox', { name: 'Ignorar' })).not.toBeInTheDocument();
-  fireEvent.click(within(codingSlide).getByRole('checkbox', { name: 'Pedir disculpas' }));
-  fireEvent.click(within(codingSlide).getByRole('checkbox', { name: 'Compartir' }));
+  const list = within(codingSlide).getByRole('combobox', { name: 'Categoría ítem 1' });
+  expect(within(list).queryByRole('option', { name: 'Ignorar' })).not.toBeInTheDocument();
+  fireEvent.change(list, { target: { value: '2' } });
 
   const [, answers] = await savedAnswers();
-  expect(answers[500]).toEqual({ text: 'le pido perdón', time: null, classification: 'positivo', categories: [2, 45] });
+  expect(answers[500]).toEqual({ text: 'le pido perdón', time: null, classification: 'positivo', categories: [2] });
   expect(answers[501]).toEqual({ text: '', time: null, classification: null, categories: [] });
 });
 

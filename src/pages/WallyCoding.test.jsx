@@ -31,7 +31,7 @@ const evaluation = {
 beforeEach(() => {
   api.listStudies.mockResolvedValue({ data: [{ id: 900, name: 'Estudio sintético', year: '2099' }] });
   api.listStudyMoments.mockResolvedValue({ data: [{ id: 901, begin: '2099-01-01', until: '2099-06-30' }] });
-  api.getWallyCodingCatalog.mockResolvedValue({ data: { categories, maxCategoriesPerItem: 6 } });
+  api.getWallyCodingCatalog.mockResolvedValue({ data: { categories, maxCategoriesPerItem: 1 } });
   api.listWallyCodingEvaluations.mockResolvedValue({
     data: [{ instrumentListId: 77, studentName: 'Alumna Sintética', course: '1 A', school: 'Colegio', evaluator: 'Evaluador', date: '2099-03-04T12:00:00.000Z', items: 2, coded: 1, status: 'parcial' }],
   });
@@ -59,32 +59,32 @@ test('lists evaluations of the selected instrument, study and moment with their 
   expect(api.listWallyCodingEvaluations).toHaveBeenCalledWith({ instrumentId: 29, studyId: 900, momentId: 901 });
 });
 
-test('shows the answer read-only and filters categories by the chosen classification', async () => {
+test('shows the answer read-only and loads the category list of the chosen classification', async () => {
   await openEvaluation();
   const item = screen.getByRole('group', { name: 'Ítem 1' });
   expect(within(item).getByText("le pido 'perdón'")).toBeInTheDocument();
   expect(within(item).getByText('4 s')).toBeInTheDocument();
-  expect(within(item).queryByRole('checkbox')).not.toBeInTheDocument();
+  expect(within(item).queryByRole('combobox')).not.toBeInTheDocument();
 
   fireEvent.click(within(item).getByRole('radio', { name: 'Negativo' }));
-  expect(within(item).getByRole('checkbox', { name: 'Respuesta fisica negativa para la persona' })).toBeInTheDocument();
-  expect(within(item).queryByRole('checkbox', { name: 'Pedir disculpas' })).not.toBeInTheDocument();
+  const list = within(item).getByRole('combobox', { name: 'Categoría ítem 1' });
+  expect(within(list).getByRole('option', { name: 'Respuesta fisica negativa para la persona' })).toBeInTheDocument();
+  expect(within(list).queryByRole('option', { name: 'Pedir disculpas' })).not.toBeInTheDocument();
 
-  fireEvent.click(within(item).getByRole('checkbox', { name: 'Respuesta fisica negativa para la persona' }));
+  fireEvent.change(list, { target: { value: '36' } });
+  expect(list).toHaveValue('36');
   fireEvent.click(within(item).getByRole('radio', { name: 'Positivo' }));
-  // Changing the classification clears categories of the previous one.
-  expect(within(item).getAllByRole('checkbox').every((box) => !box.checked)).toBe(true);
+  // Changing the classification clears the category of the previous one.
+  expect(within(item).getByRole('combobox', { name: 'Categoría ítem 1' })).toHaveValue('');
 });
 
-test('allows at most six categories per item', async () => {
+test('allows only one category per item', async () => {
   await openEvaluation();
   const item = screen.getByRole('group', { name: 'Ítem 1' });
   fireEvent.click(within(item).getByRole('radio', { name: 'Positivo' }));
-  const boxes = within(item).getAllByRole('checkbox');
-  expect(boxes).toHaveLength(7);
-  boxes.slice(0, 6).forEach((box) => fireEvent.click(box));
-  expect(boxes[6]).toBeDisabled();
-  expect(within(item).getByText('6 de 6 categorías')).toBeInTheDocument();
+  const list = within(item).getByRole('combobox', { name: 'Categoría ítem 1' });
+  expect(list).not.toHaveAttribute('multiple');
+  expect(within(list).getAllByRole('option')).toHaveLength(8); // placeholder + 7 positive
 });
 
 test('saves classification and categories of every item with the loaded version', async () => {
@@ -92,14 +92,15 @@ test('saves classification and categories of every item with the loaded version'
   await openEvaluation();
   const item = screen.getByRole('group', { name: 'Ítem 1' });
   fireEvent.click(within(item).getByRole('radio', { name: 'Positivo' }));
-  fireEvent.click(within(item).getByRole('checkbox', { name: 'Pedir disculpas' }));
-  fireEvent.click(within(item).getByRole('checkbox', { name: 'Compartir' }));
+  const list = within(item).getByRole('combobox', { name: 'Categoría ítem 1' });
+  fireEvent.change(list, { target: { value: '2' } });
+  fireEvent.change(list, { target: { value: '45' } });
   fireEvent.click(screen.getByRole('button', { name: 'Guardar codificación' }));
 
   await waitFor(() => expect(api.saveWallyCodingEvaluation).toHaveBeenCalledWith(77, {
     version: 'v1',
     items: [
-      { itemId: 501, classification: 'positivo', categories: [2, 45] },
+      { itemId: 501, classification: 'positivo', categories: [45] },
       { itemId: 502, classification: 'neutro', categories: [30] },
     ],
   }));

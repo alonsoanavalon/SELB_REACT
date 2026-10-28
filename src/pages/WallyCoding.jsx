@@ -12,7 +12,7 @@ import CodingFields from '../components/WallyOriginal/CodingFields';
 
 // INSTR-002 Fase B — Revisión y corrección de la codificación de Wally Niños/Niñas
 // (sólo Admin). La respuesta y el tiempo registrados en la toma son de solo
-// lectura; aquí se ajusta la clasificación y hasta 6 categorías por ítem.
+// lectura; aquí se ajusta la clasificación y la categoría (una por ítem).
 
 const INSTRUMENTS = [WALLY_ORIGINAL_VARIANTS.ninos, WALLY_ORIGINAL_VARIANTS.ninas];
 const STATUS_LABELS = { sin_codificar: 'Sin codificar', parcial: 'Parcial', codificada: 'Codificada' };
@@ -36,7 +36,8 @@ const formatDate = (value) => {
 
 const toCodingState = (items) => Object.fromEntries(items.map((item) => [
     item.itemId,
-    { classification: item.classification || null, categories: item.categories || [] },
+    // Una categoría por ítem: si una codificación anterior tenía más, se conserva la primera.
+    { classification: item.classification || null, categories: (item.categories || []).slice(0, 1) },
 ]));
 
 const errorMessage = (error) => {
@@ -48,7 +49,7 @@ const errorMessage = (error) => {
     return 'No fue posible guardar. Intenta nuevamente; lo que ingresaste sigue en pantalla.';
 };
 
-function CodingItem({ item, coding, categories, maxCategories, onChange }) {
+function CodingItem({ item, coding, categories, onChange }) {
     return (
         <fieldset style={styles.item} aria-label={`Ítem ${item.num}`}>
             <div style={styles.itemHeader}>
@@ -65,7 +66,6 @@ function CodingItem({ item, coding, categories, maxCategories, onChange }) {
                 num={item.num}
                 coding={coding}
                 categories={categories}
-                maxCategories={maxCategories}
                 onChange={onChange}
             />
         </fieldset>
@@ -78,7 +78,7 @@ export default function WallyCoding() {
     const [studyId, setStudyId] = useState('');
     const [moments, setMoments] = useState([]);
     const [momentId, setMomentId] = useState('');
-    const [catalog, setCatalog] = useState({ categories: [], maxCategoriesPerItem: 6 });
+    const [catalog, setCatalog] = useState({ categories: [] });
     const [evaluations, setEvaluations] = useState(null);
     const [selected, setSelected] = useState(null);
     const [evaluation, setEvaluation] = useState(null);
@@ -174,7 +174,6 @@ export default function WallyCoding() {
                         item={item}
                         coding={codingState[item.itemId]}
                         categories={catalog.categories}
-                        maxCategories={catalog.maxCategoriesPerItem}
                         onChange={(value) => setCodingState((state) => ({ ...state, [item.itemId]: value }))}
                     />
                 ))}

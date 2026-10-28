@@ -142,7 +142,6 @@ function ResponseSlide({ item, instrumentId, folder, answer, onAnswerChange, cod
                         num={item.num}
                         coding={coding}
                         categories={catalog.categories}
-                        maxCategories={catalog.maxCategoriesPerItem}
                         onChange={onCodingChange}
                     />
                 ) : (
