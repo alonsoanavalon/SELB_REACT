@@ -67,9 +67,11 @@ describe('Wally Niños / Wally Niñas (INSTR-002)', () => {
     expect(sanitizeAnswerText('a'.repeat(700)).text).toHaveLength(600);
   });
 
-  test('converts stopwatch milliseconds to whole seconds', () => {
+  test('converts stopwatch milliseconds to seconds with one decimal', () => {
     expect(toSeconds(0)).toBe(0);
-    expect(toSeconds(6499)).toBe(6);
-    expect(toSeconds(6500)).toBe(7);
+    expect(toSeconds(800)).toBe(0.8);
+    expect(toSeconds(6449)).toBe(6.4);
+    expect(toSeconds(6450)).toBe(6.5);
+    expect(toSeconds(7000)).toBe(7);
   });
 });

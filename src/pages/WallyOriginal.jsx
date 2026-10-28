@@ -80,7 +80,7 @@ function Stopwatch({ watch, onChange }) {
 
     return (
         <div style={styles.stopwatch}>
-            <span style={styles.seconds} aria-live="polite">{(elapsedMs(watch) / 1000).toFixed(1)} s</span>
+            <span style={styles.seconds} aria-live="polite">{toSeconds(elapsedMs(watch)).toFixed(1)} s</span>
             <button type="button" className="btn btn-success" onClick={() => onChange({ ...watch, startedAt: Date.now() })} disabled={running}>Iniciar</button>
             <button type="button" className="btn btn-danger" onClick={() => onChange(stopWatch(watch))} disabled={!running}>Detener</button>
             <button type="button" className="btn btn-secondary" onClick={() => onChange(EMPTY_STOPWATCH)} disabled={!isMeasured(watch)}>Reiniciar</button>
@@ -119,7 +119,7 @@ function ResponseSlide({ item, instrumentId, folder, seconds, answer, onAnswerCh
                 <input type="hidden" name="key" value={item.itemId} />
                 <input type="hidden" name="time" value={seconds === null ? '' : seconds} />
 
-                <p style={styles.time}>{seconds === null ? 'Tiempo: sin medir' : `Tiempo: ${seconds} s`}</p>
+                <p style={styles.time}>{seconds === null ? 'Tiempo: sin medir' : `Tiempo: ${seconds.toFixed(1)} s`}</p>
 
                 <label htmlFor={answerId}>Respuesta del niño o niña</label>
                 <textarea

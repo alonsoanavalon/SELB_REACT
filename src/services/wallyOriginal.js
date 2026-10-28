@@ -42,8 +42,9 @@ export function sanitizeAnswerText(value) {
   };
 }
 
+// Seconds with one decimal, as the stopwatch shows them.
 export function toSeconds(milliseconds) {
-  return Math.round(Number(milliseconds) / 1000);
+  return Math.round(Number(milliseconds) / 100) / 10;
 }
 
 const parseCategories = (value) => {

@@ -146,10 +146,10 @@ test('the stopwatch on slide 1 is controlled by Iniciar, Detener and Reiniciar',
   expect(within(situationSlide).getByText('0.0 s')).toBeInTheDocument();
 
   fireEvent.click(button('Iniciar'));
-  now += 3000;
+  now += 800;
   fireEvent.click(button('Detener'));
   now += 4000; // stopped: further time is not counted
-  expect(within(situationSlide).getByText('3.0 s')).toBeInTheDocument();
+  expect(within(situationSlide).getByText('0.8 s')).toBeInTheDocument();
 
   // Typing the answer on slide 2 does not touch the stopwatch.
   const responseSlide = screen.getByRole('group', { name: 'Respuesta ítem 1' });
@@ -157,12 +157,12 @@ test('the stopwatch on slide 1 is controlled by Iniciar, Detener and Reiniciar',
   fireEvent.change(answer, { target: { value: "le dije 'para' 😀" } });
   expect(answer).toHaveValue("le dije 'para' ");
   expect(within(responseSlide).getByRole('alert')).toHaveTextContent('caracteres no admitidos');
-  expect(within(responseSlide).getByText('Tiempo: 3 s')).toBeInTheDocument();
+  expect(within(responseSlide).getByText('Tiempo: 0.8 s')).toBeInTheDocument();
 
   const [info, answers] = await savedAnswers();
   expect(info).toMatchObject({ instrument: 28, student_id: 10, user_id: 3 });
   expect(answers).toEqual({
-    500: { text: "le dije 'para' ", time: 3, classification: null, categories: [] },
+    500: { text: "le dije 'para' ", time: 0.8, classification: null, categories: [] },
     501: { text: '', time: null, classification: null, categories: [] },
   });
 });
@@ -183,7 +183,7 @@ test('leaving slide 1 stops a running stopwatch', async () => {
   expect(within(situationSlide).getByRole('button', { name: 'Detener' })).toBeDisabled();
   expect(within(situationSlide).getByText('6.5 s')).toBeInTheDocument();
   const [, answers] = await savedAnswers();
-  expect(answers[500].time).toBe(7);
+  expect(answers[500].time).toBe(6.5);
 });
 
 test('slide 1 cannot be left without measuring the time and says why', async () => {
