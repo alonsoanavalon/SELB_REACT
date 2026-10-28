@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { get, set } from 'idb-keyval';
 import 'swiper/css';
@@ -17,6 +17,8 @@ import {
 // INSTR-002 — Toma de Wally Niños / Wally Niñas. Cada ítem tiene dos slides:
 // 1) solo el enunciado y la imagen;
 // 2) enunciado e imagen + cronómetro, respuesta abierta y codificación (Fase C).
+// El cronómetro lo controla solo la evaluadora (Iniciar/Detener); si queda
+// corriendo, se detiene al salir del slide de respuesta.
 
 const CATALOG_KEY = 'coding/wally-original/catalog';
 const EMPTY_CODING = { classification: null, categories: [] };
@@ -61,7 +63,7 @@ function SituationSlide({ item, folder }) {
     );
 }
 
-function ResponseSlide({ item, instrumentId, folder, answer, onAnswerChange, coding, catalog, onCodingChange }) {
+function ResponseSlide({ item, instrumentId, folder, isActive, answer, onAnswerChange, coding, catalog, onCodingChange }) {
     const [removedCharacters, setRemovedCharacters] = useState(false);
     const [elapsed, setElapsed] = useState(0);
     const [startedAt, setStartedAt] = useState(null);
@@ -90,9 +92,14 @@ function ResponseSlide({ item, instrumentId, folder, answer, onAnswerChange, cod
         setStartedAt(null);
     };
 
-    // Como en la aplicación antigua, empezar a escribir detiene el cronómetro.
+    // Si la evaluadora olvidó detenerlo, el cronómetro se detiene al cambiar de slide.
+    const wasActive = useRef(isActive);
+    useEffect(() => {
+        if (wasActive.current && !isActive) stop();
+        wasActive.current = isActive;
+    });
+
     const onChange = (event) => {
-        stop();
         const { text, removed } = sanitizeAnswerText(event.target.value);
         onAnswerChange(text);
         setRemovedCharacters(removed);
@@ -162,6 +169,7 @@ export default function WallyOriginal({ variant }) {
     const [answers, setAnswers] = useState({});
     const [codings, setCodings] = useState({});
     const [studentName, setStudentName] = useState('');
+    const [activeSlide, setActiveSlide] = useState(0);
 
     useEffect(() => {
         get('selectedStudentName').then((name) => setStudentName(name || ''));
@@ -193,8 +201,9 @@ export default function WallyOriginal({ variant }) {
         );
     }
 
+    // Orden de slides: asentimiento (0), instrucción (1) y dos por ítem.
     const slides = [];
-    items.forEach((item) => {
+    items.forEach((item, index) => {
         slides.push(
             <SwiperSlide key={`${item.itemId}-situation`}>
                 <SituationSlide item={item} folder={config.folder} />
@@ -206,6 +215,7 @@ export default function WallyOriginal({ variant }) {
                     item={item}
                     instrumentId={config.instrumentId}
                     folder={config.folder}
+                    isActive={activeSlide === 2 + index * 2 + 1}
                     answer={answers[item.itemId] || ''}
                     onAnswerChange={(text) => setAnswers((state) => ({ ...state, [item.itemId]: text }))}
                     coding={codings[item.itemId] || EMPTY_CODING}
@@ -225,6 +235,7 @@ export default function WallyOriginal({ variant }) {
                     navigation
                     spaceBetween={0}
                     allowTouchMove={false}
+                    onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
                 >
                     <SwiperSlide>
                         <Instruction title={config.name} instruction={config.assent} />

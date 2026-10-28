@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { get, getMany, set } from 'idb-keyval';
 import Swal from 'sweetalert2';
@@ -13,8 +13,12 @@ jest.mock('idb-keyval', () => ({
   set: jest.fn(() => Promise.resolve()),
 }));
 jest.mock('sweetalert2', () => ({ fire: jest.fn(() => Promise.resolve({ isConfirmed: true })) }));
+let mockSlideChange;
 jest.mock('swiper/react', () => ({
-  Swiper: ({ children }) => <div>{children}</div>,
+  Swiper: ({ children, onSlideChange }) => {
+    mockSlideChange = onSlideChange;
+    return <div>{children}</div>;
+  },
   SwiperSlide: ({ children }) => <div>{children}</div>,
 }));
 jest.mock('swiper', () => ({ Navigation: {}, A11y: {} }));
@@ -108,29 +112,59 @@ test('slide 1 shows only the statement and image; slide 2 adds stopwatch, answer
   expect(responseSlide.compareDocumentPosition(nextSituation) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 });
 
-test('typing stops the stopwatch and one save stores text and seconds per item', async () => {
+// Slide order: assent (0), instruction (1), then situation and response per item.
+const RESPONSE_SLIDE_ITEM_1 = 3;
+
+test('only Iniciar and Detener control the stopwatch; typing does not stop it', async () => {
   let now = 1000;
   dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => now);
   renderPage('ninos');
   await screen.findAllByText('Situación sintética uno');
+  act(() => mockSlideChange({ activeIndex: RESPONSE_SLIDE_ITEM_1 }));
 
   fireEvent.click(screen.getAllByRole('button', { name: 'Iniciar' })[0]);
-  now += 6500;
+  now += 3000;
+  fireEvent.click(screen.getAllByRole('button', { name: 'Detener' })[0]);
+  now += 4000; // stopped: further time is not counted
+
   const [firstAnswer] = screen.getAllByLabelText('Respuesta del niño o niña');
   fireEvent.change(firstAnswer, { target: { value: "le dije 'para' 😀" } });
-
   expect(firstAnswer).toHaveValue("le dije 'para' ");
   expect(screen.getByRole('alert')).toHaveTextContent('caracteres no admitidos');
-  expect(screen.getAllByRole('button', { name: 'Detener' })[0]).toBeDisabled();
-  now += 4000; // stopped: further time is not counted
-  expect(screen.getByText('6.5 s')).toBeInTheDocument();
+  expect(screen.getByText('3.0 s')).toBeInTheDocument();
+
+  // Typing while it runs keeps it running.
+  fireEvent.click(screen.getAllByRole('button', { name: 'Iniciar' })[0]);
+  fireEvent.change(firstAnswer, { target: { value: 'otra respuesta' } });
+  expect(screen.getAllByRole('button', { name: 'Detener' })[0]).toBeEnabled();
+  now += 2000;
+  fireEvent.click(screen.getAllByRole('button', { name: 'Detener' })[0]);
+  expect(screen.getByText('5.0 s')).toBeInTheDocument();
 
   const [info, answers] = await savedAnswers();
   expect(info).toMatchObject({ instrument: 28, student_id: 10, user_id: 3 });
   expect(answers).toEqual({
-    500: { text: "le dije 'para' ", time: 7, classification: null, categories: [] },
+    500: { text: 'otra respuesta', time: 5, classification: null, categories: [] },
     501: { text: '', time: null, classification: null, categories: [] },
   });
+});
+
+test('leaving the response slide stops a running stopwatch', async () => {
+  let now = 1000;
+  dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => now);
+  renderPage('ninos');
+  await screen.findAllByText('Situación sintética uno');
+  act(() => mockSlideChange({ activeIndex: RESPONSE_SLIDE_ITEM_1 }));
+
+  fireEvent.click(screen.getAllByRole('button', { name: 'Iniciar' })[0]);
+  now += 6500;
+  act(() => mockSlideChange({ activeIndex: RESPONSE_SLIDE_ITEM_1 + 1 }));
+  now += 4000; // stopped when the slide changed
+
+  expect(screen.getAllByRole('button', { name: 'Detener' })[0]).toBeDisabled();
+  expect(screen.getByText('6.5 s')).toBeInTheDocument();
+  const [, answers] = await savedAnswers();
+  expect(answers[500].time).toBe(7);
 });
 
 test('the response slide saves answer, classification and one category with the take', async () => {
