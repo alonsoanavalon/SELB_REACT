@@ -1,5 +1,6 @@
 import { useState, useEffect, Fragment } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import PullToRefreshGuard from './components/PullToRefreshGuard';
 import axios from 'axios'
 import { get, set } from 'idb-keyval';
 import Cookies from 'universal-cookie';
@@ -600,6 +601,7 @@ function App() {
             ?
             <>
               <BrowserRouter>
+                <PullToRefreshGuard />
                 <Fragment>
                   <Navbar />
 
@@ -663,6 +665,7 @@ function App() {
             
             ? <>
               <BrowserRouter>
+                <PullToRefreshGuard />
                 <Fragment>
                   <NavBarJapi />
 
@@ -693,6 +696,7 @@ function App() {
             
             ? <>
             <BrowserRouter>
+              <PullToRefreshGuard />
               <Fragment>
                 <NavBarJapi />
 
@@ -720,6 +724,7 @@ function App() {
             <></>
           </>
             : <BrowserRouter>
+            <PullToRefreshGuard />
             <Routes>
               <Route path="/" element={<Login />}></Route>
               <Route path="/login" element={<Login />}></Route>
@@ -734,6 +739,7 @@ function App() {
           :
 
           <BrowserRouter>
+            <PullToRefreshGuard />
             <Routes>
               <Route path="/" element={<Login />}></Route>
               <Route path="/login" element={<Login />}></Route>

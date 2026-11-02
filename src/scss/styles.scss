@@ -92,11 +92,15 @@ img {
 
 }
 
-/* Se supone esto ayuda para no recargar la pagina en celulares desplazando el dedo */
-
-body
-{
-  overscroll-behavior-y: contain !important;
+/* Bloquea "deslizar hacia abajo para recargar" en tablets; solo se permite en el
+   inicio (clase puesta por components/PullToRefreshGuard.js). Chrome lo toma del html. */
+html,
+body {
+  overscroll-behavior-y: contain;
+}
+html.allow-pull-to-refresh,
+html.allow-pull-to-refresh body {
+  overscroll-behavior-y: auto;
 }
 
 .button {
