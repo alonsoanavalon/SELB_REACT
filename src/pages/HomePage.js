@@ -3,6 +3,7 @@ import { get, set } from 'idb-keyval';
 import Swal from 'sweetalert2';
 import DashboardHome from '../components/DashboardHome';
 import { DASHBOARD_SUMMARY_KEY } from '../services/dashboardSummary';
+import { SESSION_EXPIRED_MESSAGE } from '../services/session';
 
 const CATALOG_KEYS = ['schools', 'courses', 'students', 'instruments'];
 
@@ -153,6 +154,7 @@ export default function HomePage() {
             `${process.env.REACT_APP_API_URL}/newevaluation`,
             {
               method: 'POST',
+              credentials: 'include',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 studyId,
@@ -160,6 +162,11 @@ export default function HomePage() {
               }),
             }
           );
+
+          if (response.status === 401) {
+            Swal.showValidationMessage(SESSION_EXPIRED_MESSAGE);
+            return false;
+          }
 
           if (!response.ok) {
             Swal.showValidationMessage(

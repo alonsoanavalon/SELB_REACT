@@ -30,6 +30,20 @@ function localAssetPath(buildDirectory, asset) {
   return path.join(buildDirectory, asset.slice(1));
 }
 
+// Production must not publish readable sources (SEC-004 S9).
+function findSourceMap(directory) {
+  for (const entry of fs.readdirSync(directory, {withFileTypes: true})) {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      const nested = findSourceMap(entryPath);
+      if (nested) return nested;
+    } else if (entry.name.endsWith('.map')) {
+      return entryPath;
+    }
+  }
+  return null;
+}
+
 function prepareRelease(buildDirectory) {
   const {mainScript} = readIndexAssets(buildDirectory);
   const source = localAssetPath(buildDirectory, mainScript);
@@ -68,6 +82,9 @@ function verifyRelease(buildDirectory, sourceServiceWorker) {
   for (const forbidden of ['completedTests', 'backupTest', 'indexedDB.deleteDatabase', 'localStorage.clear']) {
     if (serviceWorker.includes(forbidden)) fail(`RELEASE_SERVICE_WORKER_STORAGE_MUTATION:${forbidden}`);
   }
+
+  const sourceMap = findSourceMap(buildDirectory);
+  if (sourceMap) fail(`RELEASE_SOURCE_MAP_PRESENT:${path.relative(buildDirectory, sourceMap)}`);
 
   return {
     mainScript,

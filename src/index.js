@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AlertTemplate from 'react-alert-template-mui'
 import { transitions, positions, Provider as AlertProvider, types } from 'react-alert'
 import swDev from './swDev'
+import { installSessionHandling } from './services/session'
+
+installSessionHandling()
 
 const options = {
   // you can also just use 'bottom center'

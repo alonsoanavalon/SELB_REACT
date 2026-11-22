@@ -29,11 +29,10 @@ export default function Login () {
 
         let url = `${process.env.REACT_APP_API_URL}/login`
 
-        axios(url, {
-            params: {
-                email:user.username,
-                password:md5(user.password)
-          },
+        axios.post(url, {
+            email:user.username,
+            password:md5(user.password)
+        }, {
           withCredentials: true
         })
         .then(response => {
@@ -59,6 +58,9 @@ export default function Login () {
             setIsLogin(true)
             window.location.href = "/"
           }
+        })
+        .catch(error => {
+          setIsLogin(error.response && error.response.status === 429 ? 'blocked' : false)
         })
 
 /*         if (user.username == "admin" && user.password == "admin") {
@@ -113,6 +115,10 @@ durante Japi</li>
               {
                 isLogin === false &&
                 <div className="alert alert-warning" role="alert">Datos incorrectos</div>
+              }
+              {
+                isLogin === 'blocked' &&
+                <div className="alert alert-warning" role="alert">Demasiados intentos fallidos. Espera 15 minutos e intenta de nuevo.</div>
               }
 
                 <button

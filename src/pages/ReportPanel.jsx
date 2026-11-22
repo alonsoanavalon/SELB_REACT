@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import Swal from 'sweetalert2'
 import { ReportPanelContainer, ReportButton, OtherButton, Container } from './style.js';
-import { get, set, del } from 'idb-keyval';
+import { get, set } from 'idb-keyval';
 import axios from 'axios';
 import { ROLES } from '../components/constants.js';
 import Cookies from 'universal-cookie'
@@ -60,7 +60,7 @@ export default function ReportPanel () {
   
       if (navigator.onLine && firstTime) {
         firstTime = false;
-        del(data)
+        // Keep the cached copy until fresh data arrives (SEC-004 S7).
         let url = `${process.env.REACT_APP_API_URL}/${data}`
         axios(url)
           .then(res => {
@@ -74,7 +74,6 @@ export default function ReportPanel () {
     
         if (navigator.onLine && firstTime) {
           firstTime = false;
-          del(data)
           let url = `${process.env.REACT_APP_API_URL}/${data}`
           axios(url)
             .then(res => {

@@ -98,6 +98,7 @@ export default function Respaldo () {
         ;
         fetch(url, {
             method: "POST",
+            credentials: "include",
             body: JSON.stringify(errorLog),
             headers: {
               "Content-Type": "application/json",            },

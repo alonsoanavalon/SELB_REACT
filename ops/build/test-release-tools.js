@@ -29,9 +29,15 @@ try {
   assert.throws(() => verifyRelease(root, sourceServiceWorker), /RELEASE_LEGACY_BUNDLE_MISSING/);
   prepareRelease(root);
   assert.strictEqual(verifyRelease(root, sourceServiceWorker).mainScript, '/static/js/main.abc123.js');
+  fs.writeFileSync(path.join(root, 'static/js/main.abc123.js.map'), '{}\n');
+  assert.throws(
+    () => verifyRelease(root, sourceServiceWorker),
+    /RELEASE_SOURCE_MAP_PRESENT:static\/js\/main\.abc123\.js\.map/
+  );
+  fs.rmSync(path.join(root, 'static/js/main.abc123.js.map'));
   fs.appendFileSync(path.join(root, 'sw.js'), '\n// changed\n');
   assert.throws(() => verifyRelease(root, sourceServiceWorker), /SERVICE_WORKER_CHANGED/);
-  process.stdout.write('release_tools_test_status=success scenarios=3\n');
+  process.stdout.write('release_tools_test_status=success scenarios=4\n');
 } finally {
   if (root) fs.rmSync(root, {recursive: true, force: true});
 }

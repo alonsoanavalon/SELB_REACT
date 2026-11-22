@@ -1173,6 +1173,7 @@ function AdminV1Panel() {
         const slice = backupImportRows.slice(start, start + batchSize).map(row => row.raw)
         const response = await fetch(`${process.env.REACT_APP_API_URL}/newevaluation`, {
           method: 'POST',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
           },
