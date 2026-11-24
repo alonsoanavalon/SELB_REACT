@@ -24,7 +24,7 @@ export default function ReportPanel () {
 
     const openReports = () => {
         
-        if (role === ROLES.ADMIN || role === ROLES.TEACHER) {
+        if (role === ROLES.ADMIN || role === ROLES.EVALUATOR || role === ROLES.TEACHER) {
             window.location.href = '/school-selector'
         } else if (role === ROLES.PARENT) {
             

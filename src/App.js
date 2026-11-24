@@ -66,6 +66,7 @@ import JapiInteres from './pages/japi-interes/JapiInteres';
 import Wisconsin from './pages/wisconsin/Wisconsin';
 import AAH from './pages/aah/AAH';
 import AdminV1Panel from './pages/AdminV1Panel';
+import { isAdminRole, refreshCurrentUser, usesEvaluationApp } from './services/currentUser';
 
 const cookies = new Cookies();
 
@@ -92,6 +93,22 @@ function App() {
       setUserId(user.id)
       setUserRole(user.role)
       set('userRole', user.role)
+    }
+
+    if (cookies.get('id')) {
+      const current = await refreshCurrentUser({
+        online: navigator.onLine,
+        current: user,
+        load: () => axios(`${process.env.REACT_APP_API_URL}/me`).then(res => res.data),
+        persist: async value => {
+          await set('userData', value)
+          await set('userRole', value.role)
+        },
+      })
+      if (current && current !== user) {
+        setUserId(current.id)
+        setUserRole(current.role)
+      }
     }
 
   }, [])
@@ -597,7 +614,7 @@ function App() {
 
       {
         userRole ? <>
-          {(isLogged && userRole === ROLES.ADMIN)
+          {(isLogged && usesEvaluationApp(userRole))
             ?
             <>
               <BrowserRouter>
@@ -614,14 +631,14 @@ function App() {
                   <Route path="/login" element={<Login />}></Route>
                   <Route path="/tejaslee" element={<TejasLee />}></Route>
                   <Route path="/calculo" element={<Calculo />}></Route>
-                  <Route path="/excel" element={<Excel />}></Route>
-                  <Route path="/moments" element={<Moments />}></Route>
+                  {isAdminRole(userRole) && <Route path="/excel" element={<Excel />}></Route>}
+                  {isAdminRole(userRole) && <Route path="/moments" element={<Moments />}></Route>}
                   <Route path="/respaldo" element={<Respaldo />}></Route>
                   <Route path="/parents" element={<Parents />}></Route>
-                  <Route path="/sessions-logged" element={<SessionsLogged/>}/>
+                  {isAdminRole(userRole) && <Route path="/sessions-logged" element={<SessionsLogged/>}/>}
                   <Route path="/report-panel" element={<ReportPanel />}></Route>
                   <Route path="/school-selector" element={<SchoolSelector />}></Route>
-                  <Route path="/desarrollo" element={<Desarrollo />}></Route>
+                  {isAdminRole(userRole) && <Route path="/desarrollo" element={<Desarrollo />}></Route>}
                   <Route path="/sdq" element={<ParentsForm />}></Route>
                   <Route path="/charts/:studentRut" element={<Charts />}></Route>
                   <Route path="/student-selector" element={<StudentSelector />}></Route>
@@ -634,7 +651,7 @@ function App() {
                   <Route path="/wally" element={<Wally />}></Route>
                   <Route path="/wallyNinos" element={<WallyOriginal variant="ninos" />}></Route>
                   <Route path="/wallyNinas" element={<WallyOriginal variant="ninas" />}></Route>
-                  <Route path="/codificacion" element={<WallyCoding />}></Route>
+                  {isAdminRole(userRole) && <Route path="/codificacion" element={<WallyCoding />}></Route>}
                   <Route path="/eml" element={<EML />}></Route>
                   <Route path="/japi" element={<JapiInteres />}></Route>
                   <Route path="/wisconsin" element={<Wisconsin/>}></Route>
@@ -655,7 +672,7 @@ function App() {
                   <Route path="/session/course/:courseId/session/:sessionId/activity/:activityId/student/:studentId" element={<ExercisesByStudentActivity />} />
                   <Route path="/session/:sessionId/course/:courseId/student/:studentId" element={<ActivitiesBySessionAndStudent />} />
                   <Route path="/aah" element={<AAH/>} />
-                  <Route path="/admin-v1" element={<AdminV1Panel />} />
+                  {isAdminRole(userRole) && <Route path="/admin-v1" element={<AdminV1Panel />} />}
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 
