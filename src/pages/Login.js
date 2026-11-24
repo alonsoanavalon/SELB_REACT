@@ -1,22 +1,56 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
-import md5 from 'md5'
 import { set } from 'idb-keyval'
 import { WelcomeMessage } from './style.js'
 import { saveSessionToken } from '../services/session'
+import { errorCodeFrom } from '../services/passwordRules'
+import PasswordForm from '../components/PasswordForm'
 
 const cookies = new Cookies();
 
 
 export default function Login () {
 
-  
+
 
     const [isLogin, setIsLogin] = useState('')
+    // Set when the account must create a new password before entering (SEC-006).
+    const [changeToken, setChangeToken] = useState(null)
 
 
-    
+    async function completeLogin (data) {
+      await set('userData', {
+        id : data.id,
+        name: data.name,
+        surname: data.surname,
+        role: data.role,
+        email: data.email
+      })
+      saveSessionToken(data.token)
+      cookies.set('id', data.id, {path:"/", sameSite: 'lax', maxAge: 31536000 })
+      cookies.set('email', data.email, {path:"/" ,sameSite: 'lax', maxAge: 31536000 })
+      setIsLogin(true)
+      window.location.href = "/"
+    }
+
+    async function createRequiredPassword ({ newPassword }) {
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/password/required`, {
+          changeToken,
+          newPassword
+        }, { withCredentials: true })
+        await completeLogin(response.data)
+        return null
+      } catch (error) {
+        const code = errorCodeFrom(error)
+        if (code === 'CHANGE_PERMIT_INVALID') {
+          setIsLogin('expired')
+          setChangeToken(null)
+        }
+        return code || 'UNKNOWN'
+      }
+    }
 
       function validateLogin (e) {
         e.preventDefault()
@@ -30,9 +64,10 @@ export default function Login () {
 
         let url = `${process.env.REACT_APP_API_URL}/login`
 
+        // The typed password goes over HTTPS; the API verifies it (SEC-006 S1).
         axios.post(url, {
             email:user.username,
-            password:md5(user.password)
+            password:user.password
         }, {
           withCredentials: true
         })
@@ -42,23 +77,13 @@ export default function Login () {
           return response.data
         })
         .then(data => {
-          if (!data.status) {
+          if (data.passwordChangeRequired) {
+            setChangeToken(data.changeToken)
+          } else if (!data.status) {
 
             setIsLogin(false)
           } else {
-
-            set('userData', {
-              id : data.id,
-              name: data.name,
-              surname: data.surname,
-              role: data.role,
-              email: data.email
-            })
-            saveSessionToken(data.token)
-            cookies.set('id', data.id, {path:"/", sameSite: 'lax', maxAge: 31536000 })
-            cookies.set('email', data.email, {path:"/" ,sameSite: 'lax', maxAge: 31536000 })
-            setIsLogin(true)
-            window.location.href = "/"
+            return completeLogin(data)
           }
         })
         .catch(error => {
@@ -75,9 +100,22 @@ export default function Login () {
       }
 
 
+      if (changeToken) {
+        return (
+          <div className="signin">
+            <div className="signin-form">
+              <img src="/logo.png" alt="logo"/>
+              <h2 className="signin-title">Crea tu nueva contraseña</h2>
+              <p>Por seguridad, debes crear una contraseña nueva antes de continuar.</p>
+              <PasswordForm submitLabel="Guardar y entrar" onSubmit={createRequiredPassword} />
+            </div>
+          </div>
+        )
+      }
+
       return (
 
-   
+
 
             <div className="signin">
               <form name="loginForm" id="loginForm" className="signin-form">
@@ -117,6 +155,10 @@ durante Japi</li>
               {
                 isLogin === false &&
                 <div className="alert alert-warning" role="alert">Datos incorrectos</div>
+              }
+              {
+                isLogin === 'expired' &&
+                <div className="alert alert-warning" role="alert">El tiempo para crear la contraseña expiró. Vuelve a iniciar sesión.</div>
               }
               {
                 isLogin === 'blocked' &&

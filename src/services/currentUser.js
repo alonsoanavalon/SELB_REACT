@@ -21,6 +21,11 @@ export const isAdminRole = (role) => isRole(role, ROLES.ADMIN);
 export const usesEvaluationApp = (role) =>
   isRole(role, ROLES.ADMIN) || isRole(role, ROLES.EVALUATOR);
 
+// Components that show user data (e.g. the menu) re-read it on this event.
+export const USER_UPDATED_EVENT = 'selb:user-updated';
+
+export const notifyUserUpdated = () => window.dispatchEvent(new Event(USER_UPDATED_EVENT));
+
 // The role kept on the device may be stale (e.g. Admin moved to Evaluator), so
 // when online ask the API who the session belongs to. Offline, or on any error,
 // the stored user is kept as is.

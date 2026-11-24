@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import {NavLink } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import { ROLES } from './constants'
-import { isAdminRole } from '../services/currentUser'
+import { USER_UPDATED_EVENT, isAdminRole } from '../services/currentUser'
 
 export default function Aside() {
 
@@ -31,9 +31,11 @@ export default function Aside() {
         }
 
 
-        get('userData')
-        .then(res => setUserData(res))
-        .then(console.log(userData))
+        // Re-read when the API reports a different role (SEC-005 S5).
+        const loadUserData = () => get('userData').then(res => setUserData(res || {}))
+        loadUserData()
+        window.addEventListener(USER_UPDATED_EVENT, loadUserData)
+        return () => window.removeEventListener(USER_UPDATED_EVENT, loadUserData)
     }, [])
 
 
@@ -125,6 +127,11 @@ export default function Aside() {
                 }
 
 
+
+                <NavLink className={({isActive}) => isActive ? 'active' : ''} to="/cambiar-contrasena">
+                <svg id="password-icon" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>Cambiar contraseña</NavLink>
 
                 <a href="/login" onClick={logout}>
                     <svg id="logout-icon" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

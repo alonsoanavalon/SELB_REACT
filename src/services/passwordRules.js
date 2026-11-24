@@ -1,0 +1,30 @@
+// Same rules as the API (SEC-006 S4); the API has the final word.
+export const MIN_PASSWORD_LENGTH = 10;
+
+const MESSAGES = {
+  PASSWORD_TOO_SHORT: `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`,
+  PASSWORD_TOO_LONG: 'La contraseña es demasiado larga.',
+  PASSWORD_EQUALS_EMAIL: 'La contraseña no puede ser tu correo.',
+  PASSWORD_SAME_AS_CURRENT: 'La contraseña nueva debe ser distinta de la actual.',
+  PASSWORD_MISMATCH: 'Las contraseñas no coinciden.',
+  CURRENT_PASSWORD_INVALID: 'La contraseña actual no es correcta.',
+  CHANGE_PERMIT_INVALID: 'El tiempo para crear la contraseña expiró. Vuelve a iniciar sesión.',
+  TOO_MANY_ATTEMPTS: 'Demasiados intentos fallidos. Espera 15 minutos e intenta de nuevo.',
+};
+
+const DEFAULT_MESSAGE = 'No fue posible cambiar la contraseña. Intenta nuevamente.';
+
+export const passwordErrorMessage = (code) => MESSAGES[code] || DEFAULT_MESSAGE;
+
+// Returns an error code, or null when the input can be sent.
+export function checkNewPassword(newPassword, confirmation) {
+  if (typeof newPassword !== 'string' || newPassword.length < MIN_PASSWORD_LENGTH) {
+    return 'PASSWORD_TOO_SHORT';
+  }
+  if (newPassword !== confirmation) return 'PASSWORD_MISMATCH';
+  return null;
+}
+
+// Error code from a failed axios call to the password endpoints.
+export const errorCodeFrom = (error) =>
+  (error && error.response && error.response.data && error.response.data.error) || null;

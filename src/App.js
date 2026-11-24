@@ -66,7 +66,8 @@ import JapiInteres from './pages/japi-interes/JapiInteres';
 import Wisconsin from './pages/wisconsin/Wisconsin';
 import AAH from './pages/aah/AAH';
 import AdminV1Panel from './pages/AdminV1Panel';
-import { isAdminRole, refreshCurrentUser, usesEvaluationApp } from './services/currentUser';
+import ChangePassword from './pages/ChangePassword';
+import { isAdminRole, notifyUserUpdated, refreshCurrentUser, usesEvaluationApp } from './services/currentUser';
 
 const cookies = new Cookies();
 
@@ -103,6 +104,7 @@ function App() {
         persist: async value => {
           await set('userData', value)
           await set('userRole', value.role)
+          notifyUserUpdated()
         },
       })
       if (current && current !== user) {
@@ -637,6 +639,7 @@ function App() {
                   <Route path="/parents" element={<Parents />}></Route>
                   {isAdminRole(userRole) && <Route path="/sessions-logged" element={<SessionsLogged/>}/>}
                   <Route path="/report-panel" element={<ReportPanel />}></Route>
+                  <Route path="/cambiar-contrasena" element={<ChangePassword />}></Route>
                   <Route path="/school-selector" element={<SchoolSelector />}></Route>
                   {isAdminRole(userRole) && <Route path="/desarrollo" element={<Desarrollo />}></Route>}
                   <Route path="/sdq" element={<ParentsForm />}></Route>
@@ -693,6 +696,7 @@ function App() {
                   <Route path="/" element={<ReportPanel />}></Route>
                   <Route path="/login" element={<Login />}></Route>
                   <Route path="/report-panel" element={<ReportPanel />}></Route>
+                  <Route path="/cambiar-contrasena" element={<ChangePassword />}></Route>
                   <Route path="/school-selector" element={<SchoolSelector />}></Route>
                   <Route path="/charts/:studentRut" element={<Charts />}></Route>
                   <Route path="/student-selector" element={<StudentSelector />}></Route>
@@ -724,6 +728,7 @@ function App() {
                 <Route path="/" element={<ReportPanel />}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/report-panel" element={<ReportPanel />}></Route>
+                <Route path="/cambiar-contrasena" element={<ChangePassword />}></Route>
                 <Route path="/school-selector" element={<SchoolSelector />}></Route>
                 <Route path="/student-parent-selector" element={<StudentParentSelector />}></Route>
                 <Route path="/charts/:studentRut" element={<Charts />}></Route>
