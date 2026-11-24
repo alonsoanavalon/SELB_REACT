@@ -41,7 +41,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:release": "GENERATE_SOURCEMAP=false react-scripts build &&node ops/build/prepare-static-release.js build && node ops/build/verify-static-release.js build",
+    "build:release": "GENERATE_SOURCEMAP=false react-scripts build && node ops/build/prepare-static-release.js build && node ops/build/verify-static-release.js build",
     "check:release": "node ops/build/verify-static-release.js build",
     "test:release-tools": "node ops/build/test-release-tools.js",
     "test:pwa-offline": "node ops/pwa/test-offline-runtime.js",

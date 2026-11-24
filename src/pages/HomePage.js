@@ -3,7 +3,7 @@ import { get, set } from 'idb-keyval';
 import Swal from 'sweetalert2';
 import DashboardHome from '../components/DashboardHome';
 import { DASHBOARD_SUMMARY_KEY } from '../services/dashboardSummary';
-import { SESSION_EXPIRED_MESSAGE } from '../services/session';
+import { SESSION_EXPIRED_MESSAGE, authHeaders } from '../services/session';
 
 const CATALOG_KEYS = ['schools', 'courses', 'students', 'instruments'];
 
@@ -155,7 +155,7 @@ export default function HomePage() {
             {
               method: 'POST',
               credentials: 'include',
-              headers: { 'Content-Type': 'application/json' },
+              headers: { ...authHeaders(), 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 studyId,
                 instruments: tests.slice(start, end),

@@ -35,6 +35,21 @@ describe('Login', () => {
     expect(await screen.findByText('Datos incorrectos')).toBeInTheDocument();
   });
 
+  test('keeps the session token for browsers that block third-party cookies', async () => {
+    window.localStorage.clear();
+    axios.post.mockResolvedValue({
+      data: { status: true, token: 'token-abc', id: 7, email: 'user@example.test', name: 'N', surname: 'S', role: 'Teacher' },
+    });
+    delete window.location;
+    window.location = { href: '' };
+    render(<Login />);
+
+    submit('user@example.test', 'secret');
+
+    await waitFor(() => expect(window.localStorage.getItem('selbToken')).toBe('token-abc'));
+    expect(window.location.href).toBe('/');
+  });
+
   test('explains the temporary block after too many failed attempts', async () => {
     axios.post.mockRejectedValue({ response: { status: 429 } });
     render(<Login />);

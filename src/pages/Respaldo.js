@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { FaDownload, FaFileCode, FaFileCsv, FaRotateLeft } from 'react-icons/fa6';
 import '../css/operations.css';
+import { authHeaders } from '../services/session';
 
 export default function Respaldo () {
 
@@ -101,6 +102,7 @@ export default function Respaldo () {
             credentials: "include",
             body: JSON.stringify(errorLog),
             headers: {
+              ...authHeaders(),
               "Content-Type": "application/json",            },
 
           })

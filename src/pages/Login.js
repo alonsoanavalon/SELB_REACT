@@ -4,6 +4,7 @@ import Cookies from 'universal-cookie'
 import md5 from 'md5'
 import { set } from 'idb-keyval'
 import { WelcomeMessage } from './style.js'
+import { saveSessionToken } from '../services/session'
 
 const cookies = new Cookies();
 
@@ -53,6 +54,7 @@ export default function Login () {
               role: data.role,
               email: data.email
             })
+            saveSessionToken(data.token)
             cookies.set('id', data.id, {path:"/", sameSite: 'lax', maxAge: 31536000 })
             cookies.set('email', data.email, {path:"/" ,sameSite: 'lax', maxAge: 31536000 })
             setIsLogin(true)

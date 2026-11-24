@@ -26,6 +26,7 @@ import {
   updateUser,
 } from '../services/adminV1Api'
 import { ROLES } from '../components/constants'
+import { authHeaders } from '../services/session'
 
 const DEFAULT_MOMENT_UNTIL = '2100-01-01'
 const DEFAULT_USER_ROLES = [ROLES.ADMIN, ROLES.EVALUATOR, ROLES.TEACHER, ROLES.PARENT]
@@ -1175,6 +1176,7 @@ function AdminV1Panel() {
           method: 'POST',
           credentials: 'include',
           headers: {
+            ...authHeaders(),
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
