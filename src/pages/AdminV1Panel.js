@@ -1965,7 +1965,7 @@ function AdminV1Panel() {
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div>
                 <h5 className="card-title m-0">Usuarios</h5>
-                <p className="text-muted mb-0">Alta y edicion con el mismo hash legacy usado por signin.</p>
+                <p className="text-muted mb-0">Las contraseñas se guardan cifradas. Toda contraseña que pongas aquí (al crear, editar o restablecer) es temporal: el usuario deberá crear una nueva al entrar.</p>
               </div>
               {editingUserId ? (
                 <button className="btn btn-sm btn-outline-secondary" onClick={resetUserEditor}>
