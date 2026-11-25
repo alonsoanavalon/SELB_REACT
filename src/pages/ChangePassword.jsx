@@ -3,6 +3,7 @@ import axios from 'axios';
 import PasswordForm from '../components/PasswordForm';
 import { saveSessionToken } from '../services/session';
 import { errorCodeFrom } from '../services/passwordRules';
+import Cookies from 'universal-cookie';
 
 // Voluntary password change from the menu, available to every role (SEC-006 S4).
 export default function ChangePassword() {
@@ -23,13 +24,20 @@ export default function ChangePassword() {
   }
 
   return (
-    <div className="container py-4" style={{ maxWidth: '480px' }}>
-      <h2>Cambiar contraseña</h2>
-      {done ? (
-        <div className="alert alert-success" role="status">Tu contraseña fue cambiada.</div>
-      ) : (
-        <PasswordForm askCurrent submitLabel="Cambiar contraseña" onSubmit={changePassword} />
-      )}
+    <div className="change-password-page">
+      <div className="change-password-card">
+        <h2>Cambiar contraseña</h2>
+        {done ? (
+          <div className="alert alert-success" role="status">Tu contraseña fue cambiada.</div>
+        ) : (
+          <PasswordForm
+            askCurrent
+            email={new Cookies().get('email') || ''}
+            submitLabel="Cambiar contraseña"
+            onSubmit={changePassword}
+          />
+        )}
+      </div>
     </div>
   );
 }

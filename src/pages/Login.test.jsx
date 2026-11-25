@@ -92,15 +92,20 @@ describe('Login', () => {
   test('shows the API reason when the new password is rejected, and handles an expired permit', async () => {
     axios.post
       .mockResolvedValueOnce({ data: { status: false, passwordChangeRequired: true, changeToken: 'permit-1' } })
-      .mockRejectedValueOnce({ response: { status: 400, data: { status: false, error: 'PASSWORD_EQUALS_EMAIL' } } })
+      .mockRejectedValueOnce({ response: { status: 400, data: { status: false, error: 'PASSWORD_SAME_AS_CURRENT' } } })
       .mockRejectedValueOnce({ response: { status: 400, data: { status: false, error: 'CHANGE_PERMIT_INVALID' } } });
     render(<Login />);
 
     submit('user@example.test', 'old-password');
     await screen.findByText('Crea tu nueva contraseña');
 
-    fillNewPassword('user@example.test');
+    // Checked in the browser with the typed email: never sent to the API.
+    fillNewPassword('User@Example.test');
     expect(await screen.findByText('La contraseña no puede ser tu correo.')).toBeInTheDocument();
+    expect(axios.post).toHaveBeenCalledTimes(1);
+
+    fillNewPassword('the-old-password');
+    expect(await screen.findByText('La contraseña nueva debe ser distinta de la actual.')).toBeInTheDocument();
 
     fillNewPassword('a-new-valid-password');
     expect(await screen.findByText(/expiró\. Vuelve a iniciar sesión/)).toBeInTheDocument();

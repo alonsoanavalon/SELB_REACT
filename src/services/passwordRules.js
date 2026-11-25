@@ -16,12 +16,24 @@ const DEFAULT_MESSAGE = 'No fue posible cambiar la contraseña. Intenta nuevamen
 
 export const passwordErrorMessage = (code) => MESSAGES[code] || DEFAULT_MESSAGE;
 
+const normalized = (value) => String(value || '').trim().toLowerCase();
+
+// Live status of each rule, shown as a checklist while typing.
+export function passwordRuleStatus(newPassword, confirmation, email = '') {
+  const value = typeof newPassword === 'string' ? newPassword : '';
+  return {
+    length: value.length >= MIN_PASSWORD_LENGTH,
+    notEmail: value !== '' && (!email || normalized(value) !== normalized(email)),
+    matches: value !== '' && value === confirmation,
+  };
+}
+
 // Returns an error code, or null when the input can be sent.
-export function checkNewPassword(newPassword, confirmation) {
-  if (typeof newPassword !== 'string' || newPassword.length < MIN_PASSWORD_LENGTH) {
-    return 'PASSWORD_TOO_SHORT';
-  }
-  if (newPassword !== confirmation) return 'PASSWORD_MISMATCH';
+export function checkNewPassword(newPassword, confirmation, email = '') {
+  const rules = passwordRuleStatus(newPassword, confirmation, email);
+  if (!rules.length) return 'PASSWORD_TOO_SHORT';
+  if (!rules.notEmail) return 'PASSWORD_EQUALS_EMAIL';
+  if (!rules.matches) return 'PASSWORD_MISMATCH';
   return null;
 }
 

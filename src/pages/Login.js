@@ -17,6 +17,7 @@ export default function Login () {
     const [isLogin, setIsLogin] = useState('')
     // Set when the account must create a new password before entering (SEC-006).
     const [changeToken, setChangeToken] = useState(null)
+    const [loginEmail, setLoginEmail] = useState('')
 
 
     async function completeLogin (data) {
@@ -78,6 +79,7 @@ export default function Login () {
         })
         .then(data => {
           if (data.passwordChangeRequired) {
+            setLoginEmail(user.username || '')
             setChangeToken(data.changeToken)
           } else if (!data.status) {
 
@@ -107,7 +109,7 @@ export default function Login () {
               <img src="/logo.png" alt="logo"/>
               <h2 className="signin-title">Crea tu nueva contraseña</h2>
               <p>Por seguridad, debes crear una contraseña nueva antes de continuar.</p>
-              <PasswordForm submitLabel="Guardar y entrar" onSubmit={createRequiredPassword} />
+              <PasswordForm email={loginEmail} submitLabel="Guardar y entrar" onSubmit={createRequiredPassword} />
             </div>
           </div>
         )
