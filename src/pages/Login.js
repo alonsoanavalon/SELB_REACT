@@ -156,7 +156,12 @@ durante Japi</li>
 
               {
                 isLogin === false &&
-                <div className="alert alert-warning" role="alert">Datos incorrectos</div>
+                <div className="alert alert-warning" role="alert">
+                  <strong>Correo o contraseña incorrectos.</strong>
+                  <br />
+                  Por seguridad actualizamos SELB y tu contraseña anterior ya no funciona.
+                  Si aún no tienes una contraseña temporal, pide una contraseña temporal al administrador de SELB.
+                </div>
               }
               {
                 isLogin === 'expired' &&

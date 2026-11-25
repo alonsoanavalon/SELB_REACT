@@ -42,7 +42,10 @@ describe('Login', () => {
     expect(body).toEqual({ email: 'user@example.test', password: 'secret' });
     expect(config).toEqual({ withCredentials: true });
     expect(axios).not.toHaveBeenCalled();
-    expect(await screen.findByText('Datos incorrectos')).toBeInTheDocument();
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('Correo o contraseña incorrectos.');
+    expect(alert).toHaveTextContent('tu contraseña anterior ya no funciona');
+    expect(alert).toHaveTextContent('pide una contraseña temporal al administrador');
   });
 
   test('keeps the session token for browsers that block third-party cookies', async () => {
