@@ -198,3 +198,16 @@ export const saveWallyCodingEvaluation = async (instrumentListId, payload) => {
   })
   return response.data
 }
+
+export const getEvaluatorTestsSummary = async filters => {
+  const response = await axios.get(
+    `${getBaseUrl()}/evaluator-tests/summary`,
+    withParams(filters)
+  )
+  return response.data
+}
+
+export const listEvaluatorTests = async filters => {
+  const response = await axios.get(`${getBaseUrl()}/evaluator-tests`, withParams(filters))
+  return response.data
+}

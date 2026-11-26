@@ -25,6 +25,7 @@ import {
   updateStudy,
   updateUser,
 } from '../services/adminV1Api'
+import EvaluatorTestsPanel from '../components/EvaluatorTestsPanel'
 import { ROLES } from '../components/constants'
 import { authHeaders } from '../services/session'
 
@@ -1241,6 +1242,12 @@ function AdminV1Panel() {
         >
           Asignaciones
         </button>
+        <button
+          className={moduleButtonClass('evaluatorTests')}
+          onClick={() => setActiveModule('evaluatorTests')}
+        >
+          Tests por evaluador
+        </button>
       </div>
 
       {feedback.type ? (
@@ -2323,6 +2330,10 @@ function AdminV1Panel() {
             )}
           </div>
         </div>
+      ) : null}
+
+      {activeModule === 'evaluatorTests' ? (
+        <EvaluatorTestsPanel studies={studies} schools={schools} />
       ) : null}
     </section>
   )
